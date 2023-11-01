@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </head>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<style>
+    .bolds{
+        font-weight: bold;
+    }
+    #forumarea{
+        width: 80%;
+        margin: 0 auto;
+        border-radius: 10px;
+        border: solid 1px #777;
+        padding: 10px;
+    }
+    .forumpost{
+        margin: 1%;
+        width: 96%;
+        border-radius: 10px;
+        border: solid 1px #777;
+        padding: 1%
+    }
+    .card{
+        display: inline-block;
+        margin: 10px;
+    }
+</style>
+<body>
+    <button class="btn btn-primary" id="loader">Load Data</button>
+    <!-- <button class="btn btn-primary" id="changer">Check Attrs</button>
+    <div class="card" id="thisID" style="width: 18rem;" custid="Secret Repo for Data">
+        <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+      <div class="card" style="width: 18rem;">
+        <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Card title</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div> -->
+    <div id="forumarea">
+        <input type="text" id="author"/><br/>
+        <textarea id="thepost"></textarea><br/>
+        <button id="postni" class="btn btn-primary">Post It</button>
+        <div id="postswrapper">
+        <div class="forumpost">
+            <h3>Author</h3>
+            <p>Post Details</p>
+            <button class="bttn">Click Me</button>
+        </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" id="setClass">Click Change</button>
+    <table border="1" id="tableone">
+        <tr>
+            <td>Row1Col1</td>
+            <td>Row1Col2</td>
+            <td>Row1Col3</td>
+            <td>Row1Col4</td>
+        </tr>
+        <tr>
+            <td>Row2Col1</td>
+            <td>Row2Col2</td>
+            <td>Row2Col3</td>
+            <td>Row2Col4</td>
+        </tr>
+        <tr>
+            <td>Row3Col1</td>
+            <td>Row3Col2</td>
+            <td>Row3Col3</td>
+            <td>Row3Col4</td>
+        </tr>
+        <tr>
+            <td>Row4Col1</td>
+            <td>Row4Col2</td>
+            <td>Row4Col3</td>
+            <td>Row4Col4</td>
+        </tr>
+    </table>
+    <button class="changeone">Change the Cells One</button>
+    <button class="changeone">Change the Cells Two</button>
+    <!-- <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"/> -->
+
+</body>
+
+<script>
+
+    $(document).ready(function(){ //ensures external links and resources are loaded and ready
+       $("#loader").click(function(){
+            $.ajax({
+                url:"http://hyeumine.com/forumGetPosts.php?page=1",
+                method:"POST",
+                success: (data)=>{
+                  var obj = JSON.parse(data);
+                    obj.forEach(element => {
+                        //console.log(element)
+                        $('<div class="forumpost"><h3>'+ element.user+'</h3><p>'+element.post +'</p><button class="bttn">Click Me</button></div>').prependTo("#postswrapper")
+                    });
+                }
+            })
+        })
+
+        $("#postni").click(()=>{
+            $("#postswrapper").html("");
+             obj = {id:73, post:$("#thepost").val()}
+                    $.ajax({
+                        url:"http://hyeumine.com/forumNewPost.php",
+                        method:"POST",
+                        data:obj,
+                        success: (data)=>{
+                            $.ajax({
+                        url:"http://hyeumine.com/forumGetPosts.php?page=1",
+                        method:"POST",
+                        success: (data)=>{
+                            obj = JSON.parse(data);
+                            obj.forEach(element => {
+                                //console.log(element)
+                                $('<div class="forumpost"><h3>'+ element.user+'</h3><p>'+element.post +'</p><button class="bttn">Click Me</button></div>').prependTo("#postswrapper")
+                            });
+                        }
+                    })
+                }
+            });
+        })
+
+        // $("#setClass").click(()=>{
+        //     $("#tableone td:even").toggleClass("bolds")
+        // })
+        // $("#postni").click(()=>{
+        //     $('<div class="forumpost"><h3>'+
+        //         $("#author").val()
+        //         +'</h3><p>'+
+        //          $("#thepost").val()
+        //             +'</p><button class="bttn">Click Me</button></div>').prependTo("#postswrapper")
+        // })
+
+        // $(".bttn").on("click",function(){
+        //     alert(1);
+        // })
+
+        // $(".changeone").click(function(){
+        //     $("#tableone").css({border:'solid 1px #f00'})
+        // });
+
+
+        //  $("#tableone td:even").css({border:'solid 1px #0f0'})
+        //  $("#tableone tr:odd").css({color:"#00f"})
+        //  $("<tr><td>New Cell Added</td></tr>").appendTo("#tableone");
+    })
+
+</script>
+
+</html>
