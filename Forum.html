@@ -3,39 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Forum Page</title>
-  <link rel="stylesheet" href="Styles.css">
+  <link rel="icon" href="chat.png" type="image/x-icon">
+  <link rel="stylesheet" href="Styles2.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="Scripts2.js"></script>
 </head>
 <body>
+<video autoplay loop muted playsinline class="back-video">
+ <source src="mylivewallpapers-com-Aurora.mp4" type="video/mp4">
+</video>
 <header>
-  <video autoplay loop muted playsinline class="back-video">
-    <source src="mylivewallpapers-com-Lake-and-Stars-FHD.mp4" type="video/mp4">
-  </video>
   <h2 class="logo">Forum Page</h2>
   <nav class="navigation">
-    <button class="popUp">Log Out</button>
-    <button class="popUp">Log Out</button>
+    <button class="popUp" id="post">Post</button>
+    <button class="popUp" id="logOut">Log Out</button>
   </nav>
 </header>
-<div class="login">
-  <h2>Login</h2>
-  <form action="#">
-    <div class="userInput">
-      <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAkpJREFUSEvl1knIjVEcx/HPS+aNcWVnYSND5lKmiNgQC2RFyZBMCymlWFjItEBSNkRKSUJIFBtTkSHWZCEkRZGp/9u59bzPe+99njvUu3B2955zft/zH87vPB16aHT0EFcz4N4Yhynp0A/xHL8bCaJR8DIcxcgc5C0243JZeCPgw9haIHwIO8rAy4Ln42YSfIRdeJJ+T8L+TOrn4k4RvCz4FualWk7Gz5xwXzzGWFzHonaAe+Eb+mMTjtcQ3Yhj+Ioh+FMPXibi6OBnSWQxrtUQjCivprkxeNUqODr4XRJZhfM1BFfiXJqLPe9bBcf+TxiKel17ENvxESPaUePQ2IfdySSW4kpOeAkuIsxlD/a2CxyN9RKjkuD91MV9UifPTP+/Sa6W7/pu5yjTXJVN0WRnE6haQGGbUec4YOFoBBxicbU2YAGm41eKPO7uyaIrlD1No+DCSMouKAsehhmYhnCufjnAjxT5A0T9PxcdoAg8GAewltJP6N+U9p3JxaqeoR54OU5geGbn9+Ri1bx6PAZm1n7AelyqRq4Fjkc+0laZP40jeIGIqJZWPBJbsCYtiLVTUxm67KkGjpcmrsZoRIQLca+oZrn5WcnTIwOvEdnokqVq4LDFbUloHU41CK0sjzRHqWJ0s9pq4IhyAG6kaJvkdm67jfgwCM1B9e5xXJsw+RgrcKEVKlbjTNKIN/pLRS8f8cTMJ03UNqJuZWTf6LDc6J3OkQfPznwvzcHdVqioqZcHh2FMSLCn2dQ0eYCaekXO1SSveNv/B/4HUH5pHwh1c9gAAAAASUVORK5CYII=" alt="user" class = "icon"/></span>
-      <input type="text" id="firstNameInputLogin" required>
-      <label>First Name</label>
-    </div>
-    <div class="userInput">
-      <span class="icon"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAa1JREFUSEvN1k2ITlEYB/DfyKCkJsmONGShRFnZMaVYWJimbBTKR0nZSbEcSXZmarBhhZIppWYxC1YslFBmVvKVUkoWbCR06t5per13nnOne3ud7fPc/+88vZ1z3j49Wn09ci0GXoIRbCk2PYN7+FNniLrwTtzC5g5kFofxLBevAw9hCssqwn9gD57m4LnwSnzA6iD0IzbhZ4TnwsdxIwor6un3vx/15sLXcDIKK+pXcDbqzYWv40QUVtQncCrqzYXPYzQKK+rncDnqzYXTmX0dhRVneSPeRr25cMq5iSNB4FWcidBUrwMvL26o/RXBaWPH8LtpuNzoIRyYd6Y/4w4e5IBlT52J6+SGvf89vA7D2IoNWNox0i+8w0tM4lM0cjTxNlzCviioo/6wuL3Sq9V1LQSnm2oc/TXRsj09FEdxu9v3VfBB3F0kOP+zdLT2Yrozqxu8Fu+xogE4RXzFeqT3em51g8dwuiG0jLmAixH8BWsahp9jx0LwIN40jJZxq/C96uZKf+aetASno/mqCt6FRy3Bu/G4Ch7A9pbgF/hWBbdk/hsbXZmtbaRn8F8SWDwfL/V22AAAAABJRU5ErkJggg==" alt="user" class="icon"/></span>
-      <input type="text" id="lastNameInputLogin" required>
-      <label>Last Name</label>
-    </div>
-    <button type="submit" class="btn" id="loginButton">Login</button>
-    <div class="loginRegister">
-      <p>Don't have an account?<a href="#" class="register" >Register</a></p>
-    </div>
-  </form>
+<div class="container">
+  <span class="closeIcon"><ion-icon name="close-outline"></ion-icon></span>
+  <div class="login">
+    <h2>Post Something</h2>
+    <form action="#">
+      <div class="userInput">
+        <textarea class="thePost" id="autoResizeTextarea" rows="1" required></textarea>
+      </div>
+      <button type="submit" class="btn" id="submitButton">Submit</button>
+    </form>
+  </div>
+</div>
+<div id="postContainer">
+  <div class="buttonPages">
+  <span >
+    <ion-icon name="arrow-back-circle-outline" class="nextPrev" id="prev"></ion-icon>
+  <ion-icon name="arrow-forward-circle-outline" class="nextPrev" id="next"></ion-icon>
+  </span>
+  </div>
 </div>
 </body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </html>
