@@ -1,0 +1,259 @@
+*{
+  font-family: "Comic Sans MS", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99;
+}
+
+.logo{
+  font-size: 2em;
+  color: white;
+  user-select: none;
+}
+.navigation .popUp{
+  width: 130px;
+  height: 50px;
+  background: transparent;
+  border: 2px solid white;
+  outline: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1em;
+  color: white;
+  font-weight: 500;
+  margin-left: 40px;
+  transition: .5s;
+}
+.navigation .popUp:hover{
+  background: white;
+  color: #162938;
+}
+.back-video{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -100;
+}
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.container{
+  position: absolute;
+  width: 400px;
+  height: 440px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,.5);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0,0,0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 10;
+  overflow: hidden;
+  transform: scale(0);
+  transition: transform .5s ease;
+}
+.login{
+  width: 95%;
+}
+.container.activePopUp{
+  transform: scale(1);
+}
+.Posts .closeIcon{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background: mediumpurple;
+  font-size: 2em;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+.containerForDeletion{
+  width: 25%;
+  position: relative;
+}
+.containerForDeletion .closeIcon{
+  position: absolute;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background-color: rgba(255,165,0, .5);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+}
+.container .closeIcon{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 45px;
+  height: 45px;
+  background: mediumpurple;
+  font-size: 2em;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+.userInput{
+  position: relative;
+  width: 95%;
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y:auto;
+  border-bottom: 2px solid white;
+  margin: 30px 0;
+}
+.userInput textarea{
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1em;
+  color: white;
+  font-weight: 600;
+  padding: 0 0 0 5px;
+  resize: none;
+  transition: .5s;
+}
+
+.btn{
+  width: 90%;
+  height: 45px;
+  position: absolute;
+  background: #b3d4fc;
+  outline: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+}
+#postContainer{
+  position: absolute;
+  height: 86%;
+  bottom: 10px;
+  width: 91.15%;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: auto;
+  overflow-x: hidden;
+  border: none;
+  outline: none;
+}
+.Posts{
+  max-height: 500px;
+  padding: 10px;
+  background-color: rgba(255,255,0,.5);
+  backdrop-filter: blur(50px);
+  border-radius: 20px 20px 0 0;
+  overflow-y: hidden;
+  overflow-wrap: break-word;
+}
+.replyContainer{
+  background-color: rgba(213, 184, 255,.5);
+  padding: 10px;
+  border-radius: 0 0 20px 20px;
+  margin-bottom: 10px;
+  overflow-wrap: break-word;
+}
+.Posts h3{
+  width: 1000px;
+}
+.theReplyContainer{
+  max-height: 500px;
+  overflow-y: hidden;
+  overflow-wrap: break-word;
+}
+.theReply{
+  width: 50%;
+  color:#b3d4fc;
+  resize: none;
+}
+.theReply:hover{
+  cursor: pointer;
+}
+.sendIcon{
+  background-color: transparent;
+  border-radius: 5px;
+  font-size: 24px;
+  margin: 5px;
+  cursor: pointer;
+  position: relative;
+  bottom: 0;
+}
+.theReply{
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid rgba(135,206,250, .5);
+}
+#enterPageNumber{
+  background: transparent;
+  outline: none;
+  border: none;
+  border-bottom: white 2px solid;
+  margin-left: 5px;
+}
+#EnterPageNumber1{
+  color: white;
+}
+.buttonPages{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buttonPages h3{
+  position: absolute;
+  left: 25px;
+  color: white;
+}
+.nextPrev{
+  width: 35px;
+  height: 35px;
+  background-color: rgba(255,165,0, .3);
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.logo{
+  cursor: pointer;
+}
