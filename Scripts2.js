@@ -530,6 +530,18 @@ $(document).ready(function () {
       }
     })
   }
+  $.ajax({
+    url: "http://hyeumine.com/forumDeletePost.php",
+    method: "GET",
+    data: {id: idOfPost},
+    success: (data)=>{
+      jsonData = JSON.parse(data)
+      if(jsonData.success === true){
+        localStorage.setItem('pageNum', (page + ""))
+        location.reload()
+      }
+    }
+  })
   function Deleter(idOfPost) {
     $.ajax({
       url: "http://hyeumine.com/forumDeletePost.php",
