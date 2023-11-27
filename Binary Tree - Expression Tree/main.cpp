@@ -3,9 +3,7 @@
 #include <iostream>
 #include "mybinarytree.h"
 using namespace std;
-
 node* opInput(MyBinaryTree* tree, string prompt, node* parent);
-
 int main(void) {
     MyBinaryTree* tree = new MyBinaryTree();
     char op;
@@ -37,30 +35,18 @@ node* opInput(MyBinaryTree* tree, string prompt, node* parent) {
     string input;
     cout << "Enter " << prompt << ": ";
     cin >> input;
-    node *n, *left, *right;
+    node *n;
     switch (input[0]) {
         case '+':
-            n = tree->create_node("+", parent);
-            n->left = opInput(tree, "left of +", n);
-            n->right = opInput(tree, "right of +", n);
-            break;
         case '-':
-            n = tree->create_node("-", parent);
-            n->left = opInput(tree, "left of -", n);
-            n->right = opInput(tree, "right of -", n);
-            break;
         case '*':
-            n = tree->create_node("*", parent);
-            n->left = opInput(tree, "left of *", n);
-            n->right = opInput(tree, "right of *", n);
-            break;
         case '/':
-            n = tree->create_node("/", parent);
-            n->left = opInput(tree, "left of /", n);
-            n->right = opInput(tree, "right of /", n);
+            n = tree->create_node(input, parent);
+            n->left = opInput(tree, "left of " + input, n);
+            n->right = opInput(tree, "right of " + input, n);
             break;
-        default:
-            return tree->create_node(input, parent);
+        default: // number
+            return tree->create_node(input , parent);
     }
     return n;
 }
