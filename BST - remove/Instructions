@@ -1,0 +1,78 @@
+
+
+Your task is to complete the primary method of the Binary Search Tree: the remove method.
+
+As discussed in the lecture, you have to take note of three considerations in deleting a node:
+
+If the node has no children, just easily remove (or free up) the node and there will be no consequences. This is already handled by the Binary Tree's remove(n) operation.
+If the node has exactly one child, delete the node and promote the child to replace the deleted node. This is also already handled by the Binary Tree's remove(n) operation.
+If the node has two children, find the least element in the right subtree and replace the node's value with that least element and delete that node instead.
+If you have successfully deleted a node, return true. Of course, if the specified number does not exist in the tree, you are not to remove anything and only return false.
+
+Sample Output 1
+
+Op: i 50
+Op: i 75
+Op: i 25
+Op: i 12
+Op: i 64
+Op: p
+Size: 5
++--R: 50
+|   +--L: 25
+|   |   +--L: 12
+|   +--R: 75
+|   |   +--L: 64
+Status: 1
+Op: r 64
+Op: p
+Size: 4
++--R: 50
+|   +--L: 25
+|   |   +--L: 12
+|   +--R: 75
+Status: 1
+Op: x
+Exiting
+Sample Output 2
+
+Op: i 50
+Op: i 75
+Op: i 25
+Op: i 31
+Op: i 64
+Op: p
+Size: 5
++--R: 50
+|   +--L: 25
+|   |   +--R: 31
+|   +--R: 75
+|   |   +--L: 64
+Status: 1
+Op: r 31
+Op: p
+Size: 4
++--R: 50
+|   +--L: 25
+|   +--R: 75
+|   |   +--L: 64
+Status: 1
+Op: x
+Exiting
+Sample Output 3
+
+Op: i 13
+Op: p
+Size: 1
++--R: 13
+Status: 1
+Op: s 13
+Is there 13? 1
+Op: r 13
+Op: p
+Size: 0
+EMPTY
+Op: s 13
+Is there 13? 0
+Op: x
+Exiting
