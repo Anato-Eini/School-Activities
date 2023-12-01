@@ -1,55 +1,48 @@
 #include "mybinarytree.h"
 
 class BST {
-	BinaryTree* tree = new MyBinaryTree();
+    BinaryTree* tree = new MyBinaryTree();
 
-	public:
-	bool search(int num) {
-        node* curr = tree->getRoot();
-        node* par = NULL;
+public:
+    bool search(int num) {
+        return searchHelper(tree->getRoot(), num);
+    }
+
+    node* searchHelper(node* nodePtr, int num){
+        if(!nodePtr || nodePtr->elem == num){
+            return nodePtr;
+        }else if(nodePtr->elem > num){
+            return searchHelper(nodePtr->left, num);
+        }else return searchHelper(nodePtr->right, num);
+    }
+
+    bool insert(int num) {
         if(!tree->getRoot()){
             tree->addRoot(num);
             return true;
-        }
-        while(curr){
-            par = curr;
-            if(curr->elem > num){
-                curr = curr->left;
-            } else if(curr->elem < num){
-                curr = curr->right;
-            }else if (curr->elem == num){
+        } else return insertHelper(tree->getRoot(), num);
+    }
+
+    bool insertHelper(node* nodePtr, int num){
+        if(nodePtr->elem == num){
+            return false;
+        }else if(nodePtr->elem < num){
+            if(nodePtr->right){
+                return insertHelper(nodePtr->right, num);
+            }else{
+                nodePtr->right = tree->addRight(nodePtr, num);
                 return true;
             }
-        }
-        return false;
-	}
-
-	bool insert(int num) {
-        node* curr = tree->getRoot();
-        node* par = NULL;
-        if(!tree->getRoot()){
-            tree->addRoot(num);
+        }else
+        if(nodePtr->left){
+            return insertHelper(nodePtr->left, num);
+        }else{
+            nodePtr->left = tree->addLeft(nodePtr, num);
             return true;
         }
-        while(curr){
-            par = curr;
-            if(curr->elem > num){
-                curr = curr->left;
-            } else if(curr->elem < num){
-                curr = curr->right;
-            }else{
-                return false;
-            }
-        }
-        if(par->elem > num){
-            tree->addLeft(par, num);
-        } else{
-            tree->addRight(par, num);
-        }
-        return true;
-	}
+    }
 
-	void print() {
-		tree->print();
-	}
+    void print() {
+        tree->print();
+    }
 };

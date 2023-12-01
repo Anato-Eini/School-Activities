@@ -1,98 +1,91 @@
 #include "mybinarytree.h"
 
 class BST {
-    BinaryTree* tree = new MyBinaryTree();
+    MyBinaryTree* tree = new MyBinaryTree();
 
 public:
+    // TODO copy from the previous activity
     bool search(int num) {
-        return search_node(tree->getRoot(), num);
+        return searchHelper(tree->getRoot(), num);
     }
 
-    bool search_node(node* n, int num) {
-        if (n == NULL) {
-            return false;
-        }
-        if (n->elem == num) {
-            return true;
-        }
-        if (num > n->elem) {
-            return search_node(n->right, num);
-        } else {
-            return search_node(n->left, num);
-        }
+    node* searchHelper(node* nodePtr, int num){
+        if(!nodePtr || nodePtr->elem == num){
+            return nodePtr;
+        }else if(nodePtr->elem > num){
+            return searchHelper(nodePtr->left, num);
+        }else return searchHelper(nodePtr->right, num);
     }
 
     bool insert(int num) {
-        node* n = tree->getRoot();
-        if (n == NULL) {
+        if(!tree->getRoot()){
             tree->addRoot(num);
-        }
-        return insert_node(n, num);
+            return true;
+        } else return insertHelper(tree->getRoot(), num);
     }
 
-    bool insert_node(node* n, int num) {
-        if (n == NULL) {
+    bool insertHelper(node* nodePtr, int num){
+        if(nodePtr->elem == num){
             return false;
-        }
-        if (n->elem == num) {
-            return false;
-        }
-        if (num > n->elem) {
-            if (!n->right) {
-                tree->addRight(n, num);
+        }else if(nodePtr->elem < num){
+            if(nodePtr->right){
+                return insertHelper(nodePtr->right, num);
+            }else{
+                nodePtr->right = tree->addRight(nodePtr, num);
                 return true;
-            } else {
-                return insert_node(n->right, num);
             }
-        } else {
-            if (!n->left) {
-                tree->addLeft(n, num);
-                return true;
-            } else {
-                return insert_node(n->left, num);
-            }
+        }else
+        if(nodePtr->left){
+            return insertHelper(nodePtr->left, num);
+        }else{
+            nodePtr->left = tree->addLeft(nodePtr, num);
+            return true;
         }
     }
-    // DO not modify the lines above.
-    /* node* min(node* n){//para mo adto sa leftmost node
-         while (n->left){
-             n = n->left;
-         }
-         return n;
-     } */
+
     // TODO implement remove method
     // You can add helper methods like what is done for insert and search
+
+    node* minVal(node* nodePtr, int num){
+        node* curr = nodePtr;
+        while(curr->left){
+            curr = curr->left;
+        }
+        return curr;
+    }
+
+    node* removeHelper(node* nodePtr, int num){
+        node* returner;
+        if(nodePtr->elem > num){
+            nodePtr->left = removeHelper(nodePtr->left, num);
+        }else if(nodePtr->elem < num){
+            nodePtr->right = removeHelper(nodePtr->right, num);
+        }else if(nodePtr->left && nodePtr->right){
+            node* temp = minVal(nodePtr->right, num);
+            nodePtr->elem = temp->elem;
+            nodePtr->right = removeHelper(nodePtr->right, nodePtr->elem);
+        }else if(nodePtr->left){
+            returner = nodePtr->left;
+            tree->remove(nodePtr);
+            return returner;
+        }else if(nodePtr->right){
+            returner = nodePtr->right;
+            tree->remove(nodePtr);
+            return returner;
+        }else{
+            tree->remove(nodePtr);
+            return nullptr;
+        }
+        return nodePtr;
+    }
+
     bool remove(int num) {
-        node* curr = tree->getRoot();
-        if(!tree->getRoot()){
-            return false;
-        }
-        while(curr){
-            if(curr->elem > num){
-                curr = curr->left;
-            } else if(curr->elem < num){
-                curr = curr->right;
-            }else {
-                break;
-            }
-        }
-        if(!curr){
-            return false;
-        }
-        if(curr->left && curr->right){
-            node* righty = curr->right;
-            while(righty->left){
-                righty = righty->left;
-            }
-            curr->elem = righty->elem;
-            curr = NULL;
-            tree->remove(righty);
+        if(search(num)){
+            removeHelper(tree->getRoot(), num);
             return true;
         }else{
-            tree->remove(curr);
-            return true;
+            return false;
         }
-
     }
 
     void print() {

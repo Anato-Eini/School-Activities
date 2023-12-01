@@ -18,10 +18,10 @@ class MyBinaryTree : public BinaryTree {
     }
 
 public:
+
     node* addRoot(int e) {
         if (root) {
-            cout << "Root exists" << endl;
-            return NULL;
+            throw logic_error("Already has root");
         }
         node* n = create_node(e, NULL);
         root = n;
@@ -50,8 +50,7 @@ public:
 
     node* addLeft(node* p, int e) {
         if (p->left) {
-            cout << "Left of " << p->elem << " exists" << endl;
-            return NULL;
+            throw logic_error(to_string(p->elem) + " already has left child");
         }
         node* n = create_node(e, p);
         p->left = n;
@@ -61,8 +60,7 @@ public:
 
     node* addRight(node* p, int e) {
         if (p->right) {
-            cout << "Right of " << p->elem << " exists" << endl;
-            return NULL;
+            throw logic_error(to_string(p->elem) + " already has right child");
         }
         node* n = create_node(e, p);
         p->right = n;
@@ -73,7 +71,7 @@ public:
     int remove(node* n) {
         int res = n->elem;
         if (left(n) && right(n)) {
-            return -1;
+            throw logic_error("Cannot remove a node with 2 children");
         }
         if (!left(n) && !right(n)) {
             if (n->parent) {
