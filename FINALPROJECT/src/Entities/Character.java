@@ -1,24 +1,14 @@
 package Entities;
 
-public class Character extends Entity{
+public abstract class Character extends Entity{
     public Character() {
-        super("James", 0, 0, null, null, null, null);
+        super("", 0, 0, null, null, null, null);
     }
+    public abstract void skill1(Entity entity);
 
 
+    public abstract void skill2(Entity entity);
 
-    @Override
-    public void skillDamage1(Entity entity) {
 
-    }
-
-    @Override
-    public void skillDamage2(Entity entity) {
-
-    }
-
-    @Override
-    public void skillDamage3(Entity entity) {
-
-    }
+    public abstract void skill3(Entity entity);
 }
