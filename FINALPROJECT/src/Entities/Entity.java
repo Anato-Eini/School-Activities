@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public abstract class Entity {
     ArrayList<Skill> skills = new ArrayList<>();
     private String name;
-    private int level, hp, armor;
+    private int level, hp, armor, damage;
+    String statusEffect;
     public Entity(String name, int level, int hp, Skill skill1, Skill skill2, Skill skill3, Skill skill4){
         this.name = name;
         this.level = level;
@@ -14,7 +15,14 @@ public abstract class Entity {
         skills.add(skill2);
         skills.add(skill3);
         skills.add(skill4);
+        statusEffect = "Normal";
     }
+
+    public Entity setStatusEffect(String statusEffect) {
+        this.statusEffect = statusEffect;
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -31,8 +39,11 @@ public abstract class Entity {
     }
 
 
-    public Entity setSkills(ArrayList<Skill> skills) {
-        this.skills = skills;
+    public Entity setSkills(Skill skills, Skill skills1, Skill skills2, Skill skills3) {
+        this.skills.add(skills);
+        this.skills.add(skills1);
+        this.skills.add(skills2);
+        this.skills.add(skills3);
         return this;
     }
 
@@ -55,8 +66,15 @@ public abstract class Entity {
         this.armor = armor;
         return this;
     }
-
-    public abstract void skillDamage1(Entity entity);
-    public abstract void skillDamage2(Entity entity);
-    public abstract void skillDamage3(Entity entity);
+    public int getDamage(){
+        return damage;
+    }
+    public Entity setDamage(int damage) {
+        this.damage = damage;
+        return this;
+    }
+    public abstract void basicAttack(Entity entity);
+    public abstract void skill1(Entity entity);
+    public abstract void skill2(Entity entity);
+    public abstract void skill3(Entity entity);
 }
