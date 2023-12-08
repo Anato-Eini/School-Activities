@@ -1,6 +1,4 @@
 package Entities;
-
-
 public class Skill {
     private String name, debuff = null;
     private int damage, realCooldown, appliedTurns;
@@ -80,7 +78,7 @@ public class Skill {
         return this;
     }
 
-    public Skill setAppliedTurns(int appliedSec) {
+    public Skill setAppliedTurns(int appliedTurns) {
         this.appliedTurns = appliedTurns;
         return this;
     }

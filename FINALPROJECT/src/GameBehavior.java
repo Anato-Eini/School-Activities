@@ -30,11 +30,11 @@ public class GameBehavior {
                 new Skill("Earth Magic", 900, 2),
                 new Skill("Heaven's Strike", 0, 10)
         ));
-        characters.add((Character) new Support().setName("Support").setHp(360).setArmor(200).setLevel(73).setDamage(100).setSkills(
+        characters.add((Character) new Support().setName("Support").setHp(500).setArmor(250).setLevel(73).setDamage(100).setSkills(
                 new Skill("Angelic Grace", 260, 5),
                 new Skill("???", 245, 7),
-                new Skill("????", 150, 2),
-                new Skill("?????", 0, 10)
+                new Skill("Smol Hil", 0, 2),
+                new Skill("Big Hil", 0, 10)
         ));
         this.totalTime = totalTime;
     }
