@@ -20,7 +20,9 @@ public class Support extends Character{
 
     @Override
     public void skill3(Entity entity) {
-        skills.get(2).doSkill(entity);
+        skills.get(2).setRealCooldown(skills.get(2).getCooldown());
+        entity.setStatusEffect("Normal");
+        entity.setNumAppliedDebuff(0);
     }
     public void specialSkill(ArrayList<Character> characters){
         for(Character c: characters)
