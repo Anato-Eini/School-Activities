@@ -22,6 +22,6 @@ public class Fighter extends Character{
     }
     public void specialSkill(){
         this.setHp((int)(getHp() * 1.1));
-        skills.getFirst().setAppliedSec(5);
+        skills.getFirst().setAppliedTurns(5);
     }
 }

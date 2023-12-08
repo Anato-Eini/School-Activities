@@ -26,4 +26,16 @@ public class Mage extends Character{
         for(Entity e: entities)
             e.setHp((int)(getHp() * 0.90));
     }
+    public void removeDebuff(Entity entity1){
+        entity1.setStatusEffect("Normal");
+        entity1.setNumAppliedDebuff(0);
+    }
+    public void heal(Entity entity1){
+        entity1.setHp(entity1.getHp() + 50);
+    }
+    public void globalHeal(ArrayList<Entity> characters){
+        for(Entity e : characters){
+            e.setHp(e.getHp() + 50);
+        }
+    }
 }
