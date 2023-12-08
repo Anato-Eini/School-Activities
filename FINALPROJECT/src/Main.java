@@ -8,6 +8,7 @@ public class Main extends JFrame {
         app.setSize(1000,500);
         app.setDefaultCloseOperation(EXIT_ON_CLOSE);
         app.setVisible(true);
+        System.out.println("I love intellij");
 
 //        Director director = new Director();
 //        EntityBuilder entityBuilder = new EntityBuilder();
