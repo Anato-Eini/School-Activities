@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Entity {
     ArrayList<Skill> skills = new ArrayList<>();
     private String name;
-    private int level, hp, armor, damage;
+    private int level, hp, armor, damage, numAppliedDebuff;
     String statusEffect;
     public Entity(String name, int level, int hp, Skill skill1, Skill skill2, Skill skill3, Skill skill4){
         this.name = name;
@@ -21,6 +21,10 @@ public abstract class Entity {
     public Entity setStatusEffect(String statusEffect) {
         this.statusEffect = statusEffect;
         return this;
+    }
+
+    public String getStatusEffect(){
+        return statusEffect;
     }
 
     public String getName() {
@@ -66,6 +70,11 @@ public abstract class Entity {
         this.armor = armor;
         return this;
     }
+
+    public Entity setNumAppliedDebuff(int numAppliedDebuff) {
+        this.numAppliedDebuff = numAppliedDebuff;
+        return this;
+    }
     public int getDamage(){
         return damage;
     }
@@ -73,8 +82,13 @@ public abstract class Entity {
         this.damage = damage;
         return this;
     }
+    public int getNumAppliedDebuff() {return numAppliedDebuff;}
     public abstract void basicAttack(Entity entity);
     public abstract void skill1(Entity entity);
     public abstract void skill2(Entity entity);
     public abstract void skill3(Entity entity);
+
+
+
+
 }

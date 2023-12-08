@@ -2,8 +2,8 @@ package Entities;
 
 
 public class Skill {
-    private String name;
-    private int damage, realCooldown, appliedSec;
+    private String name, debuff = null;
+    private int damage, realCooldown, appliedTurns;
     private final int cooldown;
 
     public Skill(String name, int damage, int realCooldown){
@@ -11,6 +11,14 @@ public class Skill {
         this.damage = damage;
         this.realCooldown = realCooldown;
         this.cooldown = 0;
+    }
+
+    public Skill(String name, int damage, int realCooldown, String debuff){
+        this.name = name;
+        this.damage = damage;
+        this.realCooldown = realCooldown;
+        this.cooldown = 0;
+        this.debuff = debuff;
     }
     private boolean isAvailable(){
         return realCooldown == 0;
@@ -20,6 +28,20 @@ public class Skill {
         if(isAvailable()){
             realCooldown = cooldown;
             entity1.setHp(entity1.getHp() - (damage - entity1.getArmor()));
+        }
+        if(this.debuff != null){
+            switch(this.debuff){
+                case "Poison":
+                    entity1.setStatusEffect("Poisoned");
+                    entity1.setNumAppliedDebuff(5);
+                    break;
+                case "Stun":
+                    entity1.setStatusEffect("Stunned");
+                    entity1.setNumAppliedDebuff(1);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -35,8 +57,8 @@ public class Skill {
         return realCooldown;
     }
 
-    public int getAppliedSec() {
-        return appliedSec;
+    public int getAppliedTurns() {
+        return appliedTurns;
     }
 
     public int getCooldown() {
@@ -58,8 +80,13 @@ public class Skill {
         return this;
     }
 
-    public Skill setAppliedSec(int appliedSec) {
-        this.appliedSec = appliedSec;
+    public Skill setAppliedTurns(int appliedSec) {
+        this.appliedTurns = appliedTurns;
+        return this;
+    }
+
+    public Skill setDebuff(String debuff){
+        this.debuff = debuff;
         return this;
     }
 }

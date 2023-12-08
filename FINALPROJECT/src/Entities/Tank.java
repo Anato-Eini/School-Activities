@@ -22,6 +22,6 @@ public class Tank extends Character{
     }
     public void specialSkill(){
         setArmor((int)(getArmor() * 1.2));
-        skills.get(3).setAppliedSec(5);
+        skills.get(3).setAppliedTurns(5);
     }
 }
