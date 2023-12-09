@@ -1,8 +1,6 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 public class game extends JFrame{
     private JPanel gamePanel;
     private JPanel loadingPanel;
