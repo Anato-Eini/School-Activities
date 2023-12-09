@@ -6,11 +6,12 @@ public class GameBehavior {
     Boss boss;
     ArrayList<Entity> characters = new ArrayList<>();
     public GameBehavior(int totalTime) {
-        boss = new Boss("Serato", 100, 100000,
+        boss = (Boss)new Boss().setName("Serato").setLevel(100).setHp(100000).setDamage(30).setSkills(
                 new Skill("psst ayaw lagig tanaw sa papel", 50, 2),
                 new Skill("I hate this :<", 75, 3),
                 new Skill("Cool and Normal", 120, 5),
-                new Skill("Syntactically Correct", 200, 10).setDamage(30));
+                new Skill("Syntactically Correct", 200, 10)
+        );
         characters.add(new Fighter().setName("Fighter").setHp(500).setArmor(270).setLevel(70).setDamage(120).setSkills(
                 new Skill("Aleutenian's Rhapsody", 175, 4),
                 new Skill("Arma Qualia", 500, 3),
@@ -40,7 +41,7 @@ public class GameBehavior {
     protected void updateTurn(Entity entity){
         if(entity.isInDebuff()){
             entity.setNumAppliedDebuff(entity.getNumAppliedDebuff() - 1);
-            if (entity.getNumAppliedDebuff()== 0)
+            if (entity.getNumAppliedDebuff() == 0)
                 entity.setInDebuff(false);
         }
         for(Skill s: entity.getSkills())
