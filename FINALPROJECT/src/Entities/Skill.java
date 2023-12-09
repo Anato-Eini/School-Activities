@@ -26,6 +26,9 @@ public class Skill {
         if(isAvailable()){
             realCooldown = cooldown;
             entity1.setHp(entity1.getHp() - (damage - entity1.getArmor()));
+        }else{
+            System.err.println("Skill is in cooldown");
+            return;
         }
         if(this.debuff != null){
             switch(this.debuff){
