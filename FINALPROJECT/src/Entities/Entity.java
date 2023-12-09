@@ -7,6 +7,7 @@ public abstract class Entity {
     private String name;
     private int level, hp, armor, damage, numAppliedDebuff;
     String statusEffect;
+    public Entity(){}
     public Entity(String name, int level, int hp, Skill skill1, Skill skill2, Skill skill3, Skill skill4){
         this.name = name;
         this.level = level;
@@ -87,4 +88,13 @@ public abstract class Entity {
     public abstract void skill1(Entity entity);
     public abstract void skill2(Entity entity);
     public abstract void skill3(Entity entity);
+
+    public ArrayList<Skill> getSkills() {
+        return skills;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
