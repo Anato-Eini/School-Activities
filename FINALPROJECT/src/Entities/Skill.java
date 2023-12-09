@@ -87,4 +87,9 @@ public class Skill {
         this.debuff = debuff;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

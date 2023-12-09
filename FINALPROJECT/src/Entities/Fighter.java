@@ -1,6 +1,7 @@
 package Entities;
 
 public class Fighter extends Character{
+    public Fighter(){}
     @Override
     public void basicAttack(Entity entity) {
         entity.setHp(getHp() - (this.getDamage() - entity.getArmor()));
@@ -8,7 +9,7 @@ public class Fighter extends Character{
 
     @Override
     public void skill1(Entity entity) {
-        skills.get(3).doSkill(entity);
+        this.skills.getFirst().doSkill(entity);
     }
 
     @Override

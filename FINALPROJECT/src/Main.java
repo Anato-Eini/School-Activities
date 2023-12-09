@@ -1,3 +1,8 @@
+import Entities.Character;
+import Entities.Entity;
+import Entities.Fighter;
+import Entities.Skill;
+
 import javax.swing.*;
 import java.util.*;
 
