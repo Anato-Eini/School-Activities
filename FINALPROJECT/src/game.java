@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 public class game extends JFrame{
-    private JPanel gamePanel;
+    /*private JPanel gamePanel;
     private JPanel loadingPanel;
     private JButton startBtn;
 
@@ -17,5 +17,5 @@ public class game extends JFrame{
                 setContentPane(bs.getBattlePanel());
             }
         });
-    }
+    }*/
 }

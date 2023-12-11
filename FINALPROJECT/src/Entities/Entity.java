@@ -1,86 +1,33 @@
 package Entities;
-
 import java.util.ArrayList;
 
 public abstract class Entity {
-    ArrayList<Skill> skills = new ArrayList<>();
     private String name;
-    private int level, hp, armor, damage, numAppliedDebuff;
-    String statusEffect;
-    protected boolean isInDebuff = false;
+    private int level, hp, baseDmg;
+    private int skill1cd = 0,skill2cd = 0,skill3cd = 0,skill4cd = 0;
+
+    private Debuff debuff = null;
+    private Buff buff = null;
+
+    private float speed;
+
+
     public Entity(){}
-    public Entity(String name, int level, int hp, Skill skill1, Skill skill2, Skill skill3, Skill skill4){
-        this.name = name;
-        this.level = level;
-        this.hp = hp;
-        skills.add(skill1);
-        skills.add(skill2);
-        skills.add(skill3);
-        skills.add(skill4);
-        statusEffect = "Normal";
-    }
-
-    public String getStatusEffect(){
-        return statusEffect;
-    }
-
     public String getName() {
         return name;
     }
-
     public int getLevel() {
         return level;
-    }
-
-    public int getDamage(){
-        return damage;
     }
     public int getHp() {
         return hp;
     }
 
-    public int getArmor(){
-        return armor;
-    }
-
-    public int getNumAppliedDebuff() {return numAppliedDebuff;}
-
-    public boolean isInDebuff() {
-        return isInDebuff;
-    }
-
-    public ArrayList<Skill> getSkills() {
-        return skills;
-    }
-
-    public Entity setSkills(ArrayList<Skill> skills) {
-        this.skills = skills;
-        return this;
-    }
-
-    public Entity setInDebuff(boolean inDebuff) {
-        isInDebuff = inDebuff;
-        return this;
-    }
-
-    public Entity setStatusEffect(String statusEffect) {
-        this.statusEffect = statusEffect;
-        return this;
-    }
-
-    public Entity setSkills(Skill skills, Skill skills1, Skill skills2, Skill skills3) {
-        this.skills.add(skills);
-        this.skills.add(skills1);
-        this.skills.add(skills2);
-        this.skills.add(skills3);
-        return this;
-    }
 
     public Entity setName(String name) {
         this.name = name;
         return this;
     }
-
     public Entity setLevel(int level) {
         this.level = level;
         return this;
@@ -89,41 +36,90 @@ public abstract class Entity {
         this.hp = hp;
         return this;
     }
-    public Entity setArmor(int armor) {
-        this.armor = armor;
-        return this;
-    }
-    public Entity setNumAppliedDebuff(int numAppliedDebuff) {
-        this.numAppliedDebuff = numAppliedDebuff;
-        return this;
-    }
-    public Entity setDamage(int damage) {
-        this.damage = damage;
-        return this;
-    }
-    public void basicAttack(Entity entity){
-        int setDamage = this.getDamage() - entity.getArmor();
-        if(setDamage < 0)
-            setDamage = 0;
-       entity.setHp(entity.getHp() - setDamage);
-    }
-    public void skill1(Entity entity){
-        skills.getFirst().doSkill(entity);
-    }
-    public void skill2(Entity entity){
-        skills.get(1).doSkill(entity);
-    }
-    public void skill3(Entity entity){
-        skills.get(2).doSkill(entity);
-    }
-    public void skill4(Entity entity){
-        skills.get(3).doSkill(entity);
-    }
+    public abstract void skill1(Entity entity); //basic light attack
+    public abstract void skill2(Entity entity); //basic heavy attack
+    public abstract void skill3(Party p); //buffer
+    public abstract void skill4(Entity entity); //enemy debuffer
+
+    public abstract Entity setSpeed();
+    public abstract Entity setBaseDmg();
     public boolean isDead(){
         return hp <= 0;
     }
     @Override
     public String toString() {
-        return name;
+        return name + " " + hp;
+    }
+
+    public int getSkill1cd() {
+        return skill4cd;
+    }
+
+    public Entity setSkill1cd(int skill1cd) {
+        this.skill1cd = skill1cd;
+        return this;
+    }
+
+    public int getSkill2cd() {
+        return skill2cd;
+    }
+
+    public Entity setSkill2cd(int skill2cd) {
+        this.skill2cd = skill2cd;
+        return this;
+    }
+
+    public int getSkill3cd() {
+        return skill4cd;
+    }
+
+    public Entity setSkill3cd(int skill3cd) {
+        this.skill3cd = skill3cd;
+        return this;
+    }
+
+    public int getSkill4cd() {
+        return skill4cd;
+    }
+
+    public Entity setSkill4cd(int skill4cd) {
+        this.skill4cd = skill4cd;
+        return this;
+    }
+
+    public Debuff getDebuff() {
+        return debuff;
+    }
+
+    public Entity setDebuff(Debuff debuff) {
+        this.debuff = debuff;
+        return this;
+    }
+
+    public Buff getBuff() {
+        return buff;
+    }
+
+    public Buff setBuff(Buff buff) {
+        this.buff = buff;
+        return buff;
+    }
+
+    public int getBaseDmg() {
+        return baseDmg;
+    }
+
+    public Entity setBaseDmg(int baseDmg) {
+        this.baseDmg = baseDmg;
+        return this;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public Entity setSpeed(float speed) {
+        this.speed = speed;
+        return this;
     }
 }
