@@ -1,11 +1,8 @@
 import Entities.Entity;
 
-
 import javax.swing.*;
-
-
-
 import java.util.Objects;
+import java.util.Random;
 
 public class battleScreen extends JFrame {
     private JPanel battlePanel;
@@ -36,9 +33,33 @@ public class battleScreen extends JFrame {
     public JPanel getBattlePanel() {
         return battlePanel;
     }
+    public void bossAttack(GameBehavior gb){
+        int min = 1; // Minimum value of range
+        int max = 5; // Maximum value of range
+
+        int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
+        System.out.println(random_int);
+
+        switch(random_int){
+            case 1:
+                gb.boss.basicAttack(currentPlayer);
+                break;
+            case 2:
+                gb.boss.skill1(currentPlayer);
+                break;
+            case 3:
+                gb.boss.skill2(currentPlayer);
+                break;
+            case 4:
+                gb.boss.skill3(currentPlayer);
+                break;
+            case 5:
+                gb.boss.skill4(currentPlayer);
+        }
+    }
     public battleScreen(){
         GameBehavior gb = new GameBehavior(50);
-        currentPlayer = gb.characters.getFirst();
+        currentPlayer = gb.characters.get(0);
         bossName.setText(gb.boss.getName());
         playerName.setText(currentPlayer.getName());
         bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
@@ -47,6 +68,10 @@ public class battleScreen extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         skillPanel.setVisible(false);
         SwitchPanel.setVisible(false);
+
+
+
+
 
 //Switch button
 
@@ -63,10 +88,14 @@ public class battleScreen extends JFrame {
         SKILL1Button.addActionListener(e -> {
             dialogBox.setText(currentPlayer.getName() + " has use the skill " + currentPlayer.getSkills().get(0).getName());
             currentPlayer.getSkills().get(0).doSkill(gb.boss);
-            gb.boss.setHp(gb.boss.getHp() - currentPlayer.getSkills().get(0).getDamage());
+            currentPlayer.skill1(gb.boss);
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
             playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
+
+            bossAttack(gb);
+
+
 
         });
         SKILL2Button.addActionListener(e -> {
@@ -76,6 +105,7 @@ public class battleScreen extends JFrame {
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
             playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
+            bossAttack(gb);
         });
         SKILL3Button.addActionListener(e -> {
             dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(2).getName());
@@ -84,6 +114,7 @@ public class battleScreen extends JFrame {
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
             playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
+            bossAttack(gb);
         });
         SKILL4Button.addActionListener(e -> {
             dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(3).getName());
@@ -91,6 +122,7 @@ public class battleScreen extends JFrame {
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
 
             skillPanel.setVisible(false);
+            bossAttack(gb);
         });
 
 //Switch button
@@ -105,17 +137,18 @@ public class battleScreen extends JFrame {
             }
         });
         player1Button.addActionListener(e -> {
-            if(!Objects.equals(currentPlayer, gb.characters.getFirst())){
+            if(!Objects.equals(currentPlayer, gb.characters.get(0))){
 
-                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.getFirst().getName());
-                playerIcon.setText("NAME: "  + gb.characters.getFirst().getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
-                currentPlayer = gb.characters.getFirst();
+                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.get(0).getName());
+                playerIcon.setText("NAME: "  + gb.characters.get(0).getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+                currentPlayer = gb.characters.get(0);
                 playerName.setText(currentPlayer.getName());
             }else{
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
 
             SwitchPanel.setVisible(false);
+            bossAttack(gb);
         });player2Button.addActionListener(e -> {
             if(!Objects.equals(currentPlayer, gb.characters.get(1))){
                 dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.get(1).getName());
@@ -126,6 +159,7 @@ public class battleScreen extends JFrame {
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
             SwitchPanel.setVisible(false);
+            bossAttack(gb);
         });
         player3Button.addActionListener(e -> {
             if(!Objects.equals(currentPlayer, gb.characters.get(2))){
@@ -137,6 +171,7 @@ public class battleScreen extends JFrame {
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
             SwitchPanel.setVisible(false);
+            bossAttack(gb);
         });
         player4Button.addActionListener(e -> {
             if(!Objects.equals(currentPlayer, gb.characters.get(3))){
@@ -148,6 +183,7 @@ public class battleScreen extends JFrame {
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
             SwitchPanel.setVisible(false);
+            bossAttack(gb);
         });
     }
 }
