@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class battleScreen extends JFrame {
-    private JPanel battlePanel;
+    /*private JPanel battlePanel;
     private JButton SkillOptionBtn;
     private JButton SWITCHButton;
     private JTextArea dialogBox;
@@ -35,7 +35,7 @@ public class battleScreen extends JFrame {
     }
     public void bossAttack(GameBehavior gb){
         int min = 1; // Minimum value of range
-        int max = 5; // Maximum value of range
+        int max = 4; // Maximum value of range
         System.out.println(currentPlayer.getName() + " " + currentPlayer.getHp());
 
         int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
@@ -43,29 +43,27 @@ public class battleScreen extends JFrame {
 
         switch(random_int){
             case 1:
-                gb.boss.basicAttack(currentPlayer);
-                break;
-            case 2:
                 gb.boss.skill1(currentPlayer);
                 break;
-            case 3:
+            case 2:
                 gb.boss.skill2(currentPlayer);
                 break;
-            case 4:
-                gb.boss.skill3(currentPlayer);
+            case 3:
+                gb.boss.skill3(gb.characters);
                 break;
-            case 5:
+            case 4:
                 gb.boss.skill4(currentPlayer);
+                break;
         }
         System.out.println(currentPlayer.getHp());
     }
     public battleScreen(){
         GameBehavior gb = new GameBehavior(50);
-        currentPlayer = gb.characters.getFirst();
+        currentPlayer = gb.characters.party.get(0);
         bossName.setText(gb.boss.getName());
         playerName.setText(currentPlayer.getName());
         bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
-        playerIcon.setText("NAME: "  + gb.characters.getFirst()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+        playerIcon.setText("NAME: "  + gb.characters.party.get(0)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
         setContentPane(battlePanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         skillPanel.setVisible(false);
@@ -102,8 +100,8 @@ public class battleScreen extends JFrame {
         SKILL2Button.addActionListener(e -> {
             dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(1).getName());
             bossAttack(gb);
-            currentPlayer.getSkills().get(1).doSkill(gb.boss);
-            gb.boss.setHp(gb.boss.getHp() - currentPlayer.getSkills().get(1).getDamage());
+            currentPlayer.skill1(gb.boss);
+            //gb.boss.setHp(gb.boss.getHp() - currentPlayer.getSkills().get(1).getDamage()); redundant?
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
             playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
@@ -162,7 +160,7 @@ public class battleScreen extends JFrame {
         });player2Button.addActionListener(e -> {
             if(!Objects.equals(currentPlayer, gb.characters.get(1))){
                 dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.get(1).getName());
-                playerIcon.setText("NAME: "  + gb.characters.get(1)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+                playerIcon.setText("NAME: "  + gb.characters.party.get(1)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
                 currentPlayer = gb.characters.get(1);
                 playerName.setText(currentPlayer.getName());
             }else{
@@ -195,6 +193,6 @@ public class battleScreen extends JFrame {
             SwitchPanel.setVisible(false);
             bossAttack(gb);
         });
-    }
+    }*/
 }
 
