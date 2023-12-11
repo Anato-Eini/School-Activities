@@ -102,10 +102,13 @@ public abstract class Entity {
         return this;
     }
     public void basicAttack(Entity entity){
-       entity.setHp(getHp() - (this.getDamage() - entity.getArmor()));
+        int setDamage = this.getDamage() - entity.getArmor();
+        if(setDamage < 0)
+            setDamage = 0;
+       entity.setHp(entity.getHp() - setDamage);
     }
     public void skill1(Entity entity){
-        skills.get(0).doSkill(entity);
+        skills.getFirst().doSkill(entity);
     }
     public void skill2(Entity entity){
         skills.get(1).doSkill(entity);
@@ -115,6 +118,9 @@ public abstract class Entity {
     }
     public void skill4(Entity entity){
         skills.get(3).doSkill(entity);
+    }
+    public boolean isDead(){
+        return hp <= 0;
     }
     @Override
     public String toString() {

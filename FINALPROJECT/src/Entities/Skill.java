@@ -4,11 +4,11 @@ public class Skill {
     private int damage, realCooldown, appliedTurns;
     private final int cooldown;
 
-    public Skill(String name, int damage, int realCooldown){
+    public Skill(String name, int damage, int cooldown){
         this.name = name;
         this.damage = damage;
-        this.realCooldown = realCooldown;
-        this.cooldown = 0;
+        this.cooldown= cooldown;
+        this.realCooldown = 0;
     }
 
     public Skill(String name, int damage, int realCooldown, String debuff){
@@ -25,7 +25,10 @@ public class Skill {
     public void doSkill(Entity entity1){
         if(isAvailable()){
             realCooldown = cooldown;
-            entity1.setHp(entity1.getHp() - (damage - entity1.getArmor()));
+            int setDamage = damage - entity1.getArmor();
+            if(setDamage < 0)
+                setDamage = 0;
+            entity1.setHp(entity1.getHp() - setDamage);
         }else{
             System.err.println("Skill is in cooldown");
             return;
