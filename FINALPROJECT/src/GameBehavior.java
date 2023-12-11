@@ -4,25 +4,25 @@ import java.util.ArrayList;
 public class GameBehavior {
     int totalTime;
     Boss boss;
-    ArrayList<Entity> characters = new ArrayList<Entity>();
+    ArrayList<Entity> characters = new ArrayList<>();
     public GameBehavior(int totalTime) {
-        boss = (Boss)new Boss().setName("Serato").setLevel(100).setHp(100000).setDamage(30).setSkills(
-                new Skill("psst ayaw lagig tanaw sa papel", 50, 2),
-                new Skill("I hate this :<", 75, 3),
-                new Skill("Cool and Normal", 120, 5),
-                new Skill("Syntactically Correct", 200, 10)
+        boss = (Boss)new Boss().setName("Serato").setLevel(100).setHp(5000).setDamage(300).setSkills(
+                new Skill("psst ayaw lagig tanaw sa papel", 400, 2),
+                new Skill("I hate this :<", 470, 3),
+                new Skill("Cool and Normal", 500, 5),
+                new Skill("Syntactically Correct", 700, 10)
         );
-        characters.add(new Fighter().setName("Fighter").setHp(500).setArmor(270).setLevel(70).setDamage(120).setSkills(
-                new Skill("Aleutenian's Rhapsody", 175, 4),
-                new Skill("Arma Qualia", 500, 3),
-                new Skill("Demonia", 875, 4),
-                new Skill("Blood Borne", 1000, 8)
-        ));
         characters.add(new Tank().setName("Tank").setHp(1000).setArmor(500).setLevel(70).setDamage(90).setSkills(
                 new Skill("Vision Shift", 315, 4),
                 new Skill("Temporal Void", 509, 3),
                 new Skill("Emperial's Defense", 619, 2),
                 new Skill("Divine Providence", 0, 10)
+        ));
+        characters.add(new Fighter().setName("Fighter").setHp(500).setArmor(270).setLevel(70).setDamage(120).setSkills(
+                new Skill("Aleutenian's Rhapsody", 175, 4),
+                new Skill("Arma Qualia", 500, 3),
+                new Skill("Demonia", 875, 4),
+                new Skill("Blood Borne", 1000, 8)
         ));
         characters.add(new Mage().setName("Mage").setHp(350).setArmor(230).setLevel(75).setDamage(170).setSkills(
                 new Skill("Electric Magic", 200, 3),

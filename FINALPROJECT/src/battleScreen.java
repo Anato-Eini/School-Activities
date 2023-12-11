@@ -36,6 +36,7 @@ public class battleScreen extends JFrame {
     public void bossAttack(GameBehavior gb){
         int min = 1; // Minimum value of range
         int max = 5; // Maximum value of range
+        System.out.println(currentPlayer.getName() + " " + currentPlayer.getHp());
 
         int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
         System.out.println(random_int);
@@ -56,14 +57,15 @@ public class battleScreen extends JFrame {
             case 5:
                 gb.boss.skill4(currentPlayer);
         }
+        System.out.println(currentPlayer.getHp());
     }
     public battleScreen(){
         GameBehavior gb = new GameBehavior(50);
-        currentPlayer = gb.characters.get(0);
+        currentPlayer = gb.characters.getFirst();
         bossName.setText(gb.boss.getName());
         playerName.setText(currentPlayer.getName());
         bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
-        playerIcon.setText("NAME: "  + gb.characters.get(0)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+        playerIcon.setText("NAME: "  + gb.characters.getFirst()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
         setContentPane(battlePanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         skillPanel.setVisible(false);
@@ -86,43 +88,51 @@ public class battleScreen extends JFrame {
         });
 
         SKILL1Button.addActionListener(e -> {
-            dialogBox.setText(currentPlayer.getName() + " has use the skill " + currentPlayer.getSkills().get(0).getName());
-            currentPlayer.getSkills().get(0).doSkill(gb.boss);
+            dialogBox.setText(currentPlayer.getName() + " has use the skill " + currentPlayer.getSkills().getFirst().getName());
+            bossAttack(gb);
             currentPlayer.skill1(gb.boss);
+            System.out.println(currentPlayer.getHp());
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
             playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
-
-            bossAttack(gb);
-
-
+            gb.updateTurn(gb.boss);
+            gb.updateTurn(currentPlayer);
 
         });
         SKILL2Button.addActionListener(e -> {
             dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(1).getName());
+            bossAttack(gb);
             currentPlayer.getSkills().get(1).doSkill(gb.boss);
             gb.boss.setHp(gb.boss.getHp() - currentPlayer.getSkills().get(1).getDamage());
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
             playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
-            bossAttack(gb);
+            gb.updateTurn(gb.boss);
+            gb.updateTurn(currentPlayer);
+
         });
         SKILL3Button.addActionListener(e -> {
             dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(2).getName());
+            bossAttack(gb);
             currentPlayer.getSkills().get(2).doSkill(gb.boss);
             gb.boss.setHp(gb.boss.getHp() - currentPlayer.getSkills().get(2).getDamage());
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
             playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
-            bossAttack(gb);
+            gb.updateTurn(gb.boss);
+            gb.updateTurn(currentPlayer);
+
         });
         SKILL4Button.addActionListener(e -> {
             dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(3).getName());
+            bossAttack(gb);
             //implement special skill
             bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
 
             skillPanel.setVisible(false);
-            bossAttack(gb);
+            gb.updateTurn(gb.boss);
+            gb.updateTurn(currentPlayer);
+
         });
 
 //Switch button
@@ -137,11 +147,11 @@ public class battleScreen extends JFrame {
             }
         });
         player1Button.addActionListener(e -> {
-            if(!Objects.equals(currentPlayer, gb.characters.get(0))){
+            if(!Objects.equals(currentPlayer, gb.characters.getFirst())){
 
-                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.get(0).getName());
-                playerIcon.setText("NAME: "  + gb.characters.get(0).getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
-                currentPlayer = gb.characters.get(0);
+                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.getFirst().getName());
+                playerIcon.setText("NAME: "  + gb.characters.getFirst().getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+                currentPlayer = gb.characters.getFirst();
                 playerName.setText(currentPlayer.getName());
             }else{
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
