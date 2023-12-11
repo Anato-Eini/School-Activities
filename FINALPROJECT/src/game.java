@@ -12,8 +12,8 @@ public class game extends JFrame{
         startBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                bs.getBattlePanel().setVisible(true);
-                gamePanel.setVisible(false);
+//                bs.getBattlePanel().setVisible(true);
+//                gamePanel.dispose();
                 setContentPane(bs.getBattlePanel());
             }
         });

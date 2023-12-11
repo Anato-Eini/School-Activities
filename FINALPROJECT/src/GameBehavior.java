@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class GameBehavior {
     int totalTime;
     Boss boss;
-    ArrayList<Entity> characters = new ArrayList<>();
+    ArrayList<Entity> characters = new ArrayList<Entity>();
     public GameBehavior(int totalTime) {
         boss = (Boss)new Boss().setName("Serato").setLevel(100).setHp(100000).setDamage(30).setSkills(
                 new Skill("psst ayaw lagig tanaw sa papel", 50, 2),
