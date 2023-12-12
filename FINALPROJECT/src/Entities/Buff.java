@@ -7,6 +7,7 @@ public abstract class Buff {
     private int buffTurnsApplied;
     private int buffDuration;
 
+
     public int getOriginal() {
         return original;
     }
@@ -51,4 +52,6 @@ public abstract class Buff {
         this.buffDuration = buffDuration;
         return this;
     }
+
+
 }

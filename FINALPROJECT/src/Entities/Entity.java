@@ -4,7 +4,8 @@ import java.util.ArrayList;
 public abstract class Entity {
     private String name;
     private int level, hp, baseDmg;
-    private int skill1cd = 0,skill2cd = 0,skill3cd = 0,skill4cd = 0;
+    private int skill3cd = 0,skill4cd = 0;
+    private final int skill3RealCd = 3, skill4RealCd = 3;
 
     private Debuff debuff = null;
     private Buff buff = null;
@@ -51,30 +52,17 @@ public abstract class Entity {
         return name + " " + hp;
     }
 
-    public int getSkill1cd() {
-        return skill4cd;
-    }
-
-    public Entity setSkill1cd(int skill1cd) {
-        this.skill1cd = skill1cd;
-        return this;
-    }
-
-    public int getSkill2cd() {
-        return skill2cd;
-    }
-
-    public Entity setSkill2cd(int skill2cd) {
-        this.skill2cd = skill2cd;
-        return this;
-    }
 
     public int getSkill3cd() {
-        return skill4cd;
+        return skill3cd;
     }
 
     public Entity setSkill3cd(int skill3cd) {
         this.skill3cd = skill3cd;
+        return this;
+    }
+    public Entity setSkill3cd() {
+        this.skill3cd = 0;
         return this;
     }
 
@@ -84,6 +72,10 @@ public abstract class Entity {
 
     public Entity setSkill4cd(int skill4cd) {
         this.skill4cd = skill4cd;
+        return this;
+    }
+    public Entity setSkill4cd() {
+        this.skill4cd = 0;
         return this;
     }
 
@@ -121,5 +113,13 @@ public abstract class Entity {
     public Entity setSpeed(float speed) {
         this.speed = speed;
         return this;
+    }
+
+    public int getSkill3RealCd() {
+        return skill3RealCd;
+    }
+
+    public int getSkill4RealCd() {
+        return skill4RealCd;
     }
 }
