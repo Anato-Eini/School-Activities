@@ -26,7 +26,9 @@ public class Tank extends Entity {
 
     @Override
     public void skill3(Party p) {
-        //ntah
+        for(Entity e: p.party){
+            e.setBuff(new DamageBuff(getBaseDmg()));
+        }
     }
 
     @Override

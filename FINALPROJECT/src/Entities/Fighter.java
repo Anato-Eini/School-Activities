@@ -24,7 +24,9 @@ public class Fighter extends Entity {
 
     @Override
     public void skill3(Party p) {
-        //wa may buhatonon buset
+        for(Entity e: p.party){
+            e.setBuff(new DamageBuff(getBaseDmg()));
+        }
     }
 
     @Override
