@@ -1,14 +1,18 @@
 import Entities.Entity;
+import Entities.Party;
+
 
 import javax.swing.*;
+
+
+import java.awt.*;
 import java.util.Objects;
-import java.util.Random;
 
 public class battleScreen extends JFrame {
-    /*private JPanel battlePanel;
-    private JButton SkillOptionBtn;
-    private JButton SWITCHButton;
-    private JTextArea dialogBox;
+    private JPanel battlePanel;
+    private JLabel HeroEmblemIcon;
+    private JLabel switchIcon;
+    private JTextPane dialogBox;
     private JTextPane bossIcon;
     private JTextPane playerIcon;
     private JLabel bossName;
@@ -23,176 +27,174 @@ public class battleScreen extends JFrame {
     private JButton player2Button;
     private JButton player3Button;
     private JButton player4Button;
-    private JPanel SwitchPanel;
+    private JPanel HeroSelectionPanel;
+    private JPanel switchIconPanel;
+    private JPanel EmblemPanel;
 
-
-    private boolean toggleBtn = true;
-
+    //SAKTO NI? NAGHIMO KOG INSTANCE PARTY??
+    //NA AKO GE GAMIT SA SKILL 3
+    //MU GANA NA ANG CONSOLE E MINIMIZE LANG APP
+    private Party party = new Party();
     private Entity currentPlayer;
 
     public JPanel getBattlePanel() {
         return battlePanel;
     }
-    public void bossAttack(GameBehavior gb){
-        int min = 1; // Minimum value of range
-        int max = 4; // Maximum value of range
-        System.out.println(currentPlayer.getName() + " " + currentPlayer.getHp());
+    public battleScreen() {
+        GameBehavior gb = new GameBehavior();
 
-        int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
-        System.out.println(random_int);
-
-        switch(random_int){
-            case 1:
-                gb.boss.skill1(currentPlayer);
-                break;
-            case 2:
-                gb.boss.skill2(currentPlayer);
-                break;
-            case 3:
-                gb.boss.skill3(gb.characters);
-                break;
-            case 4:
-                gb.boss.skill4(currentPlayer);
-                break;
-        }
-        System.out.println(currentPlayer.getHp());
-    }
-    public battleScreen(){
-        GameBehavior gb = new GameBehavior(50);
-        currentPlayer = gb.characters.party.get(0);
+        currentPlayer = gb.characters.party.getFirst();
         bossName.setText(gb.boss.getName());
         playerName.setText(currentPlayer.getName());
-        bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
-        playerIcon.setText("NAME: "  + gb.characters.party.get(0)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+        bossIcon.setText("NAME: " + gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
+        playerIcon.setText("NAME: " + currentPlayer.getName() + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
         setContentPane(battlePanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         skillPanel.setVisible(false);
-        SwitchPanel.setVisible(false);
-
-
-
-
-
-//Switch button
-
-        SkillOptionBtn.addActionListener(e -> {
-            if(toggleBtn){
-                skillPanel.setVisible(true);
-                toggleBtn = false;
-            }else{
-                skillPanel.setVisible(false);
-                toggleBtn = true;
-            }
-        });
+        switchIconPanel.setVisible(true);
+        HeroSelectionPanel.setVisible(true);
 
         SKILL1Button.addActionListener(e -> {
-            dialogBox.setText(currentPlayer.getName() + " has use the skill " + currentPlayer.getSkills().getFirst().getName());
-            bossAttack(gb);
+            dialogBox.setText(currentPlayer.getName() + " has use basic light attack!!!");
             currentPlayer.skill1(gb.boss);
-            System.out.println(currentPlayer.getHp());
-            bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
-            playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+            bossIcon.setText("NAME: " + gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
+            playerIcon.setText("NAME: " + currentPlayer.getName() + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
-            gb.updateTurn(gb.boss);
-            gb.updateTurn(currentPlayer);
-
         });
+
         SKILL2Button.addActionListener(e -> {
-            dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(1).getName());
-            bossAttack(gb);
-            currentPlayer.skill1(gb.boss);
-            //gb.boss.setHp(gb.boss.getHp() - currentPlayer.getSkills().get(1).getDamage()); redundant?
-            bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
-            playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
+            dialogBox.setText(currentPlayer.getName() + " has use basic heavy attack!!!");
+            currentPlayer.skill2(gb.boss);
+            bossIcon.setText("NAME: " + gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
+            playerIcon.setText("NAME: " + currentPlayer.getName() + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
-            gb.updateTurn(gb.boss);
-            gb.updateTurn(currentPlayer);
-
         });
-        SKILL3Button.addActionListener(e -> {
-            dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(2).getName());
-            bossAttack(gb);
-            currentPlayer.getSkills().get(2).doSkill(gb.boss);
-            gb.boss.setHp(gb.boss.getHp() - currentPlayer.getSkills().get(2).getDamage());
-            bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
-            playerIcon.setText("NAME: "  + currentPlayer.getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
-            skillPanel.setVisible(false);
-            gb.updateTurn(gb.boss);
-            gb.updateTurn(currentPlayer);
 
+        SKILL3Button.addActionListener(e -> {
+            dialogBox.setText(currentPlayer.getName() + " has use a buff!!!");
+            currentPlayer.skill3(party);
+            bossIcon.setText("NAME: " + gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
+            playerIcon.setText("NAME: " + currentPlayer.getName() + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
+            skillPanel.setVisible(false);
         });
         SKILL4Button.addActionListener(e -> {
-            dialogBox.setText(currentPlayer.getName() + " has use skill " + currentPlayer.getSkills().get(3).getName());
-            bossAttack(gb);
-            //implement special skill
-            bossIcon.setText("NAME: "+gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
-
+            dialogBox.setText(currentPlayer.getName() + " has use a debuff!!!");
+            currentPlayer.skill4(gb.boss);
+            bossIcon.setText("NAME: " + gb.boss.getName() + "\nHP: " + gb.boss.getHp() + "\nLVL: " + gb.boss.getLevel());
+            playerIcon.setText("NAME: " + currentPlayer.getName() + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
             skillPanel.setVisible(false);
-            gb.updateTurn(gb.boss);
-            gb.updateTurn(currentPlayer);
-
         });
+//switch icon
+        ImageIcon sw = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\switch.png");
+        Image a = sw.getImage();
+        Image imageA = a.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        a.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        sw = new ImageIcon(imageA);
+        switchIconPanel.setSize(50,50);
+        switchIcon.setIcon(sw);
 
-//Switch button
-        SWITCHButton.addActionListener(e -> {
-            SwitchPanel.setVisible(true);
-            if(toggleBtn){
-                SwitchPanel.setVisible(true);
-                toggleBtn = false;
-            }else{
-                SwitchPanel.setVisible(false);
-                toggleBtn = true;
-            }
-        });
+        ImageIcon finalSw = sw;
         player1Button.addActionListener(e -> {
-            if(!Objects.equals(currentPlayer, gb.characters.getFirst())){
+            if (!Objects.equals(currentPlayer, gb.characters.party.getFirst())) {
 
-                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.getFirst().getName());
-                playerIcon.setText("NAME: "  + gb.characters.getFirst().getName()+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
-                currentPlayer = gb.characters.getFirst();
+                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.party.getFirst().getName());
+                playerIcon.setText("NAME: " + gb.characters.party.getFirst().getName() + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
+                currentPlayer = gb.characters.party.getFirst();
                 playerName.setText(currentPlayer.getName());
-            }else{
+            } else {
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
 
-            SwitchPanel.setVisible(false);
-            bossAttack(gb);
-        });player2Button.addActionListener(e -> {
-            if(!Objects.equals(currentPlayer, gb.characters.get(1))){
-                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.get(1).getName());
-                playerIcon.setText("NAME: "  + gb.characters.party.get(1)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
-                currentPlayer = gb.characters.get(1);
+            ImageIcon tk = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\tank.png");
+            Image d = tk.getImage();
+            Image imageD = d.getScaledInstance(finalSw.getIconWidth(), finalSw.getIconHeight(), Image.SCALE_SMOOTH);
+            d.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            tk = new ImageIcon(imageD);
+            HeroEmblemIcon.setIcon(tk);
+            skillPanel.setVisible(true);
+        });
+        player2Button.addActionListener(e -> {
+            if (!Objects.equals(currentPlayer, gb.characters.party.get(1))) {
+                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.party.get(1).getName());
+                playerIcon.setText("NAME: " + gb.characters.party.get(1) + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
+                currentPlayer = gb.characters.party.get(1);
                 playerName.setText(currentPlayer.getName());
-            }else{
+            } else {
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
-            SwitchPanel.setVisible(false);
-            bossAttack(gb);
+            ImageIcon ft = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\fighter.png");
+            Image b = ft.getImage();
+            Image imageB = b.getScaledInstance(finalSw.getIconWidth(), finalSw.getIconHeight(), Image.SCALE_SMOOTH);
+            b.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            ft = new ImageIcon(imageB);
+            HeroEmblemIcon.setIcon(ft);
+            skillPanel.setVisible(true);
         });
         player3Button.addActionListener(e -> {
-            if(!Objects.equals(currentPlayer, gb.characters.get(2))){
-                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.get(2).getName());
-                playerIcon.setText("NAME: "  + gb.characters.get(2)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
-                currentPlayer = gb.characters.get(2);
+            if (!Objects.equals(currentPlayer, gb.characters.party.get(2))) {
+                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.party.get(2).getName());
+                playerIcon.setText("NAME: " + gb.characters.party.get(2) + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
+                currentPlayer = gb.characters.party.get(2);
                 playerName.setText(currentPlayer.getName());
-            }else{
+            } else {
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
-            SwitchPanel.setVisible(false);
-            bossAttack(gb);
+            ImageIcon mg = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\mage.png");
+            Image c = mg.getImage();
+            Image imageC = c.getScaledInstance(finalSw.getIconWidth(), finalSw.getIconHeight(), Image.SCALE_SMOOTH);
+            c.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            mg = new ImageIcon(imageC);
+            HeroEmblemIcon.setIcon(mg);
+            skillPanel.setVisible(true);
         });
-        player4Button.addActionListener(e -> {
-            if(!Objects.equals(currentPlayer, gb.characters.get(3))){
-                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.get(3).getName());
-                playerIcon.setText("NAME: "  + gb.characters.get(3)+ "\nHP: " +currentPlayer.getHp()+ "\nLVL: " + currentPlayer.getLevel());
-                currentPlayer = gb.characters.get(3);
+        player4Button.addActionListener(ev -> {
+            if (!Objects.equals(currentPlayer, gb.characters.party.get(3))) {
+                dialogBox.setText(currentPlayer.getName() + " Has switch to " + gb.characters.party.get(3).getName());
+                playerIcon.setText("NAME: " + gb.characters.party.get(3) + "\nHP: " + currentPlayer.getHp() + "\nLVL: " + currentPlayer.getLevel());
+                currentPlayer = gb.characters.party.get(3);
                 playerName.setText(currentPlayer.getName());
-            }else{
+            } else {
                 dialogBox.setText("Invalid choice! You cannot switch with yourself");
             }
-            SwitchPanel.setVisible(false);
-            bossAttack(gb);
+            ImageIcon sp = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\support.png");
+            Image e = sp.getImage();
+            Image imageE = e.getScaledInstance(finalSw.getIconWidth(), finalSw.getIconHeight(), Image.SCALE_SMOOTH);
+            e.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            sp = new ImageIcon(imageE);
+
+            HeroEmblemIcon.setIcon(sp);
+            skillPanel.setVisible(true);
         });
-    }*/
+
+        ImageIcon p1 = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\tankIcon.png");
+        Image ip1 = p1.getImage();
+        Image imagep1 = ip1.getScaledInstance(40,40, Image.SCALE_SMOOTH);
+        ip1.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        p1 = new ImageIcon(imagep1);
+
+        ImageIcon p2 = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\fighterIcon.png");
+        Image ip2 = p2.getImage();
+        Image imagep2 = ip2.getScaledInstance(40,40, Image.SCALE_SMOOTH);
+        ip2.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        p2 = new ImageIcon(imagep2);
+
+        ImageIcon p3 = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\mageIcon.png");
+        Image ip3 = p3.getImage();
+        Image imagep3 = ip3.getScaledInstance(40,40, Image.SCALE_SMOOTH);
+        ip3.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        p3 = new ImageIcon(imagep3);
+
+        ImageIcon p4 = new ImageIcon("C:\\Java_Practice\\New folder\\CAPSTONE\\icons\\healerIcon.png");
+        Image ip4 = p4.getImage();
+        Image imagep4 = ip4.getScaledInstance(40,40, Image.SCALE_SMOOTH);
+        ip4.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+        p4 = new ImageIcon(imagep4);
+
+        player1Button.setIcon(p1);
+        player2Button.setIcon(p2);
+        player3Button.setIcon(p3);
+        player4Button.setIcon(p4);
+    }
 }
 

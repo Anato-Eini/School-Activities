@@ -3,12 +3,15 @@ import Entities.*;
 import java.util.Scanner;
 public class Main extends JFrame {
     public static void main(String[] args) { //sorry testing sa ko sa text
-        /*game app = new game();
+        //comment this out
+        game app = new game();
         app.setTitle("UGANG LEGENDS");
-        app.setSize(1000,500);
+        app.setSize(1000,1000);
         app.setDefaultCloseOperation(EXIT_ON_CLOSE);
         app.setVisible(true);
-        System.out.println("I love intellij"); */
+        System.out.println("I love intellij");
+        //
+
         System.out.println("Welcome to ugang legends");
         GameBehavior gb = new GameBehavior();
         Entity currentPlayer = gb.characters.party.get(0);
