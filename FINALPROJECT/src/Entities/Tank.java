@@ -27,6 +27,9 @@ public class Tank extends Entity {
     @Override
     public void skill3(Party p) {
         for(Entity e: p.party){
+            if(e.isDead()){
+                continue;
+            }
             e.setBuff(new DamageBuff(getBaseDmg()));
         }
     }
