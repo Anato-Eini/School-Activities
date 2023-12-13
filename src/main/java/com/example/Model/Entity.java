@@ -1,7 +1,7 @@
 package com.example.Model;
-import java.util.ArrayList;
 
 public abstract class Entity {
+    private String DebuffType;
     private String name;
     private int level, hp, baseDmg, maxHP;
     private int skill3cd = 0,skill4cd = 0;
@@ -12,6 +12,10 @@ public abstract class Entity {
 
     private float speed;
 
+    public Entity setDebuffType(String debuffType) {
+        DebuffType = debuffType;
+        return this;
+    }
 
     public Entity(){}
     public String getName() {
@@ -88,13 +92,17 @@ public abstract class Entity {
         return this;
     }
 
-    public Debuff getDebuff() {
-        return debuff;
+    public String getDebuffType() {
+        return DebuffType;
     }
 
     public Entity setDebuff(Debuff debuff) {
         this.debuff = debuff;
         return this;
+    }
+
+    public Debuff getDebuff() {
+        return debuff;
     }
 
     public Buff getBuff() {

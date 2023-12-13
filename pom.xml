@@ -24,6 +24,11 @@
       <artifactId>javafx-fxml</artifactId>
       <version>21-ea+24</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-media</artifactId>
+      <version>21-ea+24</version>
+    </dependency>
 <dependency>
       <groupId>org.controlsfx</groupId>
       <artifactId>controlsfx</artifactId>

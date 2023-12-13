@@ -1,6 +1,10 @@
 package com.example.Model;
 import java.util.ArrayList;
+
+
+
 public class Fighter extends Entity {
+    static String DebuffType = "Stun";
 
     public Entity setBaseDmg() {
         setBaseDmg(200);

@@ -1,8 +1,12 @@
 package com.example.Model;
 
 import java.util.ArrayList;
+
+
+
 public class Support extends Entity {
 
+    static String DebuffType = "Poison";
     public Entity setBaseDmg() {
         setBaseDmg(50);
         return this;
@@ -38,5 +42,6 @@ public class Support extends Entity {
     public void skill4(Entity entity) {
         //cast poison
         entity.setDebuff(new Poison());
+
     }
 }

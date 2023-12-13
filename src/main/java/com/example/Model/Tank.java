@@ -3,6 +3,7 @@ package com.example.Model;
 import java.util.ArrayList;
 
 public class Tank extends Entity {
+    static String DebuffType = "Stun";
 
     public Entity setBaseDmg() {
         setBaseDmg(100);
@@ -38,5 +39,6 @@ public class Tank extends Entity {
     public void skill4(Entity entity) {
         //cast stun
         entity.setDebuff(new Stun());
+
     }
 }
