@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="switchMenuPanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.switchMenuController">
+   <children>
+      <Button fx:id="member1Button" layoutX="24.0" layoutY="64.0" mnemonicParsing="false" onAction="#switchTo1" prefHeight="268.0" prefWidth="130.0" />
+      <Button fx:id="member2Button" layoutX="167.0" layoutY="64.0" mnemonicParsing="false" onAction="#switchTo2" prefHeight="268.0" prefWidth="130.0" />
+      <Button fx:id="member3Button" layoutX="304.0" layoutY="64.0" mnemonicParsing="false" onAction="#switchTo3" prefHeight="268.0" prefWidth="130.0" />
+      <Button fx:id="member4Button" layoutX="444.0" layoutY="64.0" mnemonicParsing="false" onAction="#switchTo4" prefHeight="268.0" prefWidth="130.0" />
+      <Button fx:id="cancelButton" layoutX="25.0" layoutY="342.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="26.0" prefWidth="548.0" text="Cancel" />
+      <Label fx:id="member1Name" alignment="CENTER" layoutX="47.0" layoutY="26.0" prefHeight="18.0" prefWidth="85.0" text="MEMBER 1" />
+      <Label fx:id="member2Name" alignment="CENTER" layoutX="189.0" layoutY="26.0" prefHeight="18.0" prefWidth="85.0" text="MEMBER 2" />
+      <Label fx:id="member3Name" alignment="CENTER" layoutX="327.0" layoutY="26.0" prefHeight="18.0" prefWidth="85.0" text="MEMBER 3" />
+      <Label fx:id="member4Name" alignment="CENTER" layoutX="467.0" layoutY="26.0" prefHeight="18.0" prefWidth="85.0" text="MEMBER 4" />
+      <Label fx:id="member1HP" alignment="CENTER" layoutX="47.0" layoutY="303.0" prefHeight="18.0" prefWidth="85.0" text="5000 / 5000" />
+      <Label fx:id="member2HP" alignment="CENTER" layoutX="189.0" layoutY="303.0" prefHeight="18.0" prefWidth="85.0" text="5000 / 5000" />
+      <Label fx:id="member3HP" alignment="CENTER" layoutX="327.0" layoutY="303.0" prefHeight="18.0" prefWidth="85.0" text="5000 / 5000" />
+      <Label fx:id="member4HP" alignment="CENTER" layoutX="467.0" layoutY="303.0" prefHeight="18.0" prefWidth="85.0" text="5000 / 5000" />
+      <Label alignment="CENTER" layoutX="47.0" layoutY="44.0" prefHeight="18.0" prefWidth="85.0" text="TANK" />
+      <Label alignment="CENTER" layoutX="189.0" layoutY="44.0" prefHeight="18.0" prefWidth="85.0" text="Fighter" />
+      <Label alignment="CENTER" layoutX="327.0" layoutY="44.0" prefHeight="18.0" prefWidth="85.0" text="Mage" />
+      <Label alignment="CENTER" layoutX="467.0" layoutY="44.0" prefHeight="18.0" prefWidth="85.0" text="Support" />
+   </children>
+</AnchorPane>
