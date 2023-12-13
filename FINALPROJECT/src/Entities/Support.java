@@ -27,6 +27,9 @@ public class Support extends Entity {
     public void skill3(Party p) {
         //buff damage
         for(Entity e: p.party){
+            if(e.isDead()){
+                continue;
+            }
             e.setBuff(new DamageBuff(getBaseDmg()));
         }
     }

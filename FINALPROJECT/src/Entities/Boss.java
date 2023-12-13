@@ -27,6 +27,9 @@ public class Boss extends Entity{
     @Override
     public void skill3(Party p) { //lets just say AoE na attack
         for(Entity e: p.party){
+            if(e.isDead()){
+                continue;
+            }
             e.setHp(e.getHp() - (getBaseDmg()/2));
         }
     }
