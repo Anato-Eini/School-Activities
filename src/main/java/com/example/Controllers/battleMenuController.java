@@ -382,7 +382,7 @@ public class battleMenuController {
         if(gb.boss.getDebuff() != null){
             if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
                 currentPlayer.skill3(gb.characters);
-                if(gb.characters.party.indexOf(currentPlayer) != 2){
+                if(gb.characters.party.indexOf(currentPlayer) != 3){
                     buffIcon.setVisible(true);
                 }
                 if(gb.boss.isDead()){
@@ -432,7 +432,7 @@ public class battleMenuController {
         //spacer
         if(currentPlayer.getSpeed() > gb.boss.getSpeed()){
             currentPlayer.skill3(gb.characters);
-            if(gb.characters.party.indexOf(currentPlayer) != 2){
+            if(gb.characters.party.indexOf(currentPlayer) != 3){
                 buffIcon.setVisible(true);
             }
             if(gb.boss.isDead()){
@@ -450,7 +450,7 @@ public class battleMenuController {
                 currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
             }
             currentPlayer.skill3(gb.characters);
-            if(gb.characters.party.indexOf(currentPlayer) != 2){
+            if(gb.characters.party.indexOf(currentPlayer) != 3){
                 buffIcon.setVisible(true);
             }
             if(gb.boss.isDead()){
@@ -738,7 +738,7 @@ public class battleMenuController {
             } else{
                 bossPoisoned.setVisible(true);
                 System.out.println("Boss poisoned");
-                gb.boss.setHp(gb.boss.getHp() - 100);
+                gb.boss.setHp(gb.boss.getHp() - 350);
                 gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
                 if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
                     gb.boss.setDebuff(null);

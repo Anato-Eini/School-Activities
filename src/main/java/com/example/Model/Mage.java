@@ -33,7 +33,7 @@ public class Mage extends Entity {
             if(e.isDead()){
                 continue;
             }
-            e.setHp((int) (e.getHp() * 1.25));
+            e.setBuff(new DamageBuff(getBaseDmg()));
         }
     }
 

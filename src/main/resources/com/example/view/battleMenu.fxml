@@ -61,12 +61,12 @@
             <Image url="@/serato.png" />
          </image>
       </ImageView>
-      <Button fx:id="attack1Button" layoutX="293.0" layoutY="315.0" mnemonicParsing="false" onAction="#doAttack1" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Answer question">
+      <Button fx:id="attack1Button" layoutX="293.0" layoutY="315.0" mnemonicParsing="false" onAction="#doAttack1" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Answer Question">
          <font>
             <Font size="10.0" />
          </font></Button>
       <Button fx:id="attack2Button" layoutX="395.0" layoutY="315.0" mnemonicParsing="false" onAction="#doAttack2" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Risk cheating" />
-      <Button fx:id="attack3Button" layoutX="293.0" layoutY="350.0" mnemonicParsing="false" onAction="#doAttack3" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Ask Seatmate" />
+      <Button fx:id="attack3Button" layoutX="293.0" layoutY="350.0" mnemonicParsing="false" onAction="#doAttack3" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Give Answers" />
       <Button fx:id="attack4Button" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="395.0" layoutY="350.0" mnemonicParsing="false" onAction="#doAttack4" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Distract Sir" />
       <Button fx:id="switchButton" layoutX="506.0" layoutY="315.0" mnemonicParsing="false" onAction="#goToSwitchMenu" prefHeight="70.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Switch" />
       <Label fx:id="bossLVL" layoutX="269.0" layoutY="66.0" prefHeight="46.0" prefWidth="200.0" text="LV. " textFill="#fdfdfd">

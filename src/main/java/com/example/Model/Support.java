@@ -30,11 +30,13 @@ public class Support extends Entity {
     @Override
     public void skill3(Party p) {
         //buff damage
+
+
         for(Entity e: p.party){
             if(e.isDead()){
                 continue;
             }
-            e.setBuff(new DamageBuff(getBaseDmg()));
+            e.setHp((int) (e.getHp() * 1.25));
         }
     }
 
