@@ -92,15 +92,15 @@ public class switchMenuController {
         member3Name.setText(gb.characters.party.get(2).getName());
         member4Name.setText(gb.characters.party.get(3).getName());
 
-        member1HP.setText(gb.characters.party.get(0).getHp() + " | " + gb.characters.party.get(0).getMaxHP());
-        member2HP.setText(gb.characters.party.get(1).getHp() + " | " + gb.characters.party.get(1).getMaxHP());
-        member3HP.setText(gb.characters.party.get(2).getHp() + " | " + gb.characters.party.get(2).getMaxHP());
-        member4HP.setText(gb.characters.party.get(3).getHp() + " | " + gb.characters.party.get(3).getMaxHP());
+        member1HP.setText(Math.max(gb.characters.party.get(0).getHp(), 0) + " | " + gb.characters.party.get(0).getMaxHP());
+        member2HP.setText(Math.max(gb.characters.party.get(1).getHp(), 0) + " | " + gb.characters.party.get(1).getMaxHP());
+        member3HP.setText(Math.max(gb.characters.party.get(2).getHp(), 0) + " | " + gb.characters.party.get(2).getMaxHP());
+        member4HP.setText(Math.max(gb.characters.party.get(3).getHp(), 0) + " | " + gb.characters.party.get(3).getMaxHP());
 
-        member1HpBar.setProgress((double) gb.characters.party.get(0).getHp() / gb.characters.party.get(0).getMaxHP());
-        member2HpBar.setProgress((double) gb.characters.party.get(1).getHp() / gb.characters.party.get(1).getMaxHP());
-        member3HpBar.setProgress((double) gb.characters.party.get(2).getHp() / gb.characters.party.get(2).getMaxHP());
-        member4HpBar.setProgress((double) gb.characters.party.get(3).getHp() / gb.characters.party.get(3).getMaxHP());
+        member1HpBar.setProgress((double) Math.max(gb.characters.party.get(0).getHp(), 0) / gb.characters.party.get(0).getMaxHP());
+        member2HpBar.setProgress((double) Math.max(gb.characters.party.get(1).getHp(), 0) / gb.characters.party.get(1).getMaxHP());
+        member3HpBar.setProgress((double) Math.max(gb.characters.party.get(2).getHp(), 0) / gb.characters.party.get(2).getMaxHP());
+        member4HpBar.setProgress((double) Math.max(gb.characters.party.get(3).getHp(), 0) / gb.characters.party.get(3).getMaxHP());
 
         if(currentPlayer.equals(gb.characters.party.get(0)) || gb.characters.party.get(0).isDead()){
             member1Button.setDisable(true);

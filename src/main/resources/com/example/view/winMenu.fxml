@@ -15,6 +15,11 @@
       </Label>
       <ImageView fitHeight="400.0" fitWidth="600.0">
          <image>
+            <Image url="@/CREDITSPAGE.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="toBeDestroyed" fitHeight="400.0" fitWidth="600.0" onMouseClicked="#goToCreddits" pickOnBounds="true" preserveRatio="true">
+         <image>
             <Image url="@/win_menu.png" />
          </image>
       </ImageView>

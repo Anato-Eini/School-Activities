@@ -68,6 +68,9 @@ public class battleMenuController {
     private ProgressBar bossHPBar;
 
     @FXML
+    private ImageView buffIcon;
+
+    @FXML
     private TextArea consoleTextArea;
 
     @FXML
@@ -142,6 +145,10 @@ public class battleMenuController {
                 currentPlayerPNG.setImage(new Image("/battle_tristan.png"));
         }
 
+        if(currentPlayer.getBuff() != null) {
+            buffIcon.setVisible(true);
+        }
+
 
     }
 
@@ -168,6 +175,8 @@ public class battleMenuController {
         if(gb.boss.getDebuff() != null){
             if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
                 currentPlayer.skill1(gb.boss);
+
+
                 if(gb.boss.isDead()){
                     System.out.println("You win");
                     gameOver.setState(true);
@@ -373,6 +382,9 @@ public class battleMenuController {
         if(gb.boss.getDebuff() != null){
             if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
                 currentPlayer.skill3(gb.characters);
+                if(gb.characters.party.indexOf(currentPlayer) != 2){
+                    buffIcon.setVisible(true);
+                }
                 if(gb.boss.isDead()){
                     System.out.println("You win");
                     gameOver.setState(true);
@@ -420,6 +432,9 @@ public class battleMenuController {
         //spacer
         if(currentPlayer.getSpeed() > gb.boss.getSpeed()){
             currentPlayer.skill3(gb.characters);
+            if(gb.characters.party.indexOf(currentPlayer) != 2){
+                buffIcon.setVisible(true);
+            }
             if(gb.boss.isDead()){
                 System.out.println("You win");
                 gameOver.setState(true);
@@ -435,6 +450,9 @@ public class battleMenuController {
                 currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
             }
             currentPlayer.skill3(gb.characters);
+            if(gb.characters.party.indexOf(currentPlayer) != 2){
+                buffIcon.setVisible(true);
+            }
             if(gb.boss.isDead()){
                 System.out.println("You win");
                 gameOver.setState(true);
@@ -448,7 +466,7 @@ public class battleMenuController {
 
         gameMaster.newTurn();
         turnLabel.setText("Question Number: " + gb.getTotalTime());
-        displayConsole(bossMove + "\n\nJay Vince Serato awaits your next move...");
+        displayConsole(bossMove + "\n\nYou gave everyone your answers on the exam...");
         bossHP.setText(gb.boss.getHp() + " | 25000");
         bossHPBar.setProgress((double) gb.boss.getHp() /25000);
         currentMemberHP.setText(currentPlayer.getHp() + " | " + currentPlayer.getMaxHP());
@@ -568,7 +586,7 @@ public class battleMenuController {
 
         gameMaster.newTurn();
         turnLabel.setText("Question Number: " + gb.getTotalTime());
-        displayConsole(bossMove + "\n\nyou casted your ultimate skill to Jay Vince Serato!");
+        displayConsole(bossMove + "\n\nyou managed to distract Jay Vince Serato!");
         bossHP.setText(gb.boss.getHp() + " | 25000");
         bossHPBar.setProgress((double) gb.boss.getHp() /25000);
         currentMemberHP.setText(currentPlayer.getHp() + " | " + currentPlayer.getMaxHP());
@@ -627,6 +645,7 @@ public class battleMenuController {
     }
     public void handlePlayerBuffs(Entity curr){
         if(curr.getBuff() != null){
+            buffIcon.setVisible(true);
             if(curr.getBuff().getBuffName().equals("Damage Buff")){
                 if(curr.getBuff().getBuffTurnsApplied() == 0){
                     int before = curr.getBaseDmg();
@@ -643,7 +662,9 @@ public class battleMenuController {
                     curr.setBuff(null);
                 }
             }
+            return;
         }
+        buffIcon.setVisible(false);
     }
 
 
@@ -717,7 +738,7 @@ public class battleMenuController {
             } else{
                 bossPoisoned.setVisible(true);
                 System.out.println("Boss poisoned");
-                gb.boss.setHp(gb.boss.getHp() - 50);
+                gb.boss.setHp(gb.boss.getHp() - 100);
                 gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
                 if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
                     gb.boss.setDebuff(null);

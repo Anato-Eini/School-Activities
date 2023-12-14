@@ -69,7 +69,6 @@
       <Button fx:id="attack3Button" layoutX="293.0" layoutY="350.0" mnemonicParsing="false" onAction="#doAttack3" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Ask Seatmate" />
       <Button fx:id="attack4Button" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="395.0" layoutY="350.0" mnemonicParsing="false" onAction="#doAttack4" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Distract Sir" />
       <Button fx:id="switchButton" layoutX="506.0" layoutY="315.0" mnemonicParsing="false" onAction="#goToSwitchMenu" prefHeight="70.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Switch" />
-      <TextArea fx:id="consoleTextArea" editable="false" layoutX="-1.0" layoutY="291.0" onMouseClicked="#onMouseClick" prefHeight="110.0" prefWidth="606.0" style="-fx-border-color: black; -fx-border-width: 10px;" visible="false" wrapText="true" />
       <Label fx:id="bossLVL" layoutX="269.0" layoutY="66.0" prefHeight="46.0" prefWidth="200.0" text="LV. " textFill="#fdfdfd">
          <font>
             <Font name="Arial Bold" size="16.0" />
@@ -100,5 +99,14 @@
             <Image url="@/poison-icon-512x487-v86ugvxe.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="buffIcon" fitHeight="36.0" fitWidth="30.0" layoutX="431.0" layoutY="267.0" visible="false">
+         <image>
+            <Image url="@/57291205-brain-power-icon-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="consoleTextArea" editable="false" layoutX="-1.0" layoutY="291.0" onMouseClicked="#onMouseClick" prefHeight="110.0" prefWidth="606.0" style="-fx-border-color: black; -fx-border-width: 10px;" visible="false" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font></TextArea>
    </children>
 </AnchorPane>
