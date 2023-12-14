@@ -11,246 +11,61 @@ public class Main extends JFrame {
         app.setVisible(true);
         System.out.println("I love intellij");
         //
-
         System.out.println("Welcome to ugang legends");
         GameBehavior gb = new GameBehavior();
         Entity currentPlayer = gb.characters.party.get(0);
         int choice;
-        boolean gameOver = false;
+        GameOverWrapper gameOver = new GameOverWrapper();
+        gameOver.setState(false);
         gb.setTotalTime(0);
         Scanner scanner = new Scanner(System.in);
-        while(!gameOver){
+        while(!gameOver.state){
             gb.setTotalTime(gb.getTotalTime() + 1);
             System.out.print("Enter choice (0 - Switch, 1 - Skill1, 2 - Skill2, 3 -  Skill3, 4- Skill4): ");
             choice = scanner.nextInt();
             switch(choice){
                 case 0:
-                    if(currentPlayer.getSkill3cd() > 0){
-                        currentPlayer.setSkill3cd(currentPlayer.getSkill3cd() - 1);
-                        System.out.println("Cooldown skill 3: " + currentPlayer.getSkill3cd());
-                    }
-                    if(currentPlayer.getSkill4cd() > 0){
-                        currentPlayer.setSkill4cd(currentPlayer.getSkill4cd() - 1);
-                        System.out.println("Cooldown skill 4: " + currentPlayer.getSkill4cd());
-                    }
-                    if(currentPlayer.getBuff() != null){
-                        if(currentPlayer.getBuff().getBuffName().equals("Damage Buff")){
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() == 0){
-                                int before = currentPlayer.getBaseDmg();
-                                currentPlayer.getBuff().setOriginal(before);
-                                System.out.println("Before dmg buff: " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getBuffed());
-                                System.out.println("After dmg buff: " + currentPlayer.getBaseDmg());
-                            }
-                            currentPlayer.getBuff().setBuffTurnsApplied(currentPlayer.getBuff().getBuffTurnsApplied() + 1);
-                            System.out.println("How many turns? " + currentPlayer.getBuff().getBuffTurnsApplied());
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() >= currentPlayer.getBuff().getBuffDuration()){
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getOriginal());
-                                System.out.println("Buff is over, base dmg is " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBuff(null);
-                            }
-                        }
-                    }
+                    checkSkill3Cd(currentPlayer);
+                    checkSkill4Cd(currentPlayer);
+                    handlePlayerBuffs(currentPlayer);
                     //
+                    handleBossDebuff(gb,currentPlayer,gameOver);
                     if(gb.boss.getDebuff() != null){
                         if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
-                            System.out.println("Boss stunned");
-                            currentPlayer.skill1(gb.boss);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
-                            if(gb.boss.isDead()){
-                                System.out.println("You win");
-                                gameOver = true;
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
-
                             break;
-                        } else{
-                            System.out.println("Boss poisoned");
-                            gb.boss.setHp(gb.boss.getHp() - 50);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
                         }
                     }
                     //spacer
+                    currentPlayer = handlePlayerDebuffs(gb,currentPlayer,gameOver);
                     if(currentPlayer.getDebuff() != null){
                         if(currentPlayer.getDebuff().getDebuffName().equals("Stun")){
-                            System.out.println("You are stunned");
-                            bossAttack(gb,currentPlayer);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("You are currently poisoned");
-                            currentPlayer.setHp(currentPlayer.getHp() - 50);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                }
-                            }
                         }
                     }
-                    do{
-                        System.out.print("Switch to which player (0-3): ");
-                        choice = scanner.nextInt();
-                        currentPlayer = gb.characters.party.get(choice);
-                        if(currentPlayer.isDead()){
-                            System.out.println("Dead character, choose another");
-                        }
-                    }while(currentPlayer.isDead());
+                    currentPlayer = switchCharacters(gb, currentPlayer);
                     bossAttack(gb,currentPlayer);
                     if(currentPlayer.isDead()){
-                        System.out.println("You are dead");
-                        if(gb.characters.isWipedOut()){
-                            System.out.println("You lose");
-                            gameOver = true;
-                        } else{
-                            do{
-                                System.out.print("Switch to which player (0-3): ");
-                                choice = scanner.nextInt();
-                                currentPlayer = gb.characters.party.get(choice);
-                                if(currentPlayer.isDead()){
-                                    System.out.println("Dead character, choose another");
-                                }
-                            }while(currentPlayer.isDead());
-                        }
+                        currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                     }
+                    System.out.println(currentPlayer);
+                    System.out.println(gb.boss);
                     break;
                 case 1:
-                    if(currentPlayer.getSkill3cd() > 0){
-                        currentPlayer.setSkill3cd(currentPlayer.getSkill3cd() - 1);
-                        System.out.println("Cooldown skill 3: " + currentPlayer.getSkill3cd());
-                    }
-                    if(currentPlayer.getSkill4cd() > 0){
-                        currentPlayer.setSkill4cd(currentPlayer.getSkill4cd() - 1);
-                        System.out.println("Cooldown skill 4: " + currentPlayer.getSkill4cd());
-                    }
-                    if(currentPlayer.getBuff() != null){
-                        if(currentPlayer.getBuff().getBuffName().equals("Damage Buff")){
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() == 0){
-                                int before = currentPlayer.getBaseDmg();
-                                currentPlayer.getBuff().setOriginal(before);
-                                System.out.println("Before dmg buff: " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getBuffed());
-                                System.out.println("After dmg buff: " + currentPlayer.getBaseDmg());
-                            }
-                            currentPlayer.getBuff().setBuffTurnsApplied(currentPlayer.getBuff().getBuffTurnsApplied() + 1);
-                            System.out.println("How many turns? " + currentPlayer.getBuff().getBuffTurnsApplied());
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() >= currentPlayer.getBuff().getBuffDuration()){
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getOriginal());
-                                System.out.println("Buff is over, base dmg is " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBuff(null);
-                            }
-                        }
-                    }
+                    checkSkill3Cd(currentPlayer);
+                    checkSkill4Cd(currentPlayer);
+                    handlePlayerBuffs(currentPlayer);
                     //
+                    handleBossDebuff(gb,currentPlayer,gameOver);
                     if(gb.boss.getDebuff() != null){
                         if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
-                            System.out.println("Boss stunned");
-                            currentPlayer.skill1(gb.boss);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
-                            if(gb.boss.isDead()){
-                                System.out.println("You win");
-                                gameOver = true;
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
-
                             break;
-                        } else{
-                            System.out.println("Boss poisoned");
-                            gb.boss.setHp(gb.boss.getHp() - 50);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
                         }
                     }
                     //spacer
+                    currentPlayer = handlePlayerDebuffs(gb,currentPlayer,gameOver);
                     if(currentPlayer.getDebuff() != null){
                         if(currentPlayer.getDebuff().getDebuffName().equals("Stun")){
-                            System.out.println("You are stunned");
-                            bossAttack(gb,currentPlayer);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("You are currently poisoned");
-                            currentPlayer.setHp(currentPlayer.getHp() - 50);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
                         }
                     }
                     //spacer
@@ -259,313 +74,81 @@ public class Main extends JFrame {
                         currentPlayer.skill1(gb.boss);
                         if(gb.boss.isDead()){
                             System.out.println("You win");
-                            gameOver = true;
+                            gameOver.setState(true);
                         }
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                            currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                     } else{
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                            currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                         currentPlayer.skill1(gb.boss);
                         if(gb.boss.isDead()){
                             System.out.println("You win");
-                            gameOver = true;
+                            gameOver.setState(true);
                         }
                     }
                     System.out.println(currentPlayer);
                     System.out.println(gb.boss);
                     break;
                 case 2:
-                    if(currentPlayer.getSkill3cd() > 0){
-                        currentPlayer.setSkill3cd(currentPlayer.getSkill3cd() - 1);
-                        System.out.println("Cooldown skill 3: " + currentPlayer.getSkill3cd());
-                    }
-                    if(currentPlayer.getSkill4cd() > 0){
-                        currentPlayer.setSkill4cd(currentPlayer.getSkill4cd() - 1);
-                        System.out.println("Cooldown skill 4: " + currentPlayer.getSkill4cd());
-                    }
-                    if(currentPlayer.getBuff() != null){
-                        if(currentPlayer.getBuff().getBuffName().equals("Damage Buff")){
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() == 0){
-                                int before = currentPlayer.getBaseDmg();
-                                currentPlayer.getBuff().setOriginal(before);
-                                System.out.println("Before dmg buff: " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getBuffed());
-                                System.out.println("After dmg buff: " + currentPlayer.getBaseDmg());
-                            }
-                            currentPlayer.getBuff().setBuffTurnsApplied(currentPlayer.getBuff().getBuffTurnsApplied() + 1);
-                            System.out.println("How many turns? " + currentPlayer.getBuff().getBuffTurnsApplied());
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() >= currentPlayer.getBuff().getBuffDuration()){
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getOriginal());
-                                System.out.println("Buff is over, base dmg is " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBuff(null);
-                            }
-                        }
-                    }
+                    checkSkill3Cd(currentPlayer);
+                    checkSkill4Cd(currentPlayer);
+                    handlePlayerBuffs(currentPlayer);
+                    handleBossDebuff(gb,currentPlayer,gameOver);
                     if(gb.boss.getDebuff() != null){
                         if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
-                            System.out.println("Boss stunned");
-                            currentPlayer.skill2(gb.boss);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
-                            if(gb.boss.isDead()){
-                                System.out.println("You win");
-                                gameOver = true;
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("Boss poisoned");
-                            gb.boss.setHp(gb.boss.getHp() - 50);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
                         }
                     }
                     //spacer
+                    currentPlayer = handlePlayerDebuffs(gb,currentPlayer,gameOver);
                     if(currentPlayer.getDebuff() != null){
                         if(currentPlayer.getDebuff().getDebuffName().equals("Stun")){
-                            System.out.println("You are stunned");
-                            bossAttack(gb,currentPlayer);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("You are poisoned");
-                            currentPlayer.setHp(currentPlayer.getHp() - 50);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
                         }
                     }
-
                     if(currentPlayer.getSpeed() > gb.boss.getSpeed()){
                         currentPlayer.skill2(gb.boss);
                         if(gb.boss.isDead()){
                             System.out.println("You win");
-                            gameOver = true;
+                            gameOver.setState(true);
                         }
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                            currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                     } else{
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                            currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                         currentPlayer.skill2(gb.boss);
                         if(gb.boss.isDead()){
                             System.out.println("You win");
-                            gameOver = true;
+                            gameOver.setState(true);
                         }
                     }
                     System.out.println(currentPlayer);
                     System.out.println(gb.boss);
                     break;
                 case 3:
-                    if(currentPlayer.getSkill4cd() > 0){
-                        currentPlayer.setSkill4cd(currentPlayer.getSkill4cd() - 1);
-                        System.out.println("Cooldown skill 4: " + currentPlayer.getSkill4cd());
-                    }
-                    if(currentPlayer.getBuff() != null){
-                        if(currentPlayer.getBuff().getBuffName().equals("Damage Buff")){
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() == 0){
-                                int before = currentPlayer.getBaseDmg();
-                                currentPlayer.getBuff().setOriginal(before);
-                                System.out.println("Before dmg buff: " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getBuffed());
-                                System.out.println("After dmg buff: " + currentPlayer.getBaseDmg());
-                            }
-                            currentPlayer.getBuff().setBuffTurnsApplied(currentPlayer.getBuff().getBuffTurnsApplied() + 1);
-                            System.out.println("How many turns? " + currentPlayer.getBuff().getBuffTurnsApplied());
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() >= currentPlayer.getBuff().getBuffDuration()){
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getOriginal());
-                                System.out.println("Buff is over, base dmg is " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBuff(null);
-                            }
-                        }
-                    }
+                    checkSkill4Cd(currentPlayer);
+                    handlePlayerBuffs(currentPlayer);
+                    handleBossDebuff(gb,currentPlayer,gameOver);
                     if(gb.boss.getDebuff() != null){
                         if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
-                            if(currentPlayer.getSkill3cd() > 0){
-                                currentPlayer.setSkill3cd(currentPlayer.getSkill3cd() - 1);
-                                System.out.println("Cooldown skill 3: " + currentPlayer.getSkill3cd());
-                            }
-                            System.out.println("Boss stunned");
-                            currentPlayer.skill3(gb.characters);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
-                            if(gb.boss.isDead()){
-                                System.out.println("You win");
-                                gameOver = true;
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("Boss poisoned");
-                            gb.boss.setHp(gb.boss.getHp() - 50);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
                         }
                     }
                     //spacer
+                    currentPlayer = handlePlayerDebuffs(gb,currentPlayer,gameOver);
                     if(currentPlayer.getDebuff() != null){
                         if(currentPlayer.getDebuff().getDebuffName().equals("Stun")){
-                            if(currentPlayer.getSkill3cd() > 0){
-                                currentPlayer.setSkill3cd(currentPlayer.getSkill3cd() - 1);
-                                System.out.println("Cooldown skill 3: " + currentPlayer.getSkill3cd());
-                            }
-                            System.out.println("You are stunned");
-                            bossAttack(gb,currentPlayer);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("You are poisoned");
-                            currentPlayer.setHp(currentPlayer.getHp() - 50);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
                         }
                     }
                     if(currentPlayer.getSkill3cd() > 0){
@@ -579,154 +162,34 @@ public class Main extends JFrame {
                         currentPlayer.skill1(gb.boss);
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                            currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                     } else{
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                            currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                         currentPlayer.skill3(gb.characters);
                     }
-
-
                     currentPlayer.setSkill3cd(currentPlayer.getSkill3RealCd());
                     System.out.println("This skill is now in cooldown");
                     System.out.println(currentPlayer);
                     System.out.println(gb.boss);
                     break;
                 case 4:
-                    if(currentPlayer.getSkill3cd() > 0){
-                        currentPlayer.setSkill3cd(currentPlayer.getSkill3cd() - 1);
-                        System.out.println("Cooldown skill 3: " + currentPlayer.getSkill3cd());
-                    }
-                    if(currentPlayer.getBuff() != null){
-                        if(currentPlayer.getBuff().getBuffName().equals("Damage Buff")){
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() == 0){
-                                int before = currentPlayer.getBaseDmg();
-                                currentPlayer.getBuff().setOriginal(before);
-                                System.out.println("Before dmg buff: " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getBuffed());
-                                System.out.println("After dmg buff: " + currentPlayer.getBaseDmg());
-                            }
-                            currentPlayer.getBuff().setBuffTurnsApplied(currentPlayer.getBuff().getBuffTurnsApplied() + 1);
-                            System.out.println("How many turns? " + currentPlayer.getBuff().getBuffTurnsApplied());
-                            if(currentPlayer.getBuff().getBuffTurnsApplied() >= currentPlayer.getBuff().getBuffDuration()){
-                                currentPlayer.setBaseDmg(currentPlayer.getBuff().getOriginal());
-                                System.out.println("Buff is over, base dmg is " + currentPlayer.getBaseDmg());
-                                currentPlayer.setBuff(null);
-                            }
-                        }
-                    }
+                    checkSkill3Cd(currentPlayer);
+                    handlePlayerBuffs(currentPlayer);
+                    handleBossDebuff(gb,currentPlayer,gameOver);
                     if(gb.boss.getDebuff() != null){
                         if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
-                            if(currentPlayer.getSkill4cd() > 0){
-                                currentPlayer.setSkill4cd(currentPlayer.getSkill4cd() - 1);
-                                System.out.println("Cooldown skill 4: " + currentPlayer.getSkill4cd());
-                            }
-                            System.out.println("Boss stunned");
-                            currentPlayer.skill4(gb.boss);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
-                            if(gb.boss.isDead()){
-                                System.out.println("You win");
-                                gameOver = true;
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("Boss poisoned");
-                            gb.boss.setHp(gb.boss.getHp() - 50);
-                            gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
-                            if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
-                                gb.boss.setDebuff(null);
-                            }
                         }
                     }
                     //spacer
+                    currentPlayer = handlePlayerDebuffs(gb,currentPlayer,gameOver);
                     if(currentPlayer.getDebuff() != null){
                         if(currentPlayer.getDebuff().getDebuffName().equals("Stun")){
-                            if(currentPlayer.getSkill4cd() > 0){
-                                currentPlayer.setSkill4cd(currentPlayer.getSkill4cd() - 1);
-                                System.out.println("Cooldown skill 4: " + currentPlayer.getSkill4cd());
-                            }
-                            System.out.println("You are stunned");
-                            bossAttack(gb,currentPlayer);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
-                            System.out.println(currentPlayer);
-                            System.out.println(gb.boss);
                             break;
-                        } else{
-                            System.out.println("You are poisoned");
-                            currentPlayer.setHp(currentPlayer.getHp() - 50);
-                            currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
-                            if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
-                                currentPlayer.setDebuff(null);
-                            }
-                            if(currentPlayer.isDead()){
-                                System.out.println("You are dead");
-                                if(gb.characters.isWipedOut()){
-                                    System.out.println("You lose");
-                                    gameOver = true;
-                                } else{
-                                    do{
-                                        System.out.print("Switch to which player (0-3): ");
-                                        choice = scanner.nextInt();
-                                        currentPlayer = gb.characters.party.get(choice);
-                                        if(currentPlayer.isDead()){
-                                            System.out.println("Dead character, choose another");
-                                        }
-                                    }while(currentPlayer.isDead());
-                                }
-                            }
                         }
                     }
                     if(currentPlayer.getSkill4cd() > 0){
@@ -740,50 +203,24 @@ public class Main extends JFrame {
                         currentPlayer.skill4(gb.boss);
                         if(gb.boss.isDead()){
                             System.out.println("You win");
-                            gameOver = true;
+                            gameOver.setState(true);
                         }
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                           currentPlayer =  handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                     } else{
                         bossAttack(gb,currentPlayer);
                         if(currentPlayer.isDead()){
-                            System.out.println("You are dead");
-                            if(gb.characters.isWipedOut()){
-                                System.out.println("You lose");
-                                gameOver = true;
-                            } else{
-                                do{
-                                    System.out.print("Switch to which player (0-3): ");
-                                    choice = scanner.nextInt();
-                                    currentPlayer = gb.characters.party.get(choice);
-                                    if(currentPlayer.isDead()){
-                                        System.out.println("Dead character, choose another");
-                                    }
-                                }while(currentPlayer.isDead());
-                            }
+                            currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
                         }
                         currentPlayer.skill4(gb.boss);
                         if(gb.boss.isDead()){
                             System.out.println("You win");
-                            gameOver = true;
+                            gameOver.setState(true);
+
                         }
                     }
-
                     currentPlayer.setSkill4cd(currentPlayer.getSkill4RealCd());
                     System.out.println("This skill will now be in cooldown");
                     System.out.println(currentPlayer);
@@ -797,10 +234,10 @@ public class Main extends JFrame {
     public static void bossAttack(GameBehavior gb, Entity currentPlayer){
         int min = 1; // Minimum value of range
         int max = 4; // Maximum value of range
-        System.out.println(currentPlayer.getName() + " " + currentPlayer.getHp());
+
 
         int random_int = (int)Math.floor(Math.random() * (max - min + 1) + min);
-        System.out.println(random_int);
+
 
         switch(random_int){
             case 1:
@@ -816,6 +253,123 @@ public class Main extends JFrame {
                 gb.boss.skill4(currentPlayer);
                 break;
         }
-        System.out.println(currentPlayer.getHp());
+
+    }
+    public static void checkSkill3Cd(Entity curr){
+        if(curr.getSkill3cd() > 0){
+            curr.setSkill3cd(curr.getSkill3cd() - 1);
+            System.out.println("Cooldown skill 3: " + curr.getSkill3cd());
+        }
+    }
+    public static void checkSkill4Cd(Entity curr){
+        if(curr.getSkill4cd() > 0){
+            curr.setSkill4cd(curr.getSkill4cd() - 1);
+            System.out.println("Cooldown skill 4: " + curr.getSkill4cd());
+        }
+    }
+    public static void handlePlayerBuffs(Entity curr){
+        if(curr.getBuff() != null){
+            if(curr.getBuff().getBuffName().equals("Damage Buff")){
+                if(curr.getBuff().getBuffTurnsApplied() == 0){
+                    int before = curr.getBaseDmg();
+                    curr.getBuff().setOriginal(before);
+                    System.out.println("Before dmg buff: " + curr.getBaseDmg());
+                    curr.setBaseDmg(curr.getBuff().getBuffed());
+                    System.out.println("After dmg buff: " + curr.getBaseDmg());
+                }
+                curr.getBuff().setBuffTurnsApplied(curr.getBuff().getBuffTurnsApplied() + 1);
+                System.out.println("How many turns? " + curr.getBuff().getBuffTurnsApplied());
+                if(curr.getBuff().getBuffTurnsApplied() >= curr.getBuff().getBuffDuration()){
+                    curr.setBaseDmg(curr.getBuff().getOriginal());
+                    System.out.println("Buff is over, base dmg is " + curr.getBaseDmg());
+                    curr.setBuff(null);
+                }
+            }
+        }
+    }
+
+    public static Entity switchCharacters(GameBehavior gameBehavior, Entity curr){
+        int choice;
+        Entity switchedCharacter = curr;
+        Scanner scanner = new Scanner(System.in);
+        do{
+            System.out.print("Switch to which player (0-3): ");
+            choice = scanner.nextInt();
+            switchedCharacter = gameBehavior.characters.party.get(choice);
+            if(switchedCharacter.isDead()){
+                System.out.println("Dead character, choose another");
+            }
+        }while(switchedCharacter.isDead());
+        return switchedCharacter;
+    }
+    public static Entity handlePlayerDebuffs(GameBehavior gb, Entity currentPlayer, GameOverWrapper gameOver){
+        if(currentPlayer.getDebuff() != null){
+            if(currentPlayer.getDebuff().getDebuffName().equals("Stun")){
+                System.out.println("You are stunned");
+                bossAttack(gb,currentPlayer);
+                currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
+                if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
+                    currentPlayer.setDebuff(null);
+                }
+                if(currentPlayer.isDead()){
+                    handlePlayerDeath(gb,currentPlayer,gameOver);
+                }
+                System.out.println(currentPlayer);
+                System.out.println(gb.boss);
+            } else{
+                System.out.println("You are currently poisoned");
+                currentPlayer.setHp(currentPlayer.getHp() - 50);
+                currentPlayer.getDebuff().setTurnsApplied(currentPlayer.getDebuff().getTurnsApplied() + 1);
+                if(currentPlayer.getDebuff().getTurnsApplied() >= currentPlayer.getDebuff().getDuration()){
+                    currentPlayer.setDebuff(null);
+                }
+                if(currentPlayer.isDead()){
+                    currentPlayer = handlePlayerDeath(gb,currentPlayer,gameOver);
+                }
+            }
+        }
+        return currentPlayer;
+    }
+    public static Entity handlePlayerDeath(GameBehavior gb, Entity currentPlayer, GameOverWrapper gameOver){
+        System.out.println("You are dead");
+        if(gb.characters.isWipedOut()){
+            System.out.println("You lose");
+            gameOver.setState(true);
+        } else{
+            currentPlayer = switchCharacters(gb,currentPlayer);
+        }
+        return currentPlayer;
+    }
+
+    public static void handleBossDebuff(GameBehavior gb, Entity currentPlayer, GameOverWrapper gameOver){
+        if(gb.boss.getDebuff() != null){
+            if(gb.boss.getDebuff().getDebuffName().equals("Stun")){
+                System.out.println("Boss stunned");
+                currentPlayer.skill1(gb.boss);
+                gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
+                if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
+                    gb.boss.setDebuff(null);
+                }
+                if(gb.boss.isDead()){
+                    System.out.println("You win");
+                    gameOver.setState(true);
+                }
+                System.out.println(currentPlayer);
+                System.out.println(gb.boss);
+            } else{
+                System.out.println("Boss poisoned");
+                gb.boss.setHp(gb.boss.getHp() - 50);
+                gb.boss.getDebuff().setTurnsApplied(gb.boss.getDebuff().getTurnsApplied() + 1);
+                if(gb.boss.getDebuff().getTurnsApplied() >= gb.boss.getDebuff().getDuration()){
+                    gb.boss.setDebuff(null);
+                }
+            }
+        }
+    }
+    public static class GameOverWrapper{
+        public boolean state;
+        public void setState(boolean state){
+            this.state = state;
+        }
     }
 }
