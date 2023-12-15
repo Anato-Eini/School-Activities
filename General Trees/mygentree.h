@@ -7,22 +7,41 @@ using namespace std;
 class MyGenTree : public GenTree {
     node* root;
     int size;
-
+    node* create_node(node* p, int e){
+        size++;
+        return new node{new node*[10], 0, p, e};
+    }
 public:
     node* addRoot(int e) {
-        // TODO implementation [+10 pts]
-        return NULL;
+        if(root) throw logic_error("Already has root");
+        root = create_node(nullptr, e);
+        return root;
     }
 
     node* addChild(node* p, int e) {
-        // TODO implementation [+30 pts]
-        return NULL;
+        p->children[p->num_child] = create_node(p, e);
+        return p->children[p->num_child++];
     }
 
 
     void remove(node* n) {
-        // TODO implementation [+35 pts]
-
+        if(n->num_child != 0) throw logic_error(to_string(n->elem) + " has children");
+        if(root == n){
+            root = nullptr;
+            size = 0;
+            delete n;
+            return;
+        }
+        for(int a = 0; a < n->parent->num_child; a++){
+            if(n->parent->children[a] == n){
+                for(int b = a + 1; b < n->parent->num_child; b++){
+                    n->parent->children[b - 1] = n->parent->children[b];
+                }
+                n->parent->num_child--;
+                size--;
+                return;
+            }
+        }
     }
 
     // DO NOT MODIFY this line onwards.
