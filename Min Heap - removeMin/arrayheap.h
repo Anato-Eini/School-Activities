@@ -50,6 +50,7 @@ public:
 
     // TODO remove the minimum value
     int removeMin() {
+        if(size == 0) return -1;
         int returner = array[0];
         swap(0, size - 1);
         size--;
