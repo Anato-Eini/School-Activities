@@ -16,6 +16,7 @@ int main() {
     for(int z = 0; z < number; z++)
         cin >> input[z];
     // Step 4: Loop the array from last to first
+
     for(int z = number - 1; z >= 0; z--){
         if(input[z] == "+"){
             a = stack->pop();
