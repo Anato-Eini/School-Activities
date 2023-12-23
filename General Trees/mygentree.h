@@ -34,12 +34,11 @@ public:
         }
         for(int a = 0; a < n->parent->num_child; a++){
             if(n->parent->children[a] == n){
-                for(int b = a + 1; b < n->parent->num_child; b++){
-                    n->parent->children[b - 1] = n->parent->children[b];
+                for(++a; a < n->parent->num_child; a++){
+                    n->parent->children[a - 1] = n->parent->children[a];
                 }
                 n->parent->num_child--;
                 size--;
-                return;
             }
         }
     }

@@ -14,7 +14,6 @@ struct node {
             return 0;
         }
         int array[num_child];
-        for(int a = 0; a < num_child; a++) array[a] = 0;
         for(int a = 0; a < num_child; a++){
             array[a] = children[a]->height();
         }
