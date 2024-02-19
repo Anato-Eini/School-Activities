@@ -39,13 +39,4 @@ public class LinkedList<T> {
         curr.element = element;
         return out;
     }
-
-    public void print(){
-        Node curr = head;
-        while(curr != null) {
-            System.out.print(curr.element + " ");
-            curr = curr.next;
-        }
-    }
-
 }
