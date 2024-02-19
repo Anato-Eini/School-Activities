@@ -30,7 +30,7 @@ public class LinkedList<T> {
             throw new IllegalArgumentException("Illegal Position");
         Node curr = head;
         int i = 1;
-        while(i < pos - 1){
+        while(i < pos){
             curr = curr.next;
             i++;
         }
@@ -39,4 +39,13 @@ public class LinkedList<T> {
         curr.element = element;
         return out;
     }
+
+    public void print(){
+        Node curr = head;
+        while(curr != null) {
+            System.out.print(curr.element + " ");
+            curr = curr.next;
+        }
+    }
+
 }
