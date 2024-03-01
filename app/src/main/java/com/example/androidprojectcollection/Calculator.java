@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 
 public class Calculator extends AppCompatActivity {
-    Button clear, clearAll, equals, point, squared, cubed, logarithmic;
+    Button clear, clearAll, equals, point;
     TextView display, viewTotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class Calculator extends AppCompatActivity {
         equals = (Button) findViewById(R.id.equals);
         viewTotal = (TextView) findViewById(R.id.total);
         point = (Button) findViewById(R.id.point);
+        viewTotal.setText("0");
         Button[] numbers = {
                 (Button) findViewById(R.id.num0),
                 (Button) findViewById(R.id.num1),
@@ -66,15 +67,15 @@ public class Calculator extends AppCompatActivity {
                 String output = contentText.substring(0, contentText.length() - 1);
                 display.setText(output);
             }
+            equals.performClick();
         });
         clearAll.setOnClickListener(view -> {
             display.setText("");
-            viewTotal.setText("");
+            viewTotal.setText("0");
         });
         equals.setOnClickListener(view -> {
             ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
             String contentText = display.getText().toString();
-            double total = 0;
             Pattern pattern = Pattern.compile("\\d*\\.?\\d+|[-+*/%]");
             Matcher matcher = pattern.matcher(contentText);
             while(matcher.find()){
@@ -84,17 +85,34 @@ public class Calculator extends AppCompatActivity {
                 }else
                     operands.add(token);
             }
-            if(!operands.isEmpty()){
-                total += (operands.get(0).contains(".") ? Double.parseDouble(operands.get(0)) :
-                        (double)Integer.parseInt(operands.get(0)));
-                for (int i = 1; i < operands.size(); i++) {
-                    total = evaluate(operands.get(i), operator.get(i - 1).charAt(0), total);
-                }
-            }
-            String output = String.valueOf(total);
-            viewTotal.setText((!output.contains(".") ? output :
-                    output.replaceAll("0*$", "").
-                            replaceAll("\\.$", "")));
+            if(operator.size() == operands.size() && !operands.isEmpty())
+                operator.remove(operator.size() - 1);
+
+            for(int i = 0; i < operator.size(); i++)
+                while(i < operator.size() && operator.get(i).equals("*"))
+                    evaluate2(i, operands, operator);
+
+            for(int i = 0; i < operator.size(); i++)
+                while(i < operator.size() && operator.get(i).equals("/"))
+                    evaluate2(i, operands, operator);
+
+            for(int i = 0; i < operator.size(); i++)
+                while(i < operator.size() && operator.get(i).equals("+"))
+                    evaluate2(i, operands, operator);
+
+            for(int i = 0; i < operator.size(); i++)
+                while(i < operator.size() && operator.get(i).equals("-"))
+                    evaluate2(i, operands, operator);
+
+            for (int i = 0; i < operator.size(); i++)
+                while(i < operator.size() && operator.get(i).equals("%"))
+                    evaluate2(i, operands, operator);
+
+            double output = (!operands.isEmpty() ? Double.parseDouble(operands.get(0)) : 0);
+            viewTotal.setText(output < Math.ceil(output) ? String.valueOf(output):
+                    String.valueOf(output).replaceAll("0*$", "").
+                            replaceAll("\\.$", "")
+                    );
         });
         point.setOnClickListener(view -> {
             String contentText = display.getText().toString();
@@ -104,7 +122,17 @@ public class Calculator extends AppCompatActivity {
                 display.append(".");
             }
         });
+    }
 
+    void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators){
+        double operand1;
+        operand1 = (operands.get(i).contains(".") ?
+                Double.parseDouble(operands.get(i)) :
+                (double) Integer.parseInt(operands.get(i)));
+        operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
+        operands.remove(i + 1);
+        operands.set(i, String.valueOf(operand1));
+        operators.remove(i);
     }
     boolean isOperator(char character){
         return character == '+' || character == '-' || character == '/' || character == '*' ||
