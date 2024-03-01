@@ -15,4 +15,7 @@
     <string name="buttonName4">Add</string>
     <string name="buttonName5">Media</string>
     <string name="buttonName6">Profile</string>
+    <string name="squared">x²</string>
+    <string name="cubed">x³</string>
+    <string name="logarithm">log₁₀(x)</string>
 </resources>
