@@ -2,7 +2,6 @@ package com.example.androidprojectcollection;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -19,35 +18,35 @@ public class Calculator extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-        clear = (Button) findViewById(R.id.remove);
-        display = (TextView) findViewById(R.id.display);
-        clearAll = (Button) findViewById(R.id.clearAll);
-        equals = (Button) findViewById(R.id.equals);
-        viewTotal = (TextView) findViewById(R.id.total);
-        point = (Button) findViewById(R.id.point);
-        squared = (Button) findViewById(R.id.squared);
-        cubed = (Button) findViewById(R.id.cubed);
-        logarithm = (Button) findViewById(R.id.logarithm);
+        clear = findViewById(R.id.remove);
+        display = findViewById(R.id.display);
+        clearAll = findViewById(R.id.clearAll);
+        equals = findViewById(R.id.equals);
+        viewTotal = findViewById(R.id.total);
+        point = findViewById(R.id.point);
+        squared = findViewById(R.id.squared);
+        cubed = findViewById(R.id.cubed);
+        logarithm = findViewById(R.id.logarithm);
         viewTotal.setText("0");
         AtomicBoolean isSpecialOp = new AtomicBoolean(false);
         Button[] numbers = {
-                (Button) findViewById(R.id.num0),
-                (Button) findViewById(R.id.num1),
-                (Button) findViewById(R.id.num2),
-                (Button) findViewById(R.id.num3),
-                (Button) findViewById(R.id.num4),
-                (Button) findViewById(R.id.num5),
-                (Button) findViewById(R.id.num6),
-                (Button) findViewById(R.id.num7),
-                (Button) findViewById(R.id.num8),
-                (Button) findViewById(R.id.num9),
+                findViewById(R.id.num0),
+                findViewById(R.id.num1),
+                findViewById(R.id.num2),
+                findViewById(R.id.num3),
+                findViewById(R.id.num4),
+                findViewById(R.id.num5),
+                findViewById(R.id.num6),
+                findViewById(R.id.num7),
+                findViewById(R.id.num8),
+                findViewById(R.id.num9),
         },
         operators = {
-                (Button) findViewById(R.id.add),
-                (Button) findViewById(R.id.subtract),
-                (Button) findViewById(R.id.multiply),
-                (Button) findViewById(R.id.divide),
-                (Button) findViewById(R.id.modulo)
+                findViewById(R.id.add),
+                findViewById(R.id.subtract),
+                findViewById(R.id.multiply),
+                findViewById(R.id.divide),
+                findViewById(R.id.modulo)
         };
         for(int i = 0; i < numbers.length; i ++){
             String input = String.valueOf(i);
@@ -70,7 +69,8 @@ public class Calculator extends AppCompatActivity {
                 if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.') {
                     display.append("0" + b.getText());
                 } else if (isOperator(contentText.charAt(contentText.length() - 1))) {
-                    String output = contentText.substring(0, contentText.length() - 1) + b.getText();
+                    String output = contentText.substring(0, contentText.length() - 1) +
+                            b.getText();
                     display.setText(output);
                 } else display.append(b.getText());
             });
@@ -128,7 +128,7 @@ public class Calculator extends AppCompatActivity {
 
             double output = (!operands.isEmpty() ? Double.parseDouble(operands.get(0)) : 0);
             viewTotal.setText(output < Math.ceil(output) ? String.valueOf(output): output == 0 ?
-                    "": String.valueOf(output).replaceAll("0*$", "").
+                    "0": String.valueOf(output).replaceAll("0*$", "").
                             replaceAll("\\.$", "")
                     );
         });
@@ -163,7 +163,8 @@ public class Calculator extends AppCompatActivity {
                 equals.performClick();
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
-                double output = Math.pow(viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
+                double output = Math.pow(viewTotalText.contains(".") ?
+                        Double.parseDouble(viewTotalText) :
                         (double) Integer.parseInt(viewTotalText), 2);
                 viewTotal.setText(
                         output < Math.ceil(output) ? String.valueOf(output) :
