@@ -2,65 +2,133 @@ package com.example.androidprojectcollection;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Calculator extends AppCompatActivity {
-    int i;
-    ArrayList<Button> numbers = new ArrayList<>(), operators = new ArrayList<>();
-    Button clear;
-    TextView display;
+    Button clear, clearAll, equals, point, squared, cubed, logarithmic;
+    TextView display, viewTotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
         clear = (Button) findViewById(R.id.remove);
         display = (TextView) findViewById(R.id.display);
-        numbers.add((Button) findViewById(R.id.num1));
-        numbers.add((Button) findViewById(R.id.num2));
-        numbers.add((Button) findViewById(R.id.num3));
-        numbers.add((Button) findViewById(R.id.num4));
-        numbers.add((Button) findViewById(R.id.num5));
-        numbers.add((Button) findViewById(R.id.num6));
-        numbers.add((Button) findViewById(R.id.num7));
-        numbers.add((Button) findViewById(R.id.num8));
-        numbers.add((Button) findViewById(R.id.num9));
-        numbers.add((Button) findViewById(R.id.num0));
-        numbers.get(0).setOnClickListener(view -> display.append("1"));
-        numbers.get(1).setOnClickListener(view -> display.append("2"));
-        numbers.get(2).setOnClickListener(view -> display.append("3"));
-        numbers.get(3).setOnClickListener(view -> display.append("4"));
-        numbers.get(4).setOnClickListener(view -> display.append("5"));
-        numbers.get(5).setOnClickListener(view -> display.append("6"));
-        numbers.get(6).setOnClickListener(view -> display.append("7"));
-        numbers.get(7).setOnClickListener(view -> display.append("8"));
-        numbers.get(8).setOnClickListener(view -> display.append("9"));
-        numbers.get(9).setOnClickListener(view -> display.append("0"));
-        operators.add((Button) findViewById(R.id.add));
-        operators.add((Button) findViewById(R.id.subtract));
-        operators.add((Button) findViewById(R.id.multiply));
-        operators.add((Button) findViewById(R.id.divide));
-        operators.get(0).setOnClickListener(view -> display.append(" + "));
-        operators.get(1).setOnClickListener(view -> display.append(" - "));
-        operators.get(2).setOnClickListener(view -> display.append(" * "));
-        operators.get(3).setOnClickListener(view -> display.append(" / "));
+        clearAll = (Button) findViewById(R.id.clearAll);
+        equals = (Button) findViewById(R.id.equals);
+        viewTotal = (TextView) findViewById(R.id.total);
+        point = (Button) findViewById(R.id.point);
+        Button[] numbers = {
+                (Button) findViewById(R.id.num0),
+                (Button) findViewById(R.id.num1),
+                (Button) findViewById(R.id.num2),
+                (Button) findViewById(R.id.num3),
+                (Button) findViewById(R.id.num4),
+                (Button) findViewById(R.id.num5),
+                (Button) findViewById(R.id.num6),
+                (Button) findViewById(R.id.num7),
+                (Button) findViewById(R.id.num8),
+                (Button) findViewById(R.id.num9),
+        },
+        operators = {
+                (Button) findViewById(R.id.add),
+                (Button) findViewById(R.id.subtract),
+                (Button) findViewById(R.id.multiply),
+                (Button) findViewById(R.id.divide),
+                (Button) findViewById(R.id.modulo)
+        };
+        for(int i = 0; i < numbers.length; i ++){
+            String input = String.valueOf(i);
+            numbers[i].setOnClickListener(view -> {
+                display.append(input);
+                equals.performClick();
+            });
+        }
+        for (Button b: operators){
+            b.setOnClickListener(view -> {
+                String contentText = display.getText().toString();
+                if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.') {
+                    display.append("0" + b.getText());
+                } else if (isOperator(contentText.charAt(contentText.length() - 1))) {
+                    String output = contentText.substring(0, contentText.length() - 1) + b.getText();
+                    display.setText(output);
+                } else display.append(b.getText());
+            });
+        }
         clear.setOnClickListener(view -> {
             String contentText = display.getText().toString();
-            String[] contents = contentText.split(" ");
-            if(contents.length > 0){
-                contents[contents.length - 1] = contents[contents.length - 1].substring(
-                        0, contents[contents.length - 1].length() - 1
-                );
-                StringBuilder sb = new StringBuilder();
-                for (String s: contents) {
-                    if(s.equals("+") || s.equals("-") || s.equals("/") || s.equals("*")){
-                        sb.append(" " + s + " ");
-                    }
-                }
+            if(!contentText.isEmpty()){
+                String output = contentText.substring(0, contentText.length() - 1);
+                display.setText(output);
             }
         });
+        clearAll.setOnClickListener(view -> {
+            display.setText("");
+            viewTotal.setText("");
+        });
+        equals.setOnClickListener(view -> {
+            ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
+            String contentText = display.getText().toString();
+            double total = 0;
+            Pattern pattern = Pattern.compile("\\d*\\.?\\d+|[-+*/%]");
+            Matcher matcher = pattern.matcher(contentText);
+            while(matcher.find()){
+                String token = matcher.group();
+                if(token.matches("[-+/*%]")){
+                    operator.add(token);
+                }else
+                    operands.add(token);
+            }
+            if(!operands.isEmpty()){
+                total += (operands.get(0).contains(".") ? Double.parseDouble(operands.get(0)) :
+                        (double)Integer.parseInt(operands.get(0)));
+                for (int i = 1; i < operands.size(); i++) {
+                    total = evaluate(operands.get(i), operator.get(i - 1).charAt(0), total);
+                }
+            }
+            String output = String.valueOf(total);
+            viewTotal.setText((!output.contains(".") ? output :
+                    output.replaceAll("0*$", "").
+                            replaceAll("\\.$", "")));
+        });
+        point.setOnClickListener(view -> {
+            String contentText = display.getText().toString();
+            if(contentText.isEmpty() || isOperator(contentText.charAt(contentText.length() - 1))){
+                display.append("0.");
+            }else{
+                display.append(".");
+            }
+        });
+
+    }
+    boolean isOperator(char character){
+        return character == '+' || character == '-' || character == '/' || character == '*' ||
+                character == '%';
+    }
+    double evaluate(String s, char operator, double total){
+        double v = (s.contains(".") ? Double.parseDouble(s) : (double) Integer.parseInt(s));
+        switch (operator){
+            case '+':
+                total += v;
+                break;
+            case '-':
+                total -= v;
+                break;
+            case '*':
+                total *= v;
+                break;
+            case '/':
+                total /= v;
+                break;
+            case '%':
+                total %= v;
+                break;
+        }
+        return total;
     }
 }
