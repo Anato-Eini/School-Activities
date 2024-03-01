@@ -34,6 +34,34 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight = "0.5"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/squared"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/squared" />
+
+            <Button
+                android:id="@+id/cubed"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/cubed" />
+
+            <Button
+                android:id="@+id/logarithm"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="@string/logarithm" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight= "0.5"
             android:orientation="horizontal">
 

@@ -2,16 +2,18 @@ package com.example.androidprojectcollection;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
 public class Calculator extends AppCompatActivity {
-    Button clear, clearAll, equals, point;
+    Button clear, clearAll, equals, point, squared, cubed, logarithm;
     TextView display, viewTotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +25,11 @@ public class Calculator extends AppCompatActivity {
         equals = (Button) findViewById(R.id.equals);
         viewTotal = (TextView) findViewById(R.id.total);
         point = (Button) findViewById(R.id.point);
+        squared = (Button) findViewById(R.id.squared);
+        cubed = (Button) findViewById(R.id.cubed);
+        logarithm = (Button) findViewById(R.id.logarithm);
         viewTotal.setText("0");
+        AtomicBoolean isSpecialOp = new AtomicBoolean(false);
         Button[] numbers = {
                 (Button) findViewById(R.id.num0),
                 (Button) findViewById(R.id.num1),
@@ -46,12 +52,20 @@ public class Calculator extends AppCompatActivity {
         for(int i = 0; i < numbers.length; i ++){
             String input = String.valueOf(i);
             numbers[i].setOnClickListener(view -> {
+                if(isSpecialOp.get()) {
+                    display.setText(viewTotal.getText().toString());
+                    isSpecialOp.set(false);
+                }
                 display.append(input);
                 equals.performClick();
             });
         }
         for (Button b: operators){
             b.setOnClickListener(view -> {
+                if(isSpecialOp.get()){
+                    display.setText(viewTotal.getText().toString());
+                    isSpecialOp.set(false);
+                }
                 String contentText = display.getText().toString();
                 if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.') {
                     display.append("0" + b.getText());
@@ -74,15 +88,19 @@ public class Calculator extends AppCompatActivity {
             viewTotal.setText("0");
         });
         equals.setOnClickListener(view -> {
+            if(isSpecialOp.get()){
+                display.setText(viewTotal.getText().toString());
+                isSpecialOp.set(false);
+            }
             ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
             String contentText = display.getText().toString();
             Pattern pattern = Pattern.compile("\\d*\\.?\\d+|[-+*/%]");
             Matcher matcher = pattern.matcher(contentText);
             while(matcher.find()){
                 String token = matcher.group();
-                if(token.matches("[-+/*%]")){
+                if(token.matches("[-+/*%]"))
                     operator.add(token);
-                }else
+                else
                     operands.add(token);
             }
             if(operator.size() == operands.size() && !operands.isEmpty())
@@ -109,8 +127,8 @@ public class Calculator extends AppCompatActivity {
                     evaluate2(i, operands, operator);
 
             double output = (!operands.isEmpty() ? Double.parseDouble(operands.get(0)) : 0);
-            viewTotal.setText(output < Math.ceil(output) ? String.valueOf(output):
-                    String.valueOf(output).replaceAll("0*$", "").
+            viewTotal.setText(output < Math.ceil(output) ? String.valueOf(output): output == 0 ?
+                    "": String.valueOf(output).replaceAll("0*$", "").
                             replaceAll("\\.$", "")
                     );
         });
@@ -118,16 +136,63 @@ public class Calculator extends AppCompatActivity {
             String contentText = display.getText().toString();
             if(contentText.isEmpty() || isOperator(contentText.charAt(contentText.length() - 1))){
                 display.append("0.");
-            }else{
+            }else if(contentText.charAt(contentText.length() - 1) != '.'){
                 display.append(".");
+            }
+        });
+
+        logarithm.setOnClickListener(view -> {
+            if(!display.getText().toString().isEmpty()){
+                equals.performClick();
+                String viewTotalText = viewTotal.getText().toString();
+                display.setText(viewTotalText);
+                double output = Math.log10(
+                        viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
+                                (double) Integer.parseInt(viewTotalText)
+                );
+                viewTotal.setText(
+                        output < Math.ceil(output) ? String.valueOf(output) :
+                                String.valueOf(output).replaceAll("0*$", "").
+                                        replaceAll("\\.$", "")
+                );
+                isSpecialOp.set(true);
+            }
+        });
+        squared.setOnClickListener(view -> {
+            if(!display.getText().toString().isEmpty()){
+                equals.performClick();
+                String viewTotalText = viewTotal.getText().toString();
+                display.setText(viewTotalText);
+                double output = Math.pow(viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
+                        (double) Integer.parseInt(viewTotalText), 2);
+                viewTotal.setText(
+                        output < Math.ceil(output) ? String.valueOf(output) :
+                                String.valueOf(output).replaceAll("0*$", "").
+                                        replaceAll("\\.$", "")
+                );
+                isSpecialOp.set(true);
+            }
+        });
+        cubed.setOnClickListener(view -> {
+            if(!display.getText().toString().isEmpty()){
+                equals.performClick();
+                String viewTotalText = viewTotal.getText().toString();
+                display.setText(viewTotalText);
+                double output = Math.pow(
+                        viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
+                                (double) Integer.parseInt(viewTotalText), 3);
+                viewTotal.setText(
+                        output < Math.ceil(output) ? String.valueOf(output) :
+                                String.valueOf(output).replaceAll("0*$", "").
+                                        replaceAll("\\.$", "")
+                );
+                isSpecialOp.set(true);
             }
         });
     }
 
     void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators){
-        double operand1;
-        operand1 = (operands.get(i).contains(".") ?
-                Double.parseDouble(operands.get(i)) :
+        double operand1 = (operands.get(i).contains(".") ? Double.parseDouble(operands.get(i)) :
                 (double) Integer.parseInt(operands.get(i)));
         operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
         operands.remove(i + 1);
