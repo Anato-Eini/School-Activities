@@ -39,7 +39,7 @@ public class Calculator extends AppCompatActivity {
                 findViewById(R.id.num6),
                 findViewById(R.id.num7),
                 findViewById(R.id.num8),
-                findViewById(R.id.num9),
+                findViewById(R.id.num9)
         },
         operators = {
                 findViewById(R.id.add),
