@@ -66,21 +66,21 @@ public class Calculator extends AppCompatActivity {
                     isSpecialOp.set(false);
                 }
                 String contentText = display.getText().toString();
-                if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.') {
+                if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.')
                     display.append("0" + b.getText());
-                } else if (isOperator(contentText.charAt(contentText.length() - 1))) {
-                    String output = contentText.substring(0, contentText.length() - 1) +
-                            b.getText();
-                    display.setText(output);
-                } else display.append(b.getText());
+                else if (isOperator(contentText.charAt(contentText.length() - 1)))
+                    display.setText(
+                            contentText.substring(0, contentText.length() - 1).
+                                    concat(b.getText().toString())
+                    );
+                else
+                    display.append(b.getText());
             });
         }
         clear.setOnClickListener(view -> {
             String contentText = display.getText().toString();
-            if(!contentText.isEmpty()){
-                String output = contentText.substring(0, contentText.length() - 1);
-                display.setText(output);
-            }
+            if(!contentText.isEmpty())
+                display.setText(contentText.substring(0, contentText.length() - 1));
             equals.performClick();
         });
         clearAll.setOnClickListener(view -> {
@@ -94,8 +94,7 @@ public class Calculator extends AppCompatActivity {
             }
             ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
             String contentText = display.getText().toString();
-            Pattern pattern = Pattern.compile("\\d*\\.?\\d+|[-+*/%]");
-            Matcher matcher = pattern.matcher(contentText);
+            Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
             while(matcher.find()){
                 String token = matcher.group();
                 if(token.matches("[-+/*%]"))
