@@ -205,16 +205,16 @@ public class Calculator extends AppCompatActivity {
             while(i < operator.size() && operator.get(i).equals("/"))
                 evaluate2(i, operands, operator);
 
+        for (int i = 0; i < operator.size(); i++)
+            while(i < operator.size() && operator.get(i).equals("%"))
+                evaluate2(i, operands, operator);
+
         for(int i = 0; i < operator.size(); i++)
             while(i < operator.size() && operator.get(i).equals("+"))
                 evaluate2(i, operands, operator);
 
         for(int i = 0; i < operator.size(); i++)
             while(i < operator.size() && operator.get(i).equals("-"))
-                evaluate2(i, operands, operator);
-
-        for (int i = 0; i < operator.size(); i++)
-            while(i < operator.size() && operator.get(i).equals("%"))
                 evaluate2(i, operands, operator);
 
         double output = (!operands.isEmpty() ? Double.parseDouble(operands.get(0)) : 0);
