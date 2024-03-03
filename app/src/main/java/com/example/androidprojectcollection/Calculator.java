@@ -222,7 +222,8 @@ public class Calculator extends AppCompatActivity {
             System.out.println(output);
             String outputString = String.valueOf(output);
             viewTotal.setText(output < Math.ceil(output) ? outputString : output == 0 ?
-                    "0" : outputString.contains("E") ? String.format(Locale.US, "%.0f", output) :
+                    "0" : outputString.contains("E") ?
+                    String.format(Locale.US, "%.0f", output) :
                     outputString.replaceAll("0*$", "").
                             replaceAll("\\.$", "")
             );
