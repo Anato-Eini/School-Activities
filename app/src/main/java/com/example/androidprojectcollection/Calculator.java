@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -106,13 +107,18 @@ public class Calculator extends AppCompatActivity {
                 display.setText(viewTotalText);
                 double output = Math.log10(
                         viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
-                                (double) Integer.parseInt(viewTotalText)
+                                (double) Long.parseLong(viewTotalText)
                 );
-                viewTotal.setText(
-                        output < Math.ceil(output) ? String.valueOf(output) :
-                                String.valueOf(output).replaceAll("0*$", "").
-                                        replaceAll("\\.$", "")
-                );
+                if(!Double.isInfinite(output)) {
+                    String outputString = String.valueOf(output);
+                    viewTotal.setText(
+                            output < Math.ceil(output) ?
+                                    outputString : outputString.contains("E") ?
+                                    String.format(Locale.US, "%.0f", output) :
+                                    outputString.replaceAll("0*$", "").
+                                            replaceAll("\\.$", "")
+                    );
+                }
                 isSpecialOp.set(true);
             }
         });
@@ -123,12 +129,17 @@ public class Calculator extends AppCompatActivity {
                 display.setText(viewTotalText);
                 double output = Math.pow(viewTotalText.contains(".") ?
                         Double.parseDouble(viewTotalText) :
-                        (double) Integer.parseInt(viewTotalText), 2);
-                viewTotal.setText(
-                        output < Math.ceil(output) ? String.valueOf(output) :
-                                String.valueOf(output).replaceAll("0*$", "").
-                                        replaceAll("\\.$", "")
-                );
+                        (double) Long.parseLong(viewTotalText), 2);
+                if(!Double.isInfinite(output)) {
+                    String outputString = String.valueOf(output);
+                    viewTotal.setText(
+                            output < Math.ceil(output) ?
+                                    outputString : outputString.contains("E") ?
+                                    String.format(Locale.US, "%.0f", output) :
+                                    outputString.replaceAll("0*$", "").
+                                            replaceAll("\\.$", "")
+                    );
+                }
                 isSpecialOp.set(true);
             }
         });
@@ -139,12 +150,17 @@ public class Calculator extends AppCompatActivity {
                 display.setText(viewTotalText);
                 double output = Math.pow(
                         viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
-                                (double) Integer.parseInt(viewTotalText), 3);
-                viewTotal.setText(
-                        output < Math.ceil(output) ? String.valueOf(output) :
-                                String.valueOf(output).replaceAll("0*$", "").
-                                        replaceAll("\\.$", "")
-                );
+                                (double) Long.parseLong(viewTotalText), 3);
+                if(!Double.isInfinite(output)) {
+                    String outputString = String.valueOf(output);
+                    viewTotal.setText(
+                            output < Math.ceil(output) ?
+                                    outputString : outputString.contains("E") ?
+                                            String.format(Locale.US, "%.0f", output) :
+                                            outputString.replaceAll("0*$", "").
+                                                    replaceAll("\\.$", "")
+                    );
+                }
                 isSpecialOp.set(true);
             }
         });
@@ -152,7 +168,7 @@ public class Calculator extends AppCompatActivity {
 
     void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators){
         double operand1 = (operands.get(i).contains(".") ? Double.parseDouble(operands.get(i)) :
-                (double) Integer.parseInt(operands.get(i)));
+                (double) Long.parseLong(operands.get(i)));
         operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
         operands.remove(i + 1);
         operands.set(i, String.valueOf(operand1));
@@ -202,14 +218,19 @@ public class Calculator extends AppCompatActivity {
                 evaluate2(i, operands, operator);
 
         double output = (!operands.isEmpty() ? Double.parseDouble(operands.get(0)) : 0);
-        viewTotal.setText(output < Math.ceil(output) ? String.valueOf(output): output == 0 ?
-                "0": String.valueOf(output).replaceAll("0*$", "").
-                replaceAll("\\.$", "")
-        );
+        if(!Double.isInfinite(output)){
+            System.out.println(output);
+            String outputString = String.valueOf(output);
+            viewTotal.setText(output < Math.ceil(output) ? outputString : output == 0 ?
+                    "0" : outputString.contains("E") ? String.format(Locale.US, "%.0f", output) :
+                    outputString.replaceAll("0*$", "").
+                            replaceAll("\\.$", "")
+            );
+        }
     }
 
     double evaluate(String s, char operator, double total){
-        double v = (s.contains(".") ? Double.parseDouble(s) : (double) Integer.parseInt(s));
+        double v = (s.contains(".") ? Double.parseDouble(s) : (double) Long.parseLong(s));
         switch (operator){
             case '+':
                 total += v;
