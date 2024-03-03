@@ -156,9 +156,9 @@ public class Calculator extends AppCompatActivity {
                     viewTotal.setText(
                             output < Math.ceil(output) ?
                                     outputString : outputString.contains("E") ?
-                                            String.format(Locale.US, "%.0f", output) :
-                                            outputString.replaceAll("0*$", "").
-                                                    replaceAll("\\.$", "")
+                                    String.format(Locale.US, "%.0f", output) :
+                                    outputString.replaceAll("0*$", "").
+                                            replaceAll("\\.$", "")
                     );
                 }
                 isSpecialOp.set(true);
