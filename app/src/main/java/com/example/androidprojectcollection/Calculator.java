@@ -14,8 +14,10 @@ import java.util.regex.Pattern;
 
 public class Calculator extends AppCompatActivity {
     Button clear, clearAll, equals, point, squared, cubed, logarithm;
-    TextView display, viewTotal;
-    AtomicBoolean isSpecialOp = new AtomicBoolean(false);
+    static TextView display;
+    static TextView viewTotal;
+    static AtomicBoolean isSpecialOp = new AtomicBoolean(false);
+    AtomicBoolean isDot = new AtomicBoolean(false);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +59,12 @@ public class Calculator extends AppCompatActivity {
                     isSpecialOp.set(false);
                 }
                 display.append(input);
-                compute();
+                Operation.sequential();
             });
         }
         for (Button b: operators){
             b.setOnClickListener(view -> {
+                isDot.set(false);
                 if(isSpecialOp.get()){
                     display.setText(viewTotal.getText().toString());
                     isSpecialOp.set(false);
@@ -69,7 +72,7 @@ public class Calculator extends AppCompatActivity {
                 String contentText = display.getText().toString();
                 if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.')
                     display.append("0" + b.getText());
-                else if (isOperator(contentText.charAt(contentText.length() - 1)))
+                else if (Operation.isOperator(contentText.charAt(contentText.length() - 1)))
                     display.setText(
                             contentText.substring(0, contentText.length() - 1).
                                     concat(b.getText().toString())
@@ -79,30 +82,40 @@ public class Calculator extends AppCompatActivity {
             });
         }
         clear.setOnClickListener(view -> {
+            isDot.set(false);
             String contentText = display.getText().toString();
             if(!contentText.isEmpty())
                 display.setText(contentText.substring(0, contentText.length() - 1));
             isSpecialOp.set(false);
-            compute();
+            Operation.sequential();
         });
         clearAll.setOnClickListener(view -> {
+            isDot.set(false);
             display.setText("");
             viewTotal.setText("0");
             isSpecialOp.set(false);
         });
-        equals.setOnClickListener(view -> display.setText(viewTotal.getText()));
+        equals.setOnClickListener(view -> {
+            isDot.set(false);
+            Operation.compute();
+            display.setText(viewTotal.getText());
+        });
         point.setOnClickListener(view -> {
             String contentText = display.getText().toString();
-            if(contentText.isEmpty() || isOperator(contentText.charAt(contentText.length() - 1))){
+
+            if(contentText.isEmpty() || Operation.isOperator(contentText.charAt(contentText.length() - 1))){
                 display.append("0.");
-            }else if(contentText.charAt(contentText.length() - 1) != '.'){
+            }else if(isDot.get()){
+                return;
+            } else if(contentText.charAt(contentText.length() - 1) != '.'){
                 display.append(".");
+                isDot.set(true);
             }
         });
 
         logarithm.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                compute();
+                Operation.compute();
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.log10(
@@ -124,7 +137,7 @@ public class Calculator extends AppCompatActivity {
         });
         squared.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                compute();
+                Operation.compute();
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.pow(viewTotalText.contains(".") ?
@@ -145,7 +158,7 @@ public class Calculator extends AppCompatActivity {
         });
         cubed.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                compute();
+                Operation.compute();
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.pow(
@@ -164,91 +177,5 @@ public class Calculator extends AppCompatActivity {
                 isSpecialOp.set(true);
             }
         });
-    }
-
-    void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators){
-        double operand1 = (operands.get(i).contains(".") ? Double.parseDouble(operands.get(i)) :
-                (double) Long.parseLong(operands.get(i)));
-        operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
-        operands.remove(i + 1);
-        operands.set(i, String.valueOf(operand1));
-        operators.remove(i);
-    }
-    boolean isOperator(char character){
-        return character == '+' || character == '-' || character == '/' || character == '*' ||
-                character == '%';
-    }
-
-    void compute(){
-        if(isSpecialOp.get()){
-            display.setText(viewTotal.getText().toString());
-            isSpecialOp.set(false);
-        }
-        ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
-        String contentText = display.getText().toString();
-        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
-        while(matcher.find()){
-            String token = matcher.group();
-            if(token.matches("[-+/*%]"))
-                operator.add(token);
-            else
-                operands.add(token);
-        }
-        if(operator.size() == operands.size() && !operands.isEmpty())
-            operator.remove(operator.size() - 1);
-
-        for(int i = 0; i < operator.size(); i++)
-            while(i < operator.size() && operator.get(i).equals("*"))
-                evaluate2(i, operands, operator);
-
-        for(int i = 0; i < operator.size(); i++)
-            while(i < operator.size() && operator.get(i).equals("/"))
-                evaluate2(i, operands, operator);
-
-        for (int i = 0; i < operator.size(); i++)
-            while(i < operator.size() && operator.get(i).equals("%"))
-                evaluate2(i, operands, operator);
-
-        for(int i = 0; i < operator.size(); i++)
-            while(i < operator.size() && operator.get(i).equals("+"))
-                evaluate2(i, operands, operator);
-
-        for(int i = 0; i < operator.size(); i++)
-            while(i < operator.size() && operator.get(i).equals("-"))
-                evaluate2(i, operands, operator);
-
-        double output = (!operands.isEmpty() ? Double.parseDouble(operands.get(0)) : 0);
-        if(!Double.isInfinite(output)){
-            System.out.println(output);
-            String outputString = String.valueOf(output);
-            viewTotal.setText(output < Math.ceil(output) ? outputString : output == 0 ?
-                    "0" : outputString.contains("E") ?
-                    String.format(Locale.US, "%.0f", output) :
-                    outputString.replaceAll("0*$", "").
-                            replaceAll("\\.$", "")
-            );
-        }
-    }
-
-    double evaluate(String s, char operator, double total){
-        double v = (s.contains(".") ? Double.parseDouble(s) : (double) Long.parseLong(s));
-        switch (operator){
-            case '+':
-                total += v;
-                break;
-            case '-':
-                total -= v;
-                break;
-            case '*':
-                total *= v;
-                break;
-            case '/':
-                total /= v;
-                break;
-            case '%':
-                total %= v;
-                break;
-        }
-        return total;
     }
 }
