@@ -1,6 +1,5 @@
 package com.example.androidprojectcollection;
 
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -9,16 +8,17 @@ import android.widget.TextView;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+
 public class Calculator extends AppCompatActivity {
     Button clear, clearAll, equals, point, squared, cubed, logarithm;
-    static TextView display;
-    static TextView viewTotal;
-    static AtomicBoolean isSpecialOp = new AtomicBoolean(false),
-        isError = new AtomicBoolean(false);
+    TextView display, viewTotal;
+    AtomicBoolean isSpecialOp = new AtomicBoolean(false),
+            isDot = new AtomicBoolean(false);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        Operation operation = new Operation();
         clear = findViewById(R.id.remove);
         display = findViewById(R.id.display);
         clearAll = findViewById(R.id.clearAll);
@@ -49,66 +49,72 @@ public class Calculator extends AppCompatActivity {
                 findViewById(R.id.modulo)
         };
         for(int i = 0; i < numbers.length; i ++){
-            if(!isError.get()){
-                String input = String.valueOf(i);
-                numbers[i].setOnClickListener(view -> {
-                    if (isSpecialOp.get()) {
-                        display.setText(viewTotal.getText().toString());
-                        isSpecialOp.set(false);
-                    }
-                    display.append(input);
-                    Operations.sequential();
-                });
-            }
+            String input = String.valueOf(i);
+            numbers[i].setOnClickListener(view -> {
+                if(isSpecialOp.get()) {
+                    display.setText(viewTotal.getText().toString());
+                    isSpecialOp.set(false);
+                }
+                display.append(input);
+                operation.sequential(this);
+            });
         }
         for (Button b: operators){
             b.setOnClickListener(view -> {
-                if(!isError.get()) {
-                    if (isSpecialOp.get()) {
-                        display.setText(viewTotal.getText().toString());
-                        isSpecialOp.set(false);
-                    }
-                    String contentText = display.getText().toString();
-                    if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.')
-                        display.append("0" + b.getText());
-                    else if (Operations.isOperator(contentText.charAt(contentText.length() - 1)))
-                        display.setText(
-                                contentText.substring(0, contentText.length() - 1).
-                                        concat(b.getText().toString())
-                        );
-                    else
-                        display.append(b.getText());
+                isDot.set(false);
+                if(isSpecialOp.get()){
+                    display.setText(viewTotal.getText().toString());
+                    isSpecialOp.set(false);
                 }
+                String contentText = display.getText().toString();
+                if (contentText.isEmpty() || contentText.charAt(contentText.length() - 1) == '.')
+                    display.append("0" + b.getText());
+                else if (operation.isOperator(contentText.charAt(contentText.length() - 1)))
+                    display.setText(
+                            contentText.substring(0, contentText.length() - 1).
+                                    concat(b.getText().toString())
+                    );
+                else
+                    display.append(b.getText());
             });
         }
         clear.setOnClickListener(view -> {
             String contentText = display.getText().toString();
-            if(!contentText.isEmpty())
+            if(!contentText.isEmpty()) {
+                if(contentText.charAt(contentText.length() - 1) == '.')
+                    isDot.set(false);
                 display.setText(contentText.substring(0, contentText.length() - 1));
+            }
             isSpecialOp.set(false);
-            Operations.sequential();
+            operation.sequential(this);
         });
         clearAll.setOnClickListener(view -> {
+            isDot.set(false);
             display.setText("");
             viewTotal.setText("0");
             isSpecialOp.set(false);
         });
         equals.setOnClickListener(view -> {
-            Operations.compute();
+            isDot.set(false);
+            operation.compute(this);
             display.setText(viewTotal.getText());
         });
         point.setOnClickListener(view -> {
-            String contentText = display.getText().toString();
-            if(contentText.isEmpty() || Operations.isOperator(contentText.charAt(contentText.length() - 1))){
-                display.append("0.");
-            }else if(contentText.charAt(contentText.length() - 1) != '.'){
-                display.append(".");
+            if(!isDot.get()){
+                String contentText = display.getText().toString();
+                if (contentText.isEmpty() ||
+                        operation.isOperator(contentText.charAt(contentText.length() - 1)))
+                    display.append("0.");
+                else
+                    display.append(".");
+                isDot.set(true);
             }
         });
 
         logarithm.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                Operations.compute();
+                operation.compute(this);
+                isDot.set(false);
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.log10(
@@ -130,7 +136,8 @@ public class Calculator extends AppCompatActivity {
         });
         squared.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                Operations.compute();
+                operation.compute(this);
+                isDot.set(false);
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.pow(viewTotalText.contains(".") ?
@@ -151,7 +158,8 @@ public class Calculator extends AppCompatActivity {
         });
         cubed.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                Operations.compute();
+                operation.compute(this);
+                isDot.set(false);
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.pow(
