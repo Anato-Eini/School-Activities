@@ -4,11 +4,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import com.example.androidprojectcollection.Calculator.*;
 
 import java.util.Stack;
 public class Operation {
-    static void evaluate2(int i, Stack<String> operands, Stack<String> operators){
+    public void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators){
         double operand1 = (operands.get(i).contains(".") ? Double.parseDouble(operands.get(i)) :
                 (double) Long.parseLong(operands.get(i)));
         operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
@@ -16,24 +15,24 @@ public class Operation {
         operands.set(i, String.valueOf(operand1));
         operators.remove(i);
     }
-    static boolean isOperator(char character){
+    public boolean isOperator(char character){
         return character == '+' || character == '-' || character == '/' || character == '*' ||
                 character == '%';
     }
-    static void sequential(){
-        if(Calculator.isSpecialOp.get()){
-        Calculator.display.setText(Calculator.viewTotal.getText().toString());
-        Calculator.isSpecialOp.set(false);
+    public void sequential(Calculator c){
+        if(c.isSpecialOp.get()){
+        c.display.setText(c.viewTotal.getText().toString());
+        c.isSpecialOp.set(false);
     }
-        Stack<String> operands = new Stack<>(), operator = new Stack<>();
-        String contentText = Calculator.display.getText().toString();
+        ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
+        String contentText = c.display.getText().toString();
         Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
         while(matcher.find()){
             String token = matcher.group();
             if(token.matches("[-+/*%]"))
-                operator.push(token);
+                operator.add(token);
             else
-                operands.push(token);
+                operands.add(token);
         }
         if(operator.size() == operands.size() && !operands.isEmpty())
             operator.remove(operator.size() - 1);
@@ -46,7 +45,7 @@ public class Operation {
         if(!Double.isInfinite(output)){
             System.out.println(output);
             String outputString = String.valueOf(output);
-            Calculator.viewTotal.setText(output < Math.ceil(output) ? outputString : output == 0 ?
+            c.viewTotal.setText(output < Math.ceil(output) ? outputString : output == 0 ?
                     "0" : outputString.contains("E") ?
                     String.format(Locale.US, "%.0f", output) :
                     outputString.replaceAll("0*$", "").
@@ -55,13 +54,14 @@ public class Operation {
         }
 
     }
-    static void compute(){
-        if(Calculator.isSpecialOp.get()){
-            Calculator.display.setText(Calculator.viewTotal.getText().toString());
-            Calculator.isSpecialOp.set(false);
+    public void compute(Calculator c){
+        if(c.isSpecialOp.get()){
+            c.display.setText(c.viewTotal.getText().toString());
+            c.isSpecialOp.set(false);
         }
         ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
-        String contentText = Calculator.display.getText().toString();
+        Stack<String> stackOperands = new Stack<>(), stackOperator = new Stack<>();
+        String contentText = c.display.getText().toString();
         Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
         while(matcher.find()){
             String token = matcher.group();
@@ -73,40 +73,41 @@ public class Operation {
         if(operator.size() == operands.size() && !operands.isEmpty())
             operator.remove(operator.size() - 1);
 
-        for(int i = 0; i < operator.size(); i++)
+        for(int i = operator.size() - 1; i >= 0; i--)
             while(i < operator.size() && operator.get(i).equals("*"))
-                evaluate2(i, operands, operator);
+                addStack(stackOperands, stackOperator, operands, operator, i);
 
-        for(int i = 0; i < operator.size(); i++)
+        for(int i = operator.size() - 1; i >= 0; i--)
             while(i < operator.size() && operator.get(i).equals("/"))
-                evaluate2(i, operands, operator);
+                addStack(stackOperands, stackOperator, operands, operator, i);
 
-        for (int i = 0; i < operator.size(); i++)
+        for(int i = operator.size() - 1; i >= 0; i--)
             while(i < operator.size() && operator.get(i).equals("%"))
-                evaluate2(i, operands, operator);
+                addStack(stackOperands, stackOperator, operands, operator, i);
 
-        for(int i = 0; i < operator.size(); i++)
+        for(int i = operator.size() - 1; i >= 0; i--)
             while(i < operator.size() && operator.get(i).equals("+"))
-                evaluate2(i, operands, operator);
+                addStack(stackOperands, stackOperator, operands, operator, i);
 
-        for(int i = 0; i < operator.size(); i++)
+        for(int i = operator.size() - 1; i >= 0; i--)
             while(i < operator.size() && operator.get(i).equals("-"))
-                evaluate2(i, operands, operator);
+                addStack(stackOperands, stackOperator, operands, operator, i);
 
-        double output = (!operands.isEmpty() ? Double.parseDouble(operands.get(0)) : 0);
-        if(!Double.isInfinite(output)){
-            System.out.println(output);
-            String outputString = String.valueOf(output);
-            Calculator.viewTotal.setText(output < Math.ceil(output) ? outputString : output == 0 ?
-                    "0" : outputString.contains("E") ?
-                    String.format(Locale.US, "%.0f", output) :
-                    outputString.replaceAll("0*$", "").
-                            replaceAll("\\.$", "")
-            );
-        }
+        c.display.setText(stackOperator.pop());
+        while (!stackOperator.isEmpty())
+            c.display.append(stackOperator.pop().concat(stackOperands.pop()));
+        sequential(c);
     }
 
-    static double evaluate(String s, char operator, double total){
+    void addStack(Stack<String> stackOperands, Stack<String> stackOperators,
+                  ArrayList<String> operands, ArrayList<String> operator, int i){
+        if(stackOperands.isEmpty())
+            stackOperands.push(operands.get(0));
+        stackOperands.push(operands.get(i - 1));
+        stackOperators.push(operator.get(i));
+    }
+
+    double evaluate(String s, char operator, double total){
         double v = (s.contains(".") ? Double.parseDouble(s) : (double) Long.parseLong(s));
         switch (operator){
             case '+':
@@ -127,5 +128,4 @@ public class Operation {
         }
         return total;
     }
-
 }
