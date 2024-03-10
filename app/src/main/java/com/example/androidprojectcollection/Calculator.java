@@ -95,7 +95,6 @@ public class Calculator extends AppCompatActivity {
             isSpecialOp.set(false);
         });
         equals.setOnClickListener(view -> {
-            isDot.set(false);
             operation.compute(this);
             display.setText(viewTotal.getText());
         });
@@ -114,7 +113,6 @@ public class Calculator extends AppCompatActivity {
         logarithm.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
                 operation.compute(this);
-                isDot.set(false);
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.log10(
@@ -137,7 +135,6 @@ public class Calculator extends AppCompatActivity {
         squared.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
                 operation.compute(this);
-                isDot.set(false);
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.pow(viewTotalText.contains(".") ?
@@ -159,7 +156,6 @@ public class Calculator extends AppCompatActivity {
         cubed.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
                 operation.compute(this);
-                isDot.set(false);
                 String viewTotalText = viewTotal.getText().toString();
                 display.setText(viewTotalText);
                 double output = Math.pow(
