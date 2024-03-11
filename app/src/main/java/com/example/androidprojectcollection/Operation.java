@@ -14,6 +14,7 @@ public class Operation {
         operands.remove(i + 1);
         operands.set(i, String.valueOf(operand1));
         operators.remove(i);
+        System.out.println("gay porn");
     }
     public boolean isOperator(char character){
         return character == '+' || character == '-' || character == '/' || character == '*' ||
@@ -45,12 +46,12 @@ public class Operation {
 
     public void sequential(Calculator c) throws Exception {
         if(c.isSpecialOp.get()){
-        c.display.setText(c.viewTotal.getText().toString());
-        c.isSpecialOp.set(false);
-    }
+            c.display.setText(c.viewTotal.getText().toString());
+            c.isSpecialOp.set(false);
+        }
         ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
-        String contentText = c.display.getText().toString();
-        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
+        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").
+                matcher(c.display.getText().toString());
         while(matcher.find()){
             String token = matcher.group();
             if(token.matches("[-+/*%]"))
@@ -84,8 +85,8 @@ public class Operation {
         }
         c.isDot.set(false);
         ArrayList<ArrayList<String>> operands = new ArrayList<>(), operator = new ArrayList<>();
-        String contentText = c.display.getText().toString();
-        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
+        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").
+                matcher(c.display.getText().toString());
         while(matcher.find()){
             String token = matcher.group();
             ArrayList<String> element = new ArrayList<>();
@@ -99,7 +100,6 @@ public class Operation {
         }
         if(operator.size() == operands.size() && !operands.isEmpty())
             operator.remove(operator.size() - 1);
-
 
         for(int i = operator.size() - 1; i >= 0; i--)
             while(i < operator.size() && operator.get(i).get(0).equals("*"))
