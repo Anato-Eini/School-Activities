@@ -13,7 +13,7 @@ public class Calculator extends AppCompatActivity {
     Button clear, clearAll, equals, point, squared, cubed, logarithm;
     TextView display, viewTotal;
     AtomicBoolean isSpecialOp = new AtomicBoolean(false),
-            isDot = new AtomicBoolean(false);
+            isDot = new AtomicBoolean(false), isError = new AtomicBoolean(false);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +55,14 @@ public class Calculator extends AppCompatActivity {
                     display.setText(viewTotal.getText().toString());
                     isSpecialOp.set(false);
                 }
-                display.append(input);
-                operation.sequential(this);
+                try {
+                    display.append(input);
+                    operation.sequential(this);
+                    isError.set(false);
+                } catch (Exception e) {
+                    isError.set(true);
+                    viewTotal.setText(e.getMessage());
+                }
             });
         }
         for (Button b: operators){
@@ -86,7 +92,16 @@ public class Calculator extends AppCompatActivity {
                 display.setText(contentText.substring(0, contentText.length() - 1));
             }
             isSpecialOp.set(false);
-            operation.sequential(this);
+            try {
+                if(!isError.get()) {
+                    operation.sequential(this);
+                    isError.set(false);
+                }else
+                    clearAll.performClick();
+            } catch (Exception e) {
+                isError.set(true);
+                viewTotal.setText(e.getMessage());
+            }
         });
         clearAll.setOnClickListener(view -> {
             isDot.set(false);
@@ -95,9 +110,13 @@ public class Calculator extends AppCompatActivity {
             isSpecialOp.set(false);
         });
         equals.setOnClickListener(view -> {
-            isDot.set(false);
-            operation.compute(this);
-            display.setText(viewTotal.getText());
+            try{
+                operation.compute(this);
+                display.setText(viewTotal.getText());
+                isError.set(false);
+            }catch (Exception e){
+                isError.set(true);
+            }
         });
         point.setOnClickListener(view -> {
             if(!isDot.get()){
@@ -113,69 +132,87 @@ public class Calculator extends AppCompatActivity {
 
         logarithm.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                operation.compute(this);
-                isDot.set(false);
-                String viewTotalText = viewTotal.getText().toString();
-                display.setText(viewTotalText);
-                double output = Math.log10(
-                        viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
-                                (double) Long.parseLong(viewTotalText)
-                );
-                if(!Double.isInfinite(output)) {
-                    String outputString = String.valueOf(output);
-                    viewTotal.setText(
-                            output < Math.ceil(output) ?
-                                    outputString : outputString.contains("E") ?
-                                    String.format(Locale.US, "%.0f", output) :
-                                    outputString.replaceAll("0*$", "").
-                                            replaceAll("\\.$", "")
+                try {
+                    operation.compute(this);
+                    String viewTotalText = viewTotal.getText().toString();
+                    display.setText(viewTotalText);
+                    double output = Math.log10(
+                            viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
+                                    (double) Long.parseLong(viewTotalText)
                     );
+                    if(!Double.isInfinite(output)) {
+                        String outputString = String.valueOf(output);
+                        viewTotal.setText(
+                                output < Math.ceil(output) ?
+                                        outputString : outputString.contains("E") ?
+                                        String.format(Locale.US, "%.0f", output) :
+                                        outputString.replaceAll("0*$", "").
+                                                replaceAll("\\.$", "")
+                        );
+                    }
+                    isSpecialOp.set(true);
+                    isError.set(false);
+                } catch (Exception e) {
+                    isError.set(true);
+                    viewTotal.setText(e.getMessage());
                 }
-                isSpecialOp.set(true);
+
             }
         });
         squared.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                operation.compute(this);
-                isDot.set(false);
-                String viewTotalText = viewTotal.getText().toString();
-                display.setText(viewTotalText);
-                double output = Math.pow(viewTotalText.contains(".") ?
-                        Double.parseDouble(viewTotalText) :
-                        (double) Long.parseLong(viewTotalText), 2);
-                if(!Double.isInfinite(output)) {
-                    String outputString = String.valueOf(output);
-                    viewTotal.setText(
-                            output < Math.ceil(output) ?
-                                    outputString : outputString.contains("E") ?
-                                    String.format(Locale.US, "%.0f", output) :
-                                    outputString.replaceAll("0*$", "").
-                                            replaceAll("\\.$", "")
-                    );
+                try {
+                    operation.compute(this);
+                    String viewTotalText = viewTotal.getText().toString();
+                    display.setText(viewTotalText);
+                    double output = Math.pow(viewTotalText.contains(".") ?
+                            Double.parseDouble(viewTotalText) :
+                            (double) Long.parseLong(viewTotalText), 2);
+                    if(!Double.isInfinite(output)) {
+                        String outputString = String.valueOf(output);
+                        viewTotal.setText(
+                                output < Math.ceil(output) ?
+                                        outputString : outputString.contains("E") ?
+                                        String.format(Locale.US, "%.0f", output) :
+                                        outputString.replaceAll("0*$", "").
+                                                replaceAll("\\.$", "")
+                        );
+                    }
+                    isSpecialOp.set(true);
+                    isError.set(false);
+                } catch (Exception e) {
+                    isError.set(true);
+                    viewTotal.setText(e.getMessage());
                 }
-                isSpecialOp.set(true);
+
             }
         });
         cubed.setOnClickListener(view -> {
             if(!display.getText().toString().isEmpty()){
-                operation.compute(this);
-                isDot.set(false);
-                String viewTotalText = viewTotal.getText().toString();
-                display.setText(viewTotalText);
-                double output = Math.pow(
-                        viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
-                                (double) Long.parseLong(viewTotalText), 3);
-                if(!Double.isInfinite(output)) {
-                    String outputString = String.valueOf(output);
-                    viewTotal.setText(
-                            output < Math.ceil(output) ?
-                                    outputString : outputString.contains("E") ?
-                                    String.format(Locale.US, "%.0f", output) :
-                                    outputString.replaceAll("0*$", "").
-                                            replaceAll("\\.$", "")
-                    );
+                try {
+                    operation.compute(this);
+                    String viewTotalText = viewTotal.getText().toString();
+                    display.setText(viewTotalText);
+                    double output = Math.pow(
+                            viewTotalText.contains(".") ? Double.parseDouble(viewTotalText) :
+                                    (double) Long.parseLong(viewTotalText), 3);
+                    if(!Double.isInfinite(output)) {
+                        String outputString = String.valueOf(output);
+                        viewTotal.setText(
+                                output < Math.ceil(output) ?
+                                        outputString : outputString.contains("E") ?
+                                        String.format(Locale.US, "%.0f", output) :
+                                        outputString.replaceAll("0*$", "").
+                                                replaceAll("\\.$", "")
+                        );
+                    }
+                    isSpecialOp.set(true);
+                    isError.set(false);
+                } catch (Exception e) {
+                    isError.set(true);
+                    viewTotal.setText(e.getMessage());
                 }
-                isSpecialOp.set(true);
+
             }
         });
     }
