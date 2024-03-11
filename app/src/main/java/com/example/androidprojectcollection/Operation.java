@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import java.util.Stack;
 public class Operation {
-    public void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators){
+    public void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators) throws Exception {
         double operand1 = (operands.get(i).contains(".") ? Double.parseDouble(operands.get(i)) :
                 (double) Long.parseLong(operands.get(i)));
         operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
@@ -20,7 +20,7 @@ public class Operation {
                 character == '%';
     }
 
-    public String evaluatePostFix(ArrayList<String> expression){
+    public String evaluatePostFix(ArrayList<String> expression) throws Exception {
         Stack<String> stack = new Stack<>();
         for(String s: expression){
             if(s.matches("[-+/*%]")){
@@ -43,7 +43,7 @@ public class Operation {
         operator.remove(i);
     }
 
-    public void sequential(Calculator c){
+    public void sequential(Calculator c) throws Exception {
         if(c.isSpecialOp.get()){
         c.display.setText(c.viewTotal.getText().toString());
         c.isSpecialOp.set(false);
@@ -77,7 +77,7 @@ public class Operation {
         }
 
     }
-    public void compute(Calculator c){
+    public void compute(Calculator c) throws Exception {
         if(c.isSpecialOp.get()){
             c.display.setText(c.viewTotal.getText().toString());
             c.isSpecialOp.set(false);
@@ -133,7 +133,7 @@ public class Operation {
         }
     }
 
-    double evaluate(String s, char operator, double total){
+    double evaluate(String s, char operator, double total) throws Exception{
         double v = (s.contains(".") ? Double.parseDouble(s) : (double) Long.parseLong(s));
         switch (operator){
             case '+':
@@ -146,6 +146,7 @@ public class Operation {
                 total *= v;
                 break;
             case '/':
+                if(v == 0)throw new Exception("Division by zero");
                 total /= v;
                 break;
             case '%':
