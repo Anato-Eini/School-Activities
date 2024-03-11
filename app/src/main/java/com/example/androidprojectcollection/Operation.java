@@ -13,8 +13,6 @@ public class Operation {
         operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
         operands.remove(i + 1);
         operands.set(i, String.valueOf(operand1));
-        operators.remove(i);
-        System.out.println("gay porn");
     }
     public boolean isOperator(char character){
         return character == '+' || character == '-' || character == '/' || character == '*' ||

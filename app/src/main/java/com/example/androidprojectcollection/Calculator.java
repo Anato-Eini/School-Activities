@@ -119,14 +119,17 @@ public class Calculator extends AppCompatActivity {
             }
         });
         point.setOnClickListener(view -> {
+            String contentText = display.getText().toString();
             if(!isDot.get()){
-                String contentText = display.getText().toString();
                 if (contentText.isEmpty() ||
                         operation.isOperator(contentText.charAt(contentText.length() - 1)))
                     display.append("0.");
                 else
                     display.append(".");
                 isDot.set(true);
+            }else if(contentText.charAt(contentText.length() - 1) == '.'){
+                display.setText(contentText.substring(0, contentText.length() - 1));
+                isDot.set(false);
             }
         });
 
