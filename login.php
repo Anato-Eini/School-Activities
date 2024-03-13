@@ -1,5 +1,5 @@
 <?php
-include 'connect.php'
+//include 'connectLogin.php'
 ?>
 <head>
     <meta charset="utf-8" />
@@ -10,6 +10,7 @@ include 'connect.php'
     <title>Login - SB Admin</title>
     <link href="css/styles2.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <header>
     <h2>Nexus</h2>
@@ -24,13 +25,15 @@ include 'connect.php'
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
                                 <div class="card-body">
-                                    <form>
+                                    <form method="get">
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name=""/>
-                                            <label for="inputEmail">Email address</label>
+                                            <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com"
+                                                   name="txtUsername"/>
+                                            <label for="inputEmail">Username</label>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input class="form-control" id="inputPassword" type="password" placeholder="Password" />
+                                            <input class="form-control" id="inputPassword" type="password" placeholder="Password"
+                                            name="txtPassword"/>
                                             <label for="inputPassword">Password</label>
                                         </div>
                                         <div class="form-check mb-3">
@@ -38,8 +41,10 @@ include 'connect.php'
                                             <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
                                         </div>
                                         <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                            <a class="small" href="password.html">Forgot Password?</a>
-                                            <a class="btn btn-primary" href="index.php">Login</a>
+<!--                                            <a class="small" href="password.html">Forgot Password?</a>-->
+                                            <!--<div class="mt-4 mb-0">
+                                                <div class="d-grid"><button class="btn btn-primary btn-block" type="submit" name="btnLogin">Login</button></div>
+                                            </div>-->
                                         </div>
                                     </form>
                                 </div>

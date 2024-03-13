@@ -10,6 +10,7 @@ include 'connect.php'
     <title>Register - SB Admin</title>
     <link href="css/styles2.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <header>
     <h2>Nexus</h2>
@@ -39,10 +40,19 @@ include 'connect.php'
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputUsername" type="text" name="txtusername"/>
+                                                    <label for="inputUsername">Username</label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="txtemail"/>
                                             <label for="inputEmail">Email address</label>
                                         </div>
+
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
