@@ -2,7 +2,7 @@
 $connection = new mysqli('localhost', 'root', '', 'dbacabalf3');
 
 if(!$connection->connect_error){
-    die (mysqli_error($connection));
+    error_log (mysqli_error($connection));
 }
 
 if(isset($_POST['btnRegister'])){
@@ -15,23 +15,33 @@ if(isset($_POST['btnRegister'])){
     $email=$_POST['txtemail'];
     $uname=$_POST['txtusername'];
     $pword=$_POST['txtpassword'];
-    //save data to tbluserprofile
-    $sql1 ="Insert into tbluserprofile(firstname,lastname,gender) values('".$fname."','".$lname."','".$gender."')";
-    mysqli_query($connection,$sql1);
     //Check tbluseraccount if username is already existing. Save info if false. Prompt msg if true.
     $sql2 ="Select * from tbluseraccount where username='".$uname."'";
     $result = mysqli_query($connection,$sql2);
     $row = mysqli_num_rows($result);
     if($row == 0){
+        $sql1 ="Insert into tbluserprofile(firstname,lastname,gender) values('".$fname."','".$lname."','".$gender."')";
+        mysqli_query($connection,$sql1);
         $sql ="Insert into tbluseraccount(emailadd,username,password) values('".$email."','".$uname."','".$pword."')";
         mysqli_query($connection,$sql);
-        echo "<script language='javascript'>
+        echo "<script>
 						alert('New record saved.');
 </script>";
-        //header("location: index.php");
     }else{
-        echo "<script language='javascript'>
+        echo "<script>
 						alert('Username already existing');
 </script>";
+    }
+}
+
+
+if(isset($_GET['btnLogin'])){
+    $username = $_GET['txtUsername'];
+    $password = $_GET['txtPassword'];
+    $sql_query = mysqli_query($connection, "Select * from tbluseraccount where username='".$username."'");
+    if(mysqli_num_rows($sql_query) > 0)
+        echo "<script>window.location.href = 'mainPage.php'</script>";
+    else{
+        echo "<script>alert('Incorrect Credentials')</script>";
     }
 }
