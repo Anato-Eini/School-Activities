@@ -1,6 +1,4 @@
-<?php
-include 'connect.php'
-?>
+
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -11,11 +9,27 @@ include 'connect.php'
     <link href="css/styles2.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <header>
     <h2>Nexus</h2>
 </header>
 <body class="bg-primary">
+<div class="modal" tabindex="-1" id="modalAlreadyExists">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Alert!</h5>
+            </div>
+            <div class="modal-body">
+                <p class="modalMessage">Incorrect Credentials</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
     <div id="layoutAuthentication">
         <div id="layoutAuthentication_content">
             <main>
@@ -83,5 +97,8 @@ include 'connect.php'
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
+<?php
+include 'connect.php'
+?>
 </body>
 

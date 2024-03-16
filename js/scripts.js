@@ -7,16 +7,9 @@
 // Scripts
 // 
 
-window.addEventListener('DOMContentLoaded', event => {
-
-    // Navbar shrink function
-    $('#popUpLogin').on('click', function () {
-        window.location.href = 'login.php';
-    })
-    $('#popUpRegister').on('click', function () {
-        window.location.href = 'register.php';
-    })
-    var navbarShrink = function () {
+window.addEventListener('DOMContentLoaded', () => {
+    alert(1);
+    const navbarShrink = function () {
         const navbarCollapsible = document.body.querySelector('#mainNav');
         if (!navbarCollapsible) {
             return;
