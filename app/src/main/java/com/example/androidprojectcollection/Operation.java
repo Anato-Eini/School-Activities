@@ -89,17 +89,14 @@ public class Operation {
         while(matcher.find()){
             String token = matcher.group();
             ArrayList<String> element = new ArrayList<>();
-            if(token.matches("[-+/*%]")) {
-                element.add(token);
+            element.add(token);
+            if(token.matches("[-+/*%]"))
                 operator.add(element);
-            } else {
-                element.add(token);
+            else
                 operands.add(element);
-            }
         }
         if(operator.size() == operands.size() && !operands.isEmpty())
             operator.remove(operator.size() - 1);
-
 
         for(int i = operator.size() - 1; i >= 0; i--)
             while(i < operator.size() && operator.get(i).get(0).equals("*"))
