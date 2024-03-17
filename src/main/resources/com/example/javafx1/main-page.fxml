@@ -21,7 +21,7 @@
                 <Font name="System Bold Italic" size="31.0"/>
             </font>
         </Label>
-        <Button fx:id="logOutButton" id="logOutButton" mnemonicParsing="false" onMouseClicked="#logOutClick"
+        <Button fx:id="logOutButton" mnemonicParsing="false" onMouseClicked="#logOutClick"
                 text="Log Out" GridPane.rowIndex="2"/>
         <ColorPicker fx:id="colorPicker" GridPane.rowIndex="1"/>
     </GridPane>

@@ -54,5 +54,5 @@
     </Label>
   </GridPane>
   <Button onAction="#onHelloButtonClick" onKeyPressed="#onHelloButtonClick" onMouseClicked="#onHelloButtonClick"
-          text="Sign in" fx:id="logOutButton" id="logOutButton"/>
+          text="Sign in" fx:id="logInButton" id=""/>
 </VBox>
