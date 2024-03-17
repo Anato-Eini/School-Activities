@@ -7,20 +7,19 @@ import java.util.regex.Pattern;
 
 import java.util.Stack;
 public class Operation {
-    public void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators){
+    public void evaluate2(int i, ArrayList<String> operands, ArrayList<String> operators) throws Exception {
         double operand1 = (operands.get(i).contains(".") ? Double.parseDouble(operands.get(i)) :
                 (double) Long.parseLong(operands.get(i)));
         operand1 = evaluate(operands.get(i + 1), operators.get(i).charAt(0), operand1);
         operands.remove(i + 1);
         operands.set(i, String.valueOf(operand1));
-        operators.remove(i);
     }
     public boolean isOperator(char character){
         return character == '+' || character == '-' || character == '/' || character == '*' ||
                 character == '%';
     }
 
-    public String evaluatePostFix(ArrayList<String> expression){
+    public String evaluatePostFix(ArrayList<String> expression) throws Exception {
         Stack<String> stack = new Stack<>();
         for(String s: expression){
             if(s.matches("[-+/*%]")){
@@ -43,14 +42,14 @@ public class Operation {
         operator.remove(i);
     }
 
-    public void sequential(Calculator c){
+    public void sequential(Calculator c) throws Exception {
         if(c.isSpecialOp.get()){
-        c.display.setText(c.viewTotal.getText().toString());
-        c.isSpecialOp.set(false);
-    }
+            c.display.setText(c.viewTotal.getText().toString());
+            c.isSpecialOp.set(false);
+        }
         ArrayList<String> operands = new ArrayList<>(), operator = new ArrayList<>();
-        String contentText = c.display.getText().toString();
-        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
+        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").
+                matcher(c.display.getText().toString());
         while(matcher.find()){
             String token = matcher.group();
             if(token.matches("[-+/*%]"))
@@ -77,15 +76,15 @@ public class Operation {
         }
 
     }
-    public void compute(Calculator c){
+    public void compute(Calculator c) throws Exception {
         if(c.isSpecialOp.get()){
             c.display.setText(c.viewTotal.getText().toString());
             c.isSpecialOp.set(false);
         }
         c.isDot.set(false);
         ArrayList<ArrayList<String>> operands = new ArrayList<>(), operator = new ArrayList<>();
-        String contentText = c.display.getText().toString();
-        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").matcher(contentText);
+        Matcher matcher = Pattern.compile("\\d*\\.?\\d+|[-+*/%]").
+                matcher(c.display.getText().toString());
         while(matcher.find()){
             String token = matcher.group();
             ArrayList<String> element = new ArrayList<>();
@@ -130,7 +129,7 @@ public class Operation {
         }
     }
 
-    double evaluate(String s, char operator, double total){
+    double evaluate(String s, char operator, double total) throws Exception{
         double v = (s.contains(".") ? Double.parseDouble(s) : (double) Long.parseLong(s));
         switch (operator){
             case '+':
@@ -143,6 +142,7 @@ public class Operation {
                 total *= v;
                 break;
             case '/':
+                if(v == 0)throw new Exception("Division by zero");
                 total /= v;
                 break;
             case '%':
