@@ -33,8 +33,8 @@ include 'connect.php';
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
                 <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                <button class="popUp" id="popUpLogin" href="IM-WebDev/login.php">Login</button>
-                <button class="popUp" id="popUpRegister" href="IM-WebDev/register.php">Register</button>
+                <button class="popUp" id="popUpLogin" onclick="window.location.href='login.php'">Login</button>
+                <button class="popUp" id="popUpRegister" onclick="window.location.href='register.php'">Register</button>
             </ul>
         </div>
     </div>

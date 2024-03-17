@@ -71,7 +71,6 @@ if(isset($_GET['btnLogin'])){
             exit();
         }else{
             echo "<script>
-            $('.modalMessage').get(0).textContent = 'Wrong Password database ".$row['password']."';
             const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
             myModalAlternative.show(myModalAlternative);
             </script>";
