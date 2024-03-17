@@ -38,7 +38,6 @@ public class HelloController {
     }
     @FXML
     protected void logOutClick() throws IOException {
-        System.out.println(logOutButton);
         nextColor = "#".concat(colorPicker.getValue().toString().substring(2, 8));
         Parent scene = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("login-view.fxml")));
         VBox p = (VBox) mainPageContainer.getParent();
