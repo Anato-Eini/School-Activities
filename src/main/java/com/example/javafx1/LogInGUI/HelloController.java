@@ -1,4 +1,4 @@
-package com.example.javafx1;
+package com.example.javafx1.LogInGUI;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-package com.example.javafx1;
+package com.example.javafx1.LogInGUI;
 
 import javafx.scene.Node;
 import javafx.scene.Parent;
