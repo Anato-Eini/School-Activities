@@ -12,13 +12,19 @@
         android:theme="@style/Theme.MidtermExam"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
+            android:name=".Batch1"
+            android:exported="true"
+            android:label="@string/title_activity_batch1"
+            android:theme="@style/Theme.MidtermExam">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false">
         </activity>
     </application>
 
