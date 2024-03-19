@@ -10,7 +10,7 @@
           <Font name="System Bold" size="24.0" />
         </font>
     </Label>
-    <GridPane layoutX="51.0" layoutY="110.0" prefHeight="177.0" prefWidth="526.0">
+    <GridPane layoutX="37.0" layoutY="111.0" prefHeight="177.0" prefWidth="526.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="177.0" minWidth="10.0" prefWidth="177.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="165.0" minWidth="0.0" prefWidth="0.0" />
@@ -41,7 +41,7 @@
             </font>
         </TextField>
     </GridPane>
-    <Button fx:id="Start" layoutX="213.0" layoutY="324.0" mnemonicParsing="false" onMouseClicked="#startButton" prefHeight="25.0" prefWidth="218.0" text="Start" />
+    <Button fx:id="Start" layoutX="197.0" layoutY="324.0" mnemonicParsing="false" onMouseClicked="#startButton" prefHeight="25.0" prefWidth="218.0" text="Start" />
    <Label fx:id="status" layoutX="180.0" layoutY="83.0" prefHeight="27.0" prefWidth="330.0" textAlignment="RIGHT" textFill="#ff0505">
       <font>
          <Font name="System Bold" size="18.0" />
