@@ -1,8 +1,7 @@
 package com.example.javafx1.SmarterBruteForce;
 
 public class CrackRunnable implements Runnable{
-    int id;
-    int posIndex;
+    int id, posIndex;
     char vowel;
 
     public CrackRunnable(int id, int posIndex, char vowel) {
@@ -14,8 +13,8 @@ public class CrackRunnable implements Runnable{
     @Override
     public void run() {
         int lengthOfTarget = SmarterBruteForce.input.length();
-        System.out.printf("Thread %0" + lengthOfTarget + "d:" +
-                " _ ".repeat(posIndex) + vowel +
-                " _ ".repeat(lengthOfTarget - posIndex - 1), id);
+        System.out.printf("Thread %0" + String.valueOf(lengthOfTarget * 5).length() + "d: " +
+                "_ ".repeat(posIndex) + vowel + " " +
+                "_ ".repeat(lengthOfTarget - posIndex - 1) + '\n', id);
     }
 }
