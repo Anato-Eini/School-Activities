@@ -18,7 +18,6 @@ public class ThreadRunnable implements Runnable{
         int totalNumbers = end - start;
         for (int j = start; j <= end; j++) {
             int total = 0;
-            int number = j;
             for (int i = 1; i <= j / 2; i++)
                 if (j % i == 0)
                     total += i;
@@ -41,8 +40,8 @@ public class ThreadRunnable implements Runnable{
                         PerfectNumberMainPage.numMTPN.getChildren().add(label);
                     }
                 });
-            Platform.runLater(() -> PerfectNumberMainPage.progressIndicators.get(i).
-                    setProgress(end == number ? 1 : 1 - ((end - number) / (double) totalNumbers)));
+            PerfectNumberMainPage.progressIndicators.get(i).
+                    setProgress(end == j ? 1 : 1 - ((end - j) / (double) totalNumbers));
         }
     }
 }
