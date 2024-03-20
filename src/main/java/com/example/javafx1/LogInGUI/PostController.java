@@ -1,6 +1,8 @@
 package com.example.javafx1.LogInGUI;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -29,7 +31,13 @@ public class PostController {
         }
     }
     @FXML
-    protected void back(){
-
+    protected void back() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("main-page.fxml"));
+        Parent scene = loader.load();
+        AnchorPane parent = (AnchorPane) postContainer.getParent();
+        parent.getChildren().clear();
+        parent.getChildren().add(scene);
+        MainPageController mainPageController = loader.getController();
+        mainPageController.getPosts();
     }
 }
