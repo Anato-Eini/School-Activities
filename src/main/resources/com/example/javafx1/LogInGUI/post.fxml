@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane fx:id="postContainer" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx1.LogInGUI.PostController">
-   <children>
-      <Label layoutX="286.0" layoutY="14.0" text="Post Something" />
-   </children>
+<AnchorPane fx:id="postContainer" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx1.LogInGUI.PostController">
+   <Label layoutX="286.0" layoutY="14.0" text="Post Something"/>
 </AnchorPane>

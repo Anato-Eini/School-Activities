@@ -1,6 +1,5 @@
 package com.example.javafx1.LogInGUI;
 
-import com.example.javafx1.BFSNodeSearch;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -17,6 +16,7 @@ public class HelloController {
     public PasswordField passwordField;
     public Button logInButton;
     public AnchorPane logInContainer;
+    public Button registerBtn;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
