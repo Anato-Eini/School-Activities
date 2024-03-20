@@ -1,5 +1,6 @@
 package com.example.javafx1.LogInGUI;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -18,7 +19,7 @@ public class RegisterController {
     public Button returnBtn, registerBtn;
     public Label status;
     public AnchorPane registerContainer;
-
+    @FXML
     protected void register() throws IOException {
         status.setAlignment(Pos.CENTER);
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty() ||
@@ -46,7 +47,7 @@ public class RegisterController {
             }
         }
     }
-
+    @FXML
     protected void logInPage() throws IOException {
         Parent node = FXMLLoader.load(
                 Objects.requireNonNull(LogInApplication.class.getResource("login-view.fxml")));
