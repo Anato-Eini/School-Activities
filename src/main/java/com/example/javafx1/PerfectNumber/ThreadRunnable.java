@@ -24,19 +24,19 @@ public class ThreadRunnable implements Runnable{
             Label label = new Label(String.valueOf(total));
             if (total < j)
                 Platform.runLater(() -> {
-                    synchronized (PerfectNumberMainPage.numLTPN) {
+                    synchronized (PerfectNumberMainPage.lock1) {
                         PerfectNumberMainPage.numLTPN.getChildren().add(label);
                     }
                 });
             else if (total == j)
                 Platform.runLater(() -> {
-                    synchronized (PerfectNumberMainPage.numPN) {
+                    synchronized (PerfectNumberMainPage.lock2) {
                         PerfectNumberMainPage.numPN.getChildren().add(label);
                     }
                 });
             else
                 Platform.runLater(() -> {
-                    synchronized (PerfectNumberMainPage.numMTPN) {
+                    synchronized (PerfectNumberMainPage.lock3) {
                         PerfectNumberMainPage.numMTPN.getChildren().add(label);
                     }
                 });
