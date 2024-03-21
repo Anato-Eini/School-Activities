@@ -1,5 +1,6 @@
 .root{
-    -fx-background-color: orange;
+    -fx-background-image: url("9797993_4248613.jpg");
+    -fx-background-size: cover;
 }
 
 .names{

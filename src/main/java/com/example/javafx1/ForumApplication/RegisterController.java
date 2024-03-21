@@ -1,8 +1,7 @@
-package com.example.javafx1.LogInGUI;
+package com.example.javafx1.ForumApplication;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,7 +20,6 @@ public class RegisterController {
     public AnchorPane registerContainer;
     @FXML
     protected void register() throws IOException {
-        status.setAlignment(Pos.CENTER);
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty() ||
                 usernameField.getText().isBlank() || passwordField.getText().isBlank())
           status.setText("Blank input/s");
@@ -50,7 +48,7 @@ public class RegisterController {
     @FXML
     protected void logInPage() throws IOException {
         Parent node = FXMLLoader.load(
-                Objects.requireNonNull(LogInApplication.class.getResource("login-view.fxml")));
+                Objects.requireNonNull(ForumApplication.class.getResource("login-view.fxml")));
         AnchorPane parent = (AnchorPane) registerContainer.getParent();
         parent.getChildren().clear();
         parent.getChildren().add(node);

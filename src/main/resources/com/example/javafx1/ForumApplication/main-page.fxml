@@ -4,15 +4,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane fx:id="mainPageContainer" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx1.LogInGUI.MainPageController">
+<AnchorPane fx:id="mainPageContainer" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx1.ForumApplication.MainPageController">
    <Button fx:id="logOutButton" layoutX="14.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#logOutClick" text="Log Out" />
-   <Label layoutX="14.0" layoutY="14.0" text="Wall-F">
-      <font>
-         <Font name="System Bold" size="19.0" />
-      </font>
-   </Label>
    <ScrollPane fx:id="forumContainer" layoutX="73.0" layoutY="42.0" prefHeight="322.0" prefWidth="457.0">
       <VBox id="posts" fx:id="posts" prefHeight="320.0" prefWidth="455.0" />
    </ScrollPane>
    <Button fx:id="postButton" layoutX="274.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#post" text="Post" />
+   <Label layoutX="13.0" layoutY="2.0" text="Wall-F" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="36.0" />
+      </font>
+   </Label>
 </AnchorPane>

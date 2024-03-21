@@ -1,4 +1,4 @@
-package com.example.javafx1.LogInGUI;
+package com.example.javafx1.ForumApplication;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,7 +50,7 @@ public class LogInController {
     @FXML
     protected void registerPage() throws IOException {
         Parent scene = FXMLLoader.load(
-                Objects.requireNonNull(LogInApplication.class.getResource("registerPage.fxml")));
+                Objects.requireNonNull(ForumApplication.class.getResource("registerPage.fxml")));
         logInContainer.getChildren().clear();
         logInContainer.getChildren().add(scene);
     }

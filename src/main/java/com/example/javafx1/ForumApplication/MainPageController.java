@@ -1,4 +1,4 @@
-package com.example.javafx1.LogInGUI;
+package com.example.javafx1.ForumApplication;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -27,8 +28,10 @@ public class MainPageController {
             String[] parts = line.split("\\|");
             Label name = new Label(parts[0]);
             name.getStyleClass().add("names");
-            Label postContent = new Label(parts[1]);
+            name.setWrapText(true);
+            Text postContent = new Text(parts[1]);
             postContent.getStyleClass().add("postContent");
+            postContent.setWrappingWidth(445);
             VBox post = new VBox();
             post.getStyleClass().add("post");
             post.getChildren().add(name);
@@ -47,7 +50,7 @@ public class MainPageController {
     @FXML
     protected void logOutClick() throws IOException {
         Parent scene = FXMLLoader.load(
-                Objects.requireNonNull(LogInApplication.class.getResource("login-view.fxml")));
+                Objects.requireNonNull(ForumApplication.class.getResource("login-view.fxml")));
         AnchorPane p = (AnchorPane) mainPageContainer.getParent();
         p.getChildren().clear();
         p.getChildren().add(scene);
