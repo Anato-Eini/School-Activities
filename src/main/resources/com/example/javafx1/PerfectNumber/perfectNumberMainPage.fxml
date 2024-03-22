@@ -29,12 +29,12 @@
          <Font name="System Italic" size="13.0" />
       </font>
    </Button>
-   <Label fx:id="numLTPN" layoutX="86.0" layoutY="99.0" text="0">
+   <Label fx:id="numLTPN" alignment="CENTER" layoutX="14.0" layoutY="99.0" prefHeight="53.0" prefWidth="184.0" text="0">
       <font>
          <Font name="System Bold" size="36.0" />
       </font>
    </Label>
-   <Label fx:id="numMTPN" layoutX="490.0" layoutY="99.0" text="0">
+   <Label fx:id="numMTPN" alignment="CENTER" layoutX="407.0" layoutY="99.0" prefHeight="53.0" prefWidth="190.0" text="0">
       <font>
          <Font name="System Bold" size="36.0" />
       </font>
