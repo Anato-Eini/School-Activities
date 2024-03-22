@@ -7,8 +7,8 @@ public class FibRunnable implements Runnable{
     }
     @Override
     public void run() {
-        if(id == 0){
-            FibonacciSequence.results[id] = 0;
+        if(id == 0 || id == 1){
+            FibonacciSequence.results[id] = id;
             return;
         }
         synchronized (FibonacciSequence.threads[id - 1]){
@@ -17,9 +17,7 @@ public class FibRunnable implements Runnable{
                 FibonacciSequence.threads[id - 1].wait();
             } catch (InterruptedException ignored) {}
         }
-        if(id != 1)
-            FibonacciSequence.results[id] = FibonacciSequence.results[id - 1] + FibonacciSequence.results[id - 2];
-        else
-            FibonacciSequence.results[id] = 1;
+
+        FibonacciSequence.results[id] = FibonacciSequence.results[id - 1] + FibonacciSequence.results[id - 2];
     }
 }
