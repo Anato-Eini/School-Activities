@@ -36,7 +36,13 @@
       <artifactId>junit-jupiter-engine</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>  </dependencies>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-engine</artifactId>
+      <version>1.10.0</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
@@ -58,7 +64,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>com.example.javafx1/com.example.javafx1.HelloApplication</mainClass>
+              <mainClass>com.example.javafx1/com.example.javafx1.PerfectNumber.PerfectNumberApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

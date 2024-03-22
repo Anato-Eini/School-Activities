@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="postContainer" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx1.ForumApplication.PostController">
+   <Label layoutX="169.0" layoutY="14.0" text="Post Something" textFill="WHITE">
+      <font>
+         <Font name="System Bold" size="35.0" />
+      </font></Label>
+   <ScrollPane layoutX="169.0" layoutY="114.0" prefHeight="232.0" prefWidth="262.0">
+      <TextArea fx:id="postContent" prefHeight="229.0" prefWidth="260.0" wrapText="true" />
+   </ScrollPane>
+   <Button fx:id="returnBtn" layoutX="169.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#back" text="Return" />
+   <Button fx:id="post" layoutX="392.0" layoutY="361.0" mnemonicParsing="false" onMouseClicked="#post" text="Post" />
+   <Label fx:id="status" alignment="CENTER" layoutX="73.0" layoutY="65.0" prefHeight="40.0" prefWidth="455.0" textAlignment="CENTER" textFill="#fc0303">
+      <font>
+         <Font name="System Bold Italic" size="28.0" />
+      </font>
+   </Label>
+</AnchorPane>
