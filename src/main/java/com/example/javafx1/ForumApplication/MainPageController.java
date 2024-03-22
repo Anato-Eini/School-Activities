@@ -2,11 +2,14 @@ package com.example.javafx1.ForumApplication;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -32,10 +35,41 @@ public class MainPageController {
             Text postContent = new Text(parts[1]);
             postContent.getStyleClass().add("postContent");
             postContent.setWrappingWidth(445);
-            VBox post = new VBox();
+            VBox post = new VBox(), replies = new VBox();
+            replies.getStyleClass().add("replies");
+            Label replyLabel = new Label("Replies");
+            replyLabel.getStyleClass().add("replyLabel");
+            replies.getChildren().add(replyLabel);
+
+
+            for(int i = 2; i < parts.length; i += 2){
+                VBox replyContainer = new VBox();
+                if(i != parts.length - 2)
+                    VBox.setMargin(replyContainer, new Insets(0, 0, 10, 0));
+                replyContainer.getStyleClass().add("replyContainers");
+                Label replyUsername = new Label(parts[i]);
+                replyUsername.getStyleClass().add("replyUsernames");
+                Text replyContent = new Text(parts[i + 1]);
+                replyContent.getStyleClass().add("replyContents");
+                replyContainer.getChildren().add(replyUsername);
+                replyContainer.getChildren().add(replyContent);
+                replies.getChildren().add(replyContainer);
+            }
+
+            HBox newReply = new HBox();
+            TextField theReply = new TextField();
+            Button submitReply = new Button();
+            submitReply.setText("Submit Reply");
+            newReply.getChildren().add(theReply);
+            newReply.getChildren().add(submitReply);
+            replies.getChildren().add(newReply);
+
+
+
             post.getStyleClass().add("post");
             post.getChildren().add(name);
             post.getChildren().add(postContent);
+            post.getChildren().add(replies);
             posts.getChildren().addFirst(post);
         }
         br.close();

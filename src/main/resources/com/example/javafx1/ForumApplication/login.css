@@ -10,6 +10,7 @@
 
 .postContent{
     -fx-font-style: italic;
+    -fx-font-size: 13pt;
 }
 
 .post{
@@ -21,4 +22,31 @@
 
 #posts{
     -fx-spacing: 10px;
+}
+
+.replies{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.replyLabel{
+    -fx-font-size: 13pt;
+    -fx-font-weight: bold;
+    -fx-font-style: italic;
+}
+
+.replyContainers{
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.replyUsernames{
+    -fx-font-size: 13pt;
+    -fx-font-weight: bold;
+}
+.replyContents{
+    -fx-font-style: italic;
+    -fx-font-size: 10pt;
 }
