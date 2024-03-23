@@ -47,6 +47,7 @@ public class LogInController {
             }else status.setText("Incorrect Credentials");
         }
     }
+    @FXML
     protected void registerPage() throws IOException {
         Parent scene = FXMLLoader.load(
                 Objects.requireNonNull(LogInApplication.class.getResource("registerPage.fxml")));
