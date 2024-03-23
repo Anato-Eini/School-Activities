@@ -18,16 +18,16 @@ public class PerfectNumberController {
     public AnchorPane mainContainer;
     @FXML
     public void startButton() throws IOException {
-        if (maxNumber.getText().isEmpty() || numberOfThreads.getText().isEmpty()) {
+        if (maxNumber.getText().isEmpty() || numberOfThreads.getText().isEmpty())
             status.setText("Blank input/s");
-        } else if (Pattern.compile("\\D").matcher(maxNumber.getText()).find() ||
-                Pattern.compile("\\D").matcher(numberOfThreads.getText()).find()) {
+        else if (Pattern.compile("\\D").matcher(maxNumber.getText()).find() ||
+                Pattern.compile("\\D").matcher(numberOfThreads.getText()).find())
             status.setText("Incorrect Format");
-        }else if(Integer.parseInt(maxNumber.getText()) <= 0){
+        else if(Integer.parseInt(maxNumber.getText()) <= 0)
             status.setText("Max N cannot be <= 0");
-        }else if(Integer.parseInt(numberOfThreads.getText()) <= 0){
+        else if(Integer.parseInt(numberOfThreads.getText()) <= 0)
             status.setText("Number of Threads cannot be <= 0");
-        } else{
+        else{
             numThreads = Integer.parseInt(numberOfThreads.getText());
             maxNum = Integer.parseInt(maxNumber.getText());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("perfectNumberMainPage.fxml"));
