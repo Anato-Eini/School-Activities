@@ -3,47 +3,53 @@ package com.example.javafx1.LogInGUI;
 import com.example.javafx1.BFSNodeSearch;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Objects;
 
 public class HelloController {
     public Label status;
-    public TextField usernameField, passwordField;
-    public Button logOutButton;
+    public TextField usernameField;
+    public PasswordField passwordField;
     public Button logInButton;
-    public VBox logInContainer;
-    public AnchorPane mainPageContainer;
-    public ColorPicker colorPicker;
-    static String nextColor = "#ffffff";
+    public AnchorPane logInContainer;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
-        if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()){
+        status.setAlignment(Pos.CENTER);
+        if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty() ||
+                usernameField.getText().isBlank() || passwordField.getText().isBlank()){
             status.setText("Blank input/s");
         }else{
-            Parent scene = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("main-page.fxml")));
-            logInContainer.getChildren().clear();
-            logInContainer.getChildren().add(scene);
-            Button logOutButton1 = (Button) BFSNodeSearch.findNode(scene, "logOutButton");
-            assert logOutButton1 != null;
-            logOutButton1.setStyle("-fx-background-color: ".concat(nextColor).concat(";"));
+            BufferedReader br = new BufferedReader(new FileReader("users.txt"));
+            String line;
+            boolean isRegistered = false;
+            while((line = br.readLine()) != null){
+                String[] tokens = line.split(" ");
+                if(tokens[0].equals(usernameField.getText()) && tokens[1].equals(passwordField.getText())){
+                    isRegistered = true;
+                    break;
+                }
+            }
+            br.close();
+            if(isRegistered){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("main-page.fxml"));
+                Parent scene = loader.load();
+                logInContainer.getChildren().clear();
+                logInContainer.getChildren().add(scene);
+                MainPageController mainPageController = loader.getController();
+                mainPageController.getPosts();
+            }else status.setText("Incorrect Credentials");
         }
     }
-    @FXML
-    protected void logOutClick() throws IOException {
-        nextColor = "#".concat(colorPicker.getValue().toString().substring(2, 8));
-        Parent scene = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("login-view.fxml")));
-        VBox p = (VBox) mainPageContainer.getParent();
-        p.getChildren().clear();
-        p.getChildren().add(scene);
+    public void registerPage() throws IOException {
+        Parent scene = FXMLLoader.load(
+                Objects.requireNonNull(LogInApplication.class.getResource("registerPage.fxml")));
+        logInContainer.getChildren().clear();
+        logInContainer.getChildren().add(scene);
     }
-
 }
