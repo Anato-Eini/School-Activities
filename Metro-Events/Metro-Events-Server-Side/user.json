@@ -1,0 +1,76 @@
+[
+  {
+    "username": "Destiny",
+    "password": "12345",
+    "userType": "Administrator",
+    "notifications": [
+      {
+        "targetUsername": "New user",
+        "eventName": "Woahhh",
+        "notificationName": "New user is requesting to join an event &ltWoahhh&gt",
+        "notificationType": "2"
+      }
+    ],
+    "reminders": [
+      {
+        "eventName": "Event Participated"
+      },
+      {
+        "eventName": "I Love Louise"
+      }
+    ]
+  },
+  {
+    "username": "Heyaaa",
+    "password": "cutieee",
+    "userType": "Organizer",
+    "notifications": [
+      {
+        "targetUsername": "New user",
+        "eventName": "4 Event",
+        "notificationName": "New user is requesting to join an event &lt4 Event&gt",
+        "notificationType": "2"
+      }
+    ],
+    "reminders": [
+      {
+        "eventName": "cutieee"
+      }
+    ]
+  },
+  {
+    "username": "New User",
+    "password": "New User",
+    "userType": "User",
+    "notifications": [],
+    "reminders": []
+  },
+  {
+    "username": "Another user",
+    "password": "1",
+    "userType": "User",
+    "notifications": [],
+    "reminders": []
+  },
+  {
+    "username": "molt",
+    "password": "molt",
+    "userType": "User",
+    "notifications": [],
+    "reminders": []
+  },
+  {
+    "username": "HackClient",
+    "password": "hacker",
+    "userType": "User",
+    "notifications": [],
+    "reminders": []
+  },
+  {
+    "username": "New user",
+    "password": "New user",
+    "userType": "User",
+    "notifications": [],
+    "reminders": []
+  }
+]
