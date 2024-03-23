@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class SmarterBruteForce {
     static String input;
-    static boolean isFinished = false;
+    static Boolean isFinished = false;
     public static void main(String[] args) throws InterruptedException {
         char[] vowels = {'a', 'e', 'i', 'o', 'u'};
         Scanner sc = new Scanner(System.in);
@@ -13,14 +13,13 @@ public class SmarterBruteForce {
         int length = input.length();
         Thread[] threads = new Thread[length * 5];
         int iteratorForVowels = 0;
-        for(int i = 0; i < threads.length; i++){
+        for(int i = 0; i < threads.length;){
             for(int j = input.length() - 1; j >= 0 && i < threads.length; j--)
-                threads[i++] = new Thread(new CrackRunnable(i, j, vowels[iteratorForVowels]));
-            iteratorForVowels++;
+                threads[i] = new Thread(new CrackRunnable(i++, j, vowels[iteratorForVowels]));
+            iteratorForVowels = ++iteratorForVowels % vowels.length;
         }
         for(Thread t: threads)
-            if(t != null)
-                t.start();
+            t.start();
         for(Thread t: threads)
             t.join();
     }
