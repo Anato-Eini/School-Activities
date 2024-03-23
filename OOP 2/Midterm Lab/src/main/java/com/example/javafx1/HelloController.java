@@ -8,7 +8,6 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -18,6 +17,7 @@ public class HelloController {
     public Label status;
     public TextField usernameField, passwordField;
     public Button logOutButton;
+    public Button logInButton;
     public VBox logInContainer;
     public AnchorPane mainPageContainer;
     public ColorPicker colorPicker;
@@ -31,14 +31,14 @@ public class HelloController {
             Parent scene = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("main-page.fxml")));
             logInContainer.getChildren().clear();
             logInContainer.getChildren().add(scene);
-            System.out.println(nextColor);
-            ((GridPane)((AnchorPane)logInContainer.getChildren().getFirst()).getChildren().getFirst()).
-                    getChildren().get(1).setStyle("-fx-background-color: ".concat(nextColor).concat(";"));
-
+            Button logOutButton1 = (Button)BFSNodeSearch.findNode(scene, "logOutButton");
+            assert logOutButton1 != null;
+            logOutButton1.setStyle("-fx-background-color: ".concat(nextColor).concat(";"));
         }
     }
     @FXML
     protected void logOutClick() throws IOException {
+        System.out.println(logOutButton);
         nextColor = "#".concat(colorPicker.getValue().toString().substring(2, 8));
         Parent scene = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("login-view.fxml")));
         VBox p = (VBox) mainPageContainer.getParent();
