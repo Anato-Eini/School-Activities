@@ -7,13 +7,13 @@
 <AnchorPane fx:id="container" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx1.PerfectNumber.PerfectNumberMainPage">
    <HBox fx:id="progressBars" layoutY="300.0" prefHeight="100.0" prefWidth="600.0" />
    <ScrollPane fx:id="containerLTPN" layoutY="14.0" prefHeight="223.0" prefWidth="200.0">
-      <VBox fx:id="numLTPN" prefHeight="221.0" prefWidth="197.0" />
+      <VBox fx:id="numLTPN" prefHeight="217.0" prefWidth="195.0" />
    </ScrollPane>
    <ScrollPane fx:id="containerPN" layoutX="200.0" layoutY="14.0" prefHeight="223.0" prefWidth="200.0">
       <VBox fx:id="numPN" prefHeight="220.0" prefWidth="197.0" />
    </ScrollPane>
    <ScrollPane fx:id="containerMTPN" layoutX="400.0" layoutY="14.0" prefHeight="223.0" prefWidth="200.0">
-      <VBox fx:id="numMTPN" prefHeight="220.0" prefWidth="198.0" />
+      <VBox fx:id="numMTPN" prefHeight="219.0" prefWidth="196.0" />
    </ScrollPane>
    <Label layoutX="14.0" layoutY="239.0" text="Less than Perfect Numbers">
       <font>
