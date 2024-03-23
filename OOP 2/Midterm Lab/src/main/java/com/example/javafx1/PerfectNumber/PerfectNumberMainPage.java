@@ -14,8 +14,11 @@ import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class PerfectNumberMainPage {
+    public static final ReentrantLock lock1 = new ReentrantLock(),
+            lock2 = new ReentrantLock(), lock3 = new ReentrantLock();
     @FXML
     static public VBox numLTPN, numPN, numMTPN;
     @FXML
