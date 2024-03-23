@@ -46,8 +46,15 @@ public class PerfectNumberMainPage {
     public void initializeFields(){
         AnchorPane parent = (AnchorPane) container.getParent();
         numLTPN = (VBox) BFSNodeSearch.findNode(parent, "numLTPN");
+        assert numLTPN != null;
+        numLTPN.getChildren().clear();
         numPN = (VBox) BFSNodeSearch.findNode(parent, "numPN");
+        assert numPN != null;
+        numPN.getChildren().clear();
         numMTPN = (VBox) BFSNodeSearch.findNode(parent, "numMTPN");
+        assert numMTPN != null;
+        numMTPN.getChildren().clear();
+        progressIndicators.clear();
     }
     public void doReturnBtn() throws IOException {
         Parent p = FXMLLoader.load(

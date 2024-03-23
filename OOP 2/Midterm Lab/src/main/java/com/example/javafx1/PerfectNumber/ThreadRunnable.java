@@ -42,7 +42,7 @@ public class ThreadRunnable implements Runnable{
                     }
                 });
             Platform.runLater(() -> PerfectNumberMainPage.progressIndicators.get(i).
-                    setProgress(end - number == 0 ? 1 : 1 - ((end - number) / (double) totalNumbers)));
+                    setProgress(end == number ? 1 : 1 - ((end - number) / (double) totalNumbers)));
         }
     }
 }
