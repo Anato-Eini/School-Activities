@@ -1,5 +1,6 @@
 package com.example.javafx1.FibonacciSequence;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class FibonacciSequence {
@@ -17,7 +18,6 @@ public class FibonacciSequence {
         threads[n - 1].start();
         threads[n - 1].join();
         System.out.println("Fibonacci Sequence: ");
-        for(int i: results)
-            System.out.print(i + " ");
+        System.out.println(String.join(" ", Arrays.toString(results)));
     }
 }
