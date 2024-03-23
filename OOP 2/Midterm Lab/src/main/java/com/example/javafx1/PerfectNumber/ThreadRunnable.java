@@ -21,23 +21,26 @@ public class ThreadRunnable implements Runnable{
             for (int i = 1; i <= j / 2; i++)
                 if (j % i == 0)
                     total += i;
-            Label label = new Label(String.valueOf(total));
             if (total < j)
                 Platform.runLater(() -> {
                     synchronized (PerfectNumberMainPage.lock1) {
-                        PerfectNumberMainPage.numLTPN.getChildren().add(label);
+                        PerfectNumberMainPage.numLTPN.setText(
+                                Integer.parseInt(PerfectNumberMainPage.numLTPN.getText()) + 1 + "");
                     }
                 });
-            else if (total == j)
+            else if (total == j) {
+                int finalTotal = total;
                 Platform.runLater(() -> {
                     synchronized (PerfectNumberMainPage.lock2) {
-                        PerfectNumberMainPage.numPN.getChildren().add(label);
+                        PerfectNumberMainPage.numPN.getChildren().add(new Label(String.valueOf(finalTotal)));
                     }
                 });
+            }
             else
                 Platform.runLater(() -> {
                     synchronized (PerfectNumberMainPage.lock3) {
-                        PerfectNumberMainPage.numMTPN.getChildren().add(label);
+                        PerfectNumberMainPage.numMTPN.setText(
+                                Integer.parseInt(PerfectNumberMainPage.numMTPN.getText()) + 1 + "");
                     }
                 });
             PerfectNumberMainPage.progressIndicators.get(i).

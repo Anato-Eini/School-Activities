@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +21,7 @@ public class PerfectNumberMainPage {
     public static final ReentrantLock lock1 = new ReentrantLock(),
             lock2 = new ReentrantLock(), lock3 = new ReentrantLock();
     @FXML
-    static public VBox numLTPN, numPN, numMTPN;
+    static public VBox numPN;
     @FXML
     public Button returnBtn;
     @FXML
@@ -28,7 +29,10 @@ public class PerfectNumberMainPage {
     @FXML
     public AnchorPane container;
     static ArrayList<ProgressIndicator> progressIndicators = new ArrayList<>();
-    public ScrollPane containerLTPN, containerPN, containerMTPN;
+    public ScrollPane containerPN;
+    @FXML
+    static public Label numMTPN, numLTPN;
+
     public void startProcess() {
         initializeFields();
         Thread[] threads = new Thread[PerfectNumberController.numThreads];
@@ -48,15 +52,13 @@ public class PerfectNumberMainPage {
     }
     public void initializeFields(){
         AnchorPane parent = (AnchorPane) container.getParent();
-        numLTPN = (VBox) BFSNodeSearch.findNode(parent, "numLTPN");
-        assert numLTPN != null;
-        numLTPN.getChildren().clear();
         numPN = (VBox) BFSNodeSearch.findNode(parent, "numPN");
+        numLTPN = (Label) BFSNodeSearch.findNode(parent, "numLTPN");
+        numMTPN = (Label) BFSNodeSearch.findNode(parent, "numMTPN");
         assert numPN != null;
         numPN.getChildren().clear();
-        numMTPN = (VBox) BFSNodeSearch.findNode(parent, "numMTPN");
-        assert numMTPN != null;
-        numMTPN.getChildren().clear();
+        numMTPN.setText("0");
+        numLTPN.setText("0");
         progressIndicators.clear();
     }
     public void doReturnBtn() throws IOException {
