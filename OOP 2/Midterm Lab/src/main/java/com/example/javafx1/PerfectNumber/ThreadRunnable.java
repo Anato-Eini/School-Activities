@@ -3,9 +3,6 @@ package com.example.javafx1.PerfectNumber;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class ThreadRunnable implements Runnable{
     int start, end, i;
