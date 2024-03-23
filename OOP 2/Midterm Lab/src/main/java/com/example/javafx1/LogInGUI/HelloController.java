@@ -1,5 +1,6 @@
 package com.example.javafx1.LogInGUI;
 
+import com.example.javafx1.BFSNodeSearch;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +32,7 @@ public class HelloController {
             Parent scene = FXMLLoader.load(Objects.requireNonNull(HelloApplication.class.getResource("main-page.fxml")));
             logInContainer.getChildren().clear();
             logInContainer.getChildren().add(scene);
-            Button logOutButton1 = (Button)BFSNodeSearch.findNode(scene, "logOutButton");
+            Button logOutButton1 = (Button) BFSNodeSearch.findNode(scene, "logOutButton");
             assert logOutButton1 != null;
             logOutButton1.setStyle("-fx-background-color: ".concat(nextColor).concat(";"));
         }
