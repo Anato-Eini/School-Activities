@@ -47,7 +47,7 @@ public class MainPageController {
     @FXML
     protected void logOutClick() throws IOException {
         Parent scene = FXMLLoader.load(
-                Objects.requireNonNull(LogInApplication.class.getResource("main-page.fxml")));
+                Objects.requireNonNull(LogInApplication.class.getResource("login-view.fxml")));
         AnchorPane p = (AnchorPane) mainPageContainer.getParent();
         p.getChildren().clear();
         p.getChildren().add(scene);
