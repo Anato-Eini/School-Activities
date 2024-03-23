@@ -10,14 +10,14 @@ import javafx.scene.layout.AnchorPane;
 import java.io.*;
 import java.util.Objects;
 
-public class HelloController {
+public class LogInController {
     public Label status;
     public TextField usernameField;
     public PasswordField passwordField;
     public Button logInButton;
     public AnchorPane logInContainer;
     public Button registerBtn;
-
+    static String username;
     @FXML
     protected void onHelloButtonClick() throws IOException {
         status.setAlignment(Pos.CENTER);
@@ -32,6 +32,7 @@ public class HelloController {
                 String[] tokens = line.split(" ");
                 if(tokens[0].equals(usernameField.getText()) && tokens[1].equals(passwordField.getText())){
                     isRegistered = true;
+                    username = usernameField.getText();
                     break;
                 }
             }
@@ -46,7 +47,7 @@ public class HelloController {
             }else status.setText("Incorrect Credentials");
         }
     }
-    public void registerPage() throws IOException {
+    protected void registerPage() throws IOException {
         Parent scene = FXMLLoader.load(
                 Objects.requireNonNull(LogInApplication.class.getResource("registerPage.fxml")));
         logInContainer.getChildren().clear();

@@ -19,7 +19,7 @@ public class RegisterController {
     public Label status;
     public AnchorPane registerContainer;
 
-    public void register() throws IOException {
+    protected void register() throws IOException {
         status.setAlignment(Pos.CENTER);
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty() ||
                 usernameField.getText().isBlank() || passwordField.getText().isBlank())
@@ -47,7 +47,7 @@ public class RegisterController {
         }
     }
 
-    public void logInPage() throws IOException {
+    protected void logInPage() throws IOException {
         Parent node = FXMLLoader.load(
                 Objects.requireNonNull(LogInApplication.class.getResource("login-view.fxml")));
         AnchorPane parent = (AnchorPane) registerContainer.getParent();
