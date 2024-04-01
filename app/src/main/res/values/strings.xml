@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">AndroidProjectCollection</string>
+    <string name="appName">Instagram</string>
+    <string name="name1">breadcrumbz</string>
+    <string name="name2">Golden Fiesta</string>
+    <string name="name3">Suzaku</string>
+    <string name="name4">Fleurette</string>
+    <string name="name5">Something here</string>
+    <string name="name6">Anitomy</string>
+    <string name="comment">Comment</string>
+    <string name="buttonName">Like</string>
+    <string name="buttonName1">Share</string>
+    <string name="buttonName2">Home</string>
+    <string name="buttonName3">Search</string>
+    <string name="buttonName4">Add</string>
+    <string name="buttonName5">Media</string>
+    <string name="buttonName6">Profile</string>
+    <string name="squared">x²</string>
+    <string name="cubed">x³</string>
+    <string name="logarithm">log₁₀(x)</string>
+</resources>
