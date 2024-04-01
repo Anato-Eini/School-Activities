@@ -18,4 +18,8 @@
     <string name="squared">x²</string>
     <string name="cubed">x³</string>
     <string name="logarithm">log₁₀(x)</string>
+    <string name="black_turn">Black\'s turn</string>
+    <string name="red_turn">Red\'s Turn</string>
+    <string name="black_win">Black Wins</string>
+    <string name="red_win">Red Wins</string>
 </resources>
