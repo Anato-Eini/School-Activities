@@ -7,6 +7,7 @@
     tools:context=".Connect3">
 
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -302,14 +303,14 @@
                 android:id="@+id/button26"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_margin="5dp"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_marginBottom="3dp"
                 android:layout_weight="1"
                 android:background="#FFFFFF"
-                android:text=" "
-                android:layout_margin="5dp" />
+                android:text=" " />
         </LinearLayout>
 
         <LinearLayout
