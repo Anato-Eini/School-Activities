@@ -129,7 +129,8 @@
         </h5>
     <script src="js/RegisterScript.js"></script>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script><?php
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<?php
 require 'connect.php';
 ?>
 </body>

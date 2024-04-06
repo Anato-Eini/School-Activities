@@ -4,7 +4,7 @@ $connection = new mysqli('localhost', 'root', '', 'dbacabalf3');
 if(!$connection->connect_error){
     error_log (mysqli_error($connection));
 }
-
+$acctId = null;
 $message = '';
 if(isset($_POST['btnRegister'])){
     //retrieve data from form and save the value to a variable
@@ -61,24 +61,62 @@ if(isset($_GET['btnLogin'])){
     $password = $_GET['txtPassword'];
 
     $sqlQuery = mysqli_query($connection,
-        "Select password from tbluseraccount where username='".$username."'");
+        "SELECT username, password FROM tbluseraccount WHERE username='".$username."'");
     if($sqlQuery) {
         $row = mysqli_fetch_assoc($sqlQuery);
-
         if(password_verify($password, $row['password'])) {
-            echo "<script>
-            window.location.href = 'mainPage.php'</script>";
+            echo "<script>window.location.href = 'employer.php'</script>";
             exit();
-        }else{
+        } else {
             echo "<script>
             const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
             myModalAlternative.show(myModalAlternative);
             </script>";
         }
-    }else{
+    } else {
         echo "<script>
             const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
             myModalAlternative.show(myModalAlternative);
             </script>";
+    }
+}
+
+/*if(isset($_POST['btnPostJob'])){
+    if(!empty($_POST['jobTitle'])) {
+        $jobTitle = mysqli_real_escape_string($connection, $_POST['jobTitle']);
+        mysqli_query($connection, "INSERT INTO tbljobposting (employerID, employeeID, jobTitle) VALUES ('$acctId', '', '$jobTitle')");
+    } else {
+        echo "Please enter a job title.";
+    }
+}*/
+
+function getPosts(): void
+{
+    global $connection;
+    $query = "SELECT * FROM tbljobposting";
+    $result = mysqli_query($connection, $query);
+
+    if ($result) {
+        $data = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+        }
+
+        echo "<table border='1'>";
+        echo "<tr>";
+        foreach ($data[0] as $key => $value) {
+            echo "<th>$key</th>";
+        }
+        echo "</tr>";
+        foreach ($data as $row) {
+            echo "<tr>";
+            foreach ($row as $value) {
+                echo "<td>$value</td>";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "Error: " . mysqli_error($connection);
     }
 }
