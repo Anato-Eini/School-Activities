@@ -130,37 +130,18 @@ function getPostsEmployee(): void
     $query = "SELECT * FROM tbljobposting";
     $result = mysqli_query($connection, $query);
     if ($result) {
-        $data = array();
-        while ($row = mysqli_fetch_assoc($result)) {
-            $data[] = $row;
-        }
-
-        echo "<table>";
-        echo "<tr>";
-        foreach ($data[0] as $key => $value) {
-            if($key == 'employerID')
-                echo "<th>employer</th>";
-            else if($key == 'employeeID')
-                echo "<th>employee</th>";
-            else
-                echo "<th>$key</th>";
-        }
+        $data = getHeader($result);
         echo "</tr>";
         foreach ($data as $row) {
-            echo "<tr>";
-            foreach ($row as $value) {
-                echo "<td>$value</td>";
-            }
-
+            tableRow($row, $connection);
             if ($row['jobstatus'] === 'Hiring') {
                 echo "<td>
-                            <form method='post'>
-                                <input type='hidden' name='jobid' value=".$row['jobID'].">
-                            <button type='submit' name='applyBtn'>Apply</button>
-                            </form>";
-            } else {
+                        <form method='post'>
+                            <input type='hidden' name='jobid' value=".$row['jobID'].">
+                        <button type='submit' name='applyBtn'>Apply</button>
+                        </form>";
+            } else
                 echo "<td></td>";
-            }
 
             echo "</tr>";
         }
@@ -170,6 +151,43 @@ function getPostsEmployee(): void
     }
 }
 
+/**
+ * @param mixed $row
+ * @param mysqli $connection
+ * @return void
+ */
+function tableRow(mixed $row, mysqli $connection): void
+{
+    echo "<tr>";
+    foreach ($row as $key => $value) {
+        if (($key == 'employerID' || $key == 'employeeID') && $value != 0) {
+            $result = mysqli_query($connection,
+                "SELECT username FROM tbluseraccount WHERE acctid='" . $value . "'");
+            echo "<td>'" . $result->fetch_assoc()['username'] . "'</td>";
+        } else
+            echo "<td>$value</td>";
+    }
+}
+
+function getHeader($result): array
+{
+    $data = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    echo "<table>";
+    echo "<tr>";
+    foreach ($data[0] as $key => $value) {
+        if($key == 'employerID')
+            echo "<th>employer</th>";
+        else if($key == 'employeeID')
+            echo "<th>employee</th>";
+        else
+            echo "<th>$key</th>";
+    }
+    echo "</tr>";
+    return $data;
+}
 
 function getPosts(): void
 {
@@ -177,32 +195,9 @@ function getPosts(): void
     $query = "SELECT * FROM tbljobposting";
     $result = mysqli_query($connection, $query);
     if ($result) {
-        $data = array();
-        while ($row = mysqli_fetch_assoc($result)) {
-            $data[] = $row;
-        }
-
-        echo "<table>";
-        echo "<tr>";
-        foreach ($data[0] as $key => $value) {
-            if($key == 'employerID')
-                echo "<th>employer</th>";
-            else if($key == 'employeeID')
-                echo "<th>employee</th>";
-            else
-                echo "<th>$key</th>";
-        }
-        echo "</tr>";
+        $data = getHeader($result);
         foreach ($data as $row) {
-            echo "<tr>";
-            foreach ($row as $key => $value) {
-                if(($key == 'employerID' || $key == 'employeeID') && $value != 0){
-                    $result = mysqli_query($connection,
-                        "SELECT username FROM tbluseraccount WHERE acctid='".$value."'");
-                    echo "<td>'".$result->fetch_assoc()['username']."'</td>";
-                } else
-                    echo "<td>$value</td>";
-            }
+            tableRow($row, $connection);
             echo "</tr>";
         }
         echo "</table>";
