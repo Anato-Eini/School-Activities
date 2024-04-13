@@ -1,5 +1,4 @@
 <?php
-session_start();
 $connection = new mysqli('localhost', 'root', '', 'dbacabalf3');
 
 if(!$connection->connect_error){
@@ -139,7 +138,12 @@ function getPostsEmployee(): void
         echo "<table>";
         echo "<tr>";
         foreach ($data[0] as $key => $value) {
-            echo "<th>$key</th>";
+            if($key == 'employerID')
+                echo "<th>employer</th>";
+            else if($key == 'employeeID')
+                echo "<th>employee</th>";
+            else
+                echo "<th>$key</th>";
         }
         echo "</tr>";
         foreach ($data as $row) {
@@ -147,6 +151,7 @@ function getPostsEmployee(): void
             foreach ($row as $value) {
                 echo "<td>$value</td>";
             }
+
             if ($row['jobstatus'] === 'Hiring') {
                 echo "<td>
                             <form method='post'>
@@ -180,13 +185,23 @@ function getPosts(): void
         echo "<table>";
         echo "<tr>";
         foreach ($data[0] as $key => $value) {
-            echo "<th>$key</th>";
+            if($key == 'employerID')
+                echo "<th>employer</th>";
+            else if($key == 'employeeID')
+                echo "<th>employee</th>";
+            else
+                echo "<th>$key</th>";
         }
         echo "</tr>";
         foreach ($data as $row) {
             echo "<tr>";
-            foreach ($row as $value) {
-                echo "<td>$value</td>";
+            foreach ($row as $key => $value) {
+                if(($key == 'employerID' || $key == 'employeeID') && $value != 0){
+                    $result = mysqli_query($connection,
+                        "SELECT username FROM tbluseraccount WHERE acctid='".$value."'");
+                    echo "<td>'".$result->fetch_assoc()['username']."'</td>";
+                } else
+                    echo "<td>$value</td>";
             }
             echo "</tr>";
         }
