@@ -465,7 +465,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView19"
+                    android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

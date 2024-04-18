@@ -7,19 +7,29 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    Button layoutExerciseBtn, buttonExerciseBtn, calculator, connect3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        layoutExerciseBtn = (Button) findViewById(R.id.layoutExercise);
-        buttonExerciseBtn = (Button) findViewById(R.id.buttonExercise);
-        calculator = (Button) findViewById(R.id.calculator);
-        connect3 = findViewById(R.id.connect3);
-        layoutExerciseBtn.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, LayoutExercise.class)));
-        buttonExerciseBtn.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ButtonExercise.class)));
-        calculator.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, Calculator.class)));
-        connect3.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, Connect3.class)));
+        Button layoutExerciseBtn = findViewById(R.id.layoutExercise),
+        buttonExerciseBtn = findViewById(R.id.buttonExercise),
+        calculator = findViewById(R.id.calculator),
+        connect3 = findViewById(R.id.connect3),
+        passingIntents = findViewById(R.id.passingIntents);
+        layoutExerciseBtn.setOnClickListener(
+                view -> startActivity(
+                        new Intent(this, LayoutExercise.class)));
+        buttonExerciseBtn.setOnClickListener(
+                view -> startActivity(
+                        new Intent(this, ButtonExercise.class)));
+        calculator.setOnClickListener(
+                view -> startActivity(
+                        new Intent(this, Calculator.class)));
+        connect3.setOnClickListener(
+                view -> startActivity(
+                        new Intent(this, Connect3.class)));
+        passingIntents.setOnClickListener(
+                view -> startActivity(
+                        new Intent(this, PassingIntentsExercise.class)));
     }
 }

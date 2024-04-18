@@ -7,6 +7,7 @@
     tools:context=".PassingIntentsExercise">
 
     <LinearLayout
+        android:id="@+id/mainContainer"
         android:layout_width="409dp"
         android:layout_height="729dp"
         android:layout_marginStart="1dp"
@@ -23,14 +24,14 @@
             android:id="@+id/headerText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" Student Registration Form"
+            android:text="@string/student_registration_form"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/headerText1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Complete Name" />
+            android:text="@string/complete_name" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,9 +43,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints="@string/first_name"
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:text="First Name" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/lastNameField"
@@ -53,16 +54,17 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Last Name" />
+                android:autofillHints="@string/last_name" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/headerText2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Gender" />
+            android:text="@string/gender" />
 
         <RadioGroup
+            android:id="@+id/gendersRG"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -72,21 +74,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Male" />
+                android:text="@string/male" />
 
             <RadioButton
                 android:id="@+id/femaleGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Female" />
+                android:text="@string/female" />
 
             <RadioButton
                 android:id="@+id/othersGender"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Others" />
+                android:text="@string/others" />
 
         </RadioGroup>
 
@@ -100,7 +102,7 @@
                 android:layout_width="95dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Birth Date"
+                android:text="@string/birth_date"
                 android:textAlignment="textStart"
                 android:textSize="16sp" />
 
@@ -123,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Phone Number" />
+                android:text="@string/phone_number" />
 
             <EditText
                 android:id="@+id/phoneNumberField"
@@ -144,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Email Address" />
+                android:text="@string/email_address" />
 
             <EditText
                 android:id="@+id/emailAddressField"
@@ -165,7 +167,7 @@
                 android:layout_width="92dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
-                android:text="Address" />
+                android:text="@string/address" />
 
             <EditText
                 android:id="@+id/addressField"
@@ -186,7 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Father's Name" />
+                android:text="@string/father_s_name" />
 
             <EditText
                 android:id="@+id/fatherNameField"
@@ -207,7 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Mother's Name" />
+                android:text="@string/mother_s_name" />
 
             <EditText
                 android:id="@+id/motherNameFIeld"
@@ -228,7 +230,7 @@
                 android:layout_width="97dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="School Graduated" />
+                android:text="@string/school_graduated" />
 
             <EditText
                 android:id="@+id/schoolGraduatedField"
@@ -249,7 +251,7 @@
                 android:layout_width="97dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="School Year Graduated" />
+                android:text="@string/school_year_graduated" />
 
             <EditText
                 android:id="@+id/syGraduatedField"
@@ -270,14 +272,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Clear" />
+                android:text="@string/clear" />
 
             <Button
                 android:id="@+id/submitBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Submit" />
+                android:text="@string/submit" />
         </LinearLayout>
 
     </LinearLayout>
