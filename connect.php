@@ -124,6 +124,50 @@ if(isset($_POST['applyBtn'])){
     WHERE jobID='".$jobid."'");
 }
 
+if(isset($_POST['deletePost'])){
+    mysqli_query($connection, "DELETE FROM tbljobposting WHERE jobID='".$_POST['jobid']."'");
+}
+
+if(isset($_POST['removeEmployee'])){
+    $statement = mysqli_prepare($connection,
+        "UPDATE tbljobposting SET employeeID = 0 where jobID = ?");
+    mysqli_stmt_bind_param($statement, "i", $_POST['jobid']);
+    mysqli_stmt_execute($statement);
+}
+
+function getPostsEmployer(): void
+{
+    global $connection;
+    $query = "SELECT * FROM tbljobposting";
+    $result = mysqli_query($connection, $query);
+    if ($result) {
+        $data = getHeader($result);
+        foreach ($data as $row) {
+            tableRow($row, $connection);
+            if($row['employerID'] == $_GET['uniqueid']){
+                echo "
+                    <td>    
+                    <form method='post'>
+                        <input type='hidden' name='jobid' value='".$row['jobID']."'>  
+                        <button type='submit' name='deletePost'>Delete</button>
+                    </form>
+                    </td>
+                    <td>
+                    <form method='post'>
+                        <input type='hidden' name='jobid' value='".$row['jobID']."'>
+                        <button type='submit' name='removeEmployee'>Remove Employee</button>
+</form>
+</td>
+                ";
+            }
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "Error: " . mysqli_error($connection);
+    }
+}
+
 function getPostsEmployee(): void
 {
     global $connection;
@@ -135,7 +179,7 @@ function getPostsEmployee(): void
         foreach ($data as $row) {
             tableRow($row, $connection);
             if ($row['jobstatus'] === 'Hiring') {
-                echo "<td>
+                echo "
                         <form method='post'>
                             <input type='hidden' name='jobid' value=".$row['jobID'].">
                         <button type='submit' name='applyBtn'>Apply</button>
@@ -189,19 +233,4 @@ function getHeader($result): array
     return $data;
 }
 
-function getPosts(): void
-{
-    global $connection;
-    $query = "SELECT * FROM tbljobposting";
-    $result = mysqli_query($connection, $query);
-    if ($result) {
-        $data = getHeader($result);
-        foreach ($data as $row) {
-            tableRow($row, $connection);
-            echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "Error: " . mysqli_error($connection);
-    }
-}
+

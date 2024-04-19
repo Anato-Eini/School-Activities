@@ -58,7 +58,7 @@
 
 <?php
 require 'connect.php';
-getPosts();
+getPostsEmployer();
 ?>
 
 <button class="btn btn-primary btn-block" type="submit" name="logOut" onclick="window.location.href = 'index.php'">
