@@ -8,11 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
-
-import static java.lang.StringTemplate.STR;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class PostController {
     public AnchorPane postContainer;
@@ -21,17 +19,17 @@ public class PostController {
     public Label status;
 
     @FXML
-    protected void post() throws IOException {
+    protected void post() throws SQLException {
         if(postContent.getText().isBlank())
             status.setText("Blank content");
-        else if(postContent.getText().contains("|"))
-            status.setText("| are not allowed");
-        else{
-            BufferedWriter bw = new BufferedWriter(new FileWriter("posts.txt", true));
-            bw.write(STR."\{LogInController.username}|\{postContent.getText()}\{'\n'}");
-            bw.close();
-            status.setText("Posted Successfully");
-            postContent.setText("");
+        else {
+            PreparedStatement preparedStatement = ForumApplication.connection.prepareStatement(
+                    "INSERT INTO tblpost (author_id, body) values (?, ?)"
+            );
+            preparedStatement.setInt(1, LogInController.idSession);
+            preparedStatement.setString(2, postContent.getText());
+            if(preparedStatement.executeUpdate() > 0)
+                status.setText("Post Successful");
         }
     }
     @FXML

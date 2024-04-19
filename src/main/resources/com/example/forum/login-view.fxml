@@ -40,7 +40,7 @@
          </font>
       </PasswordField>
   </GridPane>
-  <Button id="" fx:id="logInButton" layoutX="491.0" layoutY="322.0" onAction="#onHelloButtonClick" onKeyPressed="#onHelloButtonClick" onMouseClicked="#onHelloButtonClick" text="Sign in">
+  <Button id="" fx:id="logInButton" layoutX="491.0" layoutY="322.0" onKeyPressed="#onHelloButtonClick" onMouseClicked="#onHelloButtonClick" text="Sign in">
       <font>
          <Font size="18.0" />
       </font></Button>

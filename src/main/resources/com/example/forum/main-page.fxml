@@ -10,9 +10,9 @@
       <VBox id="posts" fx:id="posts" prefHeight="320.0" prefWidth="455.0" />
    </ScrollPane>
    <Button fx:id="postButton" layoutX="274.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#post" text="Post" />
-   <Label layoutX="13.0" layoutY="2.0" text="Wall-F" textFill="WHITE">
+   <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="-12.0" prefWidth="591.0" textFill="RED">
       <font>
-         <Font name="System Bold" size="36.0" />
+         <Font name="System Bold Italic" size="36.0" />
       </font>
    </Label>
    <Button fx:id="updateBtn" layoutX="484.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#toUpdateAccount" text="Update Account" />
