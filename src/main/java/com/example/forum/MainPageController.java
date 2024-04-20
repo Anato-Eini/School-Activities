@@ -29,12 +29,18 @@ public class MainPageController {
     public void getPosts() {
         try(Statement statement = ForumApplication.connection.createStatement();
             Statement statement1 = ForumApplication.connection.createStatement()) {
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM tblpost");
-            while (resultSet.next()) {
-                Label name = new Label(getUser(resultSet.getInt("author_id")));
+            ResultSet postRecords = statement.executeQuery("SELECT * FROM tblpost");
+            while (postRecords.next()) {
+                HBox header = new HBox();
+                Label name = new Label(getUser(postRecords.getInt("author_id")));
+                header.getChildren().add(name);
+                if(LogInController.idSession == postRecords.getInt("author_id")){
+
+                    header.getChildren().add(createDeletePostBtn(postRecords.getInt("id")));
+                }
                 name.getStyleClass().add("names");
                 name.setWrapText(true);
-                Text postContent = new Text(resultSet.getString("body"));
+                Text postContent = new Text(postRecords.getString("body"));
                 postContent.getStyleClass().add("postContent");
                 postContent.setWrappingWidth(445);
                 VBox post = new VBox(), replies = new VBox();
@@ -44,7 +50,7 @@ public class MainPageController {
                 replies.getChildren().add(replyLabel);
 
                 ResultSet replySets = statement1.executeQuery(
-                        STR."SELECT * FROM tblreply WHERE post_id = \{resultSet.getInt("id")}");
+                        STR."SELECT * FROM tblreply WHERE post_id = \{postRecords.getInt("id")}");
                 while(replySets.next()) {
                     VBox replyContainer = new VBox();
                     replyContainer.getStyleClass().add("replyContainers");
@@ -61,22 +67,49 @@ public class MainPageController {
                 HBox newReply = new HBox();
                 TextField theReply = new TextField();
                 Button submitReply = createSubmitButton(
-                        theReply, LogInController.idSession, resultSet.getInt("id"));
+                        theReply, LogInController.idSession, postRecords.getInt("id"));
                 newReply.getChildren().add(theReply);
                 newReply.getChildren().add(submitReply);
                 replies.getChildren().add(newReply);
                 //TODO implement delete own replies
+                //TODO implement edit own replies
 
                 post.getStyleClass().add("post");
-                post.getChildren().add(name);
+                post.getChildren().add(header);
                 post.getChildren().add(postContent);
                 post.getChildren().add(replies);
                 posts.getChildren().addFirst(post);
-                //TODO implement delete own posts
             }
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    private Button createEditPostBtn(int post_id){
+        Button editPostBtn = new Button();
+        editPostBtn.setText("Edit Post");
+        editPostBtn.setOnMouseClicked(_ -> {
+            //TODO implement edit own post
+        });
+        return editPostBtn;
+    }
+
+    private Button createDeletePostBtn(int post_id) {
+        Button deletePostBtn = new Button();
+        deletePostBtn.setText("Delete Post");
+        deletePostBtn.setOnMouseClicked(_ -> {
+            try {
+                Statement statement = ForumApplication.connection.createStatement();
+                statement.addBatch(STR."DELETE FROM tblpost WHERE id = \{post_id}");
+                statement.addBatch(STR."DELETE FROM tblreply WHERE post_id = \{post_id}");
+                statement.executeBatch();
+                posts.getChildren().clear();
+                getPosts();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+        return deletePostBtn;
     }
 
     private Button createSubmitButton(TextField theReply, int author_id, int post_id) {
