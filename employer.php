@@ -51,6 +51,10 @@
             <label for="budget">Budget</label>
         </div>
     </div>
+    <div class="col-md-6">
+        <label for="deadlineJob">Deadline:</label>
+        <input type="date" id="deadlineJob" name="deadlineJob">
+    </div>
     <button class="btn btn-primary btn-block" type="submit" name="btnPostJob">
         Post Job
     </button>

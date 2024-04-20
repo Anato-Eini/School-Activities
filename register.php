@@ -82,12 +82,15 @@
                                                     <label for="inputPassword">Password</label>
                                                 </div>
                                             </div>
+                                            <label for="birthDate">BirthDate:</label>
+                                            <input type="date" id="birthDate" name="birthDate">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
                                                     <input class="form-control" id="genderId" type="text" placeholder="Enter your gender" name="txtgender"/>
                                                     <label for="genderId">Gender</label>
                                                 </div>
                                             </div>
+
                                             <!--<div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
                                                     <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />

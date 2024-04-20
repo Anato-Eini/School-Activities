@@ -18,32 +18,25 @@ if(isset($_POST['btnRegister'])){
     $email=$_POST['txtemail'];
     $uname=$_POST['txtusername'];
     $pword=$_POST['txtpassword'];
+    $birthDate=$_POST['birthDate'];
     $userType = $_POST['userType'];
     $sql2 ="Select * from tbluseraccount where username='".$uname."'";
     $result = mysqli_query($connection,$sql2);
     $numUsername = mysqli_num_rows($result);
-    $numFirstName = mysqli_num_rows(mysqli_query($connection,
-        "Select * from tbluserprofile where firstname='".$fname."'"));
-    $numLastName = mysqli_num_rows(mysqli_query($connection,
-        "Select * from tbluserprofile where lastname='".$lname."'"));
-    $numPassword = mysqli_num_rows(mysqli_query($connection,
-        "Select * from tbluseraccount where password='".password_hash($pword, PASSWORD_DEFAULT)."'"));
-    $numEmailAdd = mysqli_num_rows(mysqli_query($connection,
-        "Select * from tbluseraccount where emailadd='".$email."'"));
 
     if($numUsername > 0)
         $message = "User name already exists";
-    else if($numFirstName > 0)
-        $message = "First name already exists";
-    else if($numLastName > 0)
-        $message = "Password already exists";
-    else if($numPassword > 0)
-        $message = "Password already exists";
-    else if($numEmailAdd > 0)
-        $message = "Email Address already exists";
+    else if(empty($birthDate))
+        $message = "Birth Date is required";
+    else if(empty($pword))
+        $message = "Password is required";
+    else if(empty($email))
+        $message = "Email is required";
+    else if(empty($uname))
+        $message = "Username is required";
     else{
-        $sql1 ="Insert into tbluserprofile(firstname,lastname,gender) 
-                values('".$fname."','".$lname."','".$gender."')";
+        $sql1 ="Insert into tbluserprofile(firstname,lastname,gender, birthdate) 
+                values('".$fname."','".$lname."','".$gender."', '".$birthDate."')";
         mysqli_query($connection,$sql1);
         $sql ="Insert into tbluseraccount(emailadd,username,password, usertype) 
                 values('".$email."','".$uname."','".password_hash($pword, PASSWORD_DEFAULT)."', '". $userType."')";
@@ -100,15 +93,18 @@ if(isset($_POST['btnPostJob'])){
         $message = "Please enter skills";
     else if(empty($_POST['budget']))
         $message = "Please enter budget";
-    else {
+    else if(empty($_POST['deadlineJob']))
+        $message = "Please enter deadline";
+    else{
         $jobTitle = mysqli_real_escape_string($connection, $_POST['jobTitle']);
         $skills = mysqli_real_escape_string($connection, $_POST['skills']);
         $description = mysqli_real_escape_string($connection, $_POST['description']);
         $skills = mysqli_real_escape_string($connection, $_POST['skills']);
         $budget = intval(mysqli_real_escape_string($connection, $_POST['budget']));
+        $deadlineJob = mysqli_real_escape_string($connection, $_POST['deadlineJob']);
         mysqli_query($connection, "INSERT INTO tbljobposting (employerID, employeeID, jobTitle, description, 
-                           skillsRequired, budget, jobstatus) VALUES ('$acctid', '', '$jobTitle', '$description',
-                                                                      '$skills', '$budget', 'Hiring')");
+                           skillsRequired, budget, jobstatus, deadline) VALUES ('$acctid', '', '$jobTitle', '$description',
+                                                                      '$skills', '$budget', 'Hiring', '".$deadlineJob."')");
         $message = "Job Posted Successfully";
     }
     echo "<script>
@@ -122,17 +118,41 @@ if(isset($_POST['applyBtn'])){
     $jobid = $_POST['jobid'];
     mysqli_query($connection, "UPDATE tbljobposting SET employeeID='".$_GET['uniqueid']."',jobstatus='Ongoing' 
     WHERE jobID='".$jobid."'");
+    echo "<script>
+            $('#modalMessage').get(0).textContent = 'Apply Job Successfully';
+            const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
+            myModalAlternative.show(myModalAlternative);
+						</script>";
 }
 
 if(isset($_POST['deletePost'])){
     mysqli_query($connection, "DELETE FROM tbljobposting WHERE jobID='".$_POST['jobid']."'");
+    echo "<script>
+            $('#modalMessage').get(0).textContent = 'Delete Job Successfully';
+            const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
+            myModalAlternative.show(myModalAlternative);
+						</script>";
+}
+
+if(isset($_POST['resign'])){
+    mysqli_query($connection, "UPDATE tbljobposting SET jobstatus='Hiring', employeeID=0 WHERE jobID='".$_POST['jobid']."'");
+    echo "<script>
+            $('#modalMessage').get(0).textContent = 'Resign Job Successfully';
+            const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
+            myModalAlternative.show(myModalAlternative);
+						</script>";
 }
 
 if(isset($_POST['removeEmployee'])){
     $statement = mysqli_prepare($connection,
-        "UPDATE tbljobposting SET employeeID = 0 where jobID = ?");
+        "UPDATE tbljobposting SET employeeID = 0, jobstatus='Hiring' where jobID = ?");
     mysqli_stmt_bind_param($statement, "i", $_POST['jobid']);
     mysqli_stmt_execute($statement);
+    echo "<script>
+            $('#modalMessage').get(0).textContent = 'Remove Employee Successfully';
+            const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
+            myModalAlternative.show(myModalAlternative);
+						</script>";
 }
 
 function getPostsEmployer(): void
@@ -152,13 +172,17 @@ function getPostsEmployer(): void
                         <button type='submit' name='deletePost'>Delete</button>
                     </form>
                     </td>
+                    
+                ";
+                if($row['employeeID'] != 0){
+                    echo "
                     <td>
                     <form method='post'>
                         <input type='hidden' name='jobid' value='".$row['jobID']."'>
                         <button type='submit' name='removeEmployee'>Remove Employee</button>
 </form>
-</td>
-                ";
+</td>";
+                }
             }
             echo "</tr>";
         }
@@ -179,13 +203,20 @@ function getPostsEmployee(): void
         foreach ($data as $row) {
             tableRow($row, $connection);
             if ($row['jobstatus'] === 'Hiring') {
-                echo "
+                echo "<td>
                         <form method='post'>
                             <input type='hidden' name='jobid' value=".$row['jobID'].">
                         <button type='submit' name='applyBtn'>Apply</button>
-                        </form>";
-            } else
-                echo "<td></td>";
+                        </form>
+                        </td>";
+            } else if ($row['employeeID'] === $_GET['uniqueid']) {
+                echo "<td>
+                    <form method='post'>
+                    <input type='hidden' name='jobid' value=".$row['jobID'].">
+                    <button type='submit' name='resign'>Resign</button>
+                    </form>
+  </td>";
+            }
 
             echo "</tr>";
         }
@@ -204,7 +235,11 @@ function tableRow(mixed $row, mysqli $connection): void
 {
     echo "<tr>";
     foreach ($row as $key => $value) {
-        if (($key == 'employerID' || $key == 'employeeID') && $value != 0) {
+        if($key == 'jobID')
+            continue;
+        if($key == 'employeeID' && $value == 0){
+            echo "<td> </td>";
+        }else if (($key == 'employerID' || $key == 'employeeID') && $value != 0) {
             $result = mysqli_query($connection,
                 "SELECT username FROM tbluseraccount WHERE acctid='" . $value . "'");
             echo "<td>'" . $result->fetch_assoc()['username'] . "'</td>";
@@ -222,6 +257,8 @@ function getHeader($result): array
     echo "<table>";
     echo "<tr>";
     foreach ($data[0] as $key => $value) {
+        if($key == 'jobID')
+            continue;
         if($key == 'employerID')
             echo "<th>employer</th>";
         else if($key == 'employeeID')
