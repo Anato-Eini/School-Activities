@@ -83,7 +83,7 @@ public:
     // GIVEN the grandparent (or z), find the parent (or y), and the child (or x).
     bool restructure(node* gp) {
         int gpLeftHeight = (gp->left ? gp->left->height() : 0), gpRightHeight = (gp->right ? gp->right->height() : 0);
-        node* par = (gpLeftHeight - gpRightHeight < 0 ? gp->right : gp->left); // parent
+        node* par = (gpLeftHeight - gpRightHeight > 0 ? gp->left : gp->right); // parent
         // TODO find parent
 
         // This is an indicator of the placement of grandparent to parent (gtop)
