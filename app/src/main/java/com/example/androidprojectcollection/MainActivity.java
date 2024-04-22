@@ -15,7 +15,8 @@ public class MainActivity extends AppCompatActivity {
         buttonExerciseBtn = findViewById(R.id.buttonExercise),
         calculator = findViewById(R.id.calculator),
         connect3 = findViewById(R.id.connect3),
-        passingIntents = findViewById(R.id.passingIntents);
+        passingIntents = findViewById(R.id.passingIntents),
+        menuExercise = findViewById(R.id.menus);
         layoutExerciseBtn.setOnClickListener(
                 view -> startActivity(
                         new Intent(this, LayoutExercise.class)));
@@ -31,5 +32,8 @@ public class MainActivity extends AppCompatActivity {
         passingIntents.setOnClickListener(
                 view -> startActivity(
                         new Intent(this, PassingIntentsExercise.class)));
+        menuExercise.setOnClickListener(
+                view -> startActivity(
+                        new Intent(this, MenuExercise.class)));
     }
 }
