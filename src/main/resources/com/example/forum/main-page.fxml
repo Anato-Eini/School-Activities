@@ -15,5 +15,4 @@
          <Font name="System Bold Italic" size="36.0" />
       </font>
    </Label>
-   <Button fx:id="updateBtn" layoutX="484.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#toUpdateAccount" text="Update Account" />
 </AnchorPane>
