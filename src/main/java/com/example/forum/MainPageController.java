@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -30,6 +29,7 @@ public class MainPageController {
         try(Statement statement = ForumApplication.connection.createStatement();
             Statement statement1 = ForumApplication.connection.createStatement()) {
             ResultSet postRecords = statement.executeQuery("SELECT * FROM tblpost");
+
             while (postRecords.next()) {
                 HBox header = new HBox();
                 Label name = new Label(getUser(postRecords.getInt("author_id")));
@@ -38,40 +38,30 @@ public class MainPageController {
                 Text postContent = new Text(postRecords.getString("body"));
                 postContent.getStyleClass().add("postContent");
                 postContent.setWrappingWidth(445);
-                VBox post = new VBox(), replies = new VBox();
-                replies.getStyleClass().add("replies");
                 Label replyLabel = new Label("Replies");
                 replyLabel.getStyleClass().add("replyLabel");
-                replies.getChildren().add(replyLabel);
+                VBox replies = new VBox(replyLabel);
+                replies.getStyleClass().add("replies");
 
                 ResultSet replySets = statement1.executeQuery(
                         STR."SELECT * FROM tblreply WHERE post_id = \{postRecords.getInt("id")}");
                 while(replySets.next()) {
-                    VBox replyContainer = new VBox();
-                    replyContainer.getStyleClass().add("replyContainers");
-                    Label replyUsername = new Label(getUser(replySets.getInt("author_id")));
-                    replyUsername.getStyleClass().add("replyUsernames");
-                    Text replyContent = new Text(replySets.getString("body"));
-                    replyContent.getStyleClass().add("replyContents");
-                    replyContainer.getChildren().addAll(replyUsername, replyContent);
-                    //TODO implement delete own replies
-                    //TODO implement edit own replies
-
-                    replies.getChildren().add(replyContainer);
+                    replies.getChildren().add(createReplyContainer(replySets.getInt("author_id"),
+                            replySets.getString("body"), replySets.getInt("id"), replies));
                 }
 
-                HBox newReply = new HBox();
                 TextField theReply = new TextField();
-                newReply.getChildren().addAll(theReply, createSubmitButton(
-                        theReply, LogInController.idSession, postRecords.getInt("id"), replies));
-                replies.getChildren().add(newReply);
+                replies.getChildren().add(new HBox(theReply, createSubmitReplyBtn(
+                        theReply, LogInController.idSession, postRecords.getInt("id"), replies)));
 
+                VBox post = new VBox(header, postContent, replies);
                 post.getStyleClass().add("post");
-                post.getChildren().addAll(header, postContent, replies);
+                header.getChildren().add(name);
+
                 if(LogInController.idSession == postRecords.getInt("author_id"))
                     header.getChildren().addAll(
-                            name,
-                            createEditPostBtn(postRecords.getInt("id"), postContent, post),
+                            addEditContentElements(postRecords.getInt("id"), postContent, post, header
+                                    , new Button("Edit Post"), true),
                             createDeletePostBtn(postRecords.getInt("id"), post));
                 header.getChildren().forEach(node ->
                         HBox.setMargin(node, new Insets(0, 10, 0, 0)));
@@ -81,49 +71,58 @@ public class MainPageController {
             e.printStackTrace();
         }
     }
+    private Button createDeleteReplyBtn(int reply_id, VBox replyContainer, VBox replies) {
+        Button deleteReplyBtn = new Button("Delete Reply");
+        deleteReplyBtn.setOnMouseClicked(_ -> {
+            try {
+                ForumApplication.connection.createStatement()
+                        .execute(STR."DELETE FROM tblreply WHERE id = \{reply_id}");
+                replies.getChildren().remove(replyContainer);
+                status.setText("Delete reply successfully");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+        return deleteReplyBtn;
+    }
+    private Button addEditContentElements(int id, Text textContent, VBox container, HBox replyHeader,
+                                        Button editContentBtn, boolean isPost) {
+        Button cancelEditContentBtn = new Button("Cancel"), submitEditContentBtn = new Button("Submit");
+        AtomicReference<String> content = new AtomicReference<>(textContent.getText());
 
-    private Button createEditPostBtn(int post_id, Text postContent, VBox post){
-        Button editPostBtn = new Button(), cancelEditPostBtn = new Button(), submitEditPostBtn = new Button();
-        editPostBtn.setText("Edit Post");
-        cancelEditPostBtn.setText("Cancel");
-        submitEditPostBtn.setText("Submit");
+        editContentBtn.setOnMouseClicked(_ -> {
+            replyHeader.getChildren().remove(editContentBtn);
 
-        editPostBtn.setOnMouseClicked(_ -> {
-            AtomicReference<String> bodyPost = new AtomicReference<>(postContent.getText());
-            HBox header = (HBox)post.getChildren().getFirst();
-            TextArea editBody = new TextArea(bodyPost.get());
-            Button editButton = (Button) header.getChildren().get(1);
-            header.getChildren().remove(editButton);
-            post.getChildren().remove(1);
-            VBox editPostContainer = new VBox();
-            HBox optionButtons = new HBox();
-            editBody.setPrefWidth(Region.USE_COMPUTED_SIZE);
-            editBody.setWrapText(true);
+            TextArea editBody = new TextArea(content.get());
             editBody.setPrefHeight(50);
-            optionButtons.getChildren().addAll(cancelEditPostBtn, submitEditPostBtn);
-            editPostContainer.getChildren().addAll(editBody, optionButtons);
-            post.getChildren().add(1, editPostContainer);
+            editBody.setWrapText(true);
 
-            cancelEditPostBtn.setOnMouseClicked(_ -> {
-                editBody.setText(bodyPost.get());
-                post.getChildren().remove(editPostContainer);
-                post.getChildren().add(1, postContent);
-                header.getChildren().add(1, editButton);
+            VBox editReplyContainer = new VBox(editBody, new HBox(cancelEditContentBtn, submitEditContentBtn));
+            container.getChildren().set(1, editReplyContainer);
+
+            cancelEditContentBtn.setOnMouseClicked(_ -> {
+                editBody.setText(content.get());
+                container.getChildren().set(1, textContent);
+                replyHeader.getChildren().add(1, editContentBtn);
             });
 
-            submitEditPostBtn.setOnMouseClicked(_ -> {
-                if(editBody.getText().isEmpty())
+            submitEditContentBtn.setOnMouseClicked(_ -> {
+                if(editBody.getText().isEmpty()){
                     status.setText("Can't leave as blank");
-                else if(!editBody.getText().equals(bodyPost.get())){
+                }else if(!editBody.getText().equals(content.get())){
                     try{
-                        ForumApplication.connection.createStatement().execute(
-                                STR."UPDATE tblpost SET body='\{editBody.getText()}' WHERE id=\{post_id}"
-                        );
-                        postContent.setText((editBody.getText()));
-                        post.getChildren().add(1, postContent);
-                        header.getChildren().add(1, editButton);
-                        post.getChildren().remove(editPostContainer);
-                        bodyPost.set(editBody.getText());
+                        if(isPost)
+                            ForumApplication.connection.createStatement().execute(
+                                    STR."UPDATE tblpost SET body='\{editBody.getText()}' WHERE id=\{id}"
+                            );
+                        else
+                            ForumApplication.connection.createStatement().execute(
+                                    STR."UPDATE tblreply SET body='\{editBody.getText()}' WHERE id=\{id}"
+                            );
+                        textContent.setText(editBody.getText());
+                        replyHeader.getChildren().add(1, editContentBtn);
+                        container.getChildren().set(1, textContent);
+                        content.set(editBody.getText());
                         status.setText("Edit successfully");
                     }catch (SQLException e){
                         e.printStackTrace();
@@ -132,12 +131,10 @@ public class MainPageController {
                     status.setText("Same Content");
             });
         });
-        return editPostBtn;
+        return editContentBtn;
     }
-
     private Button createDeletePostBtn(int post_id, VBox post) {
-        Button deletePostBtn = new Button();
-        deletePostBtn.setText("Delete Post");
+        Button deletePostBtn = new Button("Delete Post");
         deletePostBtn.setOnMouseClicked(_ -> {
             try {
                 Statement statement = ForumApplication.connection.createStatement();
@@ -152,29 +149,22 @@ public class MainPageController {
         });
         return deletePostBtn;
     }
-
-    private Button createSubmitButton(TextField theReply, int author_id, int post_id, VBox replies) {
-        Button submitReply = new Button();
-        submitReply.setText("Submit Reply");
+    private Button createSubmitReplyBtn(TextField theReply, int author_id, int post_id, VBox replies) {
+        Button submitReply = new Button("Submit Reply");
         submitReply.setOnMouseClicked(_ -> {
             if(theReply.getText().isEmpty())
                 status.setText("Empty Reply");
             else{
-                try {
-                    ResultSet results = ForumApplication.connection.createStatement().executeQuery(
-                            STR."SELECT name FROM tbluseracct WHERE id = \{author_id}");
-                    results.next();
-                    String authorUsername = results.getString("name");
-                    VBox replyContainer = new VBox();
-                    replyContainer.getStyleClass().add("replyContainers");
-                    Label replyUsername = new Label(authorUsername);
-                    replyUsername.getStyleClass().add("replyUsernames");
-                    Text replyContent = new Text(theReply.getText());
-                    replyContent.getStyleClass().add("replyContents");
-                    replyContainer.getChildren().addAll(replyUsername, replyContent);
-                    replies.getChildren().add(replies.getChildren().size() - 1, replyContainer);
-                    reply(post_id, author_id, theReply.getText());
-                    theReply.setText("");
+                try (Statement statement = ForumApplication.connection.createStatement()){
+                    statement.execute(STR."INSERT INTO tblreply (author_id, post_id, body) VALUES (\{author_id}, \{post_id}, '\{theReply.getText()}')",
+                            Statement.RETURN_GENERATED_KEYS);
+                    ResultSet rs = statement.getGeneratedKeys();
+                    rs.next();
+                    replies.getChildren().add(replies.getChildren().size() - 1,
+                            createReplyContainer(author_id
+                                    , theReply.getText(), rs.getInt(1), replies));
+                    theReply.clear();
+                    status.setText("Submit successfully");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -182,7 +172,27 @@ public class MainPageController {
         });
         return submitReply;
     }
+    private VBox createReplyContainer(int author_id, String body, int replyId, VBox replies) {
+        VBox replyContainer = new VBox();
+        replyContainer.getStyleClass().add("replyContainers");
+        HBox headerReply = new HBox();
+        Label replyUsername = new Label(getUser(author_id));
+        headerReply.getChildren().add(replyUsername);
 
+        replyUsername.getStyleClass().add("replyUsernames");
+        Text replyContent = new Text(body);
+        replyContent.getStyleClass().add("replyContents");
+        replyContainer.getChildren().addAll(headerReply, replyContent);
+        if(author_id == LogInController.idSession)
+            headerReply.getChildren().addAll(
+                    addEditContentElements(replyId, replyContent, replyContainer, headerReply
+                            , new Button("Edit Reply"), false),
+                    createDeleteReplyBtn(replyId, replyContainer, replies)
+            );
+
+        headerReply.getChildren().forEach(node -> HBox.setMargin(node, new Insets(0, 10, 0, 0)));
+        return replyContainer;
+    }
     @FXML
     protected void post() throws IOException {
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("post.fxml")));
@@ -200,14 +210,11 @@ public class MainPageController {
         LogInController.idSession = -1;
     }
     @FXML
-    protected void toUpdateAccount() throws IOException {
-        Parent scene = FXMLLoader.load(
-                Objects.requireNonNull(ForumApplication.class.getResource("updateAcct.fxml")));
-        AnchorPane p = (AnchorPane) mainPageContainer.getParent();
-        p.getChildren().clear();
-        p.getChildren().add(scene);
+    protected void refreshPosts(){
+        posts.getChildren().clear();
+        getPosts();
+        status.setText("Refreshed");
     }
-
     private String getUser(int id){
         try(Statement statement = ForumApplication.connection.createStatement()){
             ResultSet resultSet  = statement.executeQuery(STR."SELECT name FROM tbluseracct WHERE id = \{id}");
@@ -217,14 +224,5 @@ public class MainPageController {
             e.printStackTrace();
         }
         return null;
-    }
-
-    private void reply(int post_id, int author_id, String body){
-        try{
-            ForumApplication.connection.createStatement().execute(
-                    STR."INSERT INTO tblreply (author_id, post_id, body) VALUES (\{author_id}, \{post_id}, '\{body}')");
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
     }
 }

@@ -15,4 +15,5 @@
          <Font name="System Bold Italic" size="36.0" />
       </font>
    </Label>
+   <Button layoutX="531.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#refreshPosts" text="Refresh" />
 </AnchorPane>

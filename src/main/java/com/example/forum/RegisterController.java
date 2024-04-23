@@ -22,23 +22,22 @@ public class RegisterController {
     public AnchorPane registerContainer;
     @FXML
     protected void register() {
-        try ( Statement statement = ForumApplication.connection.createStatement();
-            PreparedStatement ps = ForumApplication.connection.prepareStatement(
-                    "insert into tbluseracct (name, password) values (?, ?)")) {
+        try {
             if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty() ||
                     usernameField.getText().isBlank() || passwordField.getText().isBlank())
                 status.setText("Blank input/s");
             else {
-                String query;
-                query = STR."Select * from tbluseracct where name = '\{usernameField.getText()}'";
-                ResultSet resultSet = statement.executeQuery(query);
+                ResultSet resultSet = ForumApplication.connection.createStatement().executeQuery(
+                                STR."Select * from tbluseracct where name = '\{usernameField.getText()}'");
                 if (resultSet.next())
                     status.setText("Username already exists");
                 else {
-                    ps.setString(1, usernameField.getText());
-                    ps.setString(2, PasswordHashing.hashPassword(passwordField.getText()));
-                    ps.execute();
+                    ForumApplication.connection.createStatement().execute(
+                            STR."insert into tbluseracct (name, password) values ('\{usernameField.getText()}', '\{PasswordHashing.hashPassword(passwordField.getText())}')"
+                    );
                     status.setText("User Registered");
+                    usernameField.clear();
+                    passwordField.clear();
                 }
             }
         }catch (SQLException | NoSuchAlgorithmException e) {

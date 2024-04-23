@@ -2,7 +2,6 @@ package com.example.forum;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,16 +24,13 @@ public class LogInController {
     @FXML
     protected void onHelloButtonClick() throws IOException {
         try {
-            status.setAlignment(Pos.CENTER);
             if (usernameField.getText().isEmpty() || passwordField.getText().isEmpty() ||
                     usernameField.getText().isBlank() || passwordField.getText().isBlank()) {
                 status.setText("Blank input/s");
             } else {
-                PreparedStatement statement1 = ForumApplication.connection.prepareStatement(
-                        "SELECT * FROM tbluseracct WHERE name = ? and password = ?");
-                statement1.setString(1, usernameField.getText());
-                statement1.setString(2, PasswordHashing.hashPassword(passwordField.getText()));
-                ResultSet resultSet = statement1.executeQuery();
+                ResultSet resultSet = ForumApplication.connection.prepareStatement(
+                        STR."SELECT * FROM tbluseracct WHERE name = '\{usernameField.getText()}' and password = '\{PasswordHashing.hashPassword(passwordField.getText())}'")
+                        .executeQuery();
                 if (resultSet.next()) {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("main-page.fxml"));
                     Parent scene = loader.load();

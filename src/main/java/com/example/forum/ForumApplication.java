@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.util.Objects;
 
 public class ForumApplication extends Application {
-    public static Connection connection = MySQLConnection.getConnection();
+    public static final Connection connection = MySQLConnection.getConnection();
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ForumApplication.class.getResource("login-view.fxml"));
