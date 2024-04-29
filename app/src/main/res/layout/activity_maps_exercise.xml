@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/backgroundMap"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapsExercise">
+
+    <ImageButton
+        android:id="@+id/mapButton1"
+        android:layout_width="140dp"
+        android:layout_height="164dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.024"
+        app:srcCompat="@drawable/street_view1" />
+
+    <ImageButton
+        android:id="@+id/mapButton2"
+        android:layout_width="155dp"
+        android:layout_height="162dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@+id/mapButton1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.045"
+        app:srcCompat="@drawable/street_view2" />
+
+    <ImageButton
+        android:id="@+id/mapButton3"
+        android:layout_width="177dp"
+        android:layout_height="125dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapButton1"
+        app:layout_constraintVertical_bias="0.128"
+        app:srcCompat="@drawable/street_view3" />
+
+    <ImageButton
+        android:id="@+id/mapButton4"
+        android:layout_width="172dp"
+        android:layout_height="122dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/mapButton3"
+        app:layout_constraintTop_toBottomOf="@+id/mapButton2"
+        app:layout_constraintVertical_bias="0.106"
+        app:srcCompat="@drawable/street_view4" />
+
+    <ImageButton
+        android:id="@+id/mapButton5"
+        android:layout_width="171dp"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapButton3"
+        app:layout_constraintVertical_bias="0.173"
+        app:srcCompat="@drawable/background_map5" />
+
+    <TextView
+        android:id="@+id/placeName"
+        android:layout_width="130dp"
+        android:layout_height="121dp"
+        android:textColor="#FF0000"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toEndOf="@+id/mapButton5"
+        app:layout_constraintTop_toBottomOf="@+id/mapButton4"
+        app:layout_constraintVertical_bias="0.296" />
+</android.support.constraint.ConstraintLayout>

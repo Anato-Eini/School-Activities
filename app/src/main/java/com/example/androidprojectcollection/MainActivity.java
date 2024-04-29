@@ -1,6 +1,7 @@
 package com.example.androidprojectcollection;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,8 @@ public class MainActivity extends AppCompatActivity {
         calculator = findViewById(R.id.calculator),
         connect3 = findViewById(R.id.connect3),
         passingIntents = findViewById(R.id.passingIntents),
-        menuExercise = findViewById(R.id.menus);
+        menuExercise = findViewById(R.id.menus),
+        maps = findViewById(R.id.maps);
         layoutExerciseBtn.setOnClickListener(
                 view -> startActivity(
                         new Intent(this, LayoutExercise.class)));
@@ -35,5 +37,8 @@ public class MainActivity extends AppCompatActivity {
         menuExercise.setOnClickListener(
                 view -> startActivity(
                         new Intent(this, MenuExercise.class)));
+        maps.setOnClickListener(
+                view -> startActivity(
+                        new Intent(this, MapsExercise.class)));
     }
 }
