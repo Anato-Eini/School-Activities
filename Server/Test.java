@@ -1,38 +1,52 @@
-import com.google.gson.Gson;
 
-public class Test {
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 
-    record Person(String name, int age, String country){
+public class Test{
+    public static void main(String[] args) throws IOException {
+        String supabaseUrl = "https://rafhblqrgvjzlxhigvlt.supabase.co/storage/v1/object/post-images/test.jpg";
+        String filePath = "./cato.jpg";
+        String apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJhZmhibHFyZ3Zqemx4aGlndmx0Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcwOTYxMzI5NiwiZXhwIjoyMDI1MTg5Mjk2fQ.hdnYG3UDwEolp6-mspMJHC3TevtNy09lnTE9dUmhjJw";
 
-    }
-    public static void main(String[] args) {
-//        Person person = new Person("Jake", 12, "PH");
-        Gson gson = new Gson();
-//        String test = gson.toJson(person);
-//        System.out.println(test);
+        File file = new File(filePath);
+        byte[] fileBytes = readFileToBytes(file);
 
-        var JSONString = """
-                {
-                    "name" : "Jake",
-                    "age" : 40,
-                    "Country" : "PH" 
-                }
-                """;
-        var person = gson.fromJson(JSONString, Person.class);
-        System.out.println(person.name);
-    }
+        String mimeType = guessMimeType(fileBytes);
+        System.out.println("MIME Type: " + mimeType);
 
-    public void login(){
+        HttpURLConnection connection = (HttpURLConnection) new URL(supabaseUrl).openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoOutput(true);
 
-    }
+        connection.setRequestProperty("Authorization", "Bearer " + apiKey);
+        connection.setRequestProperty("Content-Type", mimeType);
 
-
-    public static class BagOfPrimitives {
-        private int value1 = 1;
-        private String value2 = "abc";
-        private transient int value3 = 3;
-        BagOfPrimitives() {
-            // no-args constructor
+        try (OutputStream outputStream = connection.getOutputStream()) {
+            outputStream.write(fileBytes);
         }
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            System.out.println("File uploaded successfully.");
+        } else {
+            System.err.println("Failed to upload file. Response code: " + responseCode);
+        }
+    }
+
+    private static byte[] readFileToBytes(File file) throws IOException {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+             FileInputStream inputStream = new FileInputStream(file)) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            return outputStream.toByteArray();
+        }
+    }
+    private static String guessMimeType(byte[] data) throws IOException {
+        return URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(data));
     }
 }

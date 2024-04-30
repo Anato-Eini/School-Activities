@@ -3,6 +3,7 @@ package com.example.client;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.text.Editable;
+import android.util.Log;
 
 import com.example.client.Classes.Response;
 import com.google.gson.Gson;
@@ -13,7 +14,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.Buffer;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +49,11 @@ public class SocketClient implements Runnable {
         try {
             System.out.println("Connecting to server");
             socket = new Socket("links-warrant.gl.at.ply.gg", 23696);
+//            socket = new Socket("180.190.180.195", 5050);
+//            System.out.println(socket);
+
+//            register("asd", "asd", "asd", "asd");
+            login("asd", "asd");
 
             String messageFromServer;
             while (socket.isConnected()){
@@ -53,8 +62,10 @@ public class SocketClient implements Runnable {
                 if(dataFromClient == null) continue;
 
                 messageFromServer = new String(dataFromClient, StandardCharsets.UTF_8);
-                Gson gson = new Gson();
+                gson = new Gson();
                 Response response = gson.fromJson(messageFromServer, Response.class);
+                System.out.println(response.message);
+                System.out.println(response.data);
 
                 switch (response.operation){
                     case "register":
@@ -125,6 +136,44 @@ public class SocketClient implements Runnable {
             e.printStackTrace();
         }
     }
+
+    public static void login(String username, String password) {
+        try {
+            Map<String, Object> credentials= new HashMap<>();
+            credentials.put("username", username);
+            credentials.put("password", password);
+
+            sendBytes(writeRequest("login", credentials));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createEvent(String title, String password, String venue, Buffer image, LocalDateTime datetime) {
+        try {
+            Map<String, Object> eventData = new HashMap<>();
+            eventData.put("title", title);
+            eventData.put("description", password);
+            eventData.put("venue", venue);
+            eventData.put("image", image);
+            eventData.put("datetime", datetime);
+
+            sendBytes(writeRequest("login", eventData));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static byte[] writeRequest(String operation, Map<String, Object> data){
+        Gson gson = new Gson();
+
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("operation", operation);
+        dataMap.put("data", data);
+        String jsonData = gson.toJson(dataMap);
+        return jsonData.getBytes();
+    }
+
 
     public static void registerAsync(String username, String password, String firstName, String lastName) {
         new AsyncTask<String, Void, Void>() {

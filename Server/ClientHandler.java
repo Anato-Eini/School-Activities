@@ -1,4 +1,6 @@
+import Classes.Request;
 import com.google.gson.Gson;
+import com.sun.tools.jconsole.JConsoleContext;
 
 import java.io.*;
 import java.net.Socket;
@@ -7,25 +9,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ClientHandler implements Runnable {
     public static ArrayList<ClientHandler> clientHandlers = new ArrayList<>();
-    private Socket socket;
-    private Connection connection;
-    private BufferedReader bufferedReader;
-    private BufferedWriter bufferedWriter;
-    private String clientUsername;
+    private volatile boolean isRunning = true;
+    private final Socket socket;
+    private final Connection connection;
 
     public ClientHandler(Socket socket, Connection connection) {
-        try {
             this.socket = socket;
             this.connection = connection;
-            this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-             clientHandlers.add(this);
-        } catch (IOException e) {
-            closeEverything(socket, bufferedReader, bufferedWriter);
-            e.printStackTrace();
-        }
+            clientHandlers.add(this);
     }
 
     public byte[] readBytes() throws IOException {
@@ -42,7 +37,8 @@ public class ClientHandler implements Runnable {
 
     public void run() {
          String messageFromClient;
-         while (socket.isConnected()) {
+         String operation = null;
+         while (socket.isConnected() && isRunning) {
             try {
                 byte[] dataFromClient = readBytes();
 
@@ -51,43 +47,89 @@ public class ClientHandler implements Runnable {
                 messageFromClient = new String(dataFromClient, StandardCharsets.UTF_8);
                 Gson gson = new Gson();
                 Request request = gson.fromJson(messageFromClient, Request.class);
-                HashMap<String, Object> data = request.data;
-                switch (request.operation){
+                HashMap<String, Object> requestData= request.data;
+                operation = request.operation;
+
+                switch (request.operation) {
                     case "register" -> {
-                        String username = (String)data.get("username");
-                        String password = (String)data.get("password");
-                        String firstName = (String) data.get("firstName");
-                        String lastName = (String)data.get("lastName");
+                        System.out.println("Register");
+                        String username = (String) requestData.get("username");
+                        String password = (String) requestData.get("password");
+                        String firstName = (String) requestData.get("firstName");
+                        String lastName = (String) requestData.get("lastName");
                         String query = """
-                            INSERT INTO users (username, password, firstName, lastName) VALUES (?, ?, ?, ?)
-                        """;
+                                    INSERT INTO users (username, password, firstName, lastName) VALUES (?, ?, ?, ?)
+                                """;
                         PreparedStatement statement = connection.prepareStatement(query);
                         statement.setString(1, username);
                         statement.setString(2, password);
                         statement.setString(3, firstName);
                         statement.setString(4, lastName);
                         int rows = statement.executeUpdate();
+                        sendBytes(writeResponse("register", rows > 0, rows > 0 ? "Registered Successfully" : "Register failed", null));
+                    }
+                    case "login" -> {
+                        System.out.println("Login");
+                        String username = (String) requestData.get("username");
+                        String password = (String) requestData.get("password");
 
-                        Map<String, Object> response = new HashMap<>();
-                        Map<String, Object> responseData = new HashMap<>();
-                        response.put("operation", "register");
+                        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setString(1, username);
+                        statement.setString(2, password);
 
-                        if(rows > 0){
-                            response.put("message", "Registered Successfully");
+                        ResultSet resultSet = statement.executeQuery();
+
+                        Map<String, String> loginData = new HashMap<>();
+                        if(resultSet.next()){
+                            loginData.put("id", resultSet.getString(("id")));
+                            loginData.put("username", resultSet.getString(("username")));
+                            loginData.put("firstname", resultSet.getString(("firstname")));
+                            loginData.put("lastname", resultSet.getString(("lastname")));
+                            loginData.put("privilege", resultSet.getString(("privilege")));
+                            loginData.put("createdAt", resultSet.getString(("createdAt")));
+                            loginData.put("updatedAt", resultSet.getString(("updatedAt")));
+                            sendBytes(writeResponse("login", true, "Login Success", loginData));
+                        }else{
+                            sendBytes(writeResponse("login", false, "Incorrect username or password", null));
                         }
-                        response.put("data", responseData);
-                        gson = new Gson();
-                        String jsonData = gson.toJson(response);
-                        byte[] bytes = jsonData.getBytes();
-                        sendBytes(bytes);
+                    }
+
+                    case "createEvent" -> {
+                        System.out.println("Create Event");
+
                     }
                 }
-            } catch (IOException | SQLException e) {
-                System.err.println(e.getMessage());
-                closeEverything(socket, bufferedReader, bufferedWriter);
-               break;
+            } catch (Throwable e) {
+                e.printStackTrace();
+                if (e instanceof SQLException) {
+                    try {
+                        if (Objects.equals(((SQLException) e).getSQLState(), "23505")) {
+                            sendBytes(writeResponse(operation, false, "Username already taken", null));
+                        } else {
+                            sendBytes(writeResponse(operation, false, e.getMessage(), null));
+                        }
+                    } catch (IOException ex) {
+//                        System.err.println(ex.getMessage());
+                    }
+                } else {
+                    removeClientHandler();
+                }
             }
          }
+    }
+
+    public byte[] writeResponse(String operation, boolean status, String message, Map<String, String> data){
+        Map<String, Object> response = new HashMap<>();
+        response.put("operation", operation);
+        response.put("status", status);
+        response.put("message", message);
+
+        response.put("data", data);
+
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(response);
+        return jsonData.getBytes();
     }
 
     public void sendBytes(byte[] myByteArray) throws IOException {
@@ -112,35 +154,14 @@ public class ClientHandler implements Runnable {
         }
     }
 
-//    public void broadcastMessage(String message) {
-//        for (ClientHandler clientHandler : clientHandlers) {
-//            try {
-//                if (!clientHandler.clientUsername.equals(clientUsername)) {
-//                    clientHandler.bufferedWriter.write(message);
-//                    clientHandler.bufferedWriter.newLine();
-//                    clientHandler.bufferedWriter.flush();
-//                }
-//            } catch (IOException e) {
-//                closeEverything(socket, bufferedReader, bufferedWriter);
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
     public void removeClientHandler() {
         clientHandlers.remove(this);
-//        broadcastMessage("SERVER " + clientUsername + " has left the chat!");
+        isRunning = false;
     }
 
-    public void closeEverything(Socket socket, BufferedReader bufferedReader, BufferedWriter bufferedWriter) {
+    public void closeEverything(Socket socket) {
         try {
             removeClientHandler();
-            if (bufferedReader != null) {
-                bufferedReader.close();
-            }
-            if (bufferedWriter != null) {
-                bufferedWriter.close();
-            }
             if (socket != null) {
                 socket.close();
             }
