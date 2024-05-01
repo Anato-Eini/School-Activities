@@ -62,5 +62,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register" />
+
+        <Button
+            android:id="@+id/btnSelectEventPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Event Photo" />
+
+        <Button
+            android:id="@+id/btnCreateEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create Event" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

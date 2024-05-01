@@ -1,20 +1,34 @@
 package com.example.client;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
     EditText inputUsername;
@@ -22,16 +36,20 @@ public class MainActivity extends AppCompatActivity {
     EditText inputFirstName;
     EditText inputLastName;
     Button btnRegister;
+    Button btnSelectEventPhoto;
+    Button btnCreateEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        inputUsername= (EditText) findViewById(R.id.inputUsername);
-        inputPassword= (EditText) findViewById(R.id.inputPassword);
-        inputFirstName = (EditText) findViewById(R.id.inputFirstName);
-        inputFirstName = (EditText) findViewById(R.id.inputLastName);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
+        inputUsername= findViewById(R.id.inputUsername);
+        inputPassword=  findViewById(R.id.inputPassword);
+        inputFirstName = findViewById(R.id.inputFirstName);
+        inputLastName = findViewById(R.id.inputLastName);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnSelectEventPhoto = findViewById(R.id.btnSelectEventPhoto);
+        btnCreateEvent = findViewById(R.id.btnCreateEvent);
 
         SocketClient socketClient = new SocketClient();
         socketClient.setResponseListener(new SocketClient.ResponseListener() {
@@ -49,15 +67,48 @@ public class MainActivity extends AppCompatActivity {
         Thread thread = new Thread(socketClient);
         thread.start();
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = String.valueOf(inputUsername.getText());
-                String password = String.valueOf(inputUsername.getText());
-                String firstName = String.valueOf(inputUsername.getText());
-                String lastName = String.valueOf(inputUsername.getText());
-                SocketClient.registerAsync(username, password, firstName, lastName);
-            }
+        ActivityResultLauncher<PickVisualMediaRequest> pickMedia =
+                registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    if (uri != null) {
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                        btnCreateEvent.setOnClickListener(v -> {
+                            try {
+                                InputStream inputStream = getContentResolver().openInputStream(uri);
+                                byte[] fileBytes = readFileToBytes(inputStream);
+                                SocketClient.createEventAsync("test", "test", "test", fileBytes, LocalDateTime.now());
+                                inputStream.close();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
+
+        btnSelectEventPhoto.setOnClickListener(v -> {
+            pickMedia.launch(new PickVisualMediaRequest.Builder()
+                    .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
+                    .build());
         });
+
+        btnRegister.setOnClickListener(v ->  {
+            String username = String.valueOf(inputUsername.getText());
+            String password = String.valueOf(inputPassword.getText());
+            String firstName = String.valueOf(inputFirstName.getText());
+            String lastName = String.valueOf(inputLastName.getText());
+            SocketClient.registerAsync(username, password, firstName, lastName);
+        });
+    }
+
+    private static byte[] readFileToBytes(InputStream inputStream) throws IOException {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            return outputStream.toByteArray();
+        }
     }
 }

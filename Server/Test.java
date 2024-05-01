@@ -3,6 +3,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 
 public class Test{
     public static void main(String[] args) throws IOException {
@@ -12,6 +13,7 @@ public class Test{
 
         File file = new File(filePath);
         byte[] fileBytes = readFileToBytes(file);
+        System.out.println(Arrays.toString(fileBytes));
 
         String mimeType = guessMimeType(fileBytes);
         System.out.println("MIME Type: " + mimeType);
