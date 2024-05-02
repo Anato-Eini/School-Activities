@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import com.google.gson.Gson;
+import com.metroevents.Classes.PasswordHashing;
 import com.metroevents.Classes.Request;
 import com.metroevents.Classes.User;
 
@@ -71,6 +72,7 @@ public class ClientHandler implements Runnable {
                         System.out.println("Register");
                         String username = (String) requestData.get("username");
                         String password = (String) requestData.get("password");
+                        password = PasswordHashing.hashPassword(password);
                         String firstName = (String) requestData.get("firstName");
                         String lastName = (String) requestData.get("lastName");
                         String query = """
@@ -89,7 +91,7 @@ public class ClientHandler implements Runnable {
                         System.out.println("Login");
                         String username = (String) requestData.get("username");
                         String password = (String) requestData.get("password");
-
+                        password = PasswordHashing.hashPassword(password);
                         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
                         PreparedStatement statement = connection.prepareStatement(query);
                         statement.setString(1, username);
@@ -116,8 +118,10 @@ public class ClientHandler implements Runnable {
                             loginData.put("updatedAt", updatedAt);
 
                             // user = new User();
+                            System.out.println("Login success");
                             sendBytes(writeResponse("login", true, "Login Success", loginData));
                         } else {
+                            System.out.println("Login failed");
                             sendBytes(writeResponse("login", false, "Incorrect username or password", null));
                         }
                     }
