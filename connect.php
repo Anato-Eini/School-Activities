@@ -309,7 +309,9 @@ function getEmployeesInfo(): void
                                    FROM tbluseraccount AS ua
                                    INNER JOIN tbluserprofile AS up ON ua.profid = up.userid
                                    WHERE ua.usertype='employee'");
-    toTable($result);
+    if($result->num_rows > 0){
+        toTable($result);
+    }
 }
 
 function getEmployersInfo(): void
