@@ -65,6 +65,8 @@ if(isset($_GET['btnLogin'])){
                 echo "<script>window.location.href = 'employer.php?uniqueid=".$row['acctid']."'</script>";
             else if($row['usertype'] === 'employee')
                 echo "<script>window.location.href = 'employee.php?uniqueid=".$row['acctid']."'</script>";
+            else if($row['usertype'] === 'admin')
+                echo "<script>window.location.href = 'admin.php?uniqueid=".$row['acctid']."'</script>";
         } else {
             echo "<script>
             const myModalAlternative = new bootstrap.Modal('#modalAlreadyExists', null);
@@ -271,3 +273,62 @@ function getHeader($result): array
 }
 
 
+function getEmployeesInfo(): void
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT emailadd, username FROM tbluseraccount WHERE usertype='employee'");
+    toTable($result);
+}
+
+/**
+ * @param mysqli_result|bool $result
+ * @return void
+ */
+function toTable(mysqli_result|bool $result): void
+{
+    $data = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+    }
+    echo "<table>";
+    echo "<tr>";
+    foreach ($data[0] as $key => $value) {
+        echo "<th>" . $key . "</th>";
+    }
+    echo "</tr>";
+    foreach ($data as $row) {
+        echo "<tr>";
+        foreach ($row as $key => $value) {
+            echo "<td>" . $value . "</td>";
+        }
+        echo "</tr>";
+    }
+    echo "</table>";
+}
+
+function getEmployersInfo(): void
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT emailadd, username FROM tbluseraccount WHERE usertype='employer'");
+    if($result->num_rows > 0){
+        toTable($result);
+    }
+}
+
+function ongoingEJobs(): void
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT jobTitle FROM tbljobposting WHERE jobstatus='Ongoing'");
+    if($result->num_rows > 0){
+        toTable($result);
+    }
+}
+
+function hiringJobs(): void
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT jobTitle FROM tbljobposting WHERE jobstatus='Hiring'");
+    if($result->num_rows > 0){
+        toTable($result);
+    }
+}
