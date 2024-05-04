@@ -38,8 +38,9 @@ if(isset($_POST['btnRegister'])){
         $sql1 ="Insert into tbluserprofile(firstname,lastname,gender, birthdate) 
                 values('".$fname."','".$lname."','".$gender."', '".$birthDate."')";
         mysqli_query($connection,$sql1);
-        $sql ="Insert into tbluseraccount(emailadd,username,password, usertype) 
-                values('".$email."','".$uname."','".password_hash($pword, PASSWORD_DEFAULT)."', '". $userType."')";
+        $recentId = mysqli_insert_id($connection);
+        $sql ="Insert into tbluseraccount(profid, emailadd,username,password, usertype) 
+                values(".$recentId." ,'".$email."','".$uname."','".password_hash($pword, PASSWORD_DEFAULT)."', '". $userType."')";
         mysqli_query($connection,$sql);
         $message = "Registered Successfully";
     }
@@ -273,12 +274,7 @@ function getHeader($result): array
 }
 
 
-function getEmployeesInfo(): void
-{
-    global $connection;
-    $result = mysqli_query($connection, "SELECT emailadd, username FROM tbluseraccount WHERE usertype='employee'");
-    toTable($result);
-}
+
 
 /**
  * @param mysqli_result|bool $result
@@ -306,10 +302,24 @@ function toTable(mysqli_result|bool $result): void
     echo "</table>";
 }
 
+function getEmployeesInfo(): void
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT ua.emailadd, ua.username, up.firstname, up.lastname
+                                   FROM tbluseraccount AS ua
+                                   INNER JOIN tbluserprofile AS up ON ua.profid = up.userid
+                                   WHERE ua.usertype='employee'");
+    toTable($result);
+}
+
 function getEmployersInfo(): void
 {
     global $connection;
-    $result = mysqli_query($connection, "SELECT emailadd, username FROM tbluseraccount WHERE usertype='employer'");
+    $result = mysqli_query($connection, "SELECT ua.emailadd, ua.username, up.firstname, up.lastname
+                                   FROM tbluseraccount AS ua
+                                   INNER JOIN tbluserprofile AS up ON ua.profid = up.userid
+                                   WHERE ua.usertype='employer'");
+
     if($result->num_rows > 0){
         toTable($result);
     }
