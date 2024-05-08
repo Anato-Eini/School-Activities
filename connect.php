@@ -13,13 +13,13 @@ if(isset($_POST['btnRegister'])){
     //for tbluserprofile
     $fname=$_POST['txtfirstname'];
     $lname=$_POST['txtlastname'];
-    $gender=$_POST['txtgender'];
+    $gender=$_POST['gender'];
     //for tbluseraccount
     $email=$_POST['txtemail'];
     $uname=$_POST['txtusername'];
     $pword=$_POST['txtpassword'];
-    $birthDate=$_POST['birthDate'];
-    $userType = $_POST['userType'];
+    $birthDate= $_POST['birthDate'];
+    $userType = $_POST['usertype'];
     $sql2 ="Select * from tbluseraccount where username='".$uname."'";
     $result = mysqli_query($connection,$sql2);
     $numUsername = mysqli_num_rows($result);
@@ -129,6 +129,15 @@ if(isset($_POST['applyBtn'])){
 }
 
 if(isset($_POST['deletePost'])){
+    $statement = mysqli_prepare($connection, "SELECT * FROM tbljobposting WHERE jobID=?");
+    mysqli_stmt_bind_param($statement, "i", $_POST['jobid']);
+    mysqli_stmt_execute($statement);
+    $post = mysqli_fetch_assoc(mysqli_stmt_get_result($statement));
+    mysqli_query($connection, "INSERT INTO tblarchivejobposting(employerID, employeeID, jobTitle, description, 
+                                 skillsRequired, budget, deadline, jobstatus) VALUES (". $post['employerID'] ." ,
+                                 ". $post['employeeID'] .", '". $post['jobTitle'] ."', '". $post['description'] ."', 
+                                 '". $post['skillsRequired']."', ". $post['budget'] .", '". $post['deadline']."',
+                                 '". $post['jobstatus'] ."')");
     mysqli_query($connection, "DELETE FROM tbljobposting WHERE jobID='".$_POST['jobid']."'");
     echo "<script>
             $('#modalMessage').get(0).textContent = 'Delete Job Successfully';
@@ -259,16 +268,17 @@ function getHeader($result): array
     }
     echo "<table>";
     echo "<tr>";
-    foreach ($data[0] as $key => $value) {
-        if($key == 'jobID')
-            continue;
-        if($key == 'employerID')
-            echo "<th>employer</th>";
-        else if($key == 'employeeID')
-            echo "<th>employee</th>";
-        else
-            echo "<th>$key</th>";
-    }
+    if(sizeof($data) > 0)
+        foreach ($data[0] as $key => $value) {
+            if($key == 'jobID')
+                continue;
+            if($key == 'employerID')
+                echo "<th>employer</th>";
+            else if($key == 'employeeID')
+                echo "<th>employee</th>";
+            else
+                echo "<th>$key</th>";
+        }
     echo "</tr>";
     return $data;
 }
@@ -343,4 +353,12 @@ function hiringJobs(): void
     if($result->num_rows > 0){
         toTable($result);
     }
+}
+
+function archivedJobs(): void
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM tblarchivejobposting");
+    if($result->num_rows > 0)
+        toTable($result);
 }

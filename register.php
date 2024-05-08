@@ -62,14 +62,13 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <div class="form-floating">
-                                                    <input class="form-control" id="userType" placeholder="Enter your Username" type="text" name="userType"/>
-                                                    <label for="userType">User Type</label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <h5>User Type</h5>
+                                        <label>
+                                            <input type="radio" name="usertype" value="employee" checked>
+                                        </label> employee<br>
+                                        <label>
+                                            <input type="radio" name="usertype" value="employer">
+                                        </label> employer<br>
                                         <div class="form-floating mb-3">
                                             <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" name="txtemail"/>
                                             <label for="inputEmail">Email address</label>
@@ -85,18 +84,14 @@
                                             <label for="birthDate">BirthDate:</label>
                                             <input type="date" id="birthDate" name="birthDate">
                                             <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="genderId" type="text" placeholder="Enter your gender" name="txtgender"/>
-                                                    <label for="genderId">Gender</label>
-                                                </div>
+                                                <h5>Gender</h5>
+                                                <label>
+                                                    <input type="radio" name="gender" value="Male" checked>
+                                                </label> Male<br>
+                                                <label>
+                                                    <input type="radio" name="gender" value="Female">
+                                                </label> Female<br>
                                             </div>
-
-                                            <!--<div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
-                                                    <label for="inputPasswordConfirm">Confirm Password</label>
-                                                </div>
-                                            </div>-->
                                         </div>
                                         <div class="mt-4 mb-0">
                                             <div class="d-grid">
@@ -138,7 +133,6 @@
             James Kenneth S. Acabal <br>
             BSCS - 2 F3
         </h5>
-    <script src="js/RegisterScript.js"></script>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <?php

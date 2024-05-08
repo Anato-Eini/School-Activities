@@ -36,6 +36,8 @@ echo "<h2>Ongoing Jobs</h2>";
 ongoingEJobs();
 echo "<h2>Hiring Jobs</h2>";
 hiringJobs();
+echo "<h2>Archived Jobs</h2>";
+archivedJobs();
 ?>
 <button class="btn btn-primary btn-block" type="submit" name="logOut" onclick="window.location.href = 'index.php'">
     Log Out
