@@ -253,7 +253,7 @@ function tableRow(mixed $row, mysqli $connection): void
             echo "<td> </td>";
         }else if (($key == 'employerID' || $key == 'employeeID') && $value != 0) {
             $result = mysqli_query($connection,
-                "SELECT username FROM tbluseraccount WHERE acctid='" . $value . "'");
+                "SELECT username AS Username FROM tbluseraccount WHERE acctid='" . $value . "'");
             echo "<td>'" . $result->fetch_assoc()['username'] . "'</td>";
         } else
             echo "<td>$value</td>";
@@ -315,7 +315,8 @@ function toTable(mysqli_result|bool $result): void
 function getEmployeesInfo(): void
 {
     global $connection;
-    $result = mysqli_query($connection, "SELECT ua.emailadd, ua.username, up.firstname, up.lastname
+    $result = mysqli_query($connection, "SELECT ua.emailadd AS 'Email Address', ua.username AS 'Username', 
+                                    up.firstname AS 'First Name', up.lastname AS 'Last Name'
                                    FROM tbluseraccount AS ua
                                    INNER JOIN tbluserprofile AS up ON ua.profid = up.userid
                                    WHERE ua.usertype='employee'");
@@ -327,7 +328,8 @@ function getEmployeesInfo(): void
 function getEmployersInfo(): void
 {
     global $connection;
-    $result = mysqli_query($connection, "SELECT ua.emailadd, ua.username, up.firstname, up.lastname
+    $result = mysqli_query($connection, "SELECT ua.emailadd AS 'Email Address', ua.username AS 'Username', 
+                                    up.firstname AS 'First Name', up.lastname AS 'Last Name'
                                    FROM tbluseraccount AS ua
                                    INNER JOIN tbluserprofile AS up ON ua.profid = up.userid
                                    WHERE ua.usertype='employer'");
@@ -340,7 +342,7 @@ function getEmployersInfo(): void
 function ongoingEJobs(): void
 {
     global $connection;
-    $result = mysqli_query($connection, "SELECT jobTitle FROM tbljobposting WHERE jobstatus='Ongoing'");
+    $result = mysqli_query($connection, "SELECT jobTitle AS 'Job Title' FROM tbljobposting WHERE jobstatus='Ongoing'");
     if($result->num_rows > 0){
         toTable($result);
     }
@@ -349,7 +351,7 @@ function ongoingEJobs(): void
 function hiringJobs(): void
 {
     global $connection;
-    $result = mysqli_query($connection, "SELECT jobTitle FROM tbljobposting WHERE jobstatus='Hiring'");
+    $result = mysqli_query($connection, "SELECT jobTitle AS 'Job Title' FROM tbljobposting WHERE jobstatus='Hiring'");
     if($result->num_rows > 0){
         toTable($result);
     }
@@ -362,3 +364,46 @@ function archivedJobs(): void
     if($result->num_rows > 0)
         toTable($result);
 }
+
+function numEmployees(): int
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM tbluseraccount WHERE usertype='employee'");
+    return $result->num_rows;
+}
+
+function numEmployers(): int
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM tbluseraccount WHERE usertype='employer'");
+    return $result->num_rows;
+}
+
+function numOngoingJobs(): int
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM tbljobposting WHERE jobstatus='Ongoing'");
+    return $result->num_rows;
+}
+
+function numHiringJobs(): int
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM tbljobposting WHERE jobstatus='Hiring'");
+    return $result->num_rows;
+}
+
+function numFemale(): int
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM tbluserprofile WHERE gender = 'Female'");
+    return $result->num_rows;
+}
+
+function numMale(): int
+{
+    global $connection;
+    $result = mysqli_query($connection, "SELECT * FROM tbluserprofile WHERE gender='Male'");
+    return $result->num_rows;
+}
+

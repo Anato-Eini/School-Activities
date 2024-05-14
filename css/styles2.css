@@ -11241,3 +11241,11 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+table{
+  border-collapse: collapse;
+}
+
+td, th{
+  padding: 15px;
+}
