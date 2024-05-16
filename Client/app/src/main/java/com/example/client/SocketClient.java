@@ -1,21 +1,21 @@
 package com.example.client;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
+import static com.example.client.MainActivity.dataStore;
+
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import androidx.datastore.core.DataStore;
+import androidx.datastore.preferences.core.MutablePreferences;
+import androidx.datastore.preferences.core.Preferences;
+import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
 
 import com.example.client.Classes.Response;
 import com.google.gson.Gson;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,10 +28,14 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.reactivex.rxjava3.core.Single;
+import kotlin.Unit;
+
 public class SocketClient implements Runnable {
     private static Socket socket;
     Gson gson;
     ResponseListener responseListener;
+
 
     public ResponseListener getResponseListener() {
         return responseListener;
@@ -55,18 +59,16 @@ public class SocketClient implements Runnable {
     public void run() {
         try {
             System.out.println("Connecting to server");
-            socket = new Socket("links-warrant.gl.at.ply.gg", 23696);
+            socket = new Socket("192.168.254.104", 23696);
+//            socket = new Socket("catalog-acm.gl.at.ply.gg",42289);
 //            socket = new Socket("180.190.180.195", 5050);
-//            System.out.println(socket);
 
-//            register("asd", "asd", "asd", "asd");
-//            loginAsync("asd", "asd");
 
             String messageFromServer;
-            while (socket.isConnected()){
+            while (socket.isConnected()) {
                 byte[] dataFromClient = readBytes();
 
-                if(dataFromClient == null) continue;
+                if (dataFromClient == null) continue;
 
                 messageFromServer = new String(dataFromClient, StandardCharsets.UTF_8);
                 gson = new Gson();
@@ -74,9 +76,12 @@ public class SocketClient implements Runnable {
                 System.out.println(response.message);
                 System.out.println(response.data);
 
-                switch (response.operation){
+                switch (response.operation) {
                     case "register":
+                    case "login":
                         responseListener.onSuccess(response.message);
+                        //STORE THE DATA RECEIVED
+
                         break;
                 }
             }
@@ -138,6 +143,7 @@ public class SocketClient implements Runnable {
             String jsonData = gson.toJson(dataMap);
 
             byte[] bytes = jsonData.getBytes();
+            System.out.println(Arrays.toString(bytes));
             try {
                 sendBytes(bytes);
             } catch (IOException e) {
@@ -146,10 +152,10 @@ public class SocketClient implements Runnable {
         }).start();
     }
 
-    public static void loginAsync(String username, String password){
+    public static void loginAsync(String username, String password) {
         new Thread(() -> {
             try {
-                Map<String, Object> credentials= new HashMap<>();
+                Map<String, Object> credentials = new HashMap<>();
                 credentials.put("username", username);
                 credentials.put("password", password);
 
@@ -169,7 +175,7 @@ public class SocketClient implements Runnable {
                 eventData.put("venue", venue);
                 String s = Base64.getEncoder().encodeToString(image);
                 eventData.put("image", s);
-                eventData.put("mimeType",  URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(image)));
+                eventData.put("mimeType", URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(image)));
                 eventData.put("datetime", dateTime);
                 sendBytes(writeRequest("createEvent", eventData));
             } catch (IOException e) {
@@ -179,7 +185,7 @@ public class SocketClient implements Runnable {
     }
 
 
-    public static byte[] writeRequest(String operation, Map<String, Object> data){
+    public static byte[] writeRequest(String operation, Map<String, Object> data) {
         Gson gson = new Gson();
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("operation", operation);
@@ -188,7 +194,7 @@ public class SocketClient implements Runnable {
         return jsonData.getBytes();
     }
 
-    public interface ResponseListener{
+    public interface ResponseListener {
         void onSuccess(String message);
     }
 }

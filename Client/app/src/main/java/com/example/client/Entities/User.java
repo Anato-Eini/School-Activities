@@ -8,6 +8,7 @@ enum Privilege {
     organizer,
     admin
 }
+
 public class User {
     public UUID id;
     public String firstName;
