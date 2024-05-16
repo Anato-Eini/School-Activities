@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -61,7 +62,6 @@ public class ClientHandler implements Runnable {
                     continue;
 
                 messageFromClient = new String(dataFromClient, StandardCharsets.UTF_8);
-                // System.out.println(messageFromClient);
                 Gson gson = new Gson();
                 Request request = gson.fromJson(messageFromClient, Request.class);
                 HashMap<String, Object> requestData = request.data;
@@ -106,18 +106,19 @@ public class ClientHandler implements Runnable {
                             String firstName = resultSet.getString(("firstName"));
                             String lastName = resultSet.getString(("lastName"));
                             String privilege = resultSet.getString(("privilege"));
-                            String createdAt = resultSet.getString(("createdAt"));
-                            String updatedAt = resultSet.getString(("updatedAt"));
+                            Timestamp createdAt = resultSet.getTimestamp("createdAt");
+                            Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
 
                             loginData.put("id", id);
                             loginData.put("username", username);
                             loginData.put("firstname", firstName);
                             loginData.put("lastname", lastName);
                             loginData.put("privilege", privilege);
-                            loginData.put("createdAt", createdAt);
-                            loginData.put("updatedAt", updatedAt);
+                            loginData.put("createdAt", createdAt.toString());
+                            loginData.put("updatedAt", updatedAt != null ? updatedAt.toString() : null);
 
-                            // user = new User();
+                            user = new User(id, firstName, lastName, username, createdAt, updatedAt);
+
                             System.out.println("Login success");
                             sendBytes(writeResponse("login", true, "Login Success", loginData));
                         } else {
@@ -133,28 +134,52 @@ public class ClientHandler implements Runnable {
                                 + imageId.toString() + "." + mimeType.split("/")[1];
                         String apiKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpwc3NnaW12Z2Z0bXdpbm5mbGF5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcxNDU0MDc4NCwiZXhwIjoyMDMwMTE2Nzg0fQ.OtW0FtVOjSUStdRv0WB4JOyjZpdlznPPw30ov5e-GGc";
 
-                        HttpURLConnection connection = (HttpURLConnection) new URL(imageURL).openConnection();
+                        HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(imageURL).openConnection();
 
-                        connection.setRequestMethod("POST");
-                        connection.setDoOutput(true);
-                        connection.setRequestProperty("Authorization", "Bearer " + apiKey);
-                        connection.setRequestProperty("Content-Type", mimeType);
-                        try (OutputStream outputStream = connection.getOutputStream()) {
+                        httpURLConnection.setRequestMethod("POST");
+                        httpURLConnection.setDoOutput(true);
+                        httpURLConnection.setRequestProperty("Authorization", "Bearer " + apiKey);
+                        httpURLConnection.setRequestProperty("Content-Type", mimeType);
+                        try (OutputStream outputStream = httpURLConnection.getOutputStream()) {
                             outputStream.write(image);
                         }
 
-                        int responseCode = connection.getResponseCode();
+                        StringBuilder sb = new StringBuilder();
+                        int responseCode = httpURLConnection.getResponseCode();
                         if (responseCode == HttpURLConnection.HTTP_OK) {
                             System.out.println("File uploaded successfully.");
-                            StringBuilder sb = new StringBuilder();
                             sb.append(imageURL.substring(0, 59));
                             sb.append("public/");
                             sb.append(imageURL.substring(59, imageURL.length()));
                             System.out.println(sb.toString());
                         } else {
                             System.err.println("Failed to upload file. Response code: " + responseCode);
-                            System.out.println(connection.getResponseMessage());
+                            System.out.println(httpURLConnection.getResponseMessage());
                         }
+
+                        String title = (String) requestData.get("title");
+                        String description = (String) requestData.get("description");
+                        String venue = (String) requestData.get("venue");
+                        Timestamp datetime = (Timestamp) requestData.get("datetime");
+
+                        String query = """
+                                INSERT INTO users (organizer_id, title, description, venue, image, datetime) VALUES (?, ?, ?, ?, ?, ?) RETURNING *;
+                                """;
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setString(1, user.id);
+                        statement.setString(2, title);
+                        statement.setString(3, description);
+                        statement.setString(4, venue);
+                        statement.setString(5, sb.toString());
+                        statement.setTimestamp(6, datetime);
+
+                        ResultSet resultSet = statement.executeQuery();
+                        while (resultSet.next()) {
+                            System.out.println(resultSet.getString(0));
+                        }
+
+                        // sendBytes(writeResponse("register", rows > 0,
+                        // rows > 0 ? "Registered Successfully" : "Register failed", null));
                     }
                 }
             } catch (Throwable e) {

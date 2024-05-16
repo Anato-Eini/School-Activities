@@ -13,15 +13,19 @@ import com.metroevents.Classes.InitializeDatabase;
 public class Server {
     private final ServerSocket serverSocket;
     private final Connection connection;
-    public static String URL = "jdbc:postgresql://localhost:5432/CSIT284";
+    public static String CONNECTION_URI = "jdbc:postgresql://localhost:5432/CSIT284";
 
-    private static final String CONNECTION_URI = "jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres";
-    private static final String USERNAME = "postgres.zpssgimvgftmwinnflay";
-    private static final String PASSWORD = "D8RBWtx1nY5yP0FY";
+    // private static final String CONNECTION_URI =
+    // "jdbc:postgresql://aws-0-ap-southeast-1.pooler.supabase.com:5432/postgres";
+    // private static final String USER = "postgres.zpssgimvgftmwinnflay";
+    // private static final String PASSWORD = "D8RBWtx1nY5yP0FY";
+
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "root";
 
     public Server(ServerSocket serverSocket) throws SQLException {
         this.serverSocket = serverSocket;
-        connection = DriverManager.getConnection(CONNECTION_URI, USERNAME, PASSWORD);
+        connection = DriverManager.getConnection(CONNECTION_URI, USER, PASSWORD);
         Statement statement = connection.createStatement();
         InitializeDatabase.initializeDatabase(statement);
         System.out.println("Connected to database");

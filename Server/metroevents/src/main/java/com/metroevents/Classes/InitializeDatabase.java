@@ -1,6 +1,7 @@
 package com.metroevents.Classes;
 
-import java.sql.*;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class InitializeDatabase {
 
