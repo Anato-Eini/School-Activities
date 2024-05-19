@@ -12,8 +12,11 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -86,6 +89,7 @@ public class ClientHandler implements Runnable {
                         int rows = statement.executeUpdate();
                         sendBytes(writeResponse("register", rows > 0,
                                 rows > 0 ? "Registered Successfully" : "Register failed", null));
+                        break;
                     }
                     case "login" -> {
                         System.out.println("Login");
@@ -99,25 +103,28 @@ public class ClientHandler implements Runnable {
 
                         ResultSet resultSet = statement.executeQuery();
 
-                        Map<String, String> loginData = new HashMap<>();
+                        Map<String, Object> loginData = new HashMap<>();
                         if (resultSet.next()) {
-                            String id = resultSet.getString("id");
+                            UUID id = (UUID) resultSet.getObject("id");
                             username = resultSet.getString(("username"));
                             String firstName = resultSet.getString(("firstName"));
                             String lastName = resultSet.getString(("lastName"));
                             String privilege = resultSet.getString(("privilege"));
-                            Timestamp createdAt = resultSet.getTimestamp("createdAt");
-                            Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+                            String createdAt = resultSet.getTimestamp("createdAt").toString();
+                            String updatedAt = resultSet.getTimestamp("updatedAt") != null
+                                    ? resultSet.getTimestamp("updatedAt").toString()
+                                    : null;
 
                             loginData.put("id", id);
                             loginData.put("username", username);
                             loginData.put("firstname", firstName);
                             loginData.put("lastname", lastName);
                             loginData.put("privilege", privilege);
-                            loginData.put("createdAt", createdAt.toString());
-                            loginData.put("updatedAt", updatedAt != null ? updatedAt.toString() : null);
+                            loginData.put("createdAt", createdAt);
+                            loginData.put("updatedAt", updatedAt != null ? updatedAt : null);
 
-                            user = new User(id, firstName, lastName, username, createdAt, updatedAt);
+                            user = new User(id, firstName, lastName, username, Timestamp.valueOf(createdAt),
+                                    updatedAt == null ? null : Timestamp.valueOf(updatedAt));
 
                             System.out.println("Login success");
                             sendBytes(writeResponse("login", true, "Login Success", loginData));
@@ -125,6 +132,7 @@ public class ClientHandler implements Runnable {
                             System.out.println("Login failed");
                             sendBytes(writeResponse("login", false, "Incorrect username or password", null));
                         }
+                        break;
                     }
                     case "createEvent" -> {
                         UUID imageId = UUID.randomUUID();
@@ -160,26 +168,61 @@ public class ClientHandler implements Runnable {
                         String title = (String) requestData.get("title");
                         String description = (String) requestData.get("description");
                         String venue = (String) requestData.get("venue");
-                        Timestamp datetime = (Timestamp) requestData.get("datetime");
+                        LocalDateTime datetime = LocalDateTime.parse((String) requestData.get("datetime"));
 
                         String query = """
-                                INSERT INTO users (organizer_id, title, description, venue, image, datetime) VALUES (?, ?, ?, ?, ?, ?) RETURNING *;
+                                INSERT INTO events (organizer_id, title, description, venue, image, datetime)
+                                VALUES (?, ?, ?, ?, ?, ?) RETURNING *;
                                 """;
                         PreparedStatement statement = connection.prepareStatement(query);
-                        statement.setString(1, user.id);
+                        statement.setObject(1, user.id);
                         statement.setString(2, title);
                         statement.setString(3, description);
                         statement.setString(4, venue);
                         statement.setString(5, sb.toString());
-                        statement.setTimestamp(6, datetime);
+                        statement.setTimestamp(6, Timestamp.valueOf(datetime));
 
                         ResultSet resultSet = statement.executeQuery();
-                        while (resultSet.next()) {
-                            System.out.println(resultSet.getString(0));
+
+                        Map<String, Object> event = new HashMap<>();
+
+                        if (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                Object columnValue = resultSet.getObject(i);
+                                event.put(columnName, columnValue);
+                            }
                         }
 
-                        // sendBytes(writeResponse("register", rows > 0,
-                        // rows > 0 ? "Registered Successfully" : "Register failed", null));
+                        sendBytes(writeResponse("createEvent", true, "Event created successfully", event));
+                        break;
+                    }
+                    case "getEvents" -> {
+                        String query = "SELECT * FROM events";
+
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery(query);
+
+                        Map<String, Object> events = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> event = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                event.put(columnName, columnValue);
+                            }
+                            events.put(id.toString(), event);
+                        }
+                        sendBytes(writeResponse("getEvents", true, "Successfully fetched events", events));
+                        break;
                     }
                 }
             } catch (Throwable e) {
@@ -201,7 +244,7 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    public byte[] writeResponse(String operation, boolean status, String message, Map<String, String> data) {
+    public byte[] writeResponse(String operation, boolean status, String message, Map<String, Object> data) {
         Map<String, Object> response = new HashMap<>();
         response.put("operation", operation);
         response.put("status", status);

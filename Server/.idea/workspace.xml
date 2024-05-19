@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a1a6b1b4-dc9f-4443-abe9-a82102350dc3" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Server/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Server/ClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Server/Server.class" afterDir="false" />
-    </list>
+    <list default="true" id="a1a6b1b4-dc9f-4443-abe9-a82102350dc3" name="Changes" comment="" />
     <list id="155739e5-fcce-48a8-ae77-384ba286d73b" name="Changes by james" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +42,7 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "jdk.selected.JAVA_MODULE": "openjdk-22",
-    "last_opened_file_path": "C:/Users/kuugang/Documents/College Projects/AndroidMetroEvents/Server",
+    "last_opened_file_path": "C:/Users/kuugang/Documents/College Projects/AndroidMetroEvents/Server/metroevents",
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15429688",
     "project.structure.side.proportion": "0.44951922",

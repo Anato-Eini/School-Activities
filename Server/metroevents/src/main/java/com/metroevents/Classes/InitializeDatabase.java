@@ -43,7 +43,7 @@ public class InitializeDatabase {
                             venue VARCHAR NOT NULL,
                             image VARCHAR NOT NULL,
                             datetime TIMESTAMP NOT NULL,
-                            is_cancelled BOOLEAN,
+                            is_cancelled BOOLEAN DEFAULT FALSE,
                             cancellation_reason VARCHAR,
                             createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                             updatedAt TIMESTAMP

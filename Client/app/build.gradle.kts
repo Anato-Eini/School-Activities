@@ -23,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding = true
@@ -45,8 +45,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation ("androidx.fragment:fragment:1.7.1")
-
-    implementation ("androidx.datastore:datastore-preferences:1.1.1")
-    implementation ("androidx.datastore:datastore-preferences-rxjava2:1.1.1")
-    implementation ("androidx.datastore:datastore-preferences-rxjava3:1.1.1")
+    implementation ("androidx.datastore:datastore-preferences-rxjava2:1.0.0")
+    implementation ("io.reactivex.rxjava2:rxjava:2.2.20")
+    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation ("com.squareup.picasso:picasso:2.71828")
 }

@@ -1,24 +1,27 @@
 package com.example.client.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.client.Entities.User;
+import com.example.client.Activities.Auth;
+import com.example.client.MetroEvents;
 import com.example.client.R;
-import com.example.client.SocketClient;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Login#newInstance} factory method to
+ * Use the {@link Profile#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Login extends Fragment {
+public class Profile extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +32,10 @@ public class Login extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Login() {
+    private User user;
+    private MetroEvents metroEvents;
+
+    public Profile() {
         // Required empty public constructor
     }
 
@@ -39,11 +45,11 @@ public class Login extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Login.
+     * @return A new instance of fragment Profile.
      */
     // TODO: Rename and change types and number of parameters
-    public static Login newInstance(String param1, String param2) {
-        Login fragment = new Login();
+    public static Profile newInstance(String param1, String param2) {
+        Profile fragment = new Profile();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -58,33 +64,37 @@ public class Login extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        metroEvents = (MetroEvents) requireActivity().getApplication();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        TextView name_txt_ = view.findViewById(R.id.name_txt_);
+        TextView username_txt_ = view.findViewById(R.id.username_txt_);
 
-        Button login_btn_ = view.findViewById(R.id.login_btn_);
-        EditText username_et_ = view.findViewById(R.id.username_et_);
-        EditText password_et_ = view.findViewById(R.id.password_et_);
+        metroEvents.getUser(new MetroEvents.UserFetchCallback() {
+            @Override
+            public void onUserFetched(User user) {
+                if (user != null) {
+                    name_txt_.setText(user.firstName + " " + user.lastName);
+                    username_txt_.setText(user.username);
+                } else {
 
-        login_btn_.setOnClickListener(v -> {
-            String username = String.valueOf(username_et_.getText());
-            String password = String.valueOf(password_et_.getText());
-            SocketClient.loginAsync(username, password);
+                }
+            }
         });
 
-        Button navigate_register_btn = view.findViewById(R.id.navigate_register_btn_);
+        Button logout_btn_ = view.findViewById(R.id.logout_btn_);
 
-        navigate_register_btn.setOnClickListener(v -> {
-            FragmentManager fragmentManager = getParentFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_view, Register.class, null)
-                    .setReorderingAllowed(true)
-                    .addToBackStack("register")
-                    .commit();
+        logout_btn_.setOnClickListener(v -> {
+            metroEvents.deleteUser();
+            Intent intent = new Intent(getContext(), Auth.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         });
+
         return view;
     }
 }

@@ -1,17 +1,14 @@
 package com.example.client;
 
-import static com.example.client.MainActivity.dataStore;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-import androidx.datastore.core.DataStore;
-import androidx.datastore.preferences.core.MutablePreferences;
 import androidx.datastore.preferences.core.Preferences;
-import androidx.datastore.preferences.rxjava3.RxPreferenceDataStoreBuilder;
+import androidx.datastore.rxjava2.RxDataStore;
 
 import com.example.client.Classes.Response;
+import com.example.client.Entities.Event;
+import com.example.client.Entities.User;
 import com.google.gson.Gson;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -22,20 +19,25 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
-
-import io.reactivex.rxjava3.core.Single;
-import kotlin.Unit;
+import java.util.Objects;
+import java.util.UUID;
 
 public class SocketClient implements Runnable {
     private static Socket socket;
     Gson gson;
     ResponseListener responseListener;
+    MetroEvents metroEvents;
 
+    public SocketClient(MetroEvents metroEvents){
+        this.metroEvents = metroEvents;
+    }
 
     public ResponseListener getResponseListener() {
         return responseListener;
@@ -60,9 +62,6 @@ public class SocketClient implements Runnable {
         try {
             System.out.println("Connecting to server");
             socket = new Socket("192.168.254.104", 23696);
-//            socket = new Socket("catalog-acm.gl.at.ply.gg",42289);
-//            socket = new Socket("180.190.180.195", 5050);
-
 
             String messageFromServer;
             while (socket.isConnected()) {
@@ -73,17 +72,49 @@ public class SocketClient implements Runnable {
                 messageFromServer = new String(dataFromClient, StandardCharsets.UTF_8);
                 gson = new Gson();
                 Response response = gson.fromJson(messageFromServer, Response.class);
-                System.out.println(response.message);
-                System.out.println(response.data);
+//                System.out.println(response.message);
+//                System.out.println(response.data);
+//                System.out.println(response.status);
 
                 switch (response.operation) {
-                    case "register":
-                    case "login":
-                        responseListener.onSuccess(response.message);
-                        //STORE THE DATA RECEIVED
+                    case "login" -> {
+                        if(!response.status)break;
+                        String id = (String) response.data.get("id");
+                        String firstName = (String) response.data.get("firstname");
+                        String lastName =  (String)response.data.get("lastname");
+                        String username = (String) response.data.get("username");
+                        User.Privilege privilege =  User.Privilege.fromValue((String) response.data.get("privilege"));
+                        Timestamp createdAt = Timestamp.valueOf((String)response.data.get("createdAt"));
+                        Timestamp updatedAt = response.data.get("updatedAt") != null ? Timestamp.valueOf((String)response.data.get("updatedAt")) : null;
+                        User user = new User(id, firstName, lastName, username, privilege, createdAt, updatedAt);
+                        metroEvents.saveUser(user);
+                    }
+                    case "createEvent" -> {
+                        System.out.println(response.data);
+                    }
+                    case "getEvents" -> {
+                        HashMap<UUID, Event> events = new HashMap<>();
+                        for (Map.Entry<String, Object> entry : response.data.entrySet()) {
+                            LinkedTreeMap<String, Object> eventData = (LinkedTreeMap<String, Object>) entry.getValue();
 
-                        break;
+                            UUID event_id = UUID.fromString((String) eventData.get("id"));
+                            UUID organizer_id = UUID.fromString((String) eventData.get("organizer_id"));
+                            String title = (String) eventData.get("title");
+                            String description = (String) eventData.get("description");
+                            String venue = (String) eventData.get("venue");
+                            String image = (String) eventData.get("image");
+                            Timestamp datetime = Timestamp.valueOf((String)eventData.get("datetime"));
+                            Boolean is_cancelled = !Objects.equals(eventData.get("is_cancelled"), "f");
+                            String cancellation_reason = eventData.get("cancellation_reason") != null ? (String) eventData.get("cancellation_reason") : null;
+                            Timestamp createdAt = Timestamp.valueOf((String)eventData.get("createdat"));
+                            Timestamp updatedAt = eventData.get("updatedat") != null ? Timestamp.valueOf((String)eventData.get("updatedAt")) : null;
+                            Event event = new Event(event_id, organizer_id, title, description, venue, image, datetime, is_cancelled, cancellation_reason, createdAt, updatedAt);
+                            events.put(UUID.fromString((String) eventData.get("id")), event);
+                        }
+                        metroEvents.saveEvents(events);
+                    }
                 }
+                responseListener.onSuccess(response);
             }
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -129,23 +160,14 @@ public class SocketClient implements Runnable {
         new Thread(() -> {
             Gson gson = new Gson();
 
-            Map<String, Object> dataMap = new HashMap<>();
-            dataMap.put("operation", "register");
+            Map<String, Object> credentials = new HashMap<>();
+            credentials.put("username", username);
+            credentials.put("password", password);
+            credentials.put("firstName", firstName);
+            credentials.put("lastName", lastName);
 
-            Map<String, String> innerDataMap = new HashMap<>();
-            innerDataMap.put("username", username);
-            innerDataMap.put("password", password);
-            innerDataMap.put("firstName", firstName);
-            innerDataMap.put("lastName", lastName);
-
-            dataMap.put("data", innerDataMap);
-
-            String jsonData = gson.toJson(dataMap);
-
-            byte[] bytes = jsonData.getBytes();
-            System.out.println(Arrays.toString(bytes));
             try {
-                sendBytes(bytes);
+                sendBytes(writeRequest("register", credentials));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -176,8 +198,18 @@ public class SocketClient implements Runnable {
                 String s = Base64.getEncoder().encodeToString(image);
                 eventData.put("image", s);
                 eventData.put("mimeType", URLConnection.guessContentTypeFromStream(new ByteArrayInputStream(image)));
-                eventData.put("datetime", dateTime);
+                eventData.put("datetime", dateTime.toString());
                 sendBytes(writeRequest("createEvent", eventData));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    public static void getEvents(){
+        new Thread(() -> {
+            try {
+                sendBytes(writeRequest("getEvents", null));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -195,6 +227,6 @@ public class SocketClient implements Runnable {
     }
 
     public interface ResponseListener {
-        void onSuccess(String message);
+        void onSuccess(Response response);
     }
 }
