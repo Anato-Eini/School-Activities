@@ -56,8 +56,7 @@ public class Server {
 
     public static void main(String[] args) throws IOException, SQLException {
         System.out.println("Starting server");
-        ServerSocket serverSocket = new ServerSocket(23696);
-        // ServerSocket serverSocket = new ServerSocket(5050);
+        ServerSocket serverSocket = new ServerSocket(42783);
         Server server = new Server(serverSocket);
         server.startServer();
     }

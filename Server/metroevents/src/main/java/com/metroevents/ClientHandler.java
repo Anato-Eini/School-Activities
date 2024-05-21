@@ -70,7 +70,18 @@ public class ClientHandler implements Runnable {
                 HashMap<String, Object> requestData = request.data;
                 operation = request.operation;
 
+                System.out.println(request.operation);
+
                 switch (request.operation) {
+                    case "restoreSession" -> {
+                        UUID id = UUID.fromString((String) requestData.get("id"));
+                        String firstName = (String) requestData.get("firstName");
+                        String lastName = (String) requestData.get("lastName");
+                        String userName = (String) requestData.get("userName");
+
+                        user = new User(id, firstName, lastName, userName, null, null);
+                        break;
+                    }
                     case "register" -> {
                         System.out.println("Register");
                         String username = (String) requestData.get("username");
@@ -224,6 +235,217 @@ public class ClientHandler implements Runnable {
                         sendBytes(writeResponse("getEvents", true, "Successfully fetched events", events));
                         break;
                     }
+                    case "getJoinedEvents" -> {
+                        String query = "SELECT * FROM event_participants WHERE user_id = ?";
+
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setObject(1, user.id);
+
+                        ResultSet resultSet = statement.executeQuery();
+
+                        Map<String, Object> events = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> event = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                event.put(columnName, columnValue);
+                            }
+                            events.put(id.toString(), event);
+                        }
+
+                        sendBytes(writeResponse("getJoinedEvents", true, "Successfully fetched events", events));
+                        break;
+                    }
+
+                    case "joinEvent" -> {
+                        UUID event_id = UUID.fromString((String) requestData.get("event_id"));
+
+                        String query = "INSERT INTO event_participants (event_id, user_id) VALUES (?, ?) RETURNING *";
+
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setObject(1, event_id);
+                        statement.setObject(2, user.id);
+
+                        ResultSet resultSet = statement.executeQuery();
+
+                        Map<String, Object> data = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                data.put(columnName, columnValue);
+                            }
+                        }
+
+                        sendBytes(writeResponse("joinEvent", true, "Successfully joined event", data));
+                        break;
+                    }
+
+                    case "getComments" -> {
+                        String query = "SELECT * FROM event_comments";
+
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery(query);
+
+                        Map<String, Object> comments = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> comment = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                comment.put(columnName, columnValue);
+                            }
+                            comments.put(id.toString(), comment);
+                        }
+                        sendBytes(writeResponse("getComments", true, "Successfully fetched comments", comments));
+                        break;
+                    }
+                    case "createComment" -> {
+                        String commentText = (String) requestData.get("comment");
+                        UUID event_id = UUID.fromString((String) requestData.get("event_id"));
+                        String query = """
+                                    INSERT INTO event_comments(comment,event_id,user_id) VALUES (?, ?, ?) RETURNING *
+                                """;
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setString(1, commentText);
+                        statement.setObject(2, event_id);
+                        statement.setObject(3, user.id);
+
+                        Map<String, Object> comment = new HashMap<>();
+
+                        ResultSet resultSet = statement.executeQuery();
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> commentData = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                commentData.put(columnName, columnValue);
+                            }
+                            comment.put(id.toString(), commentData);
+
+                            sendBytes(writeResponse("createComment", true, "Comment created Succesfully", comment));
+                        }
+                    }
+
+                    case "getVotes" -> {
+                        String query = "SELECT * FROM event_votes";
+
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery(query);
+
+                        Map<String, Object> votes = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> vote = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                vote.put(columnName, columnValue);
+                            }
+                            votes.put(id.toString(), vote);
+                        }
+                        sendBytes(writeResponse("getVotes", true, "Successfully fetched votes",
+                                votes));
+                    }
+
+                    case "createVote" -> {
+                        String voteType = ((String) requestData.get("voteType")).toLowerCase();
+                        UUID event_id = UUID.fromString((String) requestData.get("event_id"));
+
+                        Map<String, Object> vote = new HashMap<>();
+
+                        String query = "SELECT * FROM event_votes WHERE event_id = ? AND user_id = ?";
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setObject(1, event_id);
+                        statement.setObject(2, user.id);
+
+                        ResultSet resultSet = statement.executeQuery();
+
+                        if (resultSet.next()) {
+                            query = """
+                                        UPDATE event_votes SET vote = CAST(? AS vote) WHERE event_id = ? AND user_id = ? RETURNING *
+                                    """;
+                        } else {
+                            query = """
+                                        INSERT INTO event_votes(vote, event_id, user_id) VALUES (CAST(? AS vote), ?, ?) RETURNING *
+                                    """;
+                        }
+
+                        statement = connection.prepareStatement(query);
+                        statement.setString(1, voteType);
+                        statement.setObject(2, event_id);
+                        statement.setObject(3, user.id);
+
+                        resultSet = statement.executeQuery();
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> voteData = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                voteData.put(columnName, columnValue);
+                            }
+                            vote.put(id.toString(), voteData);
+
+                            sendBytes(writeResponse("createVote", true, "Vote created Succesfully", vote));
+                        }
+                    }
+
+                    case "deleteVote" -> {
+                        UUID event_id = UUID.fromString((String) requestData.get("event_id"));
+                        String query = """
+                                    DELETE FROM event_votes WHERE event_id = ? AND user_id = ? RETURNING *
+                                """;
+                        PreparedStatement statement = connection.prepareStatement(query);
+                        statement.setObject(1, event_id);
+                        statement.setObject(2, user.id);
+
+                        Map<String, Object> vote = new HashMap<>();
+
+                        ResultSet resultSet = statement.executeQuery();
+                        if (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> voteData = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                voteData.put(columnName, columnValue);
+                            }
+                            vote.put(id.toString(), voteData);
+
+                            sendBytes(writeResponse("deleteVote", true, "Vote deleted succesfully", vote));
+                        }
+                    }
+
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
