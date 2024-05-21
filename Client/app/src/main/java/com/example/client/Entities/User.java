@@ -30,15 +30,14 @@ public class User {
         }
     }
 
-
-    public String id;
+    public UUID id;
     public String firstName;
     public String lastName;
     public String username;
     public Privilege privilege;
     public Timestamp createdAt;
     public Timestamp updatedAt;
-    public User(String id, String firstName, String lastName, String username, Privilege privilege, Timestamp createdAt, Timestamp updatedAt) {
+    public User(UUID id, String firstName, String lastName, String username, Privilege privilege, Timestamp createdAt, Timestamp updatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

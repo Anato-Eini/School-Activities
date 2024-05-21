@@ -77,6 +77,7 @@ public class Events extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        SocketClient.getJoinedEvents();
         View view = inflater.inflate(R.layout.fragment_events, container, false);
         SocketClient.getEvents();
 
@@ -86,10 +87,11 @@ public class Events extends Fragment {
             @Override
             public void onEventsFetched(HashMap<UUID, Event> events) {
                 List<Event> eventList = new ArrayList<>(events.values());
-                EventsAdapter adapter = new EventsAdapter(eventList);
+                EventsAdapter adapter = new EventsAdapter(eventList, getActivity());
                 events_rv_.setAdapter(adapter);
             }
         });
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         events_rv_.setLayoutManager(layoutManager);

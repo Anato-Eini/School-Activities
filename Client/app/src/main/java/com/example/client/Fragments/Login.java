@@ -1,5 +1,6 @@
 package com.example.client.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.client.Activities.OrganizerDashboard;
+import com.example.client.Activities.UserDashboard;
+import com.example.client.MetroEvents;
 import com.example.client.R;
 import com.example.client.SocketClient;
 
@@ -70,9 +76,42 @@ public class Login extends Fragment {
         EditText password_et_ = view.findViewById(R.id.password_et_);
 
         login_btn_.setOnClickListener(v -> {
-            String username = String.valueOf(username_et_.getText());
-            String password = String.valueOf(password_et_.getText());
-            SocketClient.loginAsync(username, password);
+            String username = username_et_.getText().toString().trim();
+            String password = password_et_.getText().toString().trim();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(getContext(), "Please enter both username and password", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            SocketClient.login(username, password, (status, user) -> {
+                assert getActivity() != null;
+                getActivity().runOnUiThread(() -> {
+                    if (status && user != null) {
+                        MetroEvents metroEvents = (MetroEvents) getActivity().getApplication();
+                        metroEvents.saveUser(user);
+
+                        Intent intent = null;
+                        switch (user.privilege) {
+                            case USER:
+                                intent = new Intent(getActivity(), UserDashboard.class);
+                                break;
+                            case ORGANIZER:
+                                intent = new Intent(getActivity(), OrganizerDashboard.class);
+                                break;
+                            case ADMIN:
+                                // TODO: Implement ADMIN dashboard
+//                                Toast.makeText(getContext(), "Admin dashboard not implemented yet", Toast.LENGTH_SHORT).show();
+                                return;
+                        }
+
+                        if (intent != null) {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    }
+                });
+            });
         });
 
         Button navigate_register_btn = view.findViewById(R.id.navigate_register_btn_);

@@ -1,8 +1,6 @@
 package com.example.client.Fragments;
 
 
-import static android.app.Activity.RESULT_OK;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -25,12 +23,10 @@ import com.example.client.R;
 import com.example.client.SocketClient;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 
@@ -115,7 +111,7 @@ public class CreateEvent extends Fragment {
                 assert inputStream != null;
                 byte[] imageBytes = readFileToBytes(inputStream);
 
-                SocketClient.createEventAsync(
+                SocketClient.createEvent(
                         event_title_txt_.getText().toString(),
                         event_description_txt_.getText().toString(),
                         event_venue_txt_.getText().toString(),

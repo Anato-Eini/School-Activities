@@ -49,4 +49,5 @@ dependencies {
     implementation ("io.reactivex.rxjava2:rxjava:2.2.20")
     implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation ("org.postgresql:postgresql:42.7.3")
 }

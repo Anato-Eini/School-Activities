@@ -79,7 +79,7 @@ public class Register extends Fragment {
             String password = String.valueOf(password_et.getText());
             String firstName = String.valueOf(first_name_et.getText());
             String lastName = String.valueOf(last_name_et.getText());
-            SocketClient.registerAsync(username, password, firstName, lastName);
+            SocketClient.register(username, password, firstName, lastName);
         });
 
         Button btnNavigateRegister = view.findViewById(R.id.navigate_login_btn_);

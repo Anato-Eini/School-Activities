@@ -12,25 +12,18 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/title_txt_"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                android:id="@+id/comment_txt_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
 
         <TextView
-            android:id="@+id/description_txt"
+            android:id="@+id/createdAt_txt_"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:layout_marginTop="8dp" />
-
-        <ImageView
-            android:id="@+id/image_img_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:scaleType="centerCrop" />
+            android:text="TextView" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
