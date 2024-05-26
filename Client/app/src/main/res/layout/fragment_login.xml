@@ -3,81 +3,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".Fragments.Login">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical" >
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="#ff9872"
-            android:gravity="center"
             android:orientation="vertical"
-            android:weightSum="1" >
+            android:gravity="center_horizontal">
 
+            <!-- Title -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textSize="24sp"
+                android:textColor="@android:color/black"
+                android:padding="16dp"
+                android:gravity="center_horizontal"/>
+
+            <!-- Form -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:layout_margin="16dp"
+                android:orientation="vertical">
 
                 <EditText
                     android:id="@+id/username_et_"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_weight="1"
-                    android:drawableLeft="@android:drawable/ic_menu_day"
-                    android:ems="10"
-                    android:hint="username" >
-
-                    <requestFocus />
-                </EditText>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                    android:layout_marginBottom="16dp"
+                    android:hint="Username"
+                    android:textColor="@android:color/black"
+                    android:inputType="text"/>
 
                 <EditText
                     android:id="@+id/password_et_"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:drawableLeft="@android:drawable/ic_menu_day"
-                    android:ems="10"
-                    android:hint="password"
-                    android:inputType="textPassword" />
+                    android:layout_marginBottom="32dp"
+                    android:hint="Password"
+                    android:textColor="@android:color/black"
+                    android:inputType="textPassword"/>
+
+                <Button
+                    android:id="@+id/login_btn_"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Login"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="@color/primaryColor"
+                    android:paddingVertical="12dp"
+                    android:gravity="center"
+                    android:textAllCaps="false"/>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/login_btn_"
+            <!-- Register Section -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:text="Login"
-                android:backgroundTint="@color/primaryColor"
-                />
-
-            <Button
-                android:id="@+id/navigate_register_btn_"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:gravity="center"
-                android:text="Register"
-                android:backgroundTint="@color/primaryColor"
-                />
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don't have an account? "
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/navigate_register_btn_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="onRegisterClicked"
+                    android:text="Register"
+                    android:textColor="@color/primaryColor" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+
+    </ScrollView>
+
 </FrameLayout>

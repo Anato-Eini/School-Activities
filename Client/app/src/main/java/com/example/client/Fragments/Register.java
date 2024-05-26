@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.client.R;
 import com.example.client.SocketClient;
@@ -82,7 +83,7 @@ public class Register extends Fragment {
             SocketClient.register(username, password, firstName, lastName);
         });
 
-        Button btnNavigateRegister = view.findViewById(R.id.navigate_login_btn_);
+        TextView btnNavigateRegister = view.findViewById(R.id.navigate_login_btn_);
         btnNavigateRegister.setOnClickListener(v -> {
             FragmentManager fragmentManager = getParentFragmentManager();
             fragmentManager.beginTransaction()

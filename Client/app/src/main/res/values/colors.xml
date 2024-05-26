@@ -5,4 +5,8 @@
     <color name="primaryColor">#800000</color>
     <color name="primaryDarkColor">#0000FF</color>
     <color name="accentColor">#FFFF00</color>
+    <color name="backgroundColor">#F5F5F5</color>
+    <color name="primaryTextColor">#212121</color>
+    <color name="secondaryTextColor">#757575</color>
+
 </resources>
