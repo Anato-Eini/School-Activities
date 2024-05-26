@@ -5,10 +5,12 @@ import com.example.client.Classes.AuthHandler;
 import com.example.client.Classes.CommentHandler;
 import com.example.client.Classes.EventParticipantHandler;
 import com.example.client.Classes.Response;
+import com.example.client.Classes.UserHandler;
 import com.example.client.Classes.VoteHandler;
 import com.example.client.Entities.Comment;
 import com.example.client.Entities.Event;
 import com.example.client.Entities.EventParticipant;
+import com.example.client.Entities.EventParticipantStatusNotification;
 import com.example.client.Entities.User;
 import com.example.client.Entities.Vote;
 import com.google.gson.Gson;
@@ -38,7 +40,7 @@ public class SocketClient implements Runnable {
     static MetroEvents metroEvents;
 
     public SocketClient(MetroEvents metroEvents){
-        this.metroEvents = metroEvents;
+        SocketClient.metroEvents = metroEvents;
     }
 
     public ResponseListener getResponseListener() {
@@ -67,7 +69,6 @@ public class SocketClient implements Runnable {
            // socket = new Socket("pc-knives.gl.at.ply.gg", 42783);
             socket = new Socket("192.168.254.104", 42783);
 
-
             String messageFromServer;
             while (socket.isConnected()) {
                 byte[] dataFromClient = readBytes();
@@ -77,10 +78,6 @@ public class SocketClient implements Runnable {
                 messageFromServer = new String(dataFromClient, StandardCharsets.UTF_8);
                 gson = new Gson();
                 Response response = gson.fromJson(messageFromServer, Response.class);
-//                System.out.println(response.message);
-//                System.out.println(response.operation);
-//                System.out.println(response.data);
-//                System.out.println(response.status);
 
                 switch (response.operation) {
                     case "login" -> {
@@ -232,7 +229,6 @@ public class SocketClient implements Runnable {
                         }
                     }
 
-
                     case "getEventParticipants" -> {
                         if(response.status){
                             HashMap<UUID, EventParticipant> eventParticipants = new HashMap<>();
@@ -256,10 +252,55 @@ public class SocketClient implements Runnable {
                     }
 
                     case "updateEventParticipantStatus" -> {
-                        if(response.status){
+                        if (response.status) {
                             metroEvents.eventParticipantHandler.notifyEventParticipantStatusUpdated(true);
-                        }else{
+                        } else {
                             metroEvents.eventParticipantHandler.notifyEventParticipantStatusUpdated(false);
+                        }
+                    }
+                    case "getUsers" -> {
+                        if(response.status){
+                            HashMap<UUID, User> users = new HashMap<>();
+                            for (Map.Entry<String, Object> entry : response.data.entrySet()) {
+                                LinkedTreeMap<String, Object> userData = (LinkedTreeMap<String, Object>) entry.getValue();
+                                UUID id = UUID.fromString((String) userData.get("id"));
+                                String firstname = (String) userData.get("firstname");
+                                String lastname = (String) userData.get("lastname");
+                                String username = (String) userData.get("username");
+                                User.Privilege privilege = User.Privilege.fromValue((String) userData.get("privilege"));
+
+                                Timestamp createdAt = Timestamp.valueOf((String)userData.get("createdat"));
+                                Timestamp updatedAt = userData.get("updatedat") != null ? Timestamp.valueOf((String)userData.get("updatedAt")) : null;
+                                User user = new User(id, firstname, lastname, username, privilege,createdAt, updatedAt);
+                                users.put(id, user);
+                            }
+                            metroEvents.userHandler.notifyUsersFetched(true, users);
+                        }else{
+                            metroEvents.userHandler.notifyUsersFetched(false, null);
+                        }
+                    }
+
+                    case "getUserEventParticipantStatusNotifications" -> {
+                        if(response.status){
+                            HashMap<UUID, EventParticipantStatusNotification> eventParticipantStatusNotifications = new HashMap<>();
+                            for (Map.Entry<String, Object> entry : response.data.entrySet()) {
+                                LinkedTreeMap<String, Object> data= (LinkedTreeMap<String, Object>) entry.getValue();
+                                UUID id = UUID.fromString((String) data.get("id"));
+                                UUID event_id = UUID.fromString((String) data.get("event_id"));
+                                UUID user_id = UUID.fromString((String) data.get("user_id"));
+                                String notification = (String) data.get("notification");
+                                Timestamp createdAt = Timestamp.valueOf((String) data.get("createdat"));
+                                Timestamp updatedAt = data.get("updatedat") != null ? Timestamp.valueOf((String) data.get("updatedAt")) : null;
+
+                                EventParticipantStatusNotification eventParticipantStatusNotification = new EventParticipantStatusNotification(id, event_id, user_id
+                                , notification, createdAt, updatedAt);
+
+                                eventParticipantStatusNotifications.put(id, eventParticipantStatusNotification);
+                            }
+                            System.out.println(eventParticipantStatusNotifications);
+                            metroEvents.userHandler.notifyEventParticipantStatusNotificationsFetched(true, eventParticipantStatusNotifications);
+                        }else{
+                            metroEvents.userHandler.notifyEventParticipantStatusNotificationsFetched(false, null);
                         }
                     }
                 }
@@ -463,6 +504,30 @@ public class SocketClient implements Runnable {
         }).start();
     }
 
+    public static void getUsers(UserHandler.GetUsersCallback callback){
+        new Thread(() -> {
+            metroEvents.userHandler.setNotifyFetchedUsers(callback);
+            try {
+                sendBytes(writeRequest("getUsers", null));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    public static void getUserEventParticipantStatusNotifications(UserHandler.GetUserEventParticipantStatusNotifications callback){
+        new Thread(() -> {
+            metroEvents.userHandler.setNotifyFetchedEventParticipantStatusNotifications(callback);
+            try {
+                Map<String, Object> data = new HashMap<>();
+                data.put("user_id", MetroEvents.user.id);
+
+                sendBytes(writeRequest("getUserEventParticipantStatusNotifications", data));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
 
     public static void getEventParticipants(String event_id, EventParticipantHandler.GetEventParticipantsCallback callback){
         new Thread(() -> {
@@ -477,6 +542,7 @@ public class SocketClient implements Runnable {
             }
         }).start();
     }
+
 
     public static void updateEventParticipantStatus(String participant_id, String status, EventParticipantHandler.UpdateEventEventParticipantStatus callback){
         new Thread(() -> {
@@ -511,6 +577,8 @@ public class SocketClient implements Runnable {
             }
         }).start();
     }
+
+
 
     public static byte[] writeRequest(String operation, Map<String, Object> data) {
         Gson gson = new Gson();

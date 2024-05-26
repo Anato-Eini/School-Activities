@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import androidx.core.view.WindowCompat;
 
 import com.example.client.Fragments.CreateEvent;
 import com.example.client.Fragments.Events;
+import com.example.client.Fragments.Notifications;
 import com.example.client.Fragments.Profile;
 import com.example.client.R;
 
@@ -33,21 +35,25 @@ public class UserDashboard extends AppCompatActivity {
                     .commit();
         }
 
-        Button navigate_home_btn_ = findViewById(R.id.navigate_home_btn_);
-        navigate_home_btn_.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.fragment_container_view, Events.class, null)
-                    .commit();
-        });
+        ImageButton navigate_home_btn_ = findViewById(R.id.navigate_home_btn_);
+        navigate_home_btn_.setOnClickListener(v -> getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view, Events.class, null)
+                .commit());
+
+        ImageButton navigate_notifications_btn_ = findViewById(R.id.navigate_notifications_btn_);
+        navigate_notifications_btn_.setOnClickListener(v -> getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view, Notifications.class, null)
+                .commit());
+
 
         Button navigate_profile_btn = findViewById(R.id.navigate_profile_btn_);
+        navigate_profile_btn.setOnClickListener(v -> getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view, Profile.class, null)
+                .commit());
 
-        navigate_profile_btn.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.fragment_container_view, Profile.class, null)
-                    .commit();
-        });
+        Button request_to_be_organizer = findViewById(R.id.requestOrganizer);
     }
 }

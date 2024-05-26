@@ -17,8 +17,10 @@
         android:theme="@style/Theme.Client"
         tools:targetApi="31">
         <activity
-            android:name=".Activities.ManageEvent"
-            android:exported="false" />
+            android:name=".Activities.AdminDashboard"
+            android:exported="false"
+            android:label="@string/title_activity_admin_dashboard"
+            android:theme="@style/Theme.Client" />
         <activity
             android:name=".Activities.EventDetails"
             android:exported="false" />
@@ -28,6 +30,11 @@
         <activity
             android:name=".Activities.UserDashboard"
             android:exported="false" />
+
+        <activity
+            android:name=".Activities.ManageEvent"
+            android:exported="false" />
+
         <activity
             android:name=".Activities.Auth"
             android:exported="true">

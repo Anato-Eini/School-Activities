@@ -121,6 +121,23 @@ public class InitializeDatabase {
                         """);
     }
 
+    private static void createEventStatusNotifications(Statement statement) throws SQLException {
+        statement.execute(
+                """
+                                CREATE TABLE IF NOT EXISTS event_status_notifications(
+                                    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+                                    event_id UUID NOT NULL,
+                                    user_id UUID NOT NULL,
+                                    notification VARCHAR,
+                                    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                                    updatedAt TIMESTAMP,
+                                    CONSTRAINT unique_user_notification UNIQUE (event_id, user_id),
+                                    FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
+                                    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+                                )
+                        """);
+    }
+
     public static void initializeDatabase(Statement statement) throws SQLException {
         statement.execute("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"");
         createUserPrivilegeType(statement);
@@ -131,5 +148,6 @@ public class InitializeDatabase {
         createEventComments(statement);
         createVoteType(statement);
         createEventVotes(statement);
+        createEventStatusNotifications(statement);
     }
 }

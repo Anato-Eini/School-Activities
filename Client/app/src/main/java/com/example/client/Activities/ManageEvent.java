@@ -18,7 +18,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.client.Entities.Event;
 import com.example.client.Entities.EventParticipant;
 import com.example.client.MetroEvents;
 import com.example.client.R;
@@ -28,9 +27,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import java.util.zip.Inflater;
 
 public class ManageEvent extends AppCompatActivity {
     UUID event_id;
@@ -49,7 +48,6 @@ public class ManageEvent extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
         titleTextView = findViewById(R.id.title_detail);
         descriptionTextView = findViewById(R.id.description_detail);
@@ -85,7 +83,7 @@ public class ManageEvent extends AppCompatActivity {
             TextView usernameTextView = participantView.findViewById(R.id.username_txt_);
             Spinner statusSpinner = participantView.findViewById(R.id.status_spinner);
 
-            usernameTextView.setText(participant.user_id.toString());
+            usernameTextView.setText(Objects.requireNonNull(MetroEvents.users.get(participant.user_id)).username);
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getStatusValues());
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

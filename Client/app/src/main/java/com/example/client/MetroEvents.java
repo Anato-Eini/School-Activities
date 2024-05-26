@@ -1,5 +1,9 @@
 package com.example.client;
 
+import static com.example.client.Entities.User.Privilege.ADMIN;
+import static com.example.client.Entities.User.Privilege.ORGANIZER;
+import static com.example.client.Entities.User.Privilege.USER;
+
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Intent;
@@ -13,12 +17,14 @@ import androidx.datastore.preferences.core.PreferencesKeys;
 import androidx.datastore.preferences.rxjava2.RxPreferenceDataStoreBuilder;
 import androidx.datastore.rxjava2.RxDataStore;
 
+import com.example.client.Activities.AdminDashboard;
 import com.example.client.Activities.OrganizerDashboard;
 import com.example.client.Activities.UserDashboard;
 import com.example.client.Classes.AuthHandler;
 import com.example.client.Classes.CommentHandler;
 import com.example.client.Classes.EventParticipantHandler;
 import com.example.client.Classes.Response;
+import com.example.client.Classes.UserHandler;
 import com.example.client.Classes.VoteHandler;
 import com.example.client.Entities.Event;
 import com.example.client.Entities.EventParticipant;
@@ -54,6 +60,7 @@ public class MetroEvents extends Application {
     public static SocketClient socketClient;
     public AuthHandler authHandler = new AuthHandler();
     public CommentHandler commentHandler = new CommentHandler();
+    public UserHandler userHandler = new UserHandler();
     public VoteHandler voteHandler = new VoteHandler();
     public EventParticipantHandler eventParticipantHandler = new EventParticipantHandler();
     private static final String USER_KEY = "user_key";
@@ -62,7 +69,7 @@ public class MetroEvents extends Application {
     public static final HashMap<UUID, Event> EVENTS = new HashMap<>();
     public static final HashMap<UUID, EventParticipant> PARTICIPATED_EVENTS = new HashMap<>();
     public static User user;
-
+    public static HashMap<UUID, User> users;
 
     @Override
     public void onCreate() {
@@ -73,51 +80,40 @@ public class MetroEvents extends Application {
         Thread thread = new Thread(socketClient);
         thread.start();
 
-        getUser(new UserFetchCallback() {
-            @Override
-            public void onUserFetched(User fetchedUser) {
-                if (fetchedUser != null) {
-                    SocketClient.restoreSession(fetchedUser);
-                    Intent intent = null;
-                    user = fetchedUser;
-                    switch (fetchedUser.privilege){
-                        case USER:
-                            intent = new Intent(getApplicationContext(), UserDashboard.class);
-                            break;
-                        case ORGANIZER:
-                            intent = new Intent(getApplicationContext(), OrganizerDashboard.class);
-                            break;
-                        case ADMIN:
-                            //TODO ADMIN DASHBOARD
-//                                    intent = new Intent(Auth.this, UserDashboard.class);
-//                                    startActivity(intent);
-                            break;
-                    }
-                    assert intent != null;
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
+        getUser(fetchedUser -> {
+            if (fetchedUser != null) {
+                SocketClient.restoreSession(fetchedUser);
+                Intent intent = null;
+                user = fetchedUser;
+                switch (fetchedUser.privilege){
+                    case USER:
+                        intent = new Intent(getApplicationContext(), UserDashboard.class);
+                        break;
+                    case ORGANIZER:
+                        intent = new Intent(getApplicationContext(), OrganizerDashboard.class);
+                        break;
+                    case ADMIN:
+                        intent = new Intent(getApplicationContext(), AdminDashboard.class);
+                        break;
                 }
+                assert intent != null;
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                //            optional
+                //            finish();
             }
         });
         //TODO ADD LOADING ANIMATION FOR OPERATIONS eg. LOGIN / REGISTER / CREATE EVENT
-        socketClient.setResponseListener(new SocketClient.ResponseListener() {
-            @Override
-            public void onSuccess(Response response) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        switch (response.operation){
-                            case "login":
-                            case "register":
-                            case "joinEvent":
-                            case "createEvent":
-                            case "updateEventParticipantStatus":
-                                Toast.makeText(getApplicationContext(), response.message, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        socketClient.setResponseListener(response -> new Handler(Looper.getMainLooper()).post(() -> {
+            switch (response.operation){
+                case "login":
+                case "register":
+                case "joinEvent":
+                case "createEvent":
+                case "updateEventParticipantStatus":
+                    Toast.makeText(getApplicationContext(), response.message, Toast.LENGTH_SHORT).show();
             }
-        });
+        }));
     }
 
 

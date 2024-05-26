@@ -15,4 +15,8 @@
     <string name="profile">Profile</string>
     <string name="create_event">Create Event</string>
     <string name="manage_events">Manage Events</string>
+    <string name="apply_to_be_organiner">Apply To be Organiner</string>
+    <string name="apply_to_be_organizer">Apply to be Organizer</string>
+    <string name="title_activity_admin_dashboard">AdminDashboard</string>
+    <string name="notifications">Notifications</string>
 </resources>

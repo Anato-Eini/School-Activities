@@ -479,23 +479,121 @@ public class ClientHandler implements Runnable {
                     case "updateEventParticipantStatus" -> {
                         UUID participant_id = UUID.fromString((String) requestData.get("participant_id"));
                         String status = ((String) requestData.get("status")).toLowerCase();
-                        System.out.println(status);
-                        String query = "UPDATE event_participants SET status = CAST(? AS participant_status) WHERE id = ?";
+                        String query = "UPDATE event_participants SET status = CAST(? AS participant_status) WHERE id = ? RETURNING *";
 
                         PreparedStatement preparedStatement = connection.prepareStatement(query);
                         preparedStatement.setString(1, status);
                         preparedStatement.setObject(2, participant_id);
 
-                        int rows = preparedStatement.executeUpdate();
-                        if (rows > 0) {
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        if (resultSet.next()) {
                             sendBytes(writeResponse("updateEventParticipantStatus", true,
                                     "Successfully updated event participant status", null));
+
+                            query = "SELECT * FROM events WHERE id = ?";
+                            preparedStatement = connection.prepareStatement(query);
+                            preparedStatement.setObject(1, resultSet.getObject("event_id"));
+
+                            ResultSet event = preparedStatement.executeQuery();
+                            event.next();
+
+                            query = "SELECT * FROM event_status_notifications WHERE event_id = ? AND user_id = ?";
+                            preparedStatement = connection.prepareStatement(query);
+                            preparedStatement.setObject(1, resultSet.getObject("event_id"));
+                            preparedStatement.setObject(2, resultSet.getObject("user_id"));
+
+                            ResultSet resultSet2 = preparedStatement.executeQuery();
+
+                            String notification = null;
+                            switch (status) {
+                                case "accepted" -> {
+                                    notification = "Your registration for event "
+                                            + event.getString("title") + " was accepted";
+                                }
+
+                                case "rejected" -> {
+                                    notification = "Your registration for event "
+                                            + event.getString("title") + " was rejected";
+                                }
+                            }
+
+                            if (resultSet2.next()) {
+                                query = "UPDATE event_status_notifications SET notification = ? WHERE id = ?";
+
+                                preparedStatement = connection.prepareStatement(query);
+                                preparedStatement.setString(1, notification);
+                                preparedStatement.setObject(2, resultSet2.getObject("id"));
+
+                                preparedStatement.executeUpdate();
+
+                            } else {
+                                query = "INSERT INTO event_status_notifications (notification, event_id, user_id) VALUES (?, ?, ?)";
+
+                                preparedStatement = connection.prepareStatement(query);
+                                preparedStatement.setString(1, notification);
+                                preparedStatement.setObject(2, resultSet.getObject("event_id"));
+                                preparedStatement.setObject(3, resultSet.getObject("user_id"));
+
+                                preparedStatement.executeUpdate();
+                            }
                         } else {
                             sendBytes(writeResponse("updateEventParticipantStatus", false,
                                     "Failed to update event participant status", null));
                         }
                     }
 
+                    case "getUserEventParticipantStatusNotifications" -> {
+                        UUID user_id = UUID.fromString((String) requestData.get("user_id"));
+                        String query = "SELECT * FROM event_status_notifications WHERE user_id = ?";
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setObject(1, user_id);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        Map<String, Object> notifications = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> notification = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                notification.put(columnName, columnValue);
+                            }
+                            notifications.put(id.toString(), notification);
+                        }
+                        sendBytes(writeResponse("getUserEventParticipantStatusNotifications", true,
+                                "Successfully fetched notifications",
+                                notifications));
+                    }
+
+                    case "getUsers" -> {
+                        String query = "SELECT * FROM users";
+
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery(query);
+
+                        Map<String, Object> users = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> user = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                user.put(columnName, columnValue);
+                            }
+                            users.put(id.toString(), user);
+                        }
+                        sendBytes(writeResponse("getUsers", true, "Successfully fetched users",
+                                users));
+                    }
                 }
             } catch (Throwable e) {
                 e.printStackTrace();

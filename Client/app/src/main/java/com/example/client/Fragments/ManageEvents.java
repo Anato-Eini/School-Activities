@@ -84,6 +84,12 @@ public class ManageEvents extends Fragment {
 
         events_ll = view.findViewById(R.id.events_ll_);
 
+        if(MetroEvents.users == null){
+            SocketClient.getUsers((status, users) -> {
+                MetroEvents.users = users;
+            });
+        }
+
         metroEvents.getEvents(new MetroEvents.EventsFetchCallback() {
             @Override
             public void onEventsFetched(HashMap<UUID, Event> events) {
