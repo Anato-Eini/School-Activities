@@ -34,20 +34,20 @@ public class UserDashboard extends AppCompatActivity {
         }
 
         Button navigate_home_btn_ = findViewById(R.id.navigate_home_btn_);
-        navigate_home_btn_.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.fragment_container_view, Events.class, null)
-                    .commit();
-        });
+        navigate_home_btn_.setOnClickListener(v -> getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view, Events.class, null)
+                .commit());
 
         Button navigate_profile_btn = findViewById(R.id.navigate_profile_btn_);
 
-        navigate_profile_btn.setOnClickListener(v -> {
-            getSupportFragmentManager().beginTransaction()
-                    .setReorderingAllowed(true)
-                    .replace(R.id.fragment_container_view, Profile.class, null)
-                    .commit();
-        });
+        navigate_profile_btn.setOnClickListener(v -> getSupportFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .replace(R.id.fragment_container_view, Profile.class, null)
+                .commit());
+
+        Button request_to_be_organizer = findViewById(R.id.requestOrganizer);
+
+
     }
 }

@@ -4,6 +4,7 @@ package com.example.client;
 import com.example.client.Classes.AuthHandler;
 import com.example.client.Classes.CommentHandler;
 import com.example.client.Classes.Response;
+import com.example.client.Classes.UserHandler;
 import com.example.client.Classes.VoteHandler;
 import com.example.client.Entities.Comment;
 import com.example.client.Entities.Event;
@@ -37,7 +38,7 @@ public class SocketClient implements Runnable {
     static MetroEvents metroEvents;
 
     public SocketClient(MetroEvents metroEvents){
-        this.metroEvents = metroEvents;
+        SocketClient.metroEvents = metroEvents;
     }
 
     public ResponseListener getResponseListener() {
@@ -64,8 +65,7 @@ public class SocketClient implements Runnable {
             System.out.println("Connecting to server");
 //            socket = new Socket("192.168.254.104", 23696);
            // socket = new Socket("pc-knives.gl.at.ply.gg", 42783);
-            socket = new Socket("192.168.1.4", 42783);
-
+            socket = new Socket("192.168.254.108", 42783);
 
             String messageFromServer;
             while (socket.isConnected()) {
@@ -230,7 +230,34 @@ public class SocketClient implements Runnable {
                             metroEvents.voteHandler.notifyVoteDeleted(false, null);
                         }
                     }
+                    case "getUsers" -> {
+/*                        public UUID id;
+                        public String firstName;
+                        public String lastName;
+                        public String username;
+                        public User.Privilege privilege;
+                        public Timestamp createdAt;
+                        public Timestamp updatedAt;*/
+                        if(response.status){
+                            HashMap<UUID, User> users = new HashMap<>();
+                            for (Map.Entry<String, Object> entry : response.data.entrySet()) {
+                                LinkedTreeMap<String, Object> userData = (LinkedTreeMap<String, Object>) entry.getValue();
+                                UUID id = UUID.fromString((String) userData.get("id"));
+                                String firstname = (String) userData.get("firstname");
+                                String lastname = (String) userData.get("lastname");
+                                String username = (String) userData.get("username");
+                                User.Privilege privilege = User.Privilege.fromValue((String) userData.get("privilege"));
 
+                                Timestamp createdAt = Timestamp.valueOf((String)userData.get("createdat"));
+                                Timestamp updatedAt = userData.get("updatedat") != null ? Timestamp.valueOf((String)userData.get("updatedAt")) : null;
+                                User user = new User(id, firstname, lastname, username, privilege,createdAt, updatedAt);
+                                users.put(id, user);
+                            }
+                            metroEvents.userHandler.notifyUsersFetched(true, users);
+                        }else{
+                            metroEvents.userHandler.notifyUsersFetched(false, null);
+                        }
+                    }
                 }
                 responseListener.onSuccess(response);
             }
@@ -432,6 +459,16 @@ public class SocketClient implements Runnable {
         }).start();
     }
 
+    public static void getUsers(UserHandler.GetUsersCallback callback){
+        new Thread(() -> {
+            metroEvents.userHandler.setNotifyFetchedUsers(callback);
+            try {
+                sendBytes(writeRequest("getUsers", null));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
 
     public static void restoreSession(User user){
 
@@ -452,6 +489,8 @@ public class SocketClient implements Runnable {
             }
         }).start();
     }
+
+
 
     public static byte[] writeRequest(String operation, Map<String, Object> data) {
         Gson gson = new Gson();

@@ -17,6 +17,11 @@
         android:theme="@style/Theme.Client"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.AdminDashboard"
+            android:exported="false"
+            android:label="@string/title_activity_admin_dashboard"
+            android:theme="@style/Theme.Client" />
+        <activity
             android:name=".Activities.EventDetails"
             android:exported="false" />
         <activity
@@ -30,6 +35,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
