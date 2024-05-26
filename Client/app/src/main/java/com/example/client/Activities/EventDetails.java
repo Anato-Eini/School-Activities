@@ -264,6 +264,8 @@ public class EventDetails extends AppCompatActivity {
                 });
             });
         }
+
+
     }
 
     private void disableButtons() {
