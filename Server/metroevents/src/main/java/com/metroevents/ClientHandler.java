@@ -446,6 +446,31 @@ public class ClientHandler implements Runnable {
                         }
                     }
 
+                    case "getUsers" -> {
+                        String query = "SELECT * FROM users";
+
+                        Statement statement = connection.createStatement();
+                        ResultSet resultSet = statement.executeQuery(query);
+
+                        Map<String, Object> users = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> user = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                user.put(columnName, columnValue);
+                            }
+                            users.put(id.toString(), user);
+                        }
+                        sendBytes(writeResponse("getUsers", true, "Successfully fetched users",
+                                users));
+                    }
+
                 }
             } catch (Throwable e) {
                 e.printStackTrace();

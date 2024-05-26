@@ -83,7 +83,7 @@ public class Client {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your username: ");
         String username = scanner.nextLine();
-        Socket socket = new Socket("links-warrant.gl.at.ply.gg", 23696);
+        Socket socket = new Socket("192.168.254.108", 23696);
         Client client = new Client(socket, username);
         client.listenForMessage();
         client.sendMessage();
