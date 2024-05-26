@@ -12,55 +12,74 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:weightSum="3"
         android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:padding="8dp"
+        android:background="@drawable/bottom_border"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/navigate_home_btn_"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/home_1_svgrepo_com" />
-
-        <ImageButton
-            android:id="@+id/navigate_notifications_btn_"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@android:color/transparent"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/notifications_svgrepo_com" />
-
-        <!--        <Button-->
-<!--            android:id="@+id/navigate_home_btn_"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="0.3"-->
-<!--            android:backgroundTint="@color/primaryColor"-->
-<!--            android:text="@string/home" />-->
-
-
-        <Button
-            android:id="@+id/navigate_profile_btn_"
-            android:layout_width="100dp"
+        <FrameLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:backgroundTint="@color/primaryColor"
+            android:layout_weight="1"
+            android:layout_gravity="center">
 
-            android:text="@string/profile" />
+            <ImageButton
+                android:id="@+id/navigate_home_btn_"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/home_svgrepo_com" />
+        </FrameLayout>
 
-        <Button
-            android:id="@+id/requestOrganizer"
-            android:layout_width="wrap_content"
+        <FrameLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:text="@string/apply_to_be_organizer" />
+            android:layout_weight="1"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/navigate_notifications_btn_"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/notifications_svgrepo_com" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/navigate_profile_btn_"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/legitprofile" />
+        </FrameLayout>
+
     </LinearLayout>
+
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/linearLayout"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:foregroundTint="#FFC107"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

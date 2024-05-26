@@ -13,29 +13,38 @@
         <LinearLayout
             android:id="@+id/profile_ll_"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/name_txt_"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Name" />
+                android:textSize="30sp"
+            tools:text="Name" />
 
             <TextView
                 android:id="@+id/username_txt_"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="Username" />
+                android:textSize="30sp"
+            tools:text="Username" />
+
+            <Button
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/logout_btn_"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="Logout"
+                android:backgroundTint="@color/primaryColor"
+                app:layout_constraintTop_toBottomOf="@id/profile_ll_"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/logout_btn_"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:backgroundTint="@color/primaryColor"
-            app:layout_constraintTop_toBottomOf="@id/profile_ll_"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

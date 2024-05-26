@@ -55,7 +55,8 @@
             android:layout_marginTop="16dp"
             android:text="Join Event"
             android:backgroundTint="@color/primaryColor"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"/>
 
         <EditText
             android:id="@+id/comment_event_et_"
@@ -72,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
-            android:gravity="start"
+            android:gravity="center_vertical"
             android:padding="8dp">
 
             <ImageButton

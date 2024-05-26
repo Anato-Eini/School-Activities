@@ -2,6 +2,7 @@ package com.example.client.Activities;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +29,7 @@ public class OrganizerDashboard extends AppCompatActivity {
                     .commit();
         }
 
-        Button navigate_home_btn_ = findViewById(R.id.navigate_home_btn_);
+        ImageButton navigate_home_btn_ = findViewById(R.id.navigate_home_btn_);
         navigate_home_btn_.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
@@ -37,7 +38,7 @@ public class OrganizerDashboard extends AppCompatActivity {
         });
 
 
-        Button navigate_manage_events_btn_ = findViewById(R.id.navigate_manage_events_btn_);
+        ImageButton navigate_manage_events_btn_ = findViewById(R.id.navigate_manage_events_btn_);
         navigate_manage_events_btn_.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
@@ -45,7 +46,7 @@ public class OrganizerDashboard extends AppCompatActivity {
                     .commit();
         });
 
-        Button navigate_profile_btn = findViewById(R.id.navigate_profile_btn_);
+        ImageButton navigate_profile_btn = findViewById(R.id.navigate_profile_btn_);
 
         navigate_profile_btn.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction()
@@ -54,7 +55,7 @@ public class OrganizerDashboard extends AppCompatActivity {
                     .commit();
         });
 
-        Button navigate_create_event_btn_ = findViewById(R.id.navigate_create_event_btn_);
+        ImageButton navigate_create_event_btn_ = findViewById(R.id.navigate_create_event_btn_);
         navigate_create_event_btn_.setOnClickListener(v -> {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)

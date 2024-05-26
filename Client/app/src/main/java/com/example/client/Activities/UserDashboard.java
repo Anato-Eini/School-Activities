@@ -48,12 +48,12 @@ public class UserDashboard extends AppCompatActivity {
                 .commit());
 
 
-        Button navigate_profile_btn = findViewById(R.id.navigate_profile_btn_);
+        ImageButton navigate_profile_btn = findViewById(R.id.navigate_profile_btn_);
         navigate_profile_btn.setOnClickListener(v -> getSupportFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
                 .replace(R.id.fragment_container_view, Profile.class, null)
                 .commit());
 
-        Button request_to_be_organizer = findViewById(R.id.requestOrganizer);
+       // Button request_to_be_organizer = findViewById(R.id.requestOrganizer);
     }
 }

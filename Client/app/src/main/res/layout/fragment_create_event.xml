@@ -12,6 +12,9 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="30sp"
             android:id="@+id/create_event_header_txt"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -54,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="Select Date and Time"
                 android:backgroundTint="@color/primaryColor"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 />
 
             <TextView
@@ -68,6 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="Select Image"
                 android:backgroundTint="@color/primaryColor"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 />
 
             <ImageView
@@ -84,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:text="Create Event"
                 android:backgroundTint="@color/primaryColor"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 />
 
         </LinearLayout>
