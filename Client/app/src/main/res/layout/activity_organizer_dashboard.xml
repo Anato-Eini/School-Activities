@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:weightSum="3"
+        android:weightSum="4"
         app:layout_constraintTop_toTopOf="parent"
         >
 
@@ -23,6 +23,17 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:text="@string/home"
+            android:backgroundTint="@color/primaryColor"
+            />
+
+
+        <Button
+            android:id="@+id/navigate_manage_events_btn_"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="@string/manage_events"
             android:backgroundTint="@color/primaryColor"
             />
 

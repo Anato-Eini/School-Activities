@@ -25,7 +25,6 @@ public class CommentHandler {
 
 
 
-
     public interface GetCommentsCallback{
         void onCommentsFetched(boolean success, HashMap<UUID, Comment> comments);
     }

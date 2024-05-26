@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.UUID;
 
 public class EventParticipant {
-
     public enum Status{
         PENDING ((String) "Pending"),
         ACCEPTED ((String) "Accepted"),

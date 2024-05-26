@@ -64,7 +64,8 @@ public class SocketClient implements Runnable {
             System.out.println("Connecting to server");
 //            socket = new Socket("192.168.254.104", 23696);
            // socket = new Socket("pc-knives.gl.at.ply.gg", 42783);
-            socket = new Socket("192.168.1.4", 42783);
+//            socket = new Socket("192.168.1.4", 42783);
+            socket = new Socket("192.168.254.104", 42783);
 
 
             String messageFromServer;
@@ -228,6 +229,37 @@ public class SocketClient implements Runnable {
                             }
                         } else {
                             metroEvents.voteHandler.notifyVoteDeleted(false, null);
+                        }
+                    }
+
+
+                    case "getEventParticipants" -> {
+
+//                        public UUID id;
+//                        public UUID event_id;
+//                        public UUID user_id;
+//                        public EventParticipant.Status status;
+//                        public Timestamp createdAt;
+//                        public Timestamp updatedAt;
+
+                        if(response.status){
+                            HashMap<UUID, EventParticipant> eventParticipants = new HashMap<>();
+                            for (Map.Entry<String, Object> entry : response.data.entrySet()) {
+                                LinkedTreeMap<String, Object> participantData = (LinkedTreeMap<String, Object>) entry.getValue();
+                                UUID id = UUID.fromString((String) participantData.get("id"));
+                                UUID event_id = UUID.fromString((String) participantData.get("event_id"));
+                                UUID user_id = UUID.fromString((String) participantData.get("user_id"));
+                                EventParticipant.Status status = EventParticipant.Status.fromValue((String)participantData.get("status")) ;
+                                Timestamp createdAt = Timestamp.valueOf((String) participantData.get("createdat"));
+                                Timestamp updatedAt = participantData.get("updatedat") != null ? Timestamp.valueOf((String) participantData.get("updatedAt")) : null;
+
+                                EventParticipant participant = new EventParticipant(id, event_id, user_id, status, createdAt, updatedAt);
+
+                                eventParticipants.put(id, participant);
+                            }
+                            metroEvents.eventParticipantHandler.notifyEventParticipantsFetched(true, eventParticipants);
+                        }else{
+                            metroEvents.eventParticipantHandler.notifyEventParticipantsFetched(false, null);
                         }
                     }
 
@@ -432,6 +464,20 @@ public class SocketClient implements Runnable {
         }).start();
     }
 
+
+    public static void getEventParticipants(String event_id, VoteHandler.GetVotesCallback callback){
+        new Thread(() -> {
+            metroEvents.voteHandler.setNotifyFetchedVotes(callback);
+            try {
+                Map<String, Object> data = new HashMap<>();
+                data.put("event_id", event_id);
+
+                sendBytes(writeRequest("getVotes", data));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
 
     public static void restoreSession(User user){
 

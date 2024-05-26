@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.client.Fragments.CreateEvent;
 import com.example.client.Fragments.Events;
+import com.example.client.Fragments.ManageEvents;
 import com.example.client.Fragments.Profile;
 import com.example.client.MetroEvents;
 import com.example.client.R;
@@ -32,6 +33,15 @@ public class OrganizerDashboard extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_container_view, Events.class, null)
+                    .commit();
+        });
+
+
+        Button navigate_manage_events_btn_ = findViewById(R.id.navigate_manage_events_btn_);
+        navigate_manage_events_btn_.setOnClickListener(v -> {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.fragment_container_view, ManageEvents.class, null)
                     .commit();
         });
 

@@ -17,6 +17,7 @@ import com.example.client.Activities.OrganizerDashboard;
 import com.example.client.Activities.UserDashboard;
 import com.example.client.Classes.AuthHandler;
 import com.example.client.Classes.CommentHandler;
+import com.example.client.Classes.EventParticipantHandler;
 import com.example.client.Classes.Response;
 import com.example.client.Classes.VoteHandler;
 import com.example.client.Entities.Event;
@@ -54,12 +55,14 @@ public class MetroEvents extends Application {
     public AuthHandler authHandler = new AuthHandler();
     public CommentHandler commentHandler = new CommentHandler();
     public VoteHandler voteHandler = new VoteHandler();
+    public EventParticipantHandler eventParticipantHandler = new EventParticipantHandler();
     private static final String USER_KEY = "user_key";
     private static final String EVENTS_KEY = "events_key";
     private static final String PARTICIPATED_EVENTS_KEY = "participated_events_key";
     public static final HashMap<UUID, Event> EVENTS = new HashMap<>();
     public static final HashMap<UUID, EventParticipant> PARTICIPATED_EVENTS = new HashMap<>();
     public static User user;
+
 
     @Override
     public void onCreate() {
@@ -93,8 +96,6 @@ public class MetroEvents extends Application {
                     assert intent != null;
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
-                    //            optional
-                    //            finish();
                 }
             }
         });
@@ -126,9 +127,10 @@ public class MetroEvents extends Application {
                 .create();
     }
 
-    public void saveUser(User user) {
+    public void saveUser(User fetchedUser) {
         Gson gson = getGson();
-        String userJson = gson.toJson(user);
+        String userJson = gson.toJson(fetchedUser);
+        user = fetchedUser;
 
         Preferences.Key<String> userKey = PreferencesKeys.stringKey(USER_KEY);
 
