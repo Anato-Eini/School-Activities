@@ -3,7 +3,7 @@ package com.example.client.Entities;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class Event {
+public class Event implements Comparable<Event> {
     public UUID id;
     public UUID organizer_id;
     public String title;
@@ -29,5 +29,10 @@ public class Event {
         this.cancellation_reason = cancellation_reason;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        return o.createdAt.compareTo(this.createdAt);
     }
 }

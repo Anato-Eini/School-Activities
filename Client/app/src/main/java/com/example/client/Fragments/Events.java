@@ -21,6 +21,7 @@ import com.example.client.R;
 import com.example.client.SocketClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -87,6 +88,7 @@ public class Events extends Fragment {
             @Override
             public void onEventsFetched(HashMap<UUID, Event> events) {
                 List<Event> eventList = new ArrayList<>(events.values());
+                Collections.sort(eventList);
                 EventsAdapter adapter = new EventsAdapter(eventList, getActivity());
                 events_rv_.setAdapter(adapter);
             }

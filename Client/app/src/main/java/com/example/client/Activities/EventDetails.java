@@ -121,7 +121,7 @@ public class EventDetails extends AppCompatActivity {
                     if (success && newComment != null) {
                         runOnUiThread(() -> {
                             eventComments.add(0, newComment);
-                            comments_rv_.getAdapter().notifyItemInserted(eventComments.size() - 1);
+                            comments_rv_.getAdapter().notifyItemInserted(0);
                             comment_event_et_.setText("");
                         });
                     }
