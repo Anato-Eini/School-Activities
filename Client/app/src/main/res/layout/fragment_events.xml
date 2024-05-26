@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Events">
+    tools:context=".Fragments.Events"
+    android:fitsSystemWindows="true">
 
     <!-- TODO: Update blank fragment layout -->
 
