@@ -39,13 +39,14 @@ import io.reactivex.schedulers.Schedulers;
 //        An application designed to help everyone organize and join events. The idea is to have a way to connect people to each other publicly.
 //
 //        Featured Functionalities
-//        1. Login/Register
-//        2. Join Event
-//        3. Create Event
-//        4. Request to join event
-//        5. Comment Event
-//        6. Vote Event
-//        7. Notification Event
+//        1. Login/Register ok
+//        2. Join Event ok
+//        3. Create Event ok
+//        4. Request to join event ok
+//        5. Comment Event ok
+//        6. Vote Event ok
+//        7. Notification Event pending
+//        8. Organizer pending
 
 public class MetroEvents extends Application {
     private RxDataStore<Preferences> dataStore;

@@ -63,7 +63,8 @@ public class SocketClient implements Runnable {
         try {
             System.out.println("Connecting to server");
 //            socket = new Socket("192.168.254.104", 23696);
-            socket = new Socket("pc-knives.gl.at.ply.gg", 42783);
+           // socket = new Socket("pc-knives.gl.at.ply.gg", 42783);
+            socket = new Socket("192.168.1.4", 42783);
 
 
             String messageFromServer;

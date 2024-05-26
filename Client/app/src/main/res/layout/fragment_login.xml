@@ -65,7 +65,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:text="Login" />
+                android:text="Login"
+                android:backgroundTint="@color/primaryColor"
+                />
 
             <Button
                 android:id="@+id/navigate_register_btn_"
@@ -73,7 +75,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:gravity="center"
-                android:text="Register" />
+                android:text="Register"
+                android:backgroundTint="@color/primaryColor"
+                />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

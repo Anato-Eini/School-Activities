@@ -60,12 +60,16 @@
             android:id="@+id/register_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:text="Register"
+            android:backgroundTint="@color/primaryColor"
+            />
 
         <Button
             android:id="@+id/navigate_login_btn_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login" />
+            android:text="Login"
+            android:backgroundTint="@color/primaryColor"
+            />
     </LinearLayout>
 </FrameLayout>

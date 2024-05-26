@@ -52,7 +52,9 @@
                 android:id="@+id/select_event_datetime_btn_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Date and Time" />
+                android:text="Select Date and Time"
+                android:backgroundTint="@color/primaryColor"
+                />
 
             <TextView
                 android:id="@+id/event_datetime_txt_"
@@ -64,7 +66,9 @@
                 android:id="@+id/select_event_image_btn_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Select Image" />
+                android:text="Select Image"
+                android:backgroundTint="@color/primaryColor"
+                />
 
             <ImageView
                 android:id="@+id/event_image_img_"
@@ -78,7 +82,9 @@
                 android:id="@+id/create_event_btn_"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create Event" />
+                android:text="Create Event"
+                android:backgroundTint="@color/primaryColor"
+                />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
