@@ -67,6 +67,8 @@ public class ClientHandler implements Runnable {
                 messageFromClient = new String(dataFromClient, StandardCharsets.UTF_8);
                 Gson gson = new Gson();
                 Request request = gson.fromJson(messageFromClient, Request.class);
+                if (request == null)
+                    continue;
                 HashMap<String, Object> requestData = request.data;
                 operation = request.operation;
 
@@ -443,6 +445,54 @@ public class ClientHandler implements Runnable {
                             vote.put(id.toString(), voteData);
 
                             sendBytes(writeResponse("deleteVote", true, "Vote deleted succesfully", vote));
+                        }
+                    }
+
+                    case "getEventParticipants" -> {
+                        UUID event_id = UUID.fromString((String) requestData.get("event_id"));
+
+                        String query = "SELECT * FROM event_participants WHERE event_id = ?";
+
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setObject(1, event_id);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+
+                        Map<String, Object> participants = new HashMap<>();
+
+                        while (resultSet.next()) {
+                            ResultSetMetaData metaData = resultSet.getMetaData();
+                            int columnCount = metaData.getColumnCount();
+                            Map<String, Object> participant = new HashMap<>();
+                            Object id = resultSet.getObject(1);
+
+                            for (int i = 1; i <= columnCount; i++) {
+                                String columnName = metaData.getColumnName(i);
+                                String columnValue = resultSet.getString(i);
+                                participant.put(columnName, columnValue);
+                            }
+                            participants.put(id.toString(), participant);
+                        }
+                        sendBytes(writeResponse("getEventParticipants", true, "Successfully fetched event participants",
+                                participants));
+                    }
+
+                    case "updateEventParticipantStatus" -> {
+                        UUID participant_id = UUID.fromString((String) requestData.get("participant_id"));
+                        String status = ((String) requestData.get("status")).toLowerCase();
+                        System.out.println(status);
+                        String query = "UPDATE event_participants SET status = CAST(? AS participant_status) WHERE id = ?";
+
+                        PreparedStatement preparedStatement = connection.prepareStatement(query);
+                        preparedStatement.setString(1, status);
+                        preparedStatement.setObject(2, participant_id);
+
+                        int rows = preparedStatement.executeUpdate();
+                        if (rows > 0) {
+                            sendBytes(writeResponse("updateEventParticipantStatus", true,
+                                    "Successfully updated event participant status", null));
+                        } else {
+                            sendBytes(writeResponse("updateEventParticipantStatus", false,
+                                    "Failed to update event participant status", null));
                         }
                     }
 
