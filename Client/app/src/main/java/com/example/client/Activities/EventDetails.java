@@ -22,6 +22,7 @@ import com.example.client.SocketClient;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -80,7 +81,7 @@ public class EventDetails extends AppCompatActivity {
                             eventComments.add(comment);
                         }
                     }
-
+                    Collections.sort(eventComments);
                     CommentsAdapter adapter = new CommentsAdapter(eventComments, EventDetails.this);
                     comments_rv_.setAdapter(adapter);
                 });

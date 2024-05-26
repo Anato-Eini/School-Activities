@@ -3,7 +3,7 @@ package com.example.client.Entities;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class Comment {
+public class Comment implements Comparable<Comment> {
 //    CREATE TABLE IF NOT EXISTS event_comments(
 //    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
 //    event_id UUID REFERENCES events(id) ON DELETE CASCADE,
@@ -26,5 +26,10 @@ public class Comment {
         this.comment = comment;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public int compareTo(Comment other) {
+        return other.createdAt.compareTo(this.createdAt);
     }
 }

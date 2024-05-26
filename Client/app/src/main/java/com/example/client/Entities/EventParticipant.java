@@ -3,7 +3,8 @@ package com.example.client.Entities;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-public class EventParticipant {
+public class EventParticipant implements Comparable<EventParticipant> {
+
     public enum Status{
         PENDING ((String) "Pending"),
         ACCEPTED ((String) "Accepted"),
@@ -40,6 +41,9 @@ public class EventParticipant {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public int compareTo(EventParticipant o) {
+        return o.createdAt.compareTo(this.createdAt);
+    }
 }
-
-

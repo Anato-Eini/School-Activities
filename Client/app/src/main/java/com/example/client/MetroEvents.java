@@ -111,6 +111,7 @@ public class MetroEvents extends Application {
                             case "register":
                             case "joinEvent":
                             case "createEvent":
+                            case "updateEventParticipantStatus":
                                 Toast.makeText(getApplicationContext(), response.message, Toast.LENGTH_SHORT).show();
                         }
                     }

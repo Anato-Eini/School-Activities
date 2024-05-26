@@ -1,6 +1,5 @@
 package com.example.client.Classes;
 
-import com.example.client.Entities.Comment;
 import com.example.client.Entities.EventParticipant;
 
 import java.util.HashMap;
@@ -22,4 +21,19 @@ public class EventParticipantHandler {
         }
     }
 
+
+    UpdateEventEventParticipantStatus updateEventEventParticipantStatus;
+    public interface UpdateEventEventParticipantStatus{
+        void onEventParticipantStatusUpdate(boolean success);
+    }
+
+    public void setNotifyUpdatedEventParticipantStatus(UpdateEventEventParticipantStatus callback) {
+        this.updateEventEventParticipantStatus = callback;
+    }
+
+    public void notifyEventParticipantStatusUpdated(boolean success){
+        if(updateEventEventParticipantStatus != null){
+            updateEventEventParticipantStatus.onEventParticipantStatusUpdate(success);
+        }
+    }
 }

@@ -92,7 +92,6 @@ public class ManageEvents extends Fragment {
                 events_ll.removeAllViews();
 
                 for (Event event : eventList) {
-
                     if(!event.organizer_id.equals(MetroEvents.user.id))continue;
                     View eventView = inflater.inflate(R.layout.event_item , events_ll, false);
 

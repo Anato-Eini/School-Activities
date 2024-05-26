@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.client.Activities.OrganizerDashboard;
@@ -116,7 +117,7 @@ public class Login extends Fragment {
             });
         });
 
-        Button navigate_register_btn = view.findViewById(R.id.navigate_register_btn_);
+        TextView navigate_register_btn = view.findViewById(R.id.navigate_register_btn_);
 
         navigate_register_btn.setOnClickListener(v -> {
             FragmentManager fragmentManager = getParentFragmentManager();

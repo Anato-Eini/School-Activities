@@ -3,6 +3,7 @@ package com.example.client;
 
 import com.example.client.Classes.AuthHandler;
 import com.example.client.Classes.CommentHandler;
+import com.example.client.Classes.EventParticipantHandler;
 import com.example.client.Classes.Response;
 import com.example.client.Classes.VoteHandler;
 import com.example.client.Entities.Comment;
@@ -64,7 +65,6 @@ public class SocketClient implements Runnable {
             System.out.println("Connecting to server");
 //            socket = new Socket("192.168.254.104", 23696);
            // socket = new Socket("pc-knives.gl.at.ply.gg", 42783);
-//            socket = new Socket("192.168.1.4", 42783);
             socket = new Socket("192.168.254.104", 42783);
 
 
@@ -234,14 +234,6 @@ public class SocketClient implements Runnable {
 
 
                     case "getEventParticipants" -> {
-
-//                        public UUID id;
-//                        public UUID event_id;
-//                        public UUID user_id;
-//                        public EventParticipant.Status status;
-//                        public Timestamp createdAt;
-//                        public Timestamp updatedAt;
-
                         if(response.status){
                             HashMap<UUID, EventParticipant> eventParticipants = new HashMap<>();
                             for (Map.Entry<String, Object> entry : response.data.entrySet()) {
@@ -263,6 +255,13 @@ public class SocketClient implements Runnable {
                         }
                     }
 
+                    case "updateEventParticipantStatus" -> {
+                        if(response.status){
+                            metroEvents.eventParticipantHandler.notifyEventParticipantStatusUpdated(true);
+                        }else{
+                            metroEvents.eventParticipantHandler.notifyEventParticipantStatusUpdated(false);
+                        }
+                    }
                 }
                 responseListener.onSuccess(response);
             }
@@ -465,14 +464,28 @@ public class SocketClient implements Runnable {
     }
 
 
-    public static void getEventParticipants(String event_id, VoteHandler.GetVotesCallback callback){
+    public static void getEventParticipants(String event_id, EventParticipantHandler.GetEventParticipantsCallback callback){
         new Thread(() -> {
-            metroEvents.voteHandler.setNotifyFetchedVotes(callback);
+            metroEvents.eventParticipantHandler.setNotifyFetchedEventParticipants(callback);
             try {
                 Map<String, Object> data = new HashMap<>();
                 data.put("event_id", event_id);
 
-                sendBytes(writeRequest("getVotes", data));
+                sendBytes(writeRequest("getEventParticipants", data));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).start();
+    }
+
+    public static void updateEventParticipantStatus(String participant_id, String status, EventParticipantHandler.UpdateEventEventParticipantStatus callback){
+        new Thread(() -> {
+            metroEvents.eventParticipantHandler.setNotifyUpdatedEventParticipantStatus(callback);
+            try {
+                Map<String, Object> data = new HashMap<>();
+                data.put("participant_id", participant_id);
+                data.put("status", status);
+                sendBytes(writeRequest("updateEventParticipantStatus", data));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
