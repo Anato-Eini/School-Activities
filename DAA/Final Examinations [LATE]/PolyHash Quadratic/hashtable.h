@@ -69,8 +69,7 @@ public:
 
         return numberOfCollisions;
     }
-
-    // TODO Implement print
+    
     void print() {
         for(int i = 0; i < N; i++)
             cout << i << '\t';
