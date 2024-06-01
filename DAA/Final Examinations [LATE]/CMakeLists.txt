@@ -12,3 +12,6 @@ add_executable(Sorting_on_Lists
 add_executable(Quick_Sort
         "Quick Sort/main.cpp"
 )
+add_executable(Merge_Sort "Merge Sort/main.cpp"
+        "Merge Sort/list.h"
+        "Merge Sort/linkedlist.h")
