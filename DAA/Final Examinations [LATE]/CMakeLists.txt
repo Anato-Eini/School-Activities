@@ -9,3 +9,6 @@ add_executable(Sorting_on_Lists
         "Sorting on Lists/main.cpp"
         "Sorting on Lists/arraylist.h"
         "Sorting on Lists/linkedlist.h")
+add_executable(Quick_Sort
+        "Quick Sort/main.cpp"
+)
