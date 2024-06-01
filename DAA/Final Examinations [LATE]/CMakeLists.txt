@@ -24,3 +24,10 @@ add_executable(Splay_Trees
         "Splay Trees/tree.h"
         "Splay Trees/node.h"
 )
+
+add_executable(Graphs_-_Adjacency_List
+        "Graphs - Adjacency List/main.cpp"
+        "Graphs - Adjacency List/vertex.h"
+        "Graphs - Adjacency List/graph.h"
+        "Graphs - Adjacency List/graphlist.h"
+)
