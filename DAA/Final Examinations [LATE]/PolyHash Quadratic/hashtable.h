@@ -9,7 +9,7 @@ class HashTable {
     int N;
     int count;
 
-    // TODO: Polynomial Hash Code using a=7
+    //  Polynomial Hash Code using a=7
     int hash_code(string key) {
         int code = 0, size = key.size();
 
@@ -19,7 +19,7 @@ class HashTable {
         return code;
     }
 
-    // TODO: This hash table uses a MAD compression function
+    // This hash table uses a MAD compression function
     // where a = 11, b = 461, p = 919
     int compress(int code) {
         return (11 * code + 461) % 919 % N;
@@ -33,7 +33,6 @@ class HashTable {
 public:
     HashTable(int N) : N{N}, table{new string [N]}, count{0} {}
 
-    // TODO Implement insert
     int insert(string key) {
         if(count == N)
             return -1;
@@ -49,7 +48,6 @@ public:
         return numCollisions;
     }
 
-    // TODO Implement search
     // Tip: str1.compare(str2) will return 0 if both strings are the same
     int search(string key) {
         int numberOfCollisions = 0, hash = hashfn(key);
@@ -63,7 +61,6 @@ public:
                 numberOfCollisions;
     }
 
-    // TODO Implement remove
     int remove(string key) {
         int numberOfCollisions = search(key), hash = hashfn(key);
 
