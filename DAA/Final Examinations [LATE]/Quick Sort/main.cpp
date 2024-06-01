@@ -24,7 +24,6 @@ int main(void) {
     return 0;
 }
 
-// TODO implement the sort_pivot method recursively
 void sort_pivot(int start, int end) {
     cout << "Start: " << start << " | End: " << end << endl;
     print();
