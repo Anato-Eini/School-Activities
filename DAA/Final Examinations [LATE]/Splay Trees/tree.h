@@ -168,7 +168,7 @@ public:
             v->parent = u->parent;
     }
 
-    // TODO implementation of rotate operation of x where
+    // implementation of rotate operation of x where
     //  |
     //  y
     //   \
@@ -183,7 +183,7 @@ public:
             left->parent = parent;
     }
 
-    // TODO implementation of rotate operation of x where
+    //  implementation of rotate operation of x where
     //   |
     //   y
     //  /
@@ -202,7 +202,6 @@ public:
     // Splay the child to the root recursively or iteratively.
     void restructure(node* child) {
         node* par = child->parent; // parent
-        // TODO find parent
 
         // This is an indicator of the placement of parent to child (ptoc)
         bool ptoc_right = false;
@@ -211,7 +210,6 @@ public:
         }
 
         node* gp = par->parent;
-        // TODO find grandparent. If gp does not exist, proceed to doing ZIGLEFT or ZIGRIGHT.
 
         if(!gp){
             if(ptoc_right){
@@ -240,7 +238,6 @@ public:
         //    \
       //     x
         if (gtop_right && ptoc_right) {
-            // TODO call to either zigleft or zigright or both
             cout << "ZIGZIGLEFT\n";
             zigleft(par);
             zigleft(child);
@@ -252,7 +249,6 @@ public:
             //    /
             //   x
         else if (gtop_right) {
-            // TODO call to either zigleft or zigright or both
             cout << "ZIGZAGLEFT\n";
             zigright(child);
             zigleft(child);
@@ -264,7 +260,6 @@ public:
             //  /
             // x
         else if (!ptoc_right) {
-            // TODO call to either zigleft or zigright or both
             cout << "ZIGZIGRIGHT\n";
             zigright(par);
             zigright(child);
@@ -276,7 +271,6 @@ public:
             //   \
             //    x
         else {
-            // TODO call to either zigleft or zigright or both
             cout << "ZIGZAGRIGHT\n";
             zigleft(child);
             zigright(child);
