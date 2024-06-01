@@ -15,3 +15,8 @@ add_executable(Quick_Sort
 add_executable(Merge_Sort "Merge Sort/main.cpp"
         "Merge Sort/list.h"
         "Merge Sort/linkedlist.h")
+add_executable(PolyHash_Quadratic
+        "PolyHash Quadratic/main.cpp"
+        "PolyHash Quadratic/hashtable.h"
+
+)
