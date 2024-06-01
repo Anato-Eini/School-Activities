@@ -157,13 +157,21 @@ public:
 
         for(int i = 0; i < num_vert; i++)
             for(int j = 0; j < countIn; j++)
-                if(s_vertices[i]->removeOutEdge(inEdges[j]))
+                if(s_vertices[i]->removeOutEdge(inEdges[j])) {
+                    for(int k = 1; k < num_edge; k++)
+                        s_edges[k - 1] = s_edges[k];
+                    num_edge--;
                     count++;
+                }
 
         for(int i = 0; i < num_vert; i++)
             for(int j = 0; j < countOut; j++)
-                if(s_vertices[i]->removeInEdge(outEdges[j]))
+                if(s_vertices[i]->removeInEdge(outEdges[j])) {
+                    for(int k = 1; k < num_edge; k++)
+                        s_edges[k - 1] = s_edges[k];
+                    num_edge--;
                     count++;
+                }
 
         return count;
     }
@@ -171,8 +179,9 @@ public:
     bool removeEdge(int e)  {
         for(int i = 0; i < num_vert; i++)
             if(s_vertices[i]->removeInEdge(e)){
+
                 for(int j = 0; j < num_vert; j++) {
-                    s_vertices[i]->removeOutEdge(e);
+                    s_vertices[j]->removeOutEdge(e);
                 }
 
                 for(int k = 1; k < num_edge; k++)
