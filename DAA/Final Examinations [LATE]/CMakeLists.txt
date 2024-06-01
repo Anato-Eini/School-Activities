@@ -18,5 +18,9 @@ add_executable(Merge_Sort "Merge Sort/main.cpp"
 add_executable(PolyHash_Quadratic
         "PolyHash Quadratic/main.cpp"
         "PolyHash Quadratic/hashtable.h"
-
+)
+add_executable(Splay_Trees
+        "Splay Trees/main.cpp"
+        "Splay Trees/tree.h"
+        "Splay Trees/node.h"
 )
