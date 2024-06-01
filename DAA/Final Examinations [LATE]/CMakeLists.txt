@@ -31,3 +31,9 @@ add_executable(Graphs_-_Adjacency_List
         "Graphs - Adjacency List/graph.h"
         "Graphs - Adjacency List/graphlist.h"
 )
+
+add_executable(Shortest_Path
+        "Shortest Path/main.cpp"
+        "Shortest Path/graph.h"
+        "Shortest Path/graphmatrix.h"
+)
