@@ -5,6 +5,8 @@ set(CMAKE_CXX_STANDARD 23)
 
 add_subdirectory("AVL Trees")
 
+add_subdirectory("Final Examinations [LATE]")
+
 add_executable(HashTables
         "LA2 - Hash Tables/hashtable.h"
         "LA2 - Hash Tables/main.cpp"
