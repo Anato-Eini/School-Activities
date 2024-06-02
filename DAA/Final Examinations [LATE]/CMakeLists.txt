@@ -37,3 +37,8 @@ add_executable(Shortest_Path
         "Shortest Path/graph.h"
         "Shortest Path/graphmatrix.h"
 )
+
+add_executable(Red-Black_Trees_Part_2_1
+        "Red-Black Trees Part 2_1/main.cpp"
+        "Red-Black Trees Part 2_1/tree.h"
+        "Red-Black Trees Part 2_1/node.h")
