@@ -76,9 +76,9 @@ class GraphMatrix : public Graph {
             int minIndex = minimumIndex(distance, visited);
             visited[minIndex] = true;
 
-            for(int i = 0; i < num_vert; i++)
-                if(!visited[i] && matrix[minIndex][i] && distance[i] > distance[minIndex] + matrix[minIndex][i])
-                    distance[i] = distance[minIndex] + matrix[minIndex][i];
+            for(int j = 0; j < num_vert; j++)
+                if(!visited[j] && matrix[minIndex][j] && distance[j] > distance[minIndex] + matrix[minIndex][j])
+                    distance[j] = distance[minIndex] + matrix[minIndex][j];
         }
 
         for(int i = 0; i < num_vert; i++)
