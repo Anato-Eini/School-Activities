@@ -1,6 +1,5 @@
 #ifndef ARRAYLIST_H
 #define ARRAYLIST_H
-// TODO entire implementation
 #include<iostream>
 #include "list.h"
 #include<math.h>

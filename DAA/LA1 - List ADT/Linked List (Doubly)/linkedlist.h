@@ -1,6 +1,5 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
-// TODO entire implementation and add more header file/s as needed
 #include<iostream>
 #include<stdexcept>
 #include "node.h"
