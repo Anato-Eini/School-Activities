@@ -34,7 +34,7 @@ print(f"Updated student dictionary: {student}")
 
 # Your code here:
 
-print(f"\n'courses' key value in student dictionary: {student['courses'] if 'courses' in student else "None"}")
+print(f"\n'courses' value in student dictionary: {student.get('courses') if 'courses' in student else "None"}")
 print("Student dictionary keys: ", end="")
 
 for index, keys in enumerate(student.keys()):
@@ -67,12 +67,13 @@ classroom = {
     }
 }
 
+print(f"\n\nClassroom dictionary:\n{classroom}")
+
 classroom['Charlie'] = {
     'age' : 24,
     'grades' : ['A+', 'A', 'A-']
 }
 
-print(f"\n\nClassroom dictionary:\n{classroom}")
 print(f"Updated classroom dictionary:\n{classroom}")
 
 # (6 pts) Task 5: Using the 'classroom' dictionary from Task 4, create a new dictionary 'age_map' using
@@ -145,7 +146,9 @@ print(f"\nSquared set: {squared_set}")
 # Your code here
 # Given input dictionary
 student_scores = {'Alice': 80, 'Bob': 65, 'Charlie': 90, 'Dana': 76}
-filtered_scored = {key : value for key, value in student_scores.items() if value > 75}
-sorted_filtered_dictionary = dict(sorted(filtered_scored.items(), key=lambda item: item[1], reverse=True))
+sorted_filtered_dictionary = dict(sorted(
+    dict({key : value for key, value in student_scores.items() if value > 75}).items(),
+    key=lambda item: item[1], reverse=True)
+)
 
 print(f"\nSorted filtered dictionary: {sorted_filtered_dictionary}")
