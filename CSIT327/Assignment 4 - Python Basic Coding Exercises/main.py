@@ -1,5 +1,5 @@
 def maxNum(a, b):
-    return max(a, b)
+    return a if a > b else b
 
 print(f"Max between 3 and 2: {maxNum(3, 2)}\n")
 
