@@ -1,0 +1,45 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forum Page</title>
+  <link rel="icon" href="chat.png" type="image/x-icon">
+  <link rel="stylesheet" href="Styles2.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="Scripts2.js"></script>
+</head>
+<body>
+<video autoplay loop muted playsinline class="back-video">
+ <source src="mylivewallpapers-com-Aurora.mp4" type="video/mp4">
+</video>
+<header>
+  <h2 class="logo">Forum Page</h2>
+  <nav class="navigation">
+    <button class="popUp" id="post">Post</button>
+    <button class="popUp" id="logOut">Log Out</button>
+  </nav>
+</header>
+<div class="container">
+  <span class="closeIcon"><ion-icon name="close-outline"></ion-icon></span>
+  <div class="login">
+    <h2>Post Something</h2>
+    <form action="#">
+      <div class="userInput">
+        <textarea class="thePost" id="autoResizeTextarea" rows="1" required></textarea>
+      </div>
+      <button type="submit" class="btn" id="submitButton">Submit</button>
+    </form>
+  </div>
+</div>
+<div id="postContainer">
+  <div class="buttonPages">
+  <span >
+    <ion-icon name="arrow-back-circle-outline" class="nextPrev" id="prev"></ion-icon>
+  <ion-icon name="arrow-forward-circle-outline" class="nextPrev" id="next"></ion-icon>
+  </span>
+  </div>
+</div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</html>

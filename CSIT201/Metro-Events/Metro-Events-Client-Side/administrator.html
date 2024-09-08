@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator</title>
+    <link rel="icon" href="chat.png" type="image/x-icon">
+    <link rel="stylesheet" href="Styles2.css">
+</head>
+<body>
+<video autoplay loop muted playsinline class="back-video">
+    <source src="mylivewallpapers-com-Aurora.mp4" type="video/mp4">
+</video>
+<header>
+    <h2 class="logo">Metro Events</h2>
+    <nav class="navigation">
+        <button class="popUp" id="post">Create New Event</button>
+        <button class="popUp" id="logOut">Log Out</button>
+    </nav>
+</header>
+<div class="container">
+    <span class="closeIcon"><ion-icon name="close-outline"></ion-icon></span>
+    <div class="login">
+        <h2>Event Name</h2>
+        <form action="#">
+            <div class="userInput">
+                <textarea class="thePost" id="autoResizeTextarea" rows="1" required></textarea>
+            </div>
+            <button type="submit" class="btn" id="submitButton">Submit</button>
+        </form>
+    </div>
+</div>
+    <div class="toContain">
+        <div id="containerTwo" class="containerTHREE">
+        </div>
+        <div id="containerOne" class="containerTHREE">
+        </div>
+    </div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="Scripts2.js"></script>
+<script src="functions.js"></script>
+</html>

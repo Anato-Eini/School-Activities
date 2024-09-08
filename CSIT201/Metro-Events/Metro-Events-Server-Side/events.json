@@ -1,0 +1,56 @@
+[
+  {
+    "eventName": "Another Testing Event",
+    "organizer": "Destiny",
+    "upVotes": [
+      {
+        "username": "Heyaaa"
+      },
+      {
+        "username": "Destiny"
+      },
+      {
+        "username": "molt"
+      }
+    ],
+    "participants": [
+      {
+        "username": "Heyaaa"
+      }
+    ],
+    "reviews": []
+  },
+  {
+    "eventName": "3 Event",
+    "organizer": "New User",
+    "upVotes": [
+      {
+        "username": "HackClient"
+      },
+      {
+        "username": "Another user"
+      }
+    ],
+    "participants": [],
+    "reviews": []
+  },
+  {
+    "eventName": "4 Event",
+    "organizer": "Heyaaa",
+    "upVotes": [
+      {
+        "username": "Destiny"
+      },
+      {
+        "username": "molt"
+      }
+    ],
+    "participants": [],
+    "reviews": [
+      {
+        "username": "Destiny",
+        "review": "I hate this :<"
+      }
+    ]
+  }
+]
