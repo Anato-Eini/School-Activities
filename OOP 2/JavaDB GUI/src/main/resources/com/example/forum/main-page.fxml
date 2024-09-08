@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="mainPageContainer" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.forum.MainPageController">
+   <Button fx:id="logOutButton" layoutX="14.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#logOutClick" text="Log Out" />
+   <ScrollPane fx:id="forumContainer" layoutX="73.0" layoutY="42.0" prefHeight="322.0" prefWidth="457.0">
+      <VBox id="posts" fx:id="posts" prefHeight="320.0" prefWidth="455.0" />
+   </ScrollPane>
+   <Button fx:id="postButton" layoutX="274.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#post" text="Post" />
+   <Label fx:id="status" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="-12.0" prefWidth="591.0" textFill="RED">
+      <font>
+         <Font name="System Bold Italic" size="36.0" />
+      </font>
+   </Label>
+   <Button layoutX="531.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#refreshPosts" text="Refresh" />
+</AnchorPane>
