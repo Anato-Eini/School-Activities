@@ -34,7 +34,7 @@ print(f"Updated student dictionary: {student}")
 
 # Your code here:
 
-print(f"\n'courses' value in student dictionary: {student.get('courses') if 'courses' in student else "None"}")
+print(f"\n'courses' value in student dictionary: {student.get('courses', 'No courses')}")
 print("Student dictionary keys: ", end="")
 
 for index, keys in enumerate(student.keys()):
