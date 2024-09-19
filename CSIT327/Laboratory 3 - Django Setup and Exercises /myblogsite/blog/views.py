@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 
+
 from .models import Post, Comment, User
 from .forms import *
 
