@@ -318,7 +318,7 @@ print(np.std(a[:, 6]))
 
 # only compute the standard deviation of the first 50 elements in the seventh column of the array
 # print results
-print(np.std(a[:51, 6]))
+print(np.std(a[:50, 6]))
 
 # output data values greater than 28 in the third column of the array
 # the printed output should be a numerical value
