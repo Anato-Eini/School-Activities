@@ -16,3 +16,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.author} on {self.post.title}"
+
+class User(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=255)
+    email = models.EmailField()
+    birth_date = models.DateField()
+
+    def __str__(self):
+        return self.username
