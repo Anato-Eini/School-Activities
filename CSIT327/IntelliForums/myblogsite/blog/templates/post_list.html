@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Posts</title>
+</head>
+<body>
+    <h1>Blog Posts</h1>
+    <button type="reset"></button>
+    <ul>
+        {% for post in posts %}
+            <li><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
