@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Coding\\CodeChum-Activities\\CS345\\Uninformed Search Algorithm\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{6C0D4DA0-8369-491F-92A9-911380AA8FE4}|AliacSearchAlgo\\AliacSearchAlgo.csproj|d:\\coding\\codechum-activities\\cs345\\uninformed search algorithm\\aliacsearchalgo\\fringe2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C0D4DA0-8369-491F-92A9-911380AA8FE4}|AliacSearchAlgo\\AliacSearchAlgo.csproj|solutionrelative:aliacsearchalgo\\fringe2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C0D4DA0-8369-491F-92A9-911380AA8FE4}|AliacSearchAlgo\\AliacSearchAlgo.csproj|d:\\coding\\codechum-activities\\cs345\\uninformed search algorithm\\aliacsearchalgo\\search.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C0D4DA0-8369-491F-92A9-911380AA8FE4}|AliacSearchAlgo\\AliacSearchAlgo.csproj|solutionrelative:aliacsearchalgo\\search.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C0D4DA0-8369-491F-92A9-911380AA8FE4}|AliacSearchAlgo\\AliacSearchAlgo.csproj|d:\\coding\\codechum-activities\\cs345\\uninformed search algorithm\\aliacsearchalgo\\fringe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6C0D4DA0-8369-491F-92A9-911380AA8FE4}|AliacSearchAlgo\\AliacSearchAlgo.csproj|solutionrelative:aliacsearchalgo\\fringe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Fringe2.cs",
+              "DocumentMoniker": "D:\\Coding\\CodeChum-Activities\\CS345\\Uninformed Search Algorithm\\AliacSearchAlgo\\Fringe2.cs",
+              "RelativeDocumentMoniker": "AliacSearchAlgo\\Fringe2.cs",
+              "ToolTip": "D:\\Coding\\CodeChum-Activities\\CS345\\Uninformed Search Algorithm\\AliacSearchAlgo\\Fringe2.cs",
+              "RelativeToolTip": "AliacSearchAlgo\\Fringe2.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAiwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-24T14:15:15.781Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Fringe.cs",
+              "DocumentMoniker": "D:\\Coding\\CodeChum-Activities\\CS345\\Uninformed Search Algorithm\\AliacSearchAlgo\\Fringe.cs",
+              "RelativeDocumentMoniker": "AliacSearchAlgo\\Fringe.cs",
+              "ToolTip": "D:\\Coding\\CodeChum-Activities\\CS345\\Uninformed Search Algorithm\\AliacSearchAlgo\\Fringe.cs",
+              "RelativeToolTip": "AliacSearchAlgo\\Fringe.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-24T14:14:30.875Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Search.cs",
+              "DocumentMoniker": "D:\\Coding\\CodeChum-Activities\\CS345\\Uninformed Search Algorithm\\AliacSearchAlgo\\Search.cs",
+              "RelativeDocumentMoniker": "AliacSearchAlgo\\Search.cs",
+              "ToolTip": "D:\\Coding\\CodeChum-Activities\\CS345\\Uninformed Search Algorithm\\AliacSearchAlgo\\Search.cs",
+              "RelativeToolTip": "AliacSearchAlgo\\Search.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABUAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-24T14:13:51.397Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

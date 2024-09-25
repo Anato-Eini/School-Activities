@@ -14,6 +14,7 @@ print(a)
 # complete the code and output the array
 
 #create an array with values from 0 to 4
+
 a = np.arange(5)
 print(a)
 
