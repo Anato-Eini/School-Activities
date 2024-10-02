@@ -19,8 +19,8 @@ namespace ACT4
         SixState currentState;
         int moveCounter;
 
-        int population;
-        int parents;
+        int population; //Number of population
+        int p; //p-Variable
         int crossingPoint;
 
         double mutationRate;
