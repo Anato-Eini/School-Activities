@@ -16,17 +16,19 @@ namespace ACT4
         int side;
         int n = 6;
         SixState startState;
-        SixState currentState;
+        SixState[] pStates; //Population States
+
         int moveCounter;
 
-        int population; //Number of population
-        int p; //p-Variable
+        int population; 
+        int parents; //Number of parents
         int crossingPoint;
+        int pExponent; // exponential probability where 0 <= i <= 1
 
         double mutationRate;
 
-        int[,] hTable;
-        ArrayList bMoves;
+        int[] hTable;
+        ArrayList[] bMoves;
         Object chosenMove;
 
         public Form1()
@@ -35,15 +37,50 @@ namespace ACT4
 
             population = 100;
             parents = 2;
-            crossingPoint = 4;
+            crossingPoint = n / parents;
+            mutationRate = 0.8;
+            pExponent = 5;
 
             side = pictureBox1.Width / n;
 
-            startState = randomSixState();
-            currentState = new SixState(startState);
+            pStates = new SixState[population];
+            pStates[0] = startState = randomSixState();
+            for (int i = 1; i < population; i++)
+                pStates[i] = randomSixState();
 
             updateUI();
             label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
+        }
+
+        private void sort_population()
+        {
+            (SixState, int)[] stateWithHValue = new (SixState, int)[population];
+
+            for (int i = 0; i < population; i++)
+                stateWithHValue[i] = (pStates[i], hTable[i]);
+
+            Array.Sort(stateWithHValue, (x, y) => x.Item2.CompareTo(y.Item2));
+
+            for (int i = 0; i < population; i++)
+            {
+                pStates[i] = stateWithHValue[i].Item1;
+                hTable[i] = stateWithHValue[i].Item2;
+            }
+        }
+        private int[] getParentsIndex()
+        {
+            int[] p = new int[parents];
+
+            sort_population();
+
+            Random ran = new Random();
+
+            for(int i = 0; i < parents; i++)
+            {
+                p[i] = (int)(population * Math.Pow(ran.NextDouble(), pExponent));
+            }
+
+            return p;
         }
 
         private void updateUI()
@@ -51,10 +88,9 @@ namespace ACT4
             //pictureBox1.Refresh();
             pictureBox2.Refresh();
 
-            //label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
-            label3.Text = "Attacking pairs: " + getAttackingPairs(currentState);
+            label3.Text = "Attacking pairs: " + getAttackingPairs(startState);
             label4.Text = "Moves: " + moveCounter;
-            hTable = getHeuristicTableForPossibleMoves(currentState);
+            hTable = getHeuristicTableForPossibleMoves(pStates);
             bMoves = getBestMoves(hTable);
 
             listBox1.Items.Clear();
@@ -146,29 +182,24 @@ namespace ACT4
             return attackers;
         }
 
-        private int[,] getHeuristicTableForPossibleMoves(SixState thisState)
+        private int[] getHeuristicTableForPossibleMoves(SixState[] thisState)
         {
-            int[,] hStates = new int[n, n];
+            int[] hStates = new int[population];
 
-            for (int i = 0; i < n; i++) // go through the indices
+            for (int i = 0; i < population; i++) // go through the indices
             {
-                for (int j = 0; j < n; j++) // replace them with a new value
-                {
-                    SixState possible = new SixState(thisState);
-                    possible.Y[i] = j;
-                    hStates[i, j] = getAttackingPairs(possible);
-                }
+                hStates[i] = getAttackingPairs(pStates[i]);
             }
 
             return hStates;
         }
 
-        private ArrayList getBestMoves(int[,] heuristicTable)
+        private ArrayList getBestMoves(int[] heuristicTable)
         {
             ArrayList bestMoves = new ArrayList();
-            int bestHeuristicValue = heuristicTable[0, 0];
+            int bestHeuristicValue = heuristicTable[0];
 
-            for (int i = 0; i < n; i++)
+            for (int i = 0; i < population; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
@@ -184,6 +215,7 @@ namespace ACT4
                             bestMoves.Add(new Point(i, j));
                     }
                 }
+                
             }
             label5.Text = "Possible Moves (H="+bestHeuristicValue+")";
             return bestMoves;
