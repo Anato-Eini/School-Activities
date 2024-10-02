@@ -66,9 +66,8 @@ namespace ACT4
             listBox1.Items.Clear();
 
             for(int i = 0; i < numStates; i++)
-            {
-                chosenMove[i] = chooseMove(bMoves[i]);
-            }
+                if (bMoves[i].Count > 0)
+                    chosenMove[i] = chooseMove(bMoves[i]);
             
             foreach (Point move in bMoves[bestStateIndex])
             {
