@@ -19,7 +19,11 @@ namespace ACT4
         SixState currentState;
         int moveCounter;
 
-        //bool stepMove = true;
+        int population;
+        int parents;
+        int crossingPoint;
+
+        double mutationRate;
 
         int[,] hTable;
         ArrayList bMoves;
@@ -28,6 +32,10 @@ namespace ACT4
         public Form1()
         {
             InitializeComponent();
+
+            population = 100;
+            parents = 2;
+            crossingPoint = 4;
 
             side = pictureBox1.Width / n;
 
