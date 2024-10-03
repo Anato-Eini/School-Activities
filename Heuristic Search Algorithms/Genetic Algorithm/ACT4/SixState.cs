@@ -23,6 +23,13 @@ namespace ACT4
             Y[4] = e;
             Y[5] = f;
         }
+
+        public SixState(int[] array)
+        {
+            for(int i = 0; i < 6; i++)
+                Y[i] = array[i];
+        }
+
         public SixState(SixState f)
         {
             Y[0] = f.Y[0];

@@ -21,24 +21,22 @@ namespace ACT4
         int moveCounter;
 
         int population; 
-        int parents; //Number of parents
         int crossingPoint;
-        int pExponent; // exponential probability where 0 <= i <= 1
+        int pExponent; // exponential probability where 0 <= probability <= 1
 
         double mutationRate;
 
         int[] hTable;
-        ArrayList[] bMoves;
-        Object chosenMove;
+        ArrayList bMoves;
+        object chosenMove;
 
         public Form1()
         {
             InitializeComponent();
 
-            population = 100;
-            parents = 2;
-            crossingPoint = n / parents;
-            mutationRate = 0.8;
+            population = 10;
+            crossingPoint = n / 2;
+            mutationRate = 0.5;
             pExponent = 5;
 
             side = pictureBox1.Width / n;
@@ -48,6 +46,8 @@ namespace ACT4
             for (int i = 1; i < population; i++)
                 pStates[i] = randomSixState();
 
+            label3.Text = "Attacking pairs: " + getAttackingPairs(startState);
+            label4.Text = "Generations: " + moveCounter;
             updateUI();
             label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
         }
@@ -67,15 +67,67 @@ namespace ACT4
                 hTable[i] = stateWithHValue[i].Item2;
             }
         }
+
+        private SixState[] generateChildren(SixState parent1, SixState parent2)
+        {
+            SixState[] child = new SixState[2];
+            
+            child[0] = new SixState(parent2);
+            child[1] = new SixState(parent1);
+
+            for(int i = 0; i < n / 2; i++)
+            {
+                child[0].Y[i] = parent2.Y[i];
+                child[1].Y[i] = parent1.Y[i];
+            }
+
+            for(int i =  n / 2; i < n; i++)
+            {
+                child[0].Y[i] = parent1.Y[i];
+                child[1].Y[i] = parent2.Y[i];
+            }
+            
+            //Mutate
+            Random rand = new Random();
+            if(rand.NextDouble() <= mutationRate)
+                child[0].Y[rand.Next(0, 6)] = rand.Next(0, 6);
+
+            if (rand.NextDouble() <= mutationRate)
+                child[1].Y[rand.Next(0, 6)] = rand.Next(0, 6);
+
+            return child;
+        }
+
+        private void repopulate()
+        {
+            SixState[] newPopulation = new SixState[population];
+
+            
+            int[] parentIndices = getParentsIndex();
+            SixState[] children = generateChildren(pStates[0], pStates[1]);
+            newPopulation[0] = new SixState(children[0]);
+            newPopulation[1] = new SixState(children[1]);
+
+            for (int i = 3; i < population; i += 2)
+            {
+                parentIndices = getParentsIndex();
+                children = generateChildren(pStates[parentIndices[0]], pStates[parentIndices[1]]);
+                newPopulation[i] = new SixState(children[0]);
+                newPopulation[i - 1] = new SixState(children[1]);
+            }
+
+            pStates = newPopulation;
+        }
+
         private int[] getParentsIndex()
         {
-            int[] p = new int[parents];
-
             sort_population();
+
+            int[] p = new int[2];
 
             Random ran = new Random();
 
-            for(int i = 0; i < parents; i++)
+            for(int i = 0; i < 2; i++)
             {
                 p[i] = (int)(population * Math.Pow(ran.NextDouble(), pExponent));
             }
@@ -85,11 +137,7 @@ namespace ACT4
 
         private void updateUI()
         {
-            //pictureBox1.Refresh();
-            pictureBox2.Refresh();
 
-            label3.Text = "Attacking pairs: " + getAttackingPairs(startState);
-            label4.Text = "Moves: " + moveCounter;
             hTable = getHeuristicTableForPossibleMoves(pStates);
             bMoves = getBestMoves(hTable);
 
@@ -101,7 +149,8 @@ namespace ACT4
 
             if (bMoves.Count > 0)
                 chosenMove = chooseMove(bMoves);
-            label2.Text = "Chosen move: " + chosenMove;
+
+            label2.Text = "Chosen parent index: " + 0;
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -134,7 +183,7 @@ namespace ACT4
                         e.Graphics.FillRectangle(Brushes.Black, i * side, j * side, side, side);
                     }
                     // draw queens
-                    if (j == currentState.Y[i])
+                    if (j == startState.Y[i])
                         e.Graphics.FillEllipse(Brushes.Fuchsia, i * side, j * side, side, side);
                 }
             }
@@ -187,9 +236,7 @@ namespace ACT4
             int[] hStates = new int[population];
 
             for (int i = 0; i < population; i++) // go through the indices
-            {
                 hStates[i] = getAttackingPairs(pStates[i]);
-            }
 
             return hStates;
         }
@@ -197,50 +244,38 @@ namespace ACT4
         private ArrayList getBestMoves(int[] heuristicTable)
         {
             ArrayList bestMoves = new ArrayList();
+
+            sort_population();
+
             int bestHeuristicValue = heuristicTable[0];
 
-            for (int i = 0; i < population; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    if (bestHeuristicValue > heuristicTable[i, j])
-                    {
-                        bestHeuristicValue = heuristicTable[i, j];
-                        bestMoves.Clear();
-                        if (currentState.Y[i] != j)
-                            bestMoves.Add(new Point(i, j));
-                    } else if (bestHeuristicValue == heuristicTable[i,j])
-                    {
-                        if (currentState.Y[i] != j)
-                            bestMoves.Add(new Point(i, j));
-                    }
-                }
-                
-            }
+            for (int i = 1; i < population; i++)
+                if (heuristicTable[0] == heuristicTable[i])
+                    bestMoves.Add(new Point (i, 0));
+
             label5.Text = "Possible Moves (H="+bestHeuristicValue+")";
             return bestMoves;
         }
 
-        private Object chooseMove(ArrayList possibleMoves)
+        private object chooseMove(ArrayList possibleMoves)
         {
-            int arrayLength = possibleMoves.Count;
-            Random r = new Random();
-            int randomMove = r.Next(arrayLength);
-
-            return possibleMoves[randomMove];
+            return possibleMoves[0];
         }
 
-        private void executeMove(Point move)
+        private void executeMove()
         {
-            for (int i = 0; i < n; i++)
-            {
-                startState.Y[i] = currentState.Y[i];
-            }
-            currentState.Y[move.X] = move.Y;
+            repopulate();
+
             moveCounter++;
 
-            chosenMove = null;
             updateUI();
+
+            for (int i = 0; i < n; i++)
+            {
+                startState.Y[i] = pStates[0].Y[i];
+            }
+
+            pictureBox2.Refresh();
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -250,28 +285,45 @@ namespace ACT4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (getAttackingPairs(currentState) > 0)
-               executeMove((Point)chosenMove);
+            label3.Text = "Attacking pairs: " + getAttackingPairs(startState);
+            label4.Text = "Generations: " + moveCounter;
+
+            if (getAttackingPairs(startState) > 0)
+               executeMove();
+            
+            label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
+            label4.Text = "Generations: " + moveCounter;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             startState = randomSixState();
-            currentState = new SixState(startState);
+            pStates[0] = new SixState(startState);
+            for (int i = 1; i < population; i++)
+                pStates[i] = new SixState(startState);
 
             moveCounter = 0;
 
+            label3.Text = "Attacking pairs: " + getAttackingPairs(startState);
+            label4.Text = "Generations: " + moveCounter;
+
             updateUI();
+
             pictureBox1.Refresh();
             label1.Text = "Attacking pairs: " + getAttackingPairs(startState);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            while (getAttackingPairs(currentState) > 0)
-            {
-                executeMove((Point)chosenMove);
-            }
+            label3.Text = "Attacking pairs: " + getAttackingPairs(startState);
+            label4.Text = "Generations: " + moveCounter;
+
+            while (getAttackingPairs(startState) > 0)
+                executeMove();
+
+            label3.Text = "Attacking pairs: " + getAttackingPairs(startState);
+            label4.Text = "Generations: " + moveCounter;
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
