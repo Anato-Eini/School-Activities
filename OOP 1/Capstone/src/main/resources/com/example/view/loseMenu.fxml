@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="losePanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.loseMenuController">
+   <children>
+      <Label alignment="CENTER" layoutX="141.0" layoutY="148.0" text="YOU LOSE">
+         <font>
+            <Font size="70.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/lose_menu.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
