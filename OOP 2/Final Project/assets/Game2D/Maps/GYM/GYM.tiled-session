@@ -1,0 +1,149 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/LIBRARY/LIBRARY.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/FULL_INTERIOR.tsx": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/GLE202_ROOM.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 479,
+                "y": 319
+            }
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/TILEMAPS FOLDER/ROOM_BUILDER.tsx": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/TILEMAPS FOLDER/SIR SERATO.tsx": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/HOUSE/HIS_HOUSE.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 208.66666666666669,
+                "y": 203.33333333333334
+            }
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/HOUSE/TILESET FOLDER/Generic_Home_1_Layer_1_32x32.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/HOUSE/TILESET FOLDER/Generic_Home_1_Layer_2_32x32.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/HOUSE/TILESET FOLDER/Generic_Home_1_preview_32x32.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/LIBRARY/LIBRARY.tmx": {
+            "expandedGroupLayers": [
+                32,
+                29,
+                40,
+                6,
+                7,
+                27
+            ],
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 624.5,
+                "y": 367
+            }
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/LIBRARY/TILESET FOLDER/441189603_936227338184166_6763807259902135277_n.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/PROJECT_NGE_ROOM1.tmx": {
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 282,
+                "y": 243
+            }
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/TILEMAPS FOLDER/FLOORING.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/TILEMAPS FOLDER/FULL_INTERIOR.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/TILEMAPS FOLDER/ROOM_BUILDER.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/TILEMAPS FOLDER/SIR SERATO.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/TILEMAPS FOLDER/TABLESxJAIL.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/TILEMAPS FOLDER/WALLS.tsx": {
+            "scaleInDock": 1
+        },
+        "GYM.tmx": {
+            "expandedGroupLayers": [
+                3
+            ],
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 304,
+                "y": 351.5
+            }
+        },
+        "TILESET FOLDER/Gym_2_layer_1_32x32.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TILESET FOLDER/Gym_2_layer_2_32x32.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TILESET FOLDER/Gym_layer_1_32x32.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
+        "TILESET FOLDER/Gym_layer_2_32x32.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/HOME/Desktop",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/GLE202_ROOM.tmx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/TILEMAPS FOLDER/ROOM_BUILDER.tsx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/FULL_INTERIOR.tsx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/TILEMAPS FOLDER/SIR SERATO.tsx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/LIBRARY/LIBRARY.tmx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/LIBRARY/TILESET FOLDER/441189603_936227338184166_6763807259902135277_n.tsx"
+    ],
+    "project": "GYM.tiled-project",
+    "recentFiles": [
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/GLE202_ROOM.tmx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/TILEMAPS FOLDER/ROOM_BUILDER.tsx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/FULL_INTERIOR.tsx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/GLE202 ROOM/TILEMAPS FOLDER/SIR SERATO.tsx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/LIBRARY/TILESET FOLDER/441189603_936227338184166_6763807259902135277_n.tsx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/LIBRARY/LIBRARY.tmx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/NGE ROOM/PROJECT_NGE_ROOM1.tmx",
+        "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/HOUSE/HIS_HOUSE.tmx",
+        "TILESET FOLDER/Gym_layer_2_32x32.tsx",
+        "TILESET FOLDER/Gym_2_layer_2_32x32.tsx",
+        "TILESET FOLDER/Gym_layer_1_32x32.tsx",
+        "TILESET FOLDER/Gym_2_layer_1_32x32.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

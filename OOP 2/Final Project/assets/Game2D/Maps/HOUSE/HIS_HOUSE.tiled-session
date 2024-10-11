@@ -1,0 +1,60 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "HIS_HOUSE.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "HIS_HOUSE.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 238,
+                "y": 257.33333333333326
+            }
+        },
+        "TILESET FOLDER/FULL_INTERIOR.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TILESET FOLDER/Generic_Home_1_Layer_1_32x32.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "TILESET FOLDER/Generic_Home_1_Layer_2_32x32.tsx": {
+            "scaleInDock": 0.75,
+            "scaleInEditor": 1
+        },
+        "TILESET FOLDER/Generic_Home_1_preview_32x32.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "TILESET FOLDER/ROOM_BUILDER.tsx": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/Users/HOME/Desktop/FINAL TILES/INTERIOR TILES/HOUSE/(IMAGES) TILES",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "HIS_HOUSE.tmx",
+        "TILESET FOLDER/FULL_INTERIOR.tsx",
+        "TILESET FOLDER/Generic_Home_1_Layer_1_32x32.tsx",
+        "TILESET FOLDER/Generic_Home_1_Layer_2_32x32.tsx",
+        "TILESET FOLDER/ROOM_BUILDER.tsx",
+        "TILESET FOLDER/Generic_Home_1_preview_32x32.tsx"
+    ],
+    "project": "HIS_HOUSE.tiled-project",
+    "recentFiles": [
+        "TILESET FOLDER/Generic_Home_1_preview_32x32.tsx",
+        "TILESET FOLDER/ROOM_BUILDER.tsx",
+        "TILESET FOLDER/Generic_Home_1_Layer_2_32x32.tsx",
+        "TILESET FOLDER/Generic_Home_1_Layer_1_32x32.tsx",
+        "TILESET FOLDER/FULL_INTERIOR.tsx",
+        "HIS_HOUSE.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
