@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="battleMenuPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.battleMenuController">
+   <children>
+      <ImageView fitHeight="407.0" fitWidth="606.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/pxArt.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="200.0" layoutX="234.0" layoutY="-157.0" stroke="BLACK" strokeType="INSIDE" width="136.0" />
+      <ProgressBar fx:id="currentMemberHPBar" layoutX="375.0" layoutY="253.0" prefHeight="18.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+      <ImageView fitHeight="170.0" fitWidth="382.0" layoutX="-52.0" layoutY="337.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/the_pokedex_project_tiles_by_deepzekrom_dc1heqv-p123re-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="currentPlayerPNG" fitHeight="374.0" fitWidth="431.0" layoutX="-48.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/battle_james.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="59.0" layoutY="43.0" prefHeight="46.0" prefWidth="200.0" text="Jay Vince Serato" textFill="#fdfdfd">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="bossHP" alignment="BOTTOM_LEFT" layoutX="59.0" layoutY="98.0" prefHeight="18.0" prefWidth="119.0" text="10000 / 10000" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentMemberName" alignment="CENTER_RIGHT" layoutX="269.0" layoutY="209.0" prefHeight="46.0" prefWidth="306.0" text="MEMBER1" textFill="#fdfdfd">
+         <font>
+            <Font name="Arial Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentMemberHP" alignment="TOP_RIGHT" layoutX="456.0" layoutY="271.0" prefHeight="18.0" prefWidth="119.0" text=" 5000 / 5000" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <ProgressBar fx:id="bossHPBar" layoutX="59.0" layoutY="80.0" prefWidth="200.0" progress="1.0" style="-fx-accent: green;" />
+      <Label fx:id="turnLabel" alignment="TOP_CENTER" layoutX="186.0" layoutY="16.0" prefHeight="46.0" prefWidth="232.0" text="QUESTION NUMBER: 1" textFill="#fdfdfd" />
+      <ImageView fitHeight="86.0" fitWidth="232.0" layoutX="326.0" layoutY="118.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/the_pokedex_project_tiles_by_deepzekrom_dc1heqv-p123re-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="128.0" fitWidth="136.0" layoutX="378.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/serato.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="attack1Button" layoutX="293.0" layoutY="315.0" mnemonicParsing="false" onAction="#doAttack1" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Answer Question">
+         <font>
+            <Font size="10.0" />
+         </font></Button>
+      <Button fx:id="attack2Button" layoutX="395.0" layoutY="315.0" mnemonicParsing="false" onAction="#doAttack2" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Risk cheating" />
+      <Button fx:id="attack3Button" layoutX="293.0" layoutY="350.0" mnemonicParsing="false" onAction="#doAttack3" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Give Answers" />
+      <Button fx:id="attack4Button" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="395.0" layoutY="350.0" mnemonicParsing="false" onAction="#doAttack4" prefHeight="36.0" prefWidth="102.0" style="-fx-background-color: #fdfdfd;" text="Distract Sir" />
+      <Button fx:id="switchButton" layoutX="506.0" layoutY="315.0" mnemonicParsing="false" onAction="#goToSwitchMenu" prefHeight="70.0" prefWidth="80.0" style="-fx-background-color: yellow;" text="Switch" />
+      <Label fx:id="bossLVL" layoutX="269.0" layoutY="66.0" prefHeight="46.0" prefWidth="200.0" text="LV. " textFill="#fdfdfd">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentPlayerLVL" alignment="CENTER_RIGHT" layoutX="169.0" layoutY="239.0" prefHeight="46.0" prefWidth="200.0" text="LV. " textFill="#fdfdfd">
+         <font>
+            <Font name="Arial Bold" size="16.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="bossStunned" fitHeight="18.0" fitWidth="20.0" layoutX="208.0" layoutY="99.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@/Icon_Stun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="bossPoisoned" fitHeight="18.0" fitWidth="20.0" layoutX="233.0" layoutY="99.0" visible="false">
+         <image>
+            <Image url="@/poison-icon-512x487-v86ugvxe.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="playerStunned" fitHeight="18.0" fitWidth="20.0" layoutX="379.0" layoutY="275.0" mouseTransparent="true" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@/Icon_Stun.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="playerPoisoned" fitHeight="18.0" fitWidth="20.0" layoutX="404.0" layoutY="275.0" visible="false">
+         <image>
+            <Image url="@/poison-icon-512x487-v86ugvxe.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="buffIcon" fitHeight="36.0" fitWidth="30.0" layoutX="431.0" layoutY="267.0" visible="false">
+         <image>
+            <Image url="@/57291205-brain-power-icon-removebg-preview.png" />
+         </image>
+      </ImageView>
+      <TextArea fx:id="consoleTextArea" editable="false" layoutX="-1.0" layoutY="291.0" onMouseClicked="#onMouseClick" prefHeight="110.0" prefWidth="606.0" style="-fx-border-color: black; -fx-border-width: 10px;" visible="false" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="15.0" />
+         </font></TextArea>
+   </children>
+</AnchorPane>

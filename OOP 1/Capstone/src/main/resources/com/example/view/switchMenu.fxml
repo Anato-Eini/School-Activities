@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="switchMenuPanel" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.switchMenuController">
+   <children>
+      <Button fx:id="member1Button" layoutX="24.0" layoutY="45.0" mnemonicParsing="false" onAction="#switchTo1" prefHeight="268.0" prefWidth="130.0" style="-fx-background-color: blue;" />
+      <Button fx:id="member2Button" layoutX="162.0" layoutY="45.0" mnemonicParsing="false" onAction="#switchTo2" prefHeight="268.0" prefWidth="130.0" style="-fx-background-color: red;" />
+      <Button fx:id="member3Button" layoutX="302.0" layoutY="45.0" mnemonicParsing="false" onAction="#switchTo3" prefHeight="268.0" prefWidth="130.0" style="-fx-background-color: yellow;" />
+      <Button fx:id="member4Button" layoutX="444.0" layoutY="45.0" mnemonicParsing="false" onAction="#switchTo4" prefHeight="268.0" prefWidth="130.0" style="-fx-background-color: green;" />
+      <Button fx:id="cancelButton" layoutX="26.0" layoutY="363.0" mnemonicParsing="false" onAction="#cancelButtonClicked" prefHeight="26.0" prefWidth="548.0" text="Cancel" />
+      <ImageView fx:id="member1PNG" fitHeight="268.0" fitWidth="130.0" layoutX="24.0" layoutY="46.0" mouseTransparent="true">
+         <image>
+            <Image url="@../../../member1.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="member2PNG" fitHeight="268.0" fitWidth="130.0" layoutX="162.0" layoutY="46.0" mouseTransparent="true">
+         <image>
+            <Image url="@../../../member2.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="member3PNG" fitHeight="268.0" fitWidth="130.0" layoutX="302.0" layoutY="46.0" mouseTransparent="true">
+         <image>
+            <Image url="@../../../member3.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="member4PNG" fitHeight="268.0" fitWidth="130.0" layoutX="444.0" layoutY="46.0" mouseTransparent="true">
+         <image>
+            <Image url="@../../../member4.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="member1Name" alignment="CENTER" contentDisplay="CENTER" layoutX="24.0" layoutY="256.0" mouseTransparent="true" prefHeight="51.0" prefWidth="130.0" text="JAMES KENNETH ACABAL" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Label>
+      <Label fx:id="member2Name" alignment="CENTER" layoutX="162.0" layoutY="256.0" mouseTransparent="true" prefHeight="51.0" prefWidth="130.0" text="JEREMY LEE SOMETHING SOMETHING" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Label>
+      <Label fx:id="member3Name" alignment="CENTER" layoutX="304.0" layoutY="256.0" mouseTransparent="true" prefHeight="51.0" prefWidth="130.0" text="MEMBER 3" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Label>
+      <Label fx:id="member4Name" alignment="CENTER" layoutX="444.0" layoutY="256.0" mouseTransparent="true" prefHeight="51.0" prefWidth="130.0" text="MEMBER 4" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Label>
+      <Label fx:id="member1HP" alignment="CENTER" layoutX="44.0" layoutY="340.0" prefHeight="18.0" prefWidth="85.0" text="5000 / 5000" />
+      <Label fx:id="member2HP" alignment="CENTER" layoutX="181.0" layoutY="340.0" prefHeight="18.0" prefWidth="85.0" text="5000 / 5000" />
+      <Label fx:id="member3HP" alignment="CENTER" layoutX="323.0" layoutY="340.0" prefHeight="18.0" prefWidth="85.0" text="5000 / 5000" />
+      <Label fx:id="member4HP" alignment="CENTER" layoutX="472.0" layoutY="340.0" prefHeight="18.0" prefWidth="86.0" text="5000 / 5000" />
+      <Circle fill="#ffd499" layoutX="227.0" layoutY="48.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+      <Circle fill="#ffd499" layoutX="89.0" layoutY="45.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+      <Circle fill="#ffd499" layoutX="367.0" layoutY="48.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+      <Circle fill="#ffd499" layoutX="512.0" layoutY="45.0" radius="20.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="3.0" />
+      <ProgressBar fx:id="member1HpBar" layoutX="25.0" layoutY="329.0" prefHeight="11.0" prefWidth="123.0" progress="1.0" style="-fx-accent: green;" />
+      <ProgressBar fx:id="member2HpBar" layoutX="163.0" layoutY="329.0" prefHeight="11.0" prefWidth="123.0" progress="1.0" style="-fx-accent: green;" />
+      <ProgressBar fx:id="member3HpBar" layoutX="312.0" layoutY="329.0" prefHeight="11.0" prefWidth="123.0" progress="1.0" style="-fx-accent: green;" />
+      <ProgressBar fx:id="member4HpBar" layoutX="452.0" layoutY="329.0" prefHeight="11.0" prefWidth="123.0" progress="1.0" style="-fx-accent: green;" />
+      <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="495.0" layoutY="28.0">
+         <image>
+            <Image url="@../../../support-emblem.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="210.0" layoutY="31.0">
+         <image>
+            <Image url="@../../../fighter-emblem.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="72.0" layoutY="28.0">
+         <image>
+            <Image url="@../../../tank-emblem.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="350.0" layoutY="31.0">
+         <image>
+            <Image url="@../../../mage-emblem.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

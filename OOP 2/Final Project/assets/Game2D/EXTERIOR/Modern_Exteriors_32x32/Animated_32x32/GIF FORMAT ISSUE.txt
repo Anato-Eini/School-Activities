@@ -1,0 +1,4 @@
+The.gif format doesn't support transparent colors
+So, for example, the "Street_Lamp".gif doesn't have its light colors showed
+-
+Use the .pngs of those kind of objects to have the correct animation!

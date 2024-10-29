@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.Controllers.winMenuController">
+   <children>
+      <Label fx:id="winPanel" alignment="CENTER" layoutX="170.0" layoutY="129.0" prefHeight="142.0" prefWidth="258.0" text="YOU WIN">
+         <font>
+            <Font size="61.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="400.0" fitWidth="600.0">
+         <image>
+            <Image url="@/CREDITSPAGE.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="toBeDestroyed" fitHeight="400.0" fitWidth="600.0" onMouseClicked="#goToCreddits" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@/win_menu.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

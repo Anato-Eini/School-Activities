@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragments.CreateEvent">
+
+    <!-- TODO: Update blank fragment layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="30sp"
+            android:id="@+id/create_event_header_txt"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="Create Event" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/create_event_header_txt">
+
+            <EditText
+                android:id="@+id/event_title_txt_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="Event Title"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/event_description_txt_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="Event Description"
+                android:inputType="text|textMultiLine" />
+
+            <EditText
+                android:id="@+id/event_venue_txt_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:hint="Event Venue"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/select_event_datetime_btn_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Date and Time"
+                android:backgroundTint="@color/primaryColor"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                />
+
+            <TextView
+                android:id="@+id/event_datetime_txt_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="No Date and Time Selected" />
+
+            <Button
+                android:id="@+id/select_event_image_btn_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Image"
+                android:backgroundTint="@color/primaryColor"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                />
+
+            <ImageView
+                android:id="@+id/event_image_img_"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
+
+            <Button
+                android:id="@+id/create_event_btn_"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create Event"
+                android:backgroundTint="@color/primaryColor"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
