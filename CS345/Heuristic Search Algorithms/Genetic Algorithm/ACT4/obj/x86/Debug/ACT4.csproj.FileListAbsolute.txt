@@ -1,0 +1,47 @@
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\bin\Debug\ACT4.exe
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\bin\Debug\ACT4.pdb
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\obj\x86\Debug\ACT4.Form1.resources
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\obj\x86\Debug\ACT4.Properties.Resources.resources
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\obj\x86\Debug\ACT4.exe
+C:\Users\L13Y12W09.CITU.000\AppData\Local\Temporary Projects\ACT4\obj\x86\Debug\ACT4.pdb
+Z:\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.exe
+Z:\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.pdb
+Z:\tornilla\ACT4\ACT4\bin\Debug\ACT4.exe
+Z:\tornilla\ACT4\ACT4\bin\Debug\ACT4.pdb
+Z:\tornilla\ACT4\ACT4\obj\x86\Debug\ResolveAssemblyReference.cache
+Z:\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.Form1.resources
+Z:\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.Properties.Resources.resources
+Z:\tornilla\ACT4\ACT4\obj\x86\Debug\GenerateResource.read.1.tlog
+Z:\tornilla\ACT4\ACT4\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\bin\Debug\ACT4.exe
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\bin\Debug\ACT4.pdb
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.csprojAssemblyReference.cache
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.Form1.resources
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.Properties.Resources.resources
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.csproj.GenerateResource.cache
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.csproj.CoreCompileInputs.cache
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.exe
+D:\SCHOOL DATA\MY COURSES\Intelligent Systems\Sample Prgrograms\tornilla\ACT4\ACT4\obj\x86\Debug\ACT4.pdb
+D:\Coding\CS345\N Queens\ACT4\bin\Debug\ACT4.exe.config
+D:\Coding\CS345\N Queens\ACT4\bin\Debug\ACT4.exe
+D:\Coding\CS345\N Queens\ACT4\bin\Debug\ACT4.pdb
+D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.csproj.AssemblyReference.cache
+D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.Form1.resources
+D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.Properties.Resources.resources
+D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.csproj.GenerateResource.cache
+D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.csproj.CoreCompileInputs.cache
+D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.exe
+D:\Coding\CS345\N Queens\ACT4\obj\x86\Debug\ACT4.pdb
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\bin\Debug\ACT4.exe.config
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\bin\Debug\ACT4.exe
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\bin\Debug\ACT4.pdb
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\obj\x86\Debug\ACT4.csproj.AssemblyReference.cache
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\obj\x86\Debug\ACT4.Form1.resources
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\obj\x86\Debug\ACT4.Properties.Resources.resources
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\obj\x86\Debug\ACT4.csproj.GenerateResource.cache
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\obj\x86\Debug\ACT4.csproj.CoreCompileInputs.cache
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\obj\x86\Debug\ACT4.exe
+D:\Coding\CS345\Heuristic Search Algorithms\Genetic Algorithm\ACT4\obj\x86\Debug\ACT4.pdb
