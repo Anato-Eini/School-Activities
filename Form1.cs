@@ -82,5 +82,39 @@ namespace DIP_Activity
 
             pictureBox2.Image = processed;
         }
+
+        private void mirrorHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            processed = new Bitmap(loaded.Width, loaded.Height);
+
+            int width = loaded.Width;
+            int height = loaded.Height;
+
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    processed.SetPixel(width - i - 1, j, loaded.GetPixel(i, j));
+
+            pictureBox2.Image = processed;
+        }
+
+        private void mirrorVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) 
+                return;
+
+            processed = new Bitmap(loaded.Width, loaded.Height);
+
+            int width = loaded.Width;
+            int height = loaded.Height;
+
+            for (int i = 0; i < width; i++)
+                for (int j = 0; j < height; j++)
+                    processed.SetPixel(i, height - j - 1, loaded.GetPixel(i, j));
+
+            pictureBox2.Image = processed;
+        }
     }
 }

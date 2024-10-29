@@ -110,12 +110,14 @@
             mirrorHorizontalToolStripMenuItem.Name = "mirrorHorizontalToolStripMenuItem";
             mirrorHorizontalToolStripMenuItem.Size = new Size(180, 22);
             mirrorHorizontalToolStripMenuItem.Text = "Mirror Horizontal";
+            mirrorHorizontalToolStripMenuItem.Click += mirrorHorizontalToolStripMenuItem_Click;
             // 
             // mirrorVerticalToolStripMenuItem
             // 
             mirrorVerticalToolStripMenuItem.Name = "mirrorVerticalToolStripMenuItem";
             mirrorVerticalToolStripMenuItem.Size = new Size(180, 22);
             mirrorVerticalToolStripMenuItem.Text = "Mirror Vertical";
+            mirrorVerticalToolStripMenuItem.Click += mirrorVerticalToolStripMenuItem_Click;
             // 
             // saveFileDialog1
             // 
