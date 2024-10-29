@@ -1,9 +1,0 @@
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\bin\Debug\AliacSearchAlgo.exe
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\bin\Debug\AliacSearchAlgo.pdb
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\obj\Debug\AliacSearchAlgo.csproj.AssemblyReference.cache
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\obj\Debug\AliacSearchAlgo.Form1.resources
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\obj\Debug\AliacSearchAlgo.Properties.Resources.resources
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\obj\Debug\AliacSearchAlgo.csproj.GenerateResource.cache
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\obj\Debug\AliacSearchAlgo.csproj.CoreCompileInputs.cache
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\obj\Debug\AliacSearchAlgo.exe
-D:\Coding\CodeChum-Activities\CS345\Uninformed Search Algorithm\AliacSearchAlgo\obj\Debug\AliacSearchAlgo.pdb
