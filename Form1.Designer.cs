@@ -38,13 +38,17 @@
             inversionToolStripMenuItem = new ToolStripMenuItem();
             mirrorHorizontalToolStripMenuItem = new ToolStripMenuItem();
             mirrorVerticalToolStripMenuItem = new ToolStripMenuItem();
+            histogramToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
+            label1 = new Label();
+            trackBar1 = new TrackBar();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -52,7 +56,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(800, 24);
+            menuStrip1.Size = new Size(802, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -79,7 +83,7 @@
             // 
             // dIPToolStripMenuItem
             // 
-            dIPToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pixelCopyToolStripMenuItem, grayscalingToolStripMenuItem, inversionToolStripMenuItem, mirrorHorizontalToolStripMenuItem, mirrorVerticalToolStripMenuItem });
+            dIPToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pixelCopyToolStripMenuItem, grayscalingToolStripMenuItem, inversionToolStripMenuItem, mirrorHorizontalToolStripMenuItem, mirrorVerticalToolStripMenuItem, histogramToolStripMenuItem });
             dIPToolStripMenuItem.Name = "dIPToolStripMenuItem";
             dIPToolStripMenuItem.Size = new Size(37, 20);
             dIPToolStripMenuItem.Text = "DIP";
@@ -87,37 +91,44 @@
             // pixelCopyToolStripMenuItem
             // 
             pixelCopyToolStripMenuItem.Name = "pixelCopyToolStripMenuItem";
-            pixelCopyToolStripMenuItem.Size = new Size(180, 22);
+            pixelCopyToolStripMenuItem.Size = new Size(165, 22);
             pixelCopyToolStripMenuItem.Text = "Pixel Copy";
             pixelCopyToolStripMenuItem.Click += pixelCopyToolStripMenuItem_Click;
             // 
             // grayscalingToolStripMenuItem
             // 
             grayscalingToolStripMenuItem.Name = "grayscalingToolStripMenuItem";
-            grayscalingToolStripMenuItem.Size = new Size(180, 22);
+            grayscalingToolStripMenuItem.Size = new Size(165, 22);
             grayscalingToolStripMenuItem.Text = "Grayscaling";
             grayscalingToolStripMenuItem.Click += grayscalingToolStripMenuItem_Click;
             // 
             // inversionToolStripMenuItem
             // 
             inversionToolStripMenuItem.Name = "inversionToolStripMenuItem";
-            inversionToolStripMenuItem.Size = new Size(180, 22);
+            inversionToolStripMenuItem.Size = new Size(165, 22);
             inversionToolStripMenuItem.Text = "Inversion";
             inversionToolStripMenuItem.Click += inversionToolStripMenuItem_Click;
             // 
             // mirrorHorizontalToolStripMenuItem
             // 
             mirrorHorizontalToolStripMenuItem.Name = "mirrorHorizontalToolStripMenuItem";
-            mirrorHorizontalToolStripMenuItem.Size = new Size(180, 22);
+            mirrorHorizontalToolStripMenuItem.Size = new Size(165, 22);
             mirrorHorizontalToolStripMenuItem.Text = "Mirror Horizontal";
             mirrorHorizontalToolStripMenuItem.Click += mirrorHorizontalToolStripMenuItem_Click;
             // 
             // mirrorVerticalToolStripMenuItem
             // 
             mirrorVerticalToolStripMenuItem.Name = "mirrorVerticalToolStripMenuItem";
-            mirrorVerticalToolStripMenuItem.Size = new Size(180, 22);
+            mirrorVerticalToolStripMenuItem.Size = new Size(165, 22);
             mirrorVerticalToolStripMenuItem.Text = "Mirror Vertical";
             mirrorVerticalToolStripMenuItem.Click += mirrorVerticalToolStripMenuItem_Click;
+            // 
+            // histogramToolStripMenuItem
+            // 
+            histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
+            histogramToolStripMenuItem.Size = new Size(165, 22);
+            histogramToolStripMenuItem.Text = "Histogram";
+            histogramToolStripMenuItem.Click += histogramToolStripMenuItem_Click;
             // 
             // saveFileDialog1
             // 
@@ -130,7 +141,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(0, 27);
+            pictureBox1.Location = new Point(0, 281);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(385, 420);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -139,18 +150,39 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(391, 27);
+            pictureBox2.Location = new Point(391, 281);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(409, 420);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 3;
             pictureBox2.TabStop = false;
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 24);
+            label1.Name = "label1";
+            label1.Size = new Size(62, 15);
+            label1.TabIndex = 4;
+            label1.Text = "Brightness";
+            // 
+            // trackBar1
+            // 
+            trackBar1.Location = new Point(12, 42);
+            trackBar1.Maximum = 50;
+            trackBar1.Minimum = -50;
+            trackBar1.Name = "trackBar1";
+            trackBar1.Size = new Size(373, 45);
+            trackBar1.TabIndex = 5;
+            trackBar1.Scroll += trackBar1_Scroll;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(802, 702);
+            Controls.Add(trackBar1);
+            Controls.Add(label1);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Controls.Add(menuStrip1);
@@ -161,6 +193,7 @@
             menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -180,5 +213,8 @@
         private OpenFileDialog openFileDialog1;
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
+        private ToolStripMenuItem histogramToolStripMenuItem;
+        private Label label1;
+        private TrackBar trackBar1;
     }
 }
