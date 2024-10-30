@@ -209,12 +209,12 @@ namespace DIP_Activity
                 lock (loaded)
                     preLoad = (Bitmap)loaded.Clone();
 
-                for (int i = 0; i < preLoad.Width;i++)
+                for (int i = 0; i < preLoad.Width; i++)
                     for (int j = 0; j < preLoad.Height; j++)
                         tableRed[i, j] = Algorithm.ApplyContrast(preLoad.GetPixel(i, j).R, contrastFactor);
             }));
 
-            Thread green = new(new ThreadStart(() => 
+            Thread green = new(new ThreadStart(() =>
             {
                 Bitmap preLoad;
                 lock (loaded)
@@ -225,7 +225,8 @@ namespace DIP_Activity
                         tableGreen[i, j] = Algorithm.ApplyContrast(preLoad.GetPixel(i, j).G, contrastFactor);
             }));
 
-            Thread blue = new(new ThreadStart(() => {
+            Thread blue = new(new ThreadStart(() =>
+            {
                 Bitmap preLoad;
                 lock (loaded)
                     preLoad = (Bitmap)loaded.Clone();
@@ -255,6 +256,30 @@ namespace DIP_Activity
 
             pictureBox2.Image = processed;
 
+        }
+
+        private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            processed = new Bitmap(loaded.Width, loaded.Height);
+
+            Color pixel;
+            for (int i = 0; i < loaded.Width; i++)
+                for (int j = 0; j < loaded.Height; j++)
+                {
+                    pixel = loaded.GetPixel(i, j);
+                    processed.SetPixel(i, j,
+                        Color.FromArgb(
+                            (int)Math.Min(pixel.R * 0.393 + pixel.G * 0.769 + pixel.B * 0.189, 255),
+                            (int)Math.Min(pixel.R * 0.349 + pixel.G * 0.686 + pixel.B * 0.168, 255),
+                            (int)Math.Min(pixel.R * 0.272 + pixel.G * 0.534 + pixel.B * 0.131, 255)
+                            )
+                        );
+                }
+
+            pictureBox2.Image = processed;  
         }
     }
 }

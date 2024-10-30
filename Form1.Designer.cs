@@ -47,6 +47,7 @@
             trackBar1 = new TrackBar();
             label3 = new Label();
             trackBar2 = new TrackBar();
+            sepiaToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -86,7 +87,7 @@
             // 
             // dIPToolStripMenuItem
             // 
-            dIPToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pixelCopyToolStripMenuItem, grayscalingToolStripMenuItem, inversionToolStripMenuItem, mirrorHorizontalToolStripMenuItem, mirrorVerticalToolStripMenuItem, histogramToolStripMenuItem });
+            dIPToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pixelCopyToolStripMenuItem, grayscalingToolStripMenuItem, inversionToolStripMenuItem, mirrorHorizontalToolStripMenuItem, mirrorVerticalToolStripMenuItem, histogramToolStripMenuItem, sepiaToolStripMenuItem });
             dIPToolStripMenuItem.Name = "dIPToolStripMenuItem";
             dIPToolStripMenuItem.Size = new Size(37, 20);
             dIPToolStripMenuItem.Text = "DIP";
@@ -94,42 +95,42 @@
             // pixelCopyToolStripMenuItem
             // 
             pixelCopyToolStripMenuItem.Name = "pixelCopyToolStripMenuItem";
-            pixelCopyToolStripMenuItem.Size = new Size(165, 22);
+            pixelCopyToolStripMenuItem.Size = new Size(180, 22);
             pixelCopyToolStripMenuItem.Text = "Pixel Copy";
             pixelCopyToolStripMenuItem.Click += pixelCopyToolStripMenuItem_Click;
             // 
             // grayscalingToolStripMenuItem
             // 
             grayscalingToolStripMenuItem.Name = "grayscalingToolStripMenuItem";
-            grayscalingToolStripMenuItem.Size = new Size(165, 22);
+            grayscalingToolStripMenuItem.Size = new Size(180, 22);
             grayscalingToolStripMenuItem.Text = "Grayscaling";
             grayscalingToolStripMenuItem.Click += grayscalingToolStripMenuItem_Click;
             // 
             // inversionToolStripMenuItem
             // 
             inversionToolStripMenuItem.Name = "inversionToolStripMenuItem";
-            inversionToolStripMenuItem.Size = new Size(165, 22);
+            inversionToolStripMenuItem.Size = new Size(180, 22);
             inversionToolStripMenuItem.Text = "Inversion";
             inversionToolStripMenuItem.Click += inversionToolStripMenuItem_Click;
             // 
             // mirrorHorizontalToolStripMenuItem
             // 
             mirrorHorizontalToolStripMenuItem.Name = "mirrorHorizontalToolStripMenuItem";
-            mirrorHorizontalToolStripMenuItem.Size = new Size(165, 22);
+            mirrorHorizontalToolStripMenuItem.Size = new Size(180, 22);
             mirrorHorizontalToolStripMenuItem.Text = "Mirror Horizontal";
             mirrorHorizontalToolStripMenuItem.Click += mirrorHorizontalToolStripMenuItem_Click;
             // 
             // mirrorVerticalToolStripMenuItem
             // 
             mirrorVerticalToolStripMenuItem.Name = "mirrorVerticalToolStripMenuItem";
-            mirrorVerticalToolStripMenuItem.Size = new Size(165, 22);
+            mirrorVerticalToolStripMenuItem.Size = new Size(180, 22);
             mirrorVerticalToolStripMenuItem.Text = "Mirror Vertical";
             mirrorVerticalToolStripMenuItem.Click += mirrorVerticalToolStripMenuItem_Click;
             // 
             // histogramToolStripMenuItem
             // 
             histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            histogramToolStripMenuItem.Size = new Size(165, 22);
+            histogramToolStripMenuItem.Size = new Size(180, 22);
             histogramToolStripMenuItem.Text = "Histogram";
             histogramToolStripMenuItem.Click += histogramToolStripMenuItem_Click;
             // 
@@ -201,6 +202,13 @@
             trackBar2.TickFrequency = 5;
             trackBar2.Scroll += trackBar2_Scroll;
             // 
+            // sepiaToolStripMenuItem
+            // 
+            sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
+            sepiaToolStripMenuItem.Size = new Size(180, 22);
+            sepiaToolStripMenuItem.Text = "Sepia";
+            sepiaToolStripMenuItem.Click += sepiaToolStripMenuItem_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -246,5 +254,6 @@
         private TrackBar trackBar1;
         private Label label3;
         private TrackBar trackBar2;
+        private ToolStripMenuItem sepiaToolStripMenuItem;
     }
 }
