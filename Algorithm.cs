@@ -10,9 +10,12 @@ namespace DIP_Activity
     {
         public static void Swap<T>(ref T a, ref T b)
         {
-            T temp = a;
-            a = b;
-            b = temp;
+            (b, a) = (a, b);
+        }
+
+        public static int ApplyContrast(int color, float factor)
+        {
+            return (int)(Math.Max(Math.Min(1, (color / 255.0f - 0.5f) * factor + 0.5f), 0) * 255);
         }
     }
 }

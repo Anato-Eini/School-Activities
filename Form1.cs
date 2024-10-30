@@ -173,7 +173,8 @@ namespace DIP_Activity
                             Math.Min(pixel.R + value, 255),
                             Math.Min(pixel.G + value, 255),
                             Math.Min(pixel.B + value, 255)
-                            ));
+                            )
+                        );
                     }
                     else
                     {
@@ -181,11 +182,79 @@ namespace DIP_Activity
                             Math.Max(pixel.R + value, 0),
                             Math.Max(pixel.G + value, 0),
                             Math.Max(pixel.B + value, 0)
-                            ));
+                            )
+                         );
                     }
                 }
 
-            pictureBox2 .Image = processed;
+            pictureBox2.Image = processed;
+        }
+
+        private void trackBar2_Scroll(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            float contrastFactor = trackBar2.Value / 100.0f + 1;
+
+            processed = new Bitmap(loaded.Width, loaded.Height);
+
+            int[,] tableRed = new int[loaded.Width, loaded.Height];
+            int[,] tableGreen = new int[loaded.Width, loaded.Height];
+            int[,] tableBlue = new int[loaded.Width, loaded.Height];
+
+            Thread red = new(new ThreadStart(() =>
+            {
+                Bitmap preLoad;
+                lock (loaded)
+                    preLoad = (Bitmap)loaded.Clone();
+
+                for (int i = 0; i < preLoad.Width;i++)
+                    for (int j = 0; j < preLoad.Height; j++)
+                        tableRed[i, j] = Algorithm.ApplyContrast(preLoad.GetPixel(i, j).R, contrastFactor);
+            }));
+
+            Thread green = new(new ThreadStart(() => 
+            {
+                Bitmap preLoad;
+                lock (loaded)
+                    preLoad = (Bitmap)loaded.Clone();
+
+                for (int i = 0; i < preLoad.Width; i++)
+                    for (int j = 0; j < preLoad.Height; j++)
+                        tableGreen[i, j] = Algorithm.ApplyContrast(preLoad.GetPixel(i, j).G, contrastFactor);
+            }));
+
+            Thread blue = new(new ThreadStart(() => {
+                Bitmap preLoad;
+                lock (loaded)
+                    preLoad = (Bitmap)loaded.Clone();
+
+                for (int i = 0; i < preLoad.Width; i++)
+                    for (int j = 0; j < preLoad.Height; j++)
+                        tableBlue[i, j] = Algorithm.ApplyContrast(preLoad.GetPixel(i, j).B, contrastFactor);
+            }));
+
+            red.Start();
+            blue.Start();
+            green.Start();
+
+            red.Join();
+            blue.Join();
+            green.Join();
+
+            for (int i = 0; i < loaded.Width; i++)
+                for (int j = 0; j < loaded.Height; j++)
+                {
+                    processed.SetPixel(i, j, Color.FromArgb(
+                        tableRed[i, j],
+                        tableGreen[i, j],
+                        tableBlue[i, j]
+                        ));
+                }
+
+            pictureBox2.Image = processed;
+
         }
     }
 }

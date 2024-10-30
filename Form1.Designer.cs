@@ -45,10 +45,13 @@
             pictureBox2 = new PictureBox();
             label1 = new Label();
             trackBar1 = new TrackBar();
+            label3 = new Label();
+            trackBar2 = new TrackBar();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -168,19 +171,43 @@
             // 
             // trackBar1
             // 
+            trackBar1.LargeChange = 10;
             trackBar1.Location = new Point(12, 42);
-            trackBar1.Maximum = 50;
-            trackBar1.Minimum = -50;
+            trackBar1.Maximum = 100;
+            trackBar1.Minimum = -100;
             trackBar1.Name = "trackBar1";
             trackBar1.Size = new Size(373, 45);
-            trackBar1.TabIndex = 5;
+            trackBar1.TabIndex = 10;
+            trackBar1.TickFrequency = 5;
             trackBar1.Scroll += trackBar1_Scroll;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 81);
+            label3.Name = "label3";
+            label3.Size = new Size(52, 15);
+            label3.TabIndex = 12;
+            label3.Text = "Contrast";
+            // 
+            // trackBar2
+            // 
+            trackBar2.LargeChange = 10;
+            trackBar2.Location = new Point(12, 99);
+            trackBar2.Maximum = 100;
+            trackBar2.Name = "trackBar2";
+            trackBar2.Size = new Size(362, 45);
+            trackBar2.TabIndex = 13;
+            trackBar2.TickFrequency = 5;
+            trackBar2.Scroll += trackBar2_Scroll;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(802, 702);
+            Controls.Add(trackBar2);
+            Controls.Add(label3);
             Controls.Add(trackBar1);
             Controls.Add(label1);
             Controls.Add(pictureBox2);
@@ -194,6 +221,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -216,5 +244,7 @@
         private ToolStripMenuItem histogramToolStripMenuItem;
         private Label label1;
         private TrackBar trackBar1;
+        private Label label3;
+        private TrackBar trackBar2;
     }
 }
