@@ -57,6 +57,9 @@
             label2 = new Label();
             label4 = new Label();
             trackBar4 = new TrackBar();
+            label5 = new Label();
+            trackBar5 = new TrackBar();
+            label6 = new Label();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -65,6 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar5).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -308,11 +312,43 @@
             trackBar4.Value = 50;
             trackBar4.Scroll += trackBar4_Scroll;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(783, 24);
+            label5.Name = "label5";
+            label5.Size = new Size(95, 15);
+            label5.TabIndex = 22;
+            label5.Text = "Binary Threshold";
+            // 
+            // trackBar5
+            // 
+            trackBar5.LargeChange = 10;
+            trackBar5.Location = new Point(783, 42);
+            trackBar5.Maximum = 255;
+            trackBar5.Name = "trackBar5";
+            trackBar5.Size = new Size(373, 45);
+            trackBar5.TabIndex = 23;
+            trackBar5.TickFrequency = 10;
+            trackBar5.Scroll += trackBar5_Scroll;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(783, 90);
+            label6.Name = "label6";
+            label6.Size = new Size(52, 15);
+            label6.TabIndex = 24;
+            label6.Text = "Contrast";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1226, 749);
+            Controls.Add(label6);
+            Controls.Add(trackBar5);
+            Controls.Add(label5);
             Controls.Add(trackBar4);
             Controls.Add(label4);
             Controls.Add(label2);
@@ -340,6 +376,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar3).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar5).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -374,5 +411,8 @@
         private Label label2;
         private Label label4;
         private TrackBar trackBar4;
+        private Label label5;
+        private TrackBar trackBar5;
+        private Label label6;
     }
 }

@@ -382,5 +382,27 @@ namespace DIP_Activity
 
             pictureBox2.Image = processed;
         }
+
+        private void trackBar5_Scroll(object sender, EventArgs e)
+        {
+            if (loaded == null) 
+                return;
+
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            int threshold = trackBar5.Value;
+
+            for (int i = 0; i < loaded.Width; ++i)
+                for (int j = 0; j < loaded.Height; ++j)
+                {
+                    Color pixel = loaded.GetPixel(i, j);
+                    processed.SetPixel(i, j,
+                        (pixel.R + pixel.G + pixel.B) / 3 < threshold ?
+                        Color.Black : Color.White
+                        );
+                }
+
+            pictureBox2.Image = processed;
+
+        }
     }
 }
