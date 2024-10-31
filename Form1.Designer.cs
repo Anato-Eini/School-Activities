@@ -55,6 +55,8 @@
             openFileDialog2 = new OpenFileDialog();
             trackBar3 = new TrackBar();
             label2 = new Label();
+            label4 = new Label();
+            trackBar4 = new TrackBar();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -62,6 +64,7 @@
             ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar4).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -283,11 +286,35 @@
             label2.TabIndex = 19;
             label2.Text = "Rotate";
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(400, 81);
+            label4.Name = "label4";
+            label4.Size = new Size(34, 15);
+            label4.TabIndex = 20;
+            label4.Text = "Scale";
+            // 
+            // trackBar4
+            // 
+            trackBar4.LargeChange = 10;
+            trackBar4.Location = new Point(400, 99);
+            trackBar4.Maximum = 100;
+            trackBar4.Minimum = 1;
+            trackBar4.Name = "trackBar4";
+            trackBar4.Size = new Size(373, 45);
+            trackBar4.TabIndex = 21;
+            trackBar4.TickFrequency = 5;
+            trackBar4.Value = 50;
+            trackBar4.Scroll += trackBar4_Scroll;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1226, 749);
+            Controls.Add(trackBar4);
+            Controls.Add(label4);
             Controls.Add(label2);
             Controls.Add(trackBar3);
             Controls.Add(button3);
@@ -312,6 +339,7 @@
             ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar4).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -344,5 +372,7 @@
         private OpenFileDialog openFileDialog2;
         private TrackBar trackBar3;
         private Label label2;
+        private Label label4;
+        private TrackBar trackBar4;
     }
 }

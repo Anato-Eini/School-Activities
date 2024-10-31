@@ -361,5 +361,26 @@ namespace DIP_Activity
 
             pictureBox2.Image = processed;
         }
+
+        private void trackBar4_Scroll(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            int newWidth = (int)(trackBar4.Value / 50f * loaded.Width);
+            int newHeight = (int)(trackBar4.Value / 50f * loaded.Height);
+
+            processed = new Bitmap(newWidth, newHeight);
+
+            for (int i = 0; i < newWidth; ++i)
+                for (int j = 0; j < newHeight; ++j)
+                    processed.SetPixel(i, j, loaded.GetPixel(
+                        i * loaded.Width / newWidth,
+                        j * loaded.Height / newHeight
+                        )
+                     );
+
+            pictureBox2.Image = processed;
+        }
     }
 }
