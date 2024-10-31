@@ -336,12 +336,13 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            float radians = trackBar3.Value * (float)Math.PI / 180f;
-
             processed = new Bitmap(loaded.Width, loaded.Height);
 
+            float radians = trackBar3.Value * (float)Math.PI / 180f;
             int centerX = loaded.Width / 2;
             int centerY = loaded.Height / 2;
+            float cosA = (float)Math.Cos(radians);
+            float sinA = (float)Math.Sin(radians);
 
             for (int i = 0; i < loaded.Width; ++i)
                 for (int j = 0; j < loaded.Height; ++j)
@@ -349,8 +350,8 @@ namespace DIP_Activity
                     int translatedX = i - centerX;
                     int translatedY = j - centerY;
 
-                    int newX = (int)(translatedX * Math.Cos(radians) - translatedY * Math.Sin(radians)) + centerX;
-                    int newY = (int)(translatedX * Math.Sin(radians) + translatedY * Math.Cos(radians)) + centerY;
+                    int newX = (int)(translatedX * cosA - translatedY * sinA) + centerX;
+                    int newY = (int)(translatedX * sinA + translatedY * cosA) + centerY;
 
                     processed.SetPixel(i, j,
                             newX >= 0 && newX < loaded.Width && newY >= 0 && newY < loaded.Height ?
