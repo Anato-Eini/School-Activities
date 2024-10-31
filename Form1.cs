@@ -13,16 +13,31 @@ namespace DIP_Activity
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Load the image from system to application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             pictureBox1.Image = loaded = new Bitmap(openFileDialog1.FileName);
         }
 
+        /// <summary>
+        /// Opens a dialogue for choosing image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
         }
 
+        /// <summary>
+        /// Copy operation of loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pixelCopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -37,11 +52,21 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Opens a dialogue for saving an image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             saveFileDialog1.ShowDialog();
         }
 
+        /// <summary>
+        /// Save the image after confirming the dialogue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (processed == null)
@@ -50,6 +75,11 @@ namespace DIP_Activity
             processed.Save(saveFileDialog1.FileName);
         }
 
+        /// <summary>
+        /// Applies grayscale of loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grayscalingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -69,6 +99,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Inverts the colors of loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -86,6 +121,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Flip the loaded image horizontally
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mirrorHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -103,6 +143,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Flip the loaded image vertically
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mirrorVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -120,6 +165,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Shows a histogram(greyscaled) of the loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -155,6 +205,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Adjusts brightness of the loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -191,6 +246,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Adjusts contrasts of the loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -259,6 +319,11 @@ namespace DIP_Activity
 
         }
 
+        /// <summary>
+        /// Applies sepia to the loaded imagej
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -283,16 +348,31 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Opens dialogue for "background image" button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
             openFileDialog2.ShowDialog();
         }
 
+        /// <summary>
+        /// Opens dialogue for "Load Image" button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
         }
 
+        /// <summary>
+        /// Do a subtraction operation of background and loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
             if (loaded == null || processed == null)
@@ -326,11 +406,21 @@ namespace DIP_Activity
             pictureBox3.Image = subtracted;
         }
 
+        /// <summary>
+        /// Load the image as background
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openFileDialog2_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             pictureBox2.Image = processed = new Bitmap(openFileDialog2.FileName);
         }
 
+        /// <summary>
+        /// Rotate the loaded image based on degrees value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar3_Scroll(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -362,6 +452,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Scale the loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar4_Scroll(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -383,6 +478,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies a binary operation with thresholding to the loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void trackBar5_Scroll(object sender, EventArgs e)
         {
             if (loaded == null) 
