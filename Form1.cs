@@ -6,6 +6,7 @@ namespace DIP_Activity
     {
         Bitmap? loaded;
         Bitmap? processed;
+        Bitmap? subtracted;
 
         public Form1()
         {
@@ -279,7 +280,55 @@ namespace DIP_Activity
                         );
                 }
 
-            pictureBox2.Image = processed;  
+            pictureBox2.Image = processed;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            openFileDialog2.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (loaded == null || processed == null)
+                return;
+
+            Color myGreen = Color.Green;
+            int greyGreen = 255 / 3;
+            int threshold = 5;
+
+            Color pixel;
+            subtracted = new Bitmap(loaded.Width, loaded.Height);  
+
+            for (int i = 0; i < loaded.Width; i++)
+            {
+                if (i >= processed.Width)
+                    break;
+
+                for (int j = 0; j < loaded.Height; j++)
+                {
+                    if (j >= processed.Height)
+                        break;
+
+                    pixel = loaded.GetPixel(i, j);
+
+                    subtracted.SetPixel(i, j,
+                        Math.Abs((pixel.R + pixel.G + pixel.B) / 3 - greyGreen) < threshold ?
+                        processed.GetPixel(i, j) : pixel
+                        );
+                }
+            }
+            pictureBox3.Image = subtracted;
+        }
+
+        private void openFileDialog2_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            pictureBox2.Image = processed = new Bitmap(openFileDialog2.FileName);
         }
     }
 }

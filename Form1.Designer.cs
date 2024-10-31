@@ -39,6 +39,7 @@
             mirrorHorizontalToolStripMenuItem = new ToolStripMenuItem();
             mirrorVerticalToolStripMenuItem = new ToolStripMenuItem();
             histogramToolStripMenuItem = new ToolStripMenuItem();
+            sepiaToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
             pictureBox1 = new PictureBox();
@@ -47,12 +48,17 @@
             trackBar1 = new TrackBar();
             label3 = new Label();
             trackBar2 = new TrackBar();
-            sepiaToolStripMenuItem = new ToolStripMenuItem();
+            pictureBox3 = new PictureBox();
+            button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
+            openFileDialog2 = new OpenFileDialog();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -60,7 +66,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(802, 24);
+            menuStrip1.Size = new Size(1226, 24);
             menuStrip1.TabIndex = 1;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -95,44 +101,51 @@
             // pixelCopyToolStripMenuItem
             // 
             pixelCopyToolStripMenuItem.Name = "pixelCopyToolStripMenuItem";
-            pixelCopyToolStripMenuItem.Size = new Size(180, 22);
+            pixelCopyToolStripMenuItem.Size = new Size(165, 22);
             pixelCopyToolStripMenuItem.Text = "Pixel Copy";
             pixelCopyToolStripMenuItem.Click += pixelCopyToolStripMenuItem_Click;
             // 
             // grayscalingToolStripMenuItem
             // 
             grayscalingToolStripMenuItem.Name = "grayscalingToolStripMenuItem";
-            grayscalingToolStripMenuItem.Size = new Size(180, 22);
+            grayscalingToolStripMenuItem.Size = new Size(165, 22);
             grayscalingToolStripMenuItem.Text = "Grayscaling";
             grayscalingToolStripMenuItem.Click += grayscalingToolStripMenuItem_Click;
             // 
             // inversionToolStripMenuItem
             // 
             inversionToolStripMenuItem.Name = "inversionToolStripMenuItem";
-            inversionToolStripMenuItem.Size = new Size(180, 22);
+            inversionToolStripMenuItem.Size = new Size(165, 22);
             inversionToolStripMenuItem.Text = "Inversion";
             inversionToolStripMenuItem.Click += inversionToolStripMenuItem_Click;
             // 
             // mirrorHorizontalToolStripMenuItem
             // 
             mirrorHorizontalToolStripMenuItem.Name = "mirrorHorizontalToolStripMenuItem";
-            mirrorHorizontalToolStripMenuItem.Size = new Size(180, 22);
+            mirrorHorizontalToolStripMenuItem.Size = new Size(165, 22);
             mirrorHorizontalToolStripMenuItem.Text = "Mirror Horizontal";
             mirrorHorizontalToolStripMenuItem.Click += mirrorHorizontalToolStripMenuItem_Click;
             // 
             // mirrorVerticalToolStripMenuItem
             // 
             mirrorVerticalToolStripMenuItem.Name = "mirrorVerticalToolStripMenuItem";
-            mirrorVerticalToolStripMenuItem.Size = new Size(180, 22);
+            mirrorVerticalToolStripMenuItem.Size = new Size(165, 22);
             mirrorVerticalToolStripMenuItem.Text = "Mirror Vertical";
             mirrorVerticalToolStripMenuItem.Click += mirrorVerticalToolStripMenuItem_Click;
             // 
             // histogramToolStripMenuItem
             // 
             histogramToolStripMenuItem.Name = "histogramToolStripMenuItem";
-            histogramToolStripMenuItem.Size = new Size(180, 22);
+            histogramToolStripMenuItem.Size = new Size(165, 22);
             histogramToolStripMenuItem.Text = "Histogram";
             histogramToolStripMenuItem.Click += histogramToolStripMenuItem_Click;
+            // 
+            // sepiaToolStripMenuItem
+            // 
+            sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
+            sepiaToolStripMenuItem.Size = new Size(165, 22);
+            sepiaToolStripMenuItem.Text = "Sepia";
+            sepiaToolStripMenuItem.Click += sepiaToolStripMenuItem_Click;
             // 
             // saveFileDialog1
             // 
@@ -202,18 +215,59 @@
             trackBar2.TickFrequency = 5;
             trackBar2.Scroll += trackBar2_Scroll;
             // 
-            // sepiaToolStripMenuItem
+            // pictureBox3
             // 
-            sepiaToolStripMenuItem.Name = "sepiaToolStripMenuItem";
-            sepiaToolStripMenuItem.Size = new Size(180, 22);
-            sepiaToolStripMenuItem.Text = "Sepia";
-            sepiaToolStripMenuItem.Click += sepiaToolStripMenuItem_Click;
+            pictureBox3.Location = new Point(806, 281);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(409, 420);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 14;
+            pictureBox3.TabStop = false;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(104, 707);
+            button1.Name = "button1";
+            button1.Size = new Size(149, 23);
+            button1.TabIndex = 15;
+            button1.Text = "Load Image";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(524, 707);
+            button2.Name = "button2";
+            button2.Size = new Size(149, 23);
+            button2.TabIndex = 16;
+            button2.Text = "Load Background";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(944, 707);
+            button3.Name = "button3";
+            button3.Size = new Size(149, 23);
+            button3.TabIndex = 17;
+            button3.Text = "kj";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // openFileDialog2
+            // 
+            openFileDialog2.FileName = "openFileDialog2";
+            openFileDialog2.FileOk += openFileDialog2_FileOk;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(802, 702);
+            ClientSize = new Size(1226, 749);
+            Controls.Add(button3);
+            Controls.Add(button2);
+            Controls.Add(button1);
+            Controls.Add(pictureBox3);
             Controls.Add(trackBar2);
             Controls.Add(label3);
             Controls.Add(trackBar1);
@@ -230,6 +284,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -255,5 +310,10 @@
         private Label label3;
         private TrackBar trackBar2;
         private ToolStripMenuItem sepiaToolStripMenuItem;
+        private PictureBox pictureBox3;
+        private Button button1;
+        private Button button2;
+        private Button button3;
+        private OpenFileDialog openFileDialog2;
     }
 }
