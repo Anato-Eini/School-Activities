@@ -303,7 +303,7 @@ namespace DIP_Activity
             int threshold = 5;
 
             Color pixel;
-            subtracted = new Bitmap(loaded.Width, loaded.Height);  
+            subtracted = new Bitmap(loaded.Width, loaded.Height);
 
             for (int i = 0; i < loaded.Width; i++)
             {
@@ -329,6 +329,36 @@ namespace DIP_Activity
         private void openFileDialog2_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             pictureBox2.Image = processed = new Bitmap(openFileDialog2.FileName);
+        }
+
+        private void trackBar3_Scroll(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            float radians = trackBar3.Value * (float)Math.PI / 180f;
+
+            processed = new Bitmap(loaded.Width, loaded.Height);
+
+            int centerX = loaded.Width / 2;
+            int centerY = loaded.Height / 2;
+
+            for (int i = 0; i < loaded.Width; ++i)
+                for (int j = 0; j < loaded.Height; ++j)
+                {
+                    int translatedX = i - centerX;
+                    int translatedY = j - centerY;
+
+                    int newX = (int)(translatedX * Math.Cos(radians) - translatedY * Math.Sin(radians)) + centerX;
+                    int newY = (int)(translatedX * Math.Sin(radians) + translatedY * Math.Cos(radians)) + centerY;
+
+                    processed.SetPixel(i, j,
+                            newX >= 0 && newX < loaded.Width && newY >= 0 && newY < loaded.Height ?
+                            loaded.GetPixel(newX, newY) : Color.Transparent
+                        );
+                }
+
+            pictureBox2.Image = processed;
         }
     }
 }

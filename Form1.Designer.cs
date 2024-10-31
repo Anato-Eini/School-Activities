@@ -53,12 +53,15 @@
             button2 = new Button();
             button3 = new Button();
             openFileDialog2 = new OpenFileDialog();
+            trackBar3 = new TrackBar();
+            label2 = new Label();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBar2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar3).BeginInit();
             SuspendLayout();
             // 
             // menuStrip1
@@ -250,7 +253,7 @@
             button3.Name = "button3";
             button3.Size = new Size(149, 23);
             button3.TabIndex = 17;
-            button3.Text = "kj";
+            button3.Text = "Subtract";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
@@ -259,11 +262,34 @@
             openFileDialog2.FileName = "openFileDialog2";
             openFileDialog2.FileOk += openFileDialog2_FileOk;
             // 
+            // trackBar3
+            // 
+            trackBar3.LargeChange = 10;
+            trackBar3.Location = new Point(400, 42);
+            trackBar3.Maximum = 180;
+            trackBar3.Minimum = -180;
+            trackBar3.Name = "trackBar3";
+            trackBar3.Size = new Size(373, 45);
+            trackBar3.TabIndex = 18;
+            trackBar3.TickFrequency = 10;
+            trackBar3.Scroll += trackBar3_Scroll;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(400, 24);
+            label2.Name = "label2";
+            label2.Size = new Size(41, 15);
+            label2.TabIndex = 19;
+            label2.Text = "Rotate";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1226, 749);
+            Controls.Add(label2);
+            Controls.Add(trackBar3);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -285,6 +311,7 @@
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBar2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBar3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -315,5 +342,7 @@
         private Button button2;
         private Button button3;
         private OpenFileDialog openFileDialog2;
+        private TrackBar trackBar3;
+        private Label label2;
     }
 }
