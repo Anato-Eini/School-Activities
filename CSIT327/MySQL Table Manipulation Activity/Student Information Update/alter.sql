@@ -1,0 +1,5 @@
+ALTER TABLE Students ADD COLUMN grade VARCHAR(2);
+
+ALTER TABLE Students DROP COLUMN age;
+
+ALTER TABLE Students RENAME COLUMN name TO student_name;
