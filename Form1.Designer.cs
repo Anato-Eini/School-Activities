@@ -243,6 +243,7 @@
             sepiaToolStripMenuItem1.Name = "sepiaToolStripMenuItem1";
             sepiaToolStripMenuItem1.Size = new Size(180, 22);
             sepiaToolStripMenuItem1.Text = "Sepia";
+            sepiaToolStripMenuItem1.Click += sepiaToolStripMenuItem1_Click;
             // 
             // saveFileDialog1
             // 
@@ -462,6 +463,7 @@
             // timer7
             // 
             timer7.Interval = 30;
+            timer7.Tick += timer7_Tick;
             // 
             // Form1
             // 

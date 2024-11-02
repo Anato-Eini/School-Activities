@@ -707,5 +707,51 @@ namespace DIP_Activity
                 pictureBox2.Image = processed;
             }
         }
+
+        /// <summary>
+        /// Enables sepia timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void sepiaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer7;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies sepia to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer7_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image != null)
+            {
+                processed = new Bitmap(image);
+                loaded = new Bitmap(image);
+
+                Color pixel;
+                for (int i = 0; i < loaded.Width; i++)
+                    for (int j = 0; j < loaded.Height; j++)
+                    {
+                        pixel = loaded.GetPixel(i, j);
+                        processed.SetPixel(i, j,
+                            Color.FromArgb(
+                                (int)Math.Min(pixel.R * 0.393 + pixel.G * 0.769 + pixel.B * 0.189, 255),
+                                (int)Math.Min(pixel.R * 0.349 + pixel.G * 0.686 + pixel.B * 0.168, 255),
+                                (int)Math.Min(pixel.R * 0.272 + pixel.G * 0.534 + pixel.B * 0.131, 255)
+                                )
+                            );
+                    }
+
+                pictureBox2.Image = processed;
+            }
+        }
     }
 }
