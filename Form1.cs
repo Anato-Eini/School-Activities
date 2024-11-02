@@ -545,5 +545,36 @@ namespace DIP_Activity
             if (bmap != null)
                 pictureBox2.Image = bmap;
         }
+
+        /// <summary>
+        /// Enables grayscale timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer3;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies grayscale of video frame
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image != null)
+            {
+                processed = new Bitmap(image);
+                BitmapFilter.GrayScale(processed);
+                pictureBox2.Image = processed;
+            }
+        }
     }
 }

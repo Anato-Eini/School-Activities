@@ -199,45 +199,46 @@
             // subtractToolStripMenuItem
             // 
             subtractToolStripMenuItem.Name = "subtractToolStripMenuItem";
-            subtractToolStripMenuItem.Size = new Size(165, 22);
+            subtractToolStripMenuItem.Size = new Size(180, 22);
             subtractToolStripMenuItem.Text = "Subtract";
             subtractToolStripMenuItem.Click += subtractToolStripMenuItem_Click;
             // 
             // copyToolStripMenuItem
             // 
             copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            copyToolStripMenuItem.Size = new Size(165, 22);
+            copyToolStripMenuItem.Size = new Size(180, 22);
             copyToolStripMenuItem.Text = "Copy";
             copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
             // 
             // grayscaleToolStripMenuItem
             // 
             grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
-            grayscaleToolStripMenuItem.Size = new Size(165, 22);
+            grayscaleToolStripMenuItem.Size = new Size(180, 22);
             grayscaleToolStripMenuItem.Text = "Grayscale";
+            grayscaleToolStripMenuItem.Click += grayscaleToolStripMenuItem_Click;
             // 
             // mirrorHorizontalToolStripMenuItem1
             // 
             mirrorHorizontalToolStripMenuItem1.Name = "mirrorHorizontalToolStripMenuItem1";
-            mirrorHorizontalToolStripMenuItem1.Size = new Size(165, 22);
+            mirrorHorizontalToolStripMenuItem1.Size = new Size(180, 22);
             mirrorHorizontalToolStripMenuItem1.Text = "Mirror Horizontal";
             // 
             // mirrorVerticalToolStripMenuItem1
             // 
             mirrorVerticalToolStripMenuItem1.Name = "mirrorVerticalToolStripMenuItem1";
-            mirrorVerticalToolStripMenuItem1.Size = new Size(165, 22);
+            mirrorVerticalToolStripMenuItem1.Size = new Size(180, 22);
             mirrorVerticalToolStripMenuItem1.Text = "Mirror Vertical";
             // 
             // histogramToolStripMenuItem1
             // 
             histogramToolStripMenuItem1.Name = "histogramToolStripMenuItem1";
-            histogramToolStripMenuItem1.Size = new Size(165, 22);
+            histogramToolStripMenuItem1.Size = new Size(180, 22);
             histogramToolStripMenuItem1.Text = "Histogram";
             // 
             // sepiaToolStripMenuItem1
             // 
             sepiaToolStripMenuItem1.Name = "sepiaToolStripMenuItem1";
-            sepiaToolStripMenuItem1.Size = new Size(165, 22);
+            sepiaToolStripMenuItem1.Size = new Size(180, 22);
             sepiaToolStripMenuItem1.Text = "Sepia";
             // 
             // saveFileDialog1
@@ -438,6 +439,7 @@
             // timer3
             // 
             timer3.Interval = 30;
+            timer3.Tick += timer3_Tick;
             // 
             // timer4
             // 
