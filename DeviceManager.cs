@@ -7,11 +7,6 @@ namespace WebCamLib
 {
     public class DeviceManager
     {
-	//	[DllImport("inpout32.dll", EntryPoint="Out32")]
-	//	public static extern void Output(int adress, int value);
-		
-	//	[DllImport("inpout32.dll", EntryPoint="Inp32")]
-	//	public static extern int Input(int adress);
 		
         [DllImport("avicap32.dll")]
         protected static extern bool capGetDriverDescriptionA(short wDriverIndex,
