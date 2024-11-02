@@ -1,5 +1,6 @@
 using ImageProcess2;
 using System.Drawing.Imaging;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using WebCamLib;  
 
@@ -722,9 +723,6 @@ namespace DIP_Activity
 
                             p -= bmProcessed.Stride;
                         }
-
-
-
                     }
                 }
 
@@ -761,21 +759,33 @@ namespace DIP_Activity
             if (image != null)
             {
                 processed = new Bitmap(image);
-                loaded = new Bitmap(image);
 
-                Color pixel;
-                for (int i = 0; i < loaded.Width; i++)
-                    for (int j = 0; j < loaded.Height; j++)
+                BitmapData bmProcessed = processed.LockBits(
+                    new Rectangle(0, 0, processed.Width, processed.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+                int offSet = bmProcessed.Stride - processed.Width * 3;
+
+                unsafe
+                {
+                    byte* p = (byte*)(void*)bmProcessed.Scan0;
+
+                    for (int i = 0; i < processed.Height; i++)
                     {
-                        pixel = loaded.GetPixel(i, j);
-                        processed.SetPixel(i, j,
-                            Color.FromArgb(
-                                (int)Math.Min(pixel.R * 0.393 + pixel.G * 0.769 + pixel.B * 0.189, 255),
-                                (int)Math.Min(pixel.R * 0.349 + pixel.G * 0.686 + pixel.B * 0.168, 255),
-                                (int)Math.Min(pixel.R * 0.272 + pixel.G * 0.534 + pixel.B * 0.131, 255)
-                                )
-                            );
+                        for (int j = 0; j < processed.Width; j++)
+                        {
+                            p[0] = (byte)Math.Min(255, p[2] * 0.272 + p[1] * 0.534 + p[0] * 0.131);
+                            p[1] = (byte)Math.Min(255, p[2] * 0.349 + p[1] * 0.686 + p[0] * 0.168);
+                            p[2] = (byte)Math.Min(255, p[2] * 0.393 + p[1] * 0.769 + p[0] * 0.189);
+
+                            p += 3;
+                        }
+
+                        p += offSet;
                     }
+                }
+
+                processed.UnlockBits(bmProcessed);
 
                 pictureBox2.Image = processed;
             }
