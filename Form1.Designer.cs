@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
@@ -40,6 +41,10 @@
             mirrorVerticalToolStripMenuItem = new ToolStripMenuItem();
             histogramToolStripMenuItem = new ToolStripMenuItem();
             sepiaToolStripMenuItem = new ToolStripMenuItem();
+            onToolStripMenuItem = new ToolStripMenuItem();
+            offToolStripMenuItem = new ToolStripMenuItem();
+            videoToolStripMenuItem = new ToolStripMenuItem();
+            subtractToolStripMenuItem = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
             pictureBox1 = new PictureBox();
@@ -60,6 +65,7 @@
             label5 = new Label();
             trackBar5 = new TrackBar();
             label6 = new Label();
+            timer1 = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -73,7 +79,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, dIPToolStripMenuItem, onToolStripMenuItem, offToolStripMenuItem, videoToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(1226, 24);
@@ -156,6 +162,34 @@
             sepiaToolStripMenuItem.Size = new Size(165, 22);
             sepiaToolStripMenuItem.Text = "Sepia";
             sepiaToolStripMenuItem.Click += sepiaToolStripMenuItem_Click;
+            // 
+            // onToolStripMenuItem
+            // 
+            onToolStripMenuItem.Name = "onToolStripMenuItem";
+            onToolStripMenuItem.Size = new Size(33, 20);
+            onToolStripMenuItem.Text = "on";
+            onToolStripMenuItem.Click += onToolStripMenuItem_Click;
+            // 
+            // offToolStripMenuItem
+            // 
+            offToolStripMenuItem.Name = "offToolStripMenuItem";
+            offToolStripMenuItem.Size = new Size(34, 20);
+            offToolStripMenuItem.Text = "off";
+            offToolStripMenuItem.Click += offToolStripMenuItem_Click;
+            // 
+            // videoToolStripMenuItem
+            // 
+            videoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { subtractToolStripMenuItem });
+            videoToolStripMenuItem.Name = "videoToolStripMenuItem";
+            videoToolStripMenuItem.Size = new Size(49, 20);
+            videoToolStripMenuItem.Text = "Video";
+            // 
+            // subtractToolStripMenuItem
+            // 
+            subtractToolStripMenuItem.Name = "subtractToolStripMenuItem";
+            subtractToolStripMenuItem.Size = new Size(180, 22);
+            subtractToolStripMenuItem.Text = "Subtract";
+            subtractToolStripMenuItem.Click += subtractToolStripMenuItem_Click;
             // 
             // saveFileDialog1
             // 
@@ -342,6 +376,11 @@
             label6.TabIndex = 24;
             label6.Text = "Contrast";
             // 
+            // timer1
+            // 
+            timer1.Interval = 30;
+            timer1.Tick += timer1_Tick;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -368,6 +407,7 @@
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -415,5 +455,10 @@
         private Label label5;
         private TrackBar trackBar5;
         private Label label6;
+        private ToolStripMenuItem onToolStripMenuItem;
+        private ToolStripMenuItem offToolStripMenuItem;
+        private ToolStripMenuItem videoToolStripMenuItem;
+        private ToolStripMenuItem subtractToolStripMenuItem;
+        private System.Windows.Forms.Timer timer1;
     }
 }

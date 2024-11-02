@@ -1,4 +1,5 @@
 using ImageProcess2;
+using WebCamLib;  
 
 namespace DIP_Activity
 {
@@ -7,6 +8,8 @@ namespace DIP_Activity
         Bitmap? loaded;
         Bitmap? processed;
         Bitmap? subtracted;
+
+        Device[] devices;
 
         public Form1()
         {
@@ -392,7 +395,7 @@ namespace DIP_Activity
         /// <param name="e"></param>
         private void trackBar5_Scroll(object sender, EventArgs e)
         {
-            if (loaded == null) 
+            if (loaded == null)
                 return;
 
             processed = new Bitmap(loaded.Width, loaded.Height);
@@ -410,6 +413,70 @@ namespace DIP_Activity
 
             pictureBox2.Image = processed;
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            devices = DeviceManager.GetAllDevices();
+        }
+
+        private void onToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            devices[0].ShowWindow(pictureBox1);
+        }
+
+        private void offToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            devices[0].Stop();
+        }
+
+        private void subtractToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (processed == null)
+                return;
+
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+            bmap = (Image)data.GetData("System.Drawing.Bitmap", true);
+            if (bmap != null)
+            {
+                loaded = new Bitmap(bmap);
+
+                Color myGreen = Color.Green;
+                int greyGreen = 255 / 3;
+                int threshold = 5;
+
+                Color pixel;
+                subtracted = new Bitmap(loaded.Width, loaded.Height);
+
+                for (int i = 0; i < loaded.Width; i++)
+                {
+                    if (i >= processed.Width)
+                        break;
+
+                    for (int j = 0; j < loaded.Height; j++)
+                    {
+                        if (j >= processed.Height)
+                            break;
+
+                        pixel = loaded.GetPixel(i, j);
+
+                        subtracted.SetPixel(i, j,
+                            Math.Abs((pixel.R + pixel.G + pixel.B) / 3 - greyGreen) < threshold ?
+                            processed.GetPixel(i, j) : pixel
+                            );
+                    }
+                }
+
+                pictureBox3.Image = subtracted;
+            }
         }
     }
 }
