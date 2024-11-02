@@ -197,8 +197,8 @@
             // 
             trackBar1.LargeChange = 10;
             trackBar1.Location = new Point(12, 42);
-            trackBar1.Maximum = 100;
-            trackBar1.Minimum = -100;
+            trackBar1.Maximum = 255;
+            trackBar1.Minimum = -255;
             trackBar1.Name = "trackBar1";
             trackBar1.Size = new Size(373, 45);
             trackBar1.TabIndex = 10;
@@ -219,6 +219,7 @@
             trackBar2.LargeChange = 10;
             trackBar2.Location = new Point(12, 99);
             trackBar2.Maximum = 100;
+            trackBar2.Minimum = -100;
             trackBar2.Name = "trackBar2";
             trackBar2.Size = new Size(362, 45);
             trackBar2.TabIndex = 13;
