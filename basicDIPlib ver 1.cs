@@ -7,7 +7,6 @@ namespace HNUDIP
 {
     static class ImageProcess
     {
-
         public static void copyImage(ref Bitmap a, ref Bitmap b)
         {
             b = new Bitmap(a.Width, a.Height);
