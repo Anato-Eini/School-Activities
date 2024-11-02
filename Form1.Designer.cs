@@ -222,6 +222,7 @@
             mirrorHorizontalToolStripMenuItem1.Name = "mirrorHorizontalToolStripMenuItem1";
             mirrorHorizontalToolStripMenuItem1.Size = new Size(180, 22);
             mirrorHorizontalToolStripMenuItem1.Text = "Mirror Horizontal";
+            mirrorHorizontalToolStripMenuItem1.Click += mirrorHorizontalToolStripMenuItem1_Click;
             // 
             // mirrorVerticalToolStripMenuItem1
             // 
@@ -444,6 +445,7 @@
             // timer4
             // 
             timer4.Interval = 30;
+            timer4.Tick += timer4_Tick;
             // 
             // timer5
             // 
