@@ -1,4 +1,5 @@
 using ImageProcess2;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using WebCamLib;  
 
@@ -669,34 +670,66 @@ namespace DIP_Activity
             if (image != null)
             {
                 loaded = new Bitmap(image);
-                processed = new Bitmap(image);
+                processed = new Bitmap(256, 420);
 
-                int[] histData = new int[256];
-                Color pixel;
-                int maxFreq = 420;
+                BitmapData bmLoaded = loaded.LockBits(
+                    new Rectangle(0, 0, loaded.Width, loaded.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-                for (int i = 0; i < loaded.Width; i++)
-                    for (int j = 0; j < loaded.Height; j++)
+                BitmapData bmProcessed = processed.LockBits(
+                    new Rectangle(0, 0, processed.Width, processed.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+                unsafe
+                {
+                    int[] histData = new int[256];
+                    int maxFreq = 420;
+                    int offSet = bmLoaded.Stride - loaded.Width * 3; // Padding value
+
+                    byte * p = (byte *)(void *)bmLoaded.Scan0;
+
+                    for (int i = 0; i < loaded.Height; i++)
                     {
-                        pixel = loaded.GetPixel(i, j);
-                        int ave = (pixel.R + pixel.G + pixel.B) / 3;
-                        histData[ave]++;
+                        for (int j = 0; j < loaded.Width; j++)
+                        {
+                            int ave = (int)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
+                            p[0] = p[1] = p[2] = (byte)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
+                            histData[ave]++;
 
-                        if (histData[ave] > maxFreq)
-                            maxFreq = histData[ave];
+                            if (histData[ave] > maxFreq)
+                                maxFreq = histData[ave];
+
+                            p += 3;
+                        }
+
+                        p += offSet;
                     }
 
-                processed = new Bitmap(256, 420);
-                int mFactor = maxFreq / 420;
-                int count;
+                    int mFactor = maxFreq / 420;
+                    int count;
 
-                for (int i = 0; i < 256; i++)
-                {
-                    count = Math.Min(420, histData[i] / mFactor);
+                    int lastRow = (processed.Height - 1) * bmProcessed.Stride;
+                    byte * pointerLast = (byte*)(void*)bmProcessed.Scan0 + lastRow;
 
-                    for (int j = 0; j < count; j++)
-                        processed.SetPixel(i, 419 - j, Color.Black);
+                    for (int i = 0; i < 256; i++)
+                    {
+                        p = pointerLast + i * 3;
+                        count = Math.Min(420, histData[i] / mFactor);
+
+                        for (int j = 0; j < count; j++)
+                        {
+                            p[0] = p[1] = p[2] = 255;
+
+                            p -= bmProcessed.Stride;
+                        }
+
+
+
+                    }
                 }
+
+                loaded.UnlockBits(bmLoaded);
+                processed.UnlockBits(bmProcessed);
 
                 pictureBox2.Image = processed;
             }
