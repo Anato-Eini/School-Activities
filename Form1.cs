@@ -490,32 +490,73 @@ namespace DIP_Activity
             if (bmap != null)
             {
                 loaded = new Bitmap(bmap);
-
-                Color myGreen = Color.Green;
-                int greyGreen = 255 / 3;
-                int threshold = 5;
-
-                Color pixel;
                 subtracted = new Bitmap(loaded.Width, loaded.Height);
 
-                for (int i = 0; i < loaded.Width; i++)
-                {
-                    if (i >= processed.Width)
-                        break;
+                BitmapData bmLoaded = loaded.LockBits(
+                    new Rectangle(0, 0, loaded.Width, loaded.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                    );
 
-                    for (int j = 0; j < loaded.Height; j++)
+                BitmapData bmProcessed = processed.LockBits(
+                    new Rectangle(0, 0, processed.Width, processed.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                    );
+
+                BitmapData bmSubtracted = subtracted.LockBits(
+                    new Rectangle(0, 0, subtracted.Width, subtracted.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                    );
+
+                int limitAve = 255 / 3;
+                int threshold = 5;
+
+                unsafe
+                {
+                    int paddingLoaded = bmLoaded.Stride - loaded.Width * 3;
+                    int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
+                    int paddingSubtracted = bmSubtracted.Stride - subtracted.Width * 3;
+
+                    byte * pLoaded = (byte *)bmLoaded.Scan0;
+                    byte * pProcessed = (byte *)bmProcessed.Scan0;
+                    byte * pSubtracted = (byte *)bmSubtracted.Scan0;
+                    
+                    for (int i = 0; i < loaded.Width; i++)
                     {
-                        if (j >= processed.Height)
+                        if (i >= processed.Width)
                             break;
 
-                        pixel = loaded.GetPixel(i, j);
+                        for (int j = 0; j < loaded.Height; j++)
+                        {
+                            if (j >= processed.Height)
+                                break;
 
-                        subtracted.SetPixel(i, j,
-                            Math.Abs((pixel.R + pixel.G + pixel.B) / 3 - greyGreen) < threshold ?
-                            processed.GetPixel(i, j) : pixel
-                            );
+                            if (Math.Abs(pLoaded[0] + pLoaded[1] + pLoaded[2] - limitAve) < threshold)
+                            {
+                                pSubtracted[0] = pProcessed[0];
+                                pSubtracted[1] = pProcessed[1];
+                                pSubtracted[2] = pProcessed[2];
+                            }
+                            else
+                            {
+                                pSubtracted[0] = pLoaded[0];
+                                pSubtracted[1] = pLoaded[1];
+                                pSubtracted[2] = pLoaded[2];
+                            }
+
+                            pLoaded += 3;
+                            pProcessed += 3;
+                            pSubtracted += 3;
+                        }
+
+                        pLoaded += paddingLoaded;
+                        pProcessed += paddingProcessed;
+                        pSubtracted += paddingSubtracted;
                     }
                 }
+
+                loaded.UnlockBits(bmLoaded);
+                processed.UnlockBits(bmProcessed);
+                subtracted.UnlockBits(bmSubtracted);
 
                 pictureBox3.Image = subtracted;
             }
