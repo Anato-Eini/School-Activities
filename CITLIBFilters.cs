@@ -67,7 +67,6 @@ namespace ImageProcess2
 			}
 
 			b.UnlockBits(bmData);
-
 			return true;
 		}
 
