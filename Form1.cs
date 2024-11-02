@@ -612,5 +612,41 @@ namespace DIP_Activity
                 pictureBox2.Image = processed;
             }
         }
+
+        /// <summary>
+        /// Enables mirror vertical timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mirrorVerticalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer5;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies mirror vertical to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer5_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image != null)
+            {
+                loaded = new Bitmap(image);
+                processed = new Bitmap(image);
+
+                for (int i = 0; i < processed.Width; i++)
+                    for (int j = 0; j < processed.Height; j++)
+                        processed.SetPixel(i, processed.Height - j - 1, loaded.GetPixel(i, j));
+
+                pictureBox2.Image = processed;
+            }
+        }
     }
 }

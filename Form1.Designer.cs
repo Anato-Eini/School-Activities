@@ -229,6 +229,7 @@
             mirrorVerticalToolStripMenuItem1.Name = "mirrorVerticalToolStripMenuItem1";
             mirrorVerticalToolStripMenuItem1.Size = new Size(180, 22);
             mirrorVerticalToolStripMenuItem1.Text = "Mirror Vertical";
+            mirrorVerticalToolStripMenuItem1.Click += mirrorVerticalToolStripMenuItem1_Click;
             // 
             // histogramToolStripMenuItem1
             // 
@@ -450,6 +451,7 @@
             // timer5
             // 
             timer5.Interval = 30;
+            timer5.Tick += timer5_Tick;
             // 
             // timer6
             // 
