@@ -635,12 +635,9 @@ namespace DIP_Activity
 
             if (image != null)
             {
-                loaded = new Bitmap(image);
                 processed = new Bitmap(image);
 
-                for (int i = 0; i < processed.Width; i++)
-                    for (int j = 0; j < processed.Height; j++)
-                        processed.SetPixel(i, processed.Height - j - 1, loaded.GetPixel(i, j));
+                BitmapFilter.Flip(processed, false, true);  
 
                 pictureBox2.Image = processed;
             }
