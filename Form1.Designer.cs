@@ -70,7 +70,6 @@
             trackBar4 = new TrackBar();
             label5 = new Label();
             trackBar5 = new TrackBar();
-            label6 = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
             timer2 = new System.Windows.Forms.Timer(components);
             timer3 = new System.Windows.Forms.Timer(components);
@@ -199,49 +198,49 @@
             // subtractToolStripMenuItem
             // 
             subtractToolStripMenuItem.Name = "subtractToolStripMenuItem";
-            subtractToolStripMenuItem.Size = new Size(180, 22);
+            subtractToolStripMenuItem.Size = new Size(165, 22);
             subtractToolStripMenuItem.Text = "Subtract";
             subtractToolStripMenuItem.Click += subtractToolStripMenuItem_Click;
             // 
             // copyToolStripMenuItem
             // 
             copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            copyToolStripMenuItem.Size = new Size(180, 22);
+            copyToolStripMenuItem.Size = new Size(165, 22);
             copyToolStripMenuItem.Text = "Copy";
             copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
             // 
             // grayscaleToolStripMenuItem
             // 
             grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
-            grayscaleToolStripMenuItem.Size = new Size(180, 22);
+            grayscaleToolStripMenuItem.Size = new Size(165, 22);
             grayscaleToolStripMenuItem.Text = "Grayscale";
             grayscaleToolStripMenuItem.Click += grayscaleToolStripMenuItem_Click;
             // 
             // mirrorHorizontalToolStripMenuItem1
             // 
             mirrorHorizontalToolStripMenuItem1.Name = "mirrorHorizontalToolStripMenuItem1";
-            mirrorHorizontalToolStripMenuItem1.Size = new Size(180, 22);
+            mirrorHorizontalToolStripMenuItem1.Size = new Size(165, 22);
             mirrorHorizontalToolStripMenuItem1.Text = "Mirror Horizontal";
             mirrorHorizontalToolStripMenuItem1.Click += mirrorHorizontalToolStripMenuItem1_Click;
             // 
             // mirrorVerticalToolStripMenuItem1
             // 
             mirrorVerticalToolStripMenuItem1.Name = "mirrorVerticalToolStripMenuItem1";
-            mirrorVerticalToolStripMenuItem1.Size = new Size(180, 22);
+            mirrorVerticalToolStripMenuItem1.Size = new Size(165, 22);
             mirrorVerticalToolStripMenuItem1.Text = "Mirror Vertical";
             mirrorVerticalToolStripMenuItem1.Click += mirrorVerticalToolStripMenuItem1_Click;
             // 
             // histogramToolStripMenuItem1
             // 
             histogramToolStripMenuItem1.Name = "histogramToolStripMenuItem1";
-            histogramToolStripMenuItem1.Size = new Size(180, 22);
+            histogramToolStripMenuItem1.Size = new Size(165, 22);
             histogramToolStripMenuItem1.Text = "Histogram";
             histogramToolStripMenuItem1.Click += histogramToolStripMenuItem1_Click;
             // 
             // sepiaToolStripMenuItem1
             // 
             sepiaToolStripMenuItem1.Name = "sepiaToolStripMenuItem1";
-            sepiaToolStripMenuItem1.Size = new Size(180, 22);
+            sepiaToolStripMenuItem1.Size = new Size(165, 22);
             sepiaToolStripMenuItem1.Text = "Sepia";
             sepiaToolStripMenuItem1.Click += sepiaToolStripMenuItem1_Click;
             // 
@@ -421,15 +420,6 @@
             trackBar5.TickFrequency = 10;
             trackBar5.Scroll += trackBar5_Scroll;
             // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(783, 90);
-            label6.Name = "label6";
-            label6.Size = new Size(52, 15);
-            label6.TabIndex = 24;
-            label6.Text = "Contrast";
-            // 
             // timer1
             // 
             timer1.Interval = 30;
@@ -470,7 +460,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1226, 749);
-            Controls.Add(label6);
             Controls.Add(trackBar5);
             Controls.Add(label5);
             Controls.Add(trackBar4);
@@ -538,7 +527,6 @@
         private TrackBar trackBar4;
         private Label label5;
         private TrackBar trackBar5;
-        private Label label6;
         private ToolStripMenuItem onToolStripMenuItem;
         private ToolStripMenuItem offToolStripMenuItem;
         private ToolStripMenuItem videoToolStripMenuItem;

@@ -95,8 +95,6 @@ namespace DIP_Activity
             Bitmap copy = (Bitmap)loaded.Clone();
             BitmapFilter.GrayScale(copy);
             pictureBox2.Image = copy;
-
-
         }
 
         /// <summary>
@@ -292,7 +290,6 @@ namespace DIP_Activity
             if (loaded == null || processed == null)
                 return;
 
-            Color myGreen = Color.Green;
             int greyGreen = 255 / 3;
             int threshold = 5;
 
@@ -735,7 +732,7 @@ namespace DIP_Activity
                         for (int j = 0; j < loaded.Width; j++)
                         {
                             int ave = (int)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
-                            p[0] = p[1] = p[2] = (byte)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
+                            p[0] = p[1] = p[2] = (byte)ave;
                             histData[ave]++;
 
                             if (histData[ave] > maxFreq)
