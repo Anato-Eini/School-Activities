@@ -1,4 +1,5 @@
 using ImageProcess2;
+using System.Runtime.InteropServices;
 using WebCamLib;  
 
 namespace DIP_Activity
@@ -9,6 +10,7 @@ namespace DIP_Activity
         Bitmap? processed;
         Bitmap? subtracted;
 
+        System.Windows.Forms.Timer currentTimer;
         Device[] devices;
 
         public Form1()
@@ -415,36 +417,74 @@ namespace DIP_Activity
 
         }
 
+        /// <summary>
+        /// Fetch all connected devices
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             devices = DeviceManager.GetAllDevices();
         }
 
+        /// <summary>
+        /// Render video frame to pictureBox1
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void onToolStripMenuItem_Click(object sender, EventArgs e)
         {
             devices[0].ShowWindow(pictureBox1);
         }
 
+        /// <summary>
+        /// Stops video
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void offToolStripMenuItem_Click(object sender, EventArgs e)
         {
             devices[0].Stop();
         }
 
+        /// <summary>
+        /// Enabled timer for video subtract
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void subtractToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            timer1.Enabled = true;
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer1;
+            currentTimer.Enabled = true;
         }
 
+        /// <summary>
+        /// Fetch video frame
+        /// </summary>
+        /// <returns></returns>
+        private Image getData()
+        {
+            IDataObject data;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+            return (Image)data.GetData("System.Drawing.Bitmap", true);
+        }
+
+        /// <summary>
+        /// Applies subtraction method to video frame
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (processed == null)
                 return;
 
-            IDataObject data;
-            Image bmap;
-            devices[0].Sendmessage();
-            data = Clipboard.GetDataObject();
-            bmap = (Image)data.GetData("System.Drawing.Bitmap", true);
+            Image bmap = getData();
+
             if (bmap != null)
             {
                 loaded = new Bitmap(bmap);
@@ -477,6 +517,33 @@ namespace DIP_Activity
 
                 pictureBox3.Image = subtracted;
             }
+        }
+
+        /// <summary>
+        /// Enables timer for copy timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer2;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies copy from video frame
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            Image bmap = getData();
+
+            if (bmap != null)
+                pictureBox2.Image = bmap;
         }
     }
 }

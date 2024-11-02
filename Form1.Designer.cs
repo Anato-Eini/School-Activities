@@ -45,6 +45,12 @@
             offToolStripMenuItem = new ToolStripMenuItem();
             videoToolStripMenuItem = new ToolStripMenuItem();
             subtractToolStripMenuItem = new ToolStripMenuItem();
+            copyToolStripMenuItem = new ToolStripMenuItem();
+            grayscaleToolStripMenuItem = new ToolStripMenuItem();
+            mirrorHorizontalToolStripMenuItem1 = new ToolStripMenuItem();
+            mirrorVerticalToolStripMenuItem1 = new ToolStripMenuItem();
+            histogramToolStripMenuItem1 = new ToolStripMenuItem();
+            sepiaToolStripMenuItem1 = new ToolStripMenuItem();
             saveFileDialog1 = new SaveFileDialog();
             openFileDialog1 = new OpenFileDialog();
             pictureBox1 = new PictureBox();
@@ -66,6 +72,12 @@
             trackBar5 = new TrackBar();
             label6 = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
+            timer2 = new System.Windows.Forms.Timer(components);
+            timer3 = new System.Windows.Forms.Timer(components);
+            timer4 = new System.Windows.Forms.Timer(components);
+            timer5 = new System.Windows.Forms.Timer(components);
+            timer6 = new System.Windows.Forms.Timer(components);
+            timer7 = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -179,7 +191,7 @@
             // 
             // videoToolStripMenuItem
             // 
-            videoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { subtractToolStripMenuItem });
+            videoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { subtractToolStripMenuItem, copyToolStripMenuItem, grayscaleToolStripMenuItem, mirrorHorizontalToolStripMenuItem1, mirrorVerticalToolStripMenuItem1, histogramToolStripMenuItem1, sepiaToolStripMenuItem1 });
             videoToolStripMenuItem.Name = "videoToolStripMenuItem";
             videoToolStripMenuItem.Size = new Size(49, 20);
             videoToolStripMenuItem.Text = "Video";
@@ -187,9 +199,46 @@
             // subtractToolStripMenuItem
             // 
             subtractToolStripMenuItem.Name = "subtractToolStripMenuItem";
-            subtractToolStripMenuItem.Size = new Size(180, 22);
+            subtractToolStripMenuItem.Size = new Size(165, 22);
             subtractToolStripMenuItem.Text = "Subtract";
             subtractToolStripMenuItem.Click += subtractToolStripMenuItem_Click;
+            // 
+            // copyToolStripMenuItem
+            // 
+            copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            copyToolStripMenuItem.Size = new Size(165, 22);
+            copyToolStripMenuItem.Text = "Copy";
+            copyToolStripMenuItem.Click += copyToolStripMenuItem_Click;
+            // 
+            // grayscaleToolStripMenuItem
+            // 
+            grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
+            grayscaleToolStripMenuItem.Size = new Size(165, 22);
+            grayscaleToolStripMenuItem.Text = "Grayscale";
+            // 
+            // mirrorHorizontalToolStripMenuItem1
+            // 
+            mirrorHorizontalToolStripMenuItem1.Name = "mirrorHorizontalToolStripMenuItem1";
+            mirrorHorizontalToolStripMenuItem1.Size = new Size(165, 22);
+            mirrorHorizontalToolStripMenuItem1.Text = "Mirror Horizontal";
+            // 
+            // mirrorVerticalToolStripMenuItem1
+            // 
+            mirrorVerticalToolStripMenuItem1.Name = "mirrorVerticalToolStripMenuItem1";
+            mirrorVerticalToolStripMenuItem1.Size = new Size(165, 22);
+            mirrorVerticalToolStripMenuItem1.Text = "Mirror Vertical";
+            // 
+            // histogramToolStripMenuItem1
+            // 
+            histogramToolStripMenuItem1.Name = "histogramToolStripMenuItem1";
+            histogramToolStripMenuItem1.Size = new Size(165, 22);
+            histogramToolStripMenuItem1.Text = "Histogram";
+            // 
+            // sepiaToolStripMenuItem1
+            // 
+            sepiaToolStripMenuItem1.Name = "sepiaToolStripMenuItem1";
+            sepiaToolStripMenuItem1.Size = new Size(165, 22);
+            sepiaToolStripMenuItem1.Text = "Sepia";
             // 
             // saveFileDialog1
             // 
@@ -381,6 +430,31 @@
             timer1.Interval = 30;
             timer1.Tick += timer1_Tick;
             // 
+            // timer2
+            // 
+            timer2.Interval = 30;
+            timer2.Tick += timer2_Tick;
+            // 
+            // timer3
+            // 
+            timer3.Interval = 30;
+            // 
+            // timer4
+            // 
+            timer4.Interval = 30;
+            // 
+            // timer5
+            // 
+            timer5.Interval = 30;
+            // 
+            // timer6
+            // 
+            timer6.Interval = 30;
+            // 
+            // timer7
+            // 
+            timer7.Interval = 30;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -460,5 +534,17 @@
         private ToolStripMenuItem videoToolStripMenuItem;
         private ToolStripMenuItem subtractToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
+        private ToolStripMenuItem copyToolStripMenuItem;
+        private ToolStripMenuItem grayscaleToolStripMenuItem;
+        private ToolStripMenuItem mirrorHorizontalToolStripMenuItem1;
+        private ToolStripMenuItem mirrorVerticalToolStripMenuItem1;
+        private ToolStripMenuItem histogramToolStripMenuItem1;
+        private ToolStripMenuItem sepiaToolStripMenuItem1;
+        private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.Timer timer4;
+        private System.Windows.Forms.Timer timer5;
+        private System.Windows.Forms.Timer timer6;
+        private System.Windows.Forms.Timer timer7;
     }
 }
