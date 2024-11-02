@@ -648,5 +648,64 @@ namespace DIP_Activity
                 pictureBox2.Image = processed;
             }
         }
+
+        /// <summary>
+        /// Enables histogram timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void histogramToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer6;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Render histogram from video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer6_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image != null)
+            {
+                loaded = new Bitmap(image);
+                processed = new Bitmap(image);
+
+                int[] histData = new int[256];
+                Color pixel;
+                int maxFreq = 420;
+
+                for (int i = 0; i < loaded.Width; i++)
+                    for (int j = 0; j < loaded.Height; j++)
+                    {
+                        pixel = loaded.GetPixel(i, j);
+                        int ave = (pixel.R + pixel.G + pixel.B) / 3;
+                        histData[ave]++;
+
+                        if (histData[ave] > maxFreq)
+                            maxFreq = histData[ave];
+                    }
+
+                processed = new Bitmap(256, 420);
+                int mFactor = maxFreq / 420;
+                int count;
+
+                for (int i = 0; i < 256; i++)
+                {
+                    count = Math.Min(420, histData[i] / mFactor);
+
+                    for (int j = 0; j < count; j++)
+                        processed.SetPixel(i, 419 - j, Color.Black);
+                }
+
+                pictureBox2.Image = processed;
+            }
+        }
     }
 }

@@ -236,6 +236,7 @@
             histogramToolStripMenuItem1.Name = "histogramToolStripMenuItem1";
             histogramToolStripMenuItem1.Size = new Size(180, 22);
             histogramToolStripMenuItem1.Text = "Histogram";
+            histogramToolStripMenuItem1.Click += histogramToolStripMenuItem1_Click;
             // 
             // sepiaToolStripMenuItem1
             // 
@@ -456,6 +457,7 @@
             // timer6
             // 
             timer6.Interval = 30;
+            timer6.Tick += timer6_Tick;
             // 
             // timer7
             // 
