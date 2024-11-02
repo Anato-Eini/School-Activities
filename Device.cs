@@ -24,13 +24,6 @@ namespace WebCamLib
 		private const int SWP_NOZORDER = 0x40;
 		private const int HWND_BOTTOM = 1;
 		
-		
-	//	[DllImport("inpout32.dll", EntryPoint="Out32")]
-	//	public static extern void Output(int adress, int value);
-		
-	//	[DllImport("inpout32.dll", EntryPoint="Inp32")]
-	//	public static extern int Input(int adress);
-		
 		[DllImport("avicap32.dll")]
         protected static extern int capCreateCaptureWindowA([MarshalAs(UnmanagedType.VBByRefStr)] ref string lpszWindowName,
             int dwStyle, int x, int y, int nWidth, int nHeight, int hWndParent, int nID);
