@@ -517,14 +517,14 @@ namespace DIP_Activity
                     byte * pProcessed = (byte *)bmProcessed.Scan0;
                     byte * pSubtracted = (byte *)bmSubtracted.Scan0;
                     
-                    for (int i = 0; i < loaded.Width; i++)
+                    for (int i = 0; i < loaded.Height; i++)
                     {
-                        if (i >= processed.Width)
+                        if (i >= processed.Height)
                             break;
 
-                        for (int j = 0; j < loaded.Height; j++)
+                        for (int j = 0; j < loaded.Width; j++)
                         {
-                            if (j >= processed.Height)
+                            if (j >= processed.Width)
                                 break;
 
                             if (Math.Abs(pLoaded[0] + pLoaded[1] + pLoaded[2] - limitAve) < threshold)
