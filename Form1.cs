@@ -516,17 +516,17 @@ namespace DIP_Activity
                     byte * pLoaded = (byte *)bmLoaded.Scan0;
                     byte * pProcessed = (byte *)bmProcessed.Scan0;
                     byte * pSubtracted = (byte *)bmSubtracted.Scan0;
+
+                    byte* start_p_processed = (byte*)bmProcessed.Scan0;
                     
-                    for (int i = 0; i < loaded.Height; i++)
+                    for (int i = 0; 
+                        i < loaded.Height; 
+                        i++, pLoaded += paddingLoaded, pSubtracted += paddingSubtracted)
                     {
-                        if (i >= processed.Height)
-                            break;
-
-                        for (int j = 0; j < loaded.Width; j++)
+                        for (int j = 0; 
+                            j < loaded.Width; 
+                            j++, pLoaded += 3, pSubtracted += 3)
                         {
-                            if (j >= processed.Width)
-                                break;
-
                             if (Math.Abs(pLoaded[0] + pLoaded[1] + pLoaded[2] - limitAve) < threshold)
                             {
                                 pSubtracted[0] = pProcessed[0];
@@ -540,14 +540,12 @@ namespace DIP_Activity
                                 pSubtracted[2] = pLoaded[2];
                             }
 
-                            pLoaded += 3;
-                            pProcessed += 3;
-                            pSubtracted += 3;
+                            if (j < processed.Width)
+                                pProcessed += 3;
                         }
 
-                        pLoaded += paddingLoaded;
-                        pProcessed += paddingProcessed;
-                        pSubtracted += paddingSubtracted;
+                        if (i < processed.Height)
+                            pProcessed = start_p_processed + i * 3;
                     }
                 }
 
