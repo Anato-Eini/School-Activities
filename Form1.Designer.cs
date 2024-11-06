@@ -52,8 +52,13 @@
             histogramToolStripMenuItem1 = new ToolStripMenuItem();
             sepiaToolStripMenuItem1 = new ToolStripMenuItem();
             convolutionMatrixToolStripMenuItem = new ToolStripMenuItem();
+            shrinkToolStripMenuItem1 = new ToolStripMenuItem();
+            smoothToolStripMenuItem = new ToolStripMenuItem();
+            gaussianBlurToolStripMenuItem1 = new ToolStripMenuItem();
+            sharpenToolStripMenuItem1 = new ToolStripMenuItem();
+            meanRemovalToolStripMenuItem1 = new ToolStripMenuItem();
+            embossingToolStripMenuItem1 = new ToolStripMenuItem();
             convolutionToolStripMenuItem = new ToolStripMenuItem();
-            shrinkToolStripMenuItem = new ToolStripMenuItem();
             smoothingToolStripMenuItem = new ToolStripMenuItem();
             gaussianBlurToolStripMenuItem = new ToolStripMenuItem();
             sharpenToolStripMenuItem = new ToolStripMenuItem();
@@ -91,6 +96,16 @@
             timer5 = new System.Windows.Forms.Timer(components);
             timer6 = new System.Windows.Forms.Timer(components);
             timer7 = new System.Windows.Forms.Timer(components);
+            timer8 = new System.Windows.Forms.Timer(components);
+            timer9 = new System.Windows.Forms.Timer(components);
+            timer10 = new System.Windows.Forms.Timer(components);
+            timer11 = new System.Windows.Forms.Timer(components);
+            timer12 = new System.Windows.Forms.Timer(components);
+            timer13 = new System.Windows.Forms.Timer(components);
+            timer14 = new System.Windows.Forms.Timer(components);
+            timer15 = new System.Windows.Forms.Timer(components);
+            timer16 = new System.Windows.Forms.Timer(components);
+            timer17 = new System.Windows.Forms.Timer(components);
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -260,22 +275,55 @@
             // 
             // convolutionMatrixToolStripMenuItem
             // 
+            convolutionMatrixToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { shrinkToolStripMenuItem1, smoothToolStripMenuItem, gaussianBlurToolStripMenuItem1, sharpenToolStripMenuItem1, meanRemovalToolStripMenuItem1, embossingToolStripMenuItem1 });
             convolutionMatrixToolStripMenuItem.Name = "convolutionMatrixToolStripMenuItem";
             convolutionMatrixToolStripMenuItem.Size = new Size(177, 22);
             convolutionMatrixToolStripMenuItem.Text = "Convolution Matrix";
             // 
+            // shrinkToolStripMenuItem1
+            // 
+            shrinkToolStripMenuItem1.Name = "shrinkToolStripMenuItem1";
+            shrinkToolStripMenuItem1.Size = new Size(153, 22);
+            shrinkToolStripMenuItem1.Text = "Shrink";
+            shrinkToolStripMenuItem1.Click += shrinkToolStripMenuItem1_Click;
+            // 
+            // smoothToolStripMenuItem
+            // 
+            smoothToolStripMenuItem.Name = "smoothToolStripMenuItem";
+            smoothToolStripMenuItem.Size = new Size(153, 22);
+            smoothToolStripMenuItem.Text = "Smooth";
+            // 
+            // gaussianBlurToolStripMenuItem1
+            // 
+            gaussianBlurToolStripMenuItem1.Name = "gaussianBlurToolStripMenuItem1";
+            gaussianBlurToolStripMenuItem1.Size = new Size(153, 22);
+            gaussianBlurToolStripMenuItem1.Text = "Gaussian Blur";
+            // 
+            // sharpenToolStripMenuItem1
+            // 
+            sharpenToolStripMenuItem1.Name = "sharpenToolStripMenuItem1";
+            sharpenToolStripMenuItem1.Size = new Size(153, 22);
+            sharpenToolStripMenuItem1.Text = "Sharpen";
+            // 
+            // meanRemovalToolStripMenuItem1
+            // 
+            meanRemovalToolStripMenuItem1.Name = "meanRemovalToolStripMenuItem1";
+            meanRemovalToolStripMenuItem1.Size = new Size(153, 22);
+            meanRemovalToolStripMenuItem1.Text = "Mean Removal";
+            // 
+            // embossingToolStripMenuItem1
+            // 
+            embossingToolStripMenuItem1.Name = "embossingToolStripMenuItem1";
+            embossingToolStripMenuItem1.Size = new Size(153, 22);
+            embossingToolStripMenuItem1.Text = "Embossing";
+            // 
             // convolutionToolStripMenuItem
             // 
-            convolutionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { shrinkToolStripMenuItem, smoothingToolStripMenuItem, gaussianBlurToolStripMenuItem, sharpenToolStripMenuItem, meanRemovalToolStripMenuItem, embossingToolStripMenuItem });
+            convolutionToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { smoothingToolStripMenuItem, gaussianBlurToolStripMenuItem, sharpenToolStripMenuItem, meanRemovalToolStripMenuItem, embossingToolStripMenuItem });
             convolutionToolStripMenuItem.Name = "convolutionToolStripMenuItem";
             convolutionToolStripMenuItem.Size = new Size(122, 20);
             convolutionToolStripMenuItem.Text = "Convolution Matrix";
-            // 
-            // shrinkToolStripMenuItem
-            // 
-            shrinkToolStripMenuItem.Name = "shrinkToolStripMenuItem";
-            shrinkToolStripMenuItem.Size = new Size(180, 22);
-            shrinkToolStripMenuItem.Text = "Shrink";
+            convolutionToolStripMenuItem.Click += convolutionToolStripMenuItem_Click;
             // 
             // smoothingToolStripMenuItem
             // 
@@ -315,42 +363,42 @@
             // embossLaplacianToolStripMenuItem
             // 
             embossLaplacianToolStripMenuItem.Name = "embossLaplacianToolStripMenuItem";
-            embossLaplacianToolStripMenuItem.Size = new Size(180, 22);
+            embossLaplacianToolStripMenuItem.Size = new Size(172, 22);
             embossLaplacianToolStripMenuItem.Text = "Emboss Laplacian";
             embossLaplacianToolStripMenuItem.Click += embossLaplacianToolStripMenuItem_Click;
             // 
             // horizontalVerticalToolStripMenuItem
             // 
             horizontalVerticalToolStripMenuItem.Name = "horizontalVerticalToolStripMenuItem";
-            horizontalVerticalToolStripMenuItem.Size = new Size(180, 22);
+            horizontalVerticalToolStripMenuItem.Size = new Size(172, 22);
             horizontalVerticalToolStripMenuItem.Text = "Horizontal/Vertical";
             horizontalVerticalToolStripMenuItem.Click += horizontalVerticalToolStripMenuItem_Click;
             // 
             // allDirectionsToolStripMenuItem
             // 
             allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
-            allDirectionsToolStripMenuItem.Size = new Size(180, 22);
+            allDirectionsToolStripMenuItem.Size = new Size(172, 22);
             allDirectionsToolStripMenuItem.Text = "All Directions";
             allDirectionsToolStripMenuItem.Click += allDirectionsToolStripMenuItem_Click;
             // 
             // lossyToolStripMenuItem
             // 
             lossyToolStripMenuItem.Name = "lossyToolStripMenuItem";
-            lossyToolStripMenuItem.Size = new Size(180, 22);
+            lossyToolStripMenuItem.Size = new Size(172, 22);
             lossyToolStripMenuItem.Text = "Lossy";
             lossyToolStripMenuItem.Click += lossyToolStripMenuItem_Click;
             // 
             // horizontalOnlyToolStripMenuItem
             // 
             horizontalOnlyToolStripMenuItem.Name = "horizontalOnlyToolStripMenuItem";
-            horizontalOnlyToolStripMenuItem.Size = new Size(180, 22);
+            horizontalOnlyToolStripMenuItem.Size = new Size(172, 22);
             horizontalOnlyToolStripMenuItem.Text = "Horizontal Only";
             horizontalOnlyToolStripMenuItem.Click += horizontalOnlyToolStripMenuItem_Click;
             // 
             // verticalOnlyToolStripMenuItem
             // 
             verticalOnlyToolStripMenuItem.Name = "verticalOnlyToolStripMenuItem";
-            verticalOnlyToolStripMenuItem.Size = new Size(180, 22);
+            verticalOnlyToolStripMenuItem.Size = new Size(172, 22);
             verticalOnlyToolStripMenuItem.Text = "Vertical Only";
             verticalOnlyToolStripMenuItem.Click += verticalOnlyToolStripMenuItem_Click;
             // 
@@ -565,6 +613,48 @@
             timer7.Interval = 30;
             timer7.Tick += timer7_Tick;
             // 
+            // timer8
+            // 
+            timer8.Interval = 30;
+            timer8.Tick += timer8_Tick;
+            // 
+            // timer9
+            // 
+            timer9.Interval = 30;
+            // 
+            // timer10
+            // 
+            timer10.Interval = 30;
+            // 
+            // timer11
+            // 
+            timer11.Interval = 30;
+            // 
+            // timer12
+            // 
+            timer12.Interval = 30;
+            // 
+            // timer13
+            // 
+            timer13.Interval = 30;
+            // 
+            // timer14
+            // 
+            timer14.Interval = 30;
+            timer14.Tick += timer14_Tick;
+            // 
+            // timer15
+            // 
+            timer15.Interval = 30;
+            // 
+            // timer16
+            // 
+            timer16.Interval = 30;
+            // 
+            // timer17
+            // 
+            timer17.Interval = 30;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -655,7 +745,6 @@
         private System.Windows.Forms.Timer timer6;
         private System.Windows.Forms.Timer timer7;
         private ToolStripMenuItem convolutionToolStripMenuItem;
-        private ToolStripMenuItem shrinkToolStripMenuItem;
         private ToolStripMenuItem smoothingToolStripMenuItem;
         private ToolStripMenuItem gaussianBlurToolStripMenuItem;
         private ToolStripMenuItem sharpenToolStripMenuItem;
@@ -668,5 +757,21 @@
         private ToolStripMenuItem lossyToolStripMenuItem;
         private ToolStripMenuItem horizontalOnlyToolStripMenuItem;
         private ToolStripMenuItem verticalOnlyToolStripMenuItem;
+        private System.Windows.Forms.Timer timer8;
+        private System.Windows.Forms.Timer timer9;
+        private System.Windows.Forms.Timer timer10;
+        private System.Windows.Forms.Timer timer11;
+        private System.Windows.Forms.Timer timer12;
+        private System.Windows.Forms.Timer timer13;
+        private System.Windows.Forms.Timer timer14;
+        private System.Windows.Forms.Timer timer15;
+        private System.Windows.Forms.Timer timer16;
+        private System.Windows.Forms.Timer timer17;
+        private ToolStripMenuItem shrinkToolStripMenuItem1;
+        private ToolStripMenuItem smoothToolStripMenuItem;
+        private ToolStripMenuItem gaussianBlurToolStripMenuItem1;
+        private ToolStripMenuItem sharpenToolStripMenuItem1;
+        private ToolStripMenuItem meanRemovalToolStripMenuItem1;
+        private ToolStripMenuItem embossingToolStripMenuItem1;
     }
 }

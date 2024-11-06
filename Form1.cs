@@ -976,5 +976,37 @@ namespace DIP_Activity
             BitmapFilter.EmbossVertical(processed);
             pictureBox2.Image = processed;
         }
+
+        private void shrinkToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer8;
+            currentTimer.Enabled = true;
+        }
+
+        private void timer8_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer14_Tick(object sender, EventArgs e)
+        {
+
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            loaded = new Bitmap(image);
+
+
+        }
+
+        private void convolutionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
