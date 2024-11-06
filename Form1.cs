@@ -919,7 +919,12 @@ namespace DIP_Activity
 
         private void verticalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (loaded == null)
+                return;
 
+            processed = new Bitmap(loaded);
+            BitmapFilter.EmbossVertical(processed);
+            pictureBox2.Image = processed;
         }
     }
 }
