@@ -331,6 +331,7 @@
             allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
             allDirectionsToolStripMenuItem.Size = new Size(180, 22);
             allDirectionsToolStripMenuItem.Text = "All Directions";
+            allDirectionsToolStripMenuItem.Click += allDirectionsToolStripMenuItem_Click;
             // 
             // lossyToolStripMenuItem
             // 
