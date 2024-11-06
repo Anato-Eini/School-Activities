@@ -853,5 +853,14 @@ namespace DIP_Activity
             BitmapFilter.MeanRemoval(loaded, 9);
             pictureBox2.Image = loaded;
         }
+
+        private void embossLaplacianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            BitmapFilter.EmbossLaplacian(loaded);
+            pictureBox2.Image = loaded; 
+        }
     }
 }

@@ -314,37 +314,38 @@
             // embossLaplacianToolStripMenuItem
             // 
             embossLaplacianToolStripMenuItem.Name = "embossLaplacianToolStripMenuItem";
-            embossLaplacianToolStripMenuItem.Size = new Size(172, 22);
+            embossLaplacianToolStripMenuItem.Size = new Size(180, 22);
             embossLaplacianToolStripMenuItem.Text = "Emboss Laplacian";
+            embossLaplacianToolStripMenuItem.Click += embossLaplacianToolStripMenuItem_Click;
             // 
             // horizontalVerticalToolStripMenuItem
             // 
             horizontalVerticalToolStripMenuItem.Name = "horizontalVerticalToolStripMenuItem";
-            horizontalVerticalToolStripMenuItem.Size = new Size(172, 22);
+            horizontalVerticalToolStripMenuItem.Size = new Size(180, 22);
             horizontalVerticalToolStripMenuItem.Text = "Horizontal/Vertical";
             // 
             // allDirectionsToolStripMenuItem
             // 
             allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
-            allDirectionsToolStripMenuItem.Size = new Size(172, 22);
+            allDirectionsToolStripMenuItem.Size = new Size(180, 22);
             allDirectionsToolStripMenuItem.Text = "All Directions";
             // 
             // lossyToolStripMenuItem
             // 
             lossyToolStripMenuItem.Name = "lossyToolStripMenuItem";
-            lossyToolStripMenuItem.Size = new Size(172, 22);
+            lossyToolStripMenuItem.Size = new Size(180, 22);
             lossyToolStripMenuItem.Text = "Lossy";
             // 
             // horizontalOnlyToolStripMenuItem
             // 
             horizontalOnlyToolStripMenuItem.Name = "horizontalOnlyToolStripMenuItem";
-            horizontalOnlyToolStripMenuItem.Size = new Size(172, 22);
+            horizontalOnlyToolStripMenuItem.Size = new Size(180, 22);
             horizontalOnlyToolStripMenuItem.Text = "Horizontal Only";
             // 
             // verticalOnlyToolStripMenuItem
             // 
             verticalOnlyToolStripMenuItem.Name = "verticalOnlyToolStripMenuItem";
-            verticalOnlyToolStripMenuItem.Size = new Size(172, 22);
+            verticalOnlyToolStripMenuItem.Size = new Size(180, 22);
             verticalOnlyToolStripMenuItem.Text = "Vertical Only";
             // 
             // saveFileDialog1
