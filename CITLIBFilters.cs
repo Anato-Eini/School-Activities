@@ -455,6 +455,17 @@ namespace ImageProcess2
 			return BitmapFilter.Conv3x3(b, m);
 		}
 
+		public static bool EmbossLossy(Bitmap b)
+		{
+			ConvMatrix m = new();
+			m.TopLeft = m.TopRight = m.BottomMid = 1;
+			m.TopMid = m.MidLeft = m.MidRight = m.BottomLeft = m.BottomRight = -2;
+			m.Pixel = 4;
+			m.Offset = 127;
+
+			return BitmapFilter.Conv3x3(b, m);
+		}
+
 		public static bool EdgeDetectQuick(Bitmap b)
 		{
 			ConvMatrix m = new ConvMatrix();

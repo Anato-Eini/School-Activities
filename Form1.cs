@@ -896,5 +896,15 @@ namespace DIP_Activity
             BitmapFilter.EmbossAllDirections(processed);
             pictureBox2.Image = processed;
         }
+
+        private void lossyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.EmbossLossy(processed);
+            pictureBox2.Image = processed;
+        }
     }
 }

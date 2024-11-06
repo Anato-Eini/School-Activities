@@ -338,6 +338,7 @@
             lossyToolStripMenuItem.Name = "lossyToolStripMenuItem";
             lossyToolStripMenuItem.Size = new Size(180, 22);
             lossyToolStripMenuItem.Text = "Lossy";
+            lossyToolStripMenuItem.Click += lossyToolStripMenuItem_Click;
             // 
             // horizontalOnlyToolStripMenuItem
             // 
