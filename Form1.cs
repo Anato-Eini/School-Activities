@@ -872,6 +872,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies emboss laplacian to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void embossLaplacianToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -882,6 +887,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies sharpen to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -892,6 +902,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies emboss horizontal/vertical to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void horizontalVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -902,6 +917,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies emboss all directions to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void allDirectionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -912,6 +932,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies emboss lossy to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void lossyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -922,6 +947,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies emboss horizontal only to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void horizontalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -932,6 +962,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies emboss vertical only to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void verticalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
