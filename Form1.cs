@@ -832,8 +832,9 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            BitmapFilter.Smooth(loaded);
-            pictureBox2.Image = loaded;
+            processed = new Bitmap(loaded);
+            BitmapFilter.Smooth(processed);
+            pictureBox2.Image = processed;
         }
 
         private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
@@ -841,8 +842,9 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            BitmapFilter.Smooth(loaded);
-            pictureBox2.Image = loaded;
+            processed = new Bitmap(loaded);
+            BitmapFilter.Smooth(processed);
+            pictureBox2.Image = processed;
         }
 
         private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -850,8 +852,9 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            BitmapFilter.MeanRemoval(loaded, 9);
-            pictureBox2.Image = loaded;
+            processed = new Bitmap(loaded);
+            BitmapFilter.MeanRemoval(processed);
+            pictureBox2.Image = processed;
         }
 
         private void embossLaplacianToolStripMenuItem_Click(object sender, EventArgs e)
@@ -859,8 +862,19 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            BitmapFilter.EmbossLaplacian(loaded);
-            pictureBox2.Image = loaded; 
+            processed = new Bitmap(loaded);
+            BitmapFilter.EmbossLaplacian(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.Sharpen(processed);
+            pictureBox2.Image = processed;
         }
     }
 }

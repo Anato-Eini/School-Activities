@@ -296,6 +296,7 @@
             sharpenToolStripMenuItem.Name = "sharpenToolStripMenuItem";
             sharpenToolStripMenuItem.Size = new Size(180, 22);
             sharpenToolStripMenuItem.Text = "Sharpen";
+            sharpenToolStripMenuItem.Click += sharpenToolStripMenuItem_Click;
             // 
             // meanRemovalToolStripMenuItem
             // 
