@@ -513,18 +513,18 @@ namespace DIP_Activity
                     int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
                     int paddingSubtracted = bmSubtracted.Stride - subtracted.Width * 3;
 
-                    byte * pLoaded = (byte *)bmLoaded.Scan0;
-                    byte * pProcessed = (byte *)bmProcessed.Scan0;
-                    byte * pSubtracted = (byte *)bmSubtracted.Scan0;
+                    byte* pLoaded = (byte*)bmLoaded.Scan0;
+                    byte* pProcessed = (byte*)bmProcessed.Scan0;
+                    byte* pSubtracted = (byte*)bmSubtracted.Scan0;
 
                     byte* start_p_processed = (byte*)bmProcessed.Scan0;
-                    
-                    for (int i = 0; 
-                        i < loaded.Height; 
+
+                    for (int i = 0;
+                        i < loaded.Height;
                         i++, pLoaded += paddingLoaded, pSubtracted += paddingSubtracted)
                     {
-                        for (int j = 0; 
-                            j < loaded.Width; 
+                        for (int j = 0;
+                            j < loaded.Width;
                             j++, pLoaded += 3, pSubtracted += 3)
                         {
                             if (Math.Abs(pLoaded[0] + pLoaded[1] + pLoaded[2] - limitAve) < threshold)
@@ -675,7 +675,7 @@ namespace DIP_Activity
             {
                 processed = new Bitmap(image);
 
-                BitmapFilter.Flip(processed, false, true);  
+                BitmapFilter.Flip(processed, false, true);
 
                 pictureBox2.Image = processed;
             }
@@ -723,7 +723,7 @@ namespace DIP_Activity
                     int maxFreq = 420;
                     int offSet = bmLoaded.Stride - loaded.Width * 3; // Padding value
 
-                    byte * p = (byte *)(void *)bmLoaded.Scan0;
+                    byte* p = (byte*)(void*)bmLoaded.Scan0;
 
                     for (int i = 0; i < loaded.Height; i++)
                     {
@@ -746,7 +746,7 @@ namespace DIP_Activity
                     int count;
 
                     int lastRow = (processed.Height - 1) * bmProcessed.Stride;
-                    byte * pointerLast = (byte*)(void*)bmProcessed.Scan0 + lastRow;
+                    byte* pointerLast = (byte*)(void*)bmProcessed.Scan0 + lastRow;
 
                     for (int i = 0; i < 256; i++)
                     {
@@ -825,6 +825,14 @@ namespace DIP_Activity
 
                 pictureBox2.Image = processed;
             }
+        }
+
+        private void smoothingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            pictureBox2.Image = BitmapFilter.Smooth(loaded, 1);
         }
     }
 }
