@@ -312,10 +312,10 @@ namespace ImageProcess2
 			return true;
 		}
 
-		public static Bitmap? Conv3x3(Bitmap b, ConvMatrix m)
+		public static bool Conv3x3(Bitmap b, ConvMatrix m)
 		{
 			// Avoid divide by zero errors
-			if (0 == m.Factor) return null;
+			if (0 == m.Factor) return false;
 
 			Bitmap bSrc = (Bitmap)b.Clone(); 
 
@@ -381,10 +381,10 @@ namespace ImageProcess2
 			b.UnlockBits(bmData);
 			bSrc.UnlockBits(bmSrc);
 
-			return bSrc;
+			return true;
 		}
 
-		public static Bitmap? Smooth(Bitmap b, int nWeight /* default to 1 */)
+		public static bool Smooth(Bitmap b, int nWeight /* default to 1 */)
 		{
 			ConvMatrix m = new ConvMatrix();
 			m.SetAll(1);
@@ -394,7 +394,7 @@ namespace ImageProcess2
 			return  BitmapFilter.Conv3x3(b, m);
 		}
 
-		public static Bitmap? GaussianBlur(Bitmap b, int nWeight /* default to 4*/)
+		public static bool GaussianBlur(Bitmap b, int nWeight /* default to 4*/)
 		{
 			ConvMatrix m = new ConvMatrix();
 			m.SetAll(1);
@@ -404,7 +404,7 @@ namespace ImageProcess2
 
 			return  BitmapFilter.Conv3x3(b, m);
 		}
-		public static Bitmap? MeanRemoval(Bitmap b, int nWeight /* default to 9*/ )
+		public static bool? MeanRemoval(Bitmap b, int nWeight /* default to 9*/ )
 		{
 			ConvMatrix m = new ConvMatrix();
 			m.SetAll(-1);
@@ -413,7 +413,7 @@ namespace ImageProcess2
 
 			return BitmapFilter.Conv3x3(b, m);
 		}
-		public static Bitmap? Sharpen(Bitmap b, int nWeight /* default to 11*/ )
+		public static bool Sharpen(Bitmap b, int nWeight /* default to 11*/ )
 		{
 			ConvMatrix m = new ConvMatrix();
 			m.SetAll(0);
@@ -423,7 +423,7 @@ namespace ImageProcess2
 
 			return  BitmapFilter.Conv3x3(b, m);
 		}
-		public static Bitmap? EmbossLaplacian(Bitmap b)
+		public static bool EmbossLaplacian(Bitmap b)
 		{
 			ConvMatrix m = new ConvMatrix();
 			m.SetAll(-1);
@@ -433,7 +433,7 @@ namespace ImageProcess2
 
 			return  BitmapFilter.Conv3x3(b, m);
 		}	
-		public static Bitmap? EdgeDetectQuick(Bitmap b)
+		public static bool EdgeDetectQuick(Bitmap b)
 		{
 			ConvMatrix m = new ConvMatrix();
 			m.TopLeft = m.TopMid = m.TopRight = -1;
@@ -445,7 +445,7 @@ namespace ImageProcess2
 			return  BitmapFilter.Conv3x3(b, m);
 		}
 
-		public static Bitmap? EdgeDetectConvolution(Bitmap b, short nType, byte nThreshold)
+		public static bool EdgeDetectConvolution(Bitmap b, short nType, byte nThreshold)
 		{
 			ConvMatrix m = new ConvMatrix();
 
@@ -541,7 +541,7 @@ namespace ImageProcess2
 			b.UnlockBits(bmData);
 			bTemp.UnlockBits(bmData2);
 
-			return bTemp;
+			return true;
 		}
 	
 		public static bool EdgeDetectHorizontal(Bitmap b)
@@ -611,7 +611,7 @@ namespace ImageProcess2
 			return true;
 		}
 
-		public static Bitmap? EdgeDetectVertical(Bitmap b)
+		public static bool EdgeDetectVertical(Bitmap b)
 		{
 			Bitmap bmTemp = (Bitmap)b.Clone();
 
@@ -678,10 +678,10 @@ namespace ImageProcess2
 			b.UnlockBits(bmData);
 			bmTemp.UnlockBits(bmData2);
 
-			return bmTemp;
+			return true;
 		}
 
-		public static Bitmap? EdgeDetectHomogenity(Bitmap b, byte nThreshold)
+		public static bool EdgeDetectHomogenity(Bitmap b, byte nThreshold)
 		{
 			// This one works by working out the greatest difference between a pixel and it's eight neighbours.
 			// The threshold allows softer edges to be forced down to black, use 0 to negate it's effect.
@@ -753,10 +753,10 @@ namespace ImageProcess2
 			b.UnlockBits(bmData);
 			b2.UnlockBits(bmData2);
 
-			return b2;
+			return true;
             
 		}
-		public static Bitmap? EdgeDetectDifference(Bitmap b, byte nThreshold)
+		public static bool EdgeDetectDifference(Bitmap b, byte nThreshold)
 		{
 			// This one works by working out the greatest difference between a pixel and it's eight neighbours.
 			// The threshold allows softer edges to be forced down to black, use 0 to negate it's effect.
@@ -816,11 +816,11 @@ namespace ImageProcess2
 			b.UnlockBits(bmData);
 			b2.UnlockBits(bmData2);
 
-			return b2;
+			return true;
             
 		}
 
-		public static Bitmap? EdgeEnhance(Bitmap b, byte nThreshold)
+		public static bool EdgeEnhance(Bitmap b, byte nThreshold)
 		{
 			// This one works by working out the greatest difference between a nPixel and it's eight neighbours.
 			// The threshold allows softer edges to be forced down to black, use 0 to negate it's effect.
@@ -883,7 +883,7 @@ namespace ImageProcess2
 			b.UnlockBits(bmData);
 			b2.UnlockBits(bmData2);
 
-			return b2;
+			return true;
 		}
 		public static Bitmap Resize(Bitmap b, int nWidth, int nHeight, bool bBilinear)
 		{

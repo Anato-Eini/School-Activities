@@ -832,7 +832,17 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            pictureBox2.Image = BitmapFilter.Smooth(loaded, 1);
+            BitmapFilter.Smooth(loaded, 1);
+            pictureBox2.Image = loaded;
+        }
+
+        private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            BitmapFilter.Smooth(loaded, 1);
+            pictureBox2.Image = loaded;
         }
     }
 }
