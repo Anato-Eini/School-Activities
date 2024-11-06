@@ -827,6 +827,11 @@ namespace DIP_Activity
             }
         }
 
+        /// <summary>
+        /// Applies smooth filter to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void smoothingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -837,6 +842,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies gaussian blur to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
@@ -847,6 +857,11 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
+        /// <summary>
+        /// Applies mean removal to loaded image
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (loaded == null)
