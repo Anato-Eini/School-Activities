@@ -352,6 +352,7 @@
             verticalOnlyToolStripMenuItem.Name = "verticalOnlyToolStripMenuItem";
             verticalOnlyToolStripMenuItem.Size = new Size(180, 22);
             verticalOnlyToolStripMenuItem.Text = "Vertical Only";
+            verticalOnlyToolStripMenuItem.Click += verticalOnlyToolStripMenuItem_Click;
             // 
             // saveFileDialog1
             // 

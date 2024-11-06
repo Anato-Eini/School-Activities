@@ -916,5 +916,10 @@ namespace DIP_Activity
             BitmapFilter.EmbossHorizontal(processed);
             pictureBox2.Image = processed;
         }
+
+        private void verticalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
