@@ -324,6 +324,7 @@
             horizontalVerticalToolStripMenuItem.Name = "horizontalVerticalToolStripMenuItem";
             horizontalVerticalToolStripMenuItem.Size = new Size(180, 22);
             horizontalVerticalToolStripMenuItem.Text = "Horizontal/Vertical";
+            horizontalVerticalToolStripMenuItem.Click += horizontalVerticalToolStripMenuItem_Click;
             // 
             // allDirectionsToolStripMenuItem
             // 

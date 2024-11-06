@@ -433,6 +433,18 @@ namespace ImageProcess2
 
 			return  BitmapFilter.Conv3x3(b, m);
 		}	
+
+		public static bool EmbossHorzVertical(Bitmap b)
+		{
+			ConvMatrix m = new ConvMatrix();
+			m.TopLeft = m.TopRight = m.BottomLeft = m.BottomRight = 0;
+			m.TopMid = m.MidLeft = m.MidRight = -1;
+			m.Pixel = 4;
+			m.Offset = 127;
+
+			return BitmapFilter.Conv3x3(b, m);
+		}
+
 		public static bool EdgeDetectQuick(Bitmap b)
 		{
 			ConvMatrix m = new ConvMatrix();

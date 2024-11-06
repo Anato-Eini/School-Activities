@@ -876,5 +876,15 @@ namespace DIP_Activity
             BitmapFilter.Sharpen(processed);
             pictureBox2.Image = processed;
         }
+
+        private void horizontalVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.EmbossHorzVertical(processed);
+            pictureBox2.Image = processed;
+        }
     }
 }
