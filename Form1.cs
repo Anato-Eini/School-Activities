@@ -832,7 +832,7 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            BitmapFilter.Smooth(loaded, 1);
+            BitmapFilter.Smooth(loaded);
             pictureBox2.Image = loaded;
         }
 
@@ -841,7 +841,16 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            BitmapFilter.Smooth(loaded, 1);
+            BitmapFilter.Smooth(loaded);
+            pictureBox2.Image = loaded;
+        }
+
+        private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            BitmapFilter.MeanRemoval(loaded, 9);
             pictureBox2.Image = loaded;
         }
     }

@@ -302,6 +302,7 @@
             meanRemovalToolStripMenuItem.Name = "meanRemovalToolStripMenuItem";
             meanRemovalToolStripMenuItem.Size = new Size(180, 22);
             meanRemovalToolStripMenuItem.Text = "Mean Removal";
+            meanRemovalToolStripMenuItem.Click += meanRemovalToolStripMenuItem_Click;
             // 
             // embossingToolStripMenuItem
             // 
