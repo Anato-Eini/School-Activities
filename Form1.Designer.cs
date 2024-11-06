@@ -345,6 +345,7 @@
             horizontalOnlyToolStripMenuItem.Name = "horizontalOnlyToolStripMenuItem";
             horizontalOnlyToolStripMenuItem.Size = new Size(180, 22);
             horizontalOnlyToolStripMenuItem.Text = "Horizontal Only";
+            horizontalOnlyToolStripMenuItem.Click += horizontalOnlyToolStripMenuItem_Click;
             // 
             // verticalOnlyToolStripMenuItem
             // 

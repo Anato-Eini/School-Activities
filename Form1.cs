@@ -906,5 +906,15 @@ namespace DIP_Activity
             BitmapFilter.EmbossLossy(processed);
             pictureBox2.Image = processed;
         }
+
+        private void horizontalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null)
+                return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.EmbossHorizontal(processed);
+            pictureBox2.Image = processed;
+        }
     }
 }
