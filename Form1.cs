@@ -427,30 +427,98 @@ namespace DIP_Activity
             if (loaded == null || processed == null)
                 return;
 
-            int greyGreen = 255 / 3;
-            int threshold = 5;
+            //int greyGreen = 255 / 3;
+            //int threshold = 5;
 
-            Color pixel;
+            //Color pixel;
+            //subtracted = new Bitmap(loaded.Width, loaded.Height);
+
+            //for (int i = 0; i < loaded.Width; i++)
+            //{
+            //    if (i >= processed.Width)
+            //        break;
+
+            //    for (int j = 0; j < loaded.Height; j++)
+            //    {
+            //        if (j >= processed.Height)
+            //            break;
+
+            //        pixel = loaded.GetPixel(i, j);
+
+            //        subtracted.SetPixel(i, j,
+            //            Math.Abs((pixel.R + pixel.G + pixel.B) / 3 - greyGreen) < threshold ?
+            //            processed.GetPixel(i, j) : pixel
+            //            );
+            //    }
+            //}
+            //pictureBox3.Image = subtracted;
+
             subtracted = new Bitmap(loaded.Width, loaded.Height);
 
-            for (int i = 0; i < loaded.Width; i++)
+            BitmapData bmLoaded = loaded.LockBits(
+                new Rectangle(0, 0, loaded.Width, loaded.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            BitmapData bmProcessed = processed.LockBits(
+                new Rectangle(0, 0, processed.Width, processed.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            BitmapData bmSubtracted = subtracted.LockBits(
+                new Rectangle(0, 0, subtracted.Width, subtracted.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            int limitAve = 255 / 3;
+            int threshold = 5;
+
+            unsafe
             {
-                if (i >= processed.Width)
-                    break;
+                int paddingLoaded = bmLoaded.Stride - loaded.Width * 3;
+                int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
+                int paddingSubtracted = bmSubtracted.Stride - subtracted.Width * 3;
 
-                for (int j = 0; j < loaded.Height; j++)
+                byte* pLoaded = (byte*)bmLoaded.Scan0;
+                byte* pProcessed = (byte*)bmProcessed.Scan0;
+                byte* pSubtracted = (byte*)bmSubtracted.Scan0;
+
+                byte* start_p_processed = (byte*)bmProcessed.Scan0;
+
+                for (int i = 0;
+                    i < loaded.Height;
+                    i++, pLoaded += paddingLoaded, pSubtracted += paddingSubtracted)
                 {
-                    if (j >= processed.Height)
-                        break;
+                    for (int j = 0;
+                        j < loaded.Width;
+                        j++, pLoaded += 3, pSubtracted += 3)
+                    {
+                        if (Math.Abs(((pLoaded[0] + pLoaded[1] + pLoaded[2]) / 3) - limitAve) < threshold)
+                        {
+                            pSubtracted[0] = pProcessed[0];
+                            pSubtracted[1] = pProcessed[1];
+                            pSubtracted[2] = pProcessed[2];
+                        }
+                        else
+                        {
+                            pSubtracted[0] = pLoaded[0];
+                            pSubtracted[1] = pLoaded[1];
+                            pSubtracted[2] = pLoaded[2];
+                        }
 
-                    pixel = loaded.GetPixel(i, j);
+                        if (j < processed.Width - 1)
+                            pProcessed += 3;
+                    }
 
-                    subtracted.SetPixel(i, j,
-                        Math.Abs((pixel.R + pixel.G + pixel.B) / 3 - greyGreen) < threshold ?
-                        processed.GetPixel(i, j) : pixel
-                        );
+                    if (i < processed.Height)
+                        pProcessed = start_p_processed + i * bmProcessed.Stride;
                 }
             }
+
+            loaded.UnlockBits(bmLoaded);
+            processed.UnlockBits(bmProcessed);
+            subtracted.UnlockBits(bmSubtracted);
+
             pictureBox3.Image = subtracted;
         }
 
