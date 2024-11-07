@@ -360,6 +360,7 @@
             verticalOnlyToolStripMenuItem1.Name = "verticalOnlyToolStripMenuItem1";
             verticalOnlyToolStripMenuItem1.Size = new Size(180, 22);
             verticalOnlyToolStripMenuItem1.Text = "Vertical Only";
+            verticalOnlyToolStripMenuItem1.Click += verticalOnlyToolStripMenuItem1_Click;
             // 
             // convolutionToolStripMenuItem
             // 
@@ -704,6 +705,7 @@
             // timer17
             // 
             timer17.Interval = 60;
+            timer17.Tick += timer17_Tick;
             // 
             // Form1
             // 

@@ -1251,5 +1251,28 @@ namespace DIP_Activity
             pictureBox2.Image = loaded;
 
         }
+
+        private void verticalOnlyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer17;
+            currentTimer.Enabled = true;
+        }
+
+        private void timer17_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            pictureBox1.Image = loaded = new Bitmap(image);
+            BitmapFilter.EmbossVertical(loaded);
+            pictureBox2.Image = loaded;
+
+        }
     }
 }
