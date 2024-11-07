@@ -615,14 +615,6 @@ namespace DIP_Activity
 
             processed = new Bitmap(newWidth, newHeight);
 
-            //for (int i = 0; i < newWidth; ++i)
-            //    for (int j = 0; j < newHeight; ++j)
-            //        processed.SetPixel(i, j, loaded.GetPixel(
-            //            i * loaded.Width / newWidth,
-            //            j * loaded.Height / newHeight
-            //            )
-            //         );
-
             BitmapData bmLoaded = loaded.LockBits(
                 new Rectangle(0, 0, loaded.Width, loaded.Height),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
@@ -678,18 +670,39 @@ namespace DIP_Activity
             processed = new Bitmap(loaded.Width, loaded.Height);
             int threshold = trackBar5.Value;
 
-            for (int i = 0; i < loaded.Width; ++i)
-                for (int j = 0; j < loaded.Height; ++j)
-                {
-                    Color pixel = loaded.GetPixel(i, j);
-                    processed.SetPixel(i, j,
-                        (pixel.R + pixel.G + pixel.B) / 3 < threshold ?
-                        Color.Black : Color.White
-                        );
-                }
+            BitmapData bmLoaded = loaded.LockBits(
+                new Rectangle(0, 0, loaded.Width, loaded.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            BitmapData bmProcessed = processed.LockBits(
+                new Rectangle(0, 0, processed.Width, processed.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            unsafe
+            {
+                int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
+                int paddingLoaded = bmLoaded.Stride - loaded.Width * 3;
+
+                byte* pProcessed = (byte*)bmProcessed.Scan0;
+                byte* pLoaded = (byte*)bmLoaded.Scan0;
+
+                for (int i = 0;
+                    i < loaded.Height;
+                    i++, pProcessed += paddingProcessed, pLoaded += paddingLoaded)
+
+                    for (int j = 0;
+                        j < loaded.Width;
+                        j++, pProcessed += 3, pLoaded += 3)
+                        pProcessed[0] = pProcessed[1] = pProcessed[2] = (byte)(
+                            (pLoaded[0] + pLoaded[1] + pLoaded[2]) / 3 < threshold ? 0 : 255);
+            }
+
+            loaded.UnlockBits(bmLoaded);
+            processed.UnlockBits(bmProcessed);
 
             pictureBox2.Image = processed;
-
         }
 
         /// <summary>
