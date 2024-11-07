@@ -1101,11 +1101,72 @@ namespace DIP_Activity
             pictureBox2.Image = loaded;
         }
 
+        /// <summary>
+        /// Enables timer for emboss laplacian
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void embossLaplacianToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
 
+            currentTimer = timer12;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies emboss laplacian to video filters
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer12_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            pictureBox1.Image = loaded = new Bitmap(image);
+            BitmapFilter.EmbossLaplacian(loaded);
+            pictureBox2.Image = loaded;
+
+        }
+
+        /// <summary>
+        /// Enables emboss (horizontal/vertical) filter timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void horizontalVerticalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer13;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies emboss horizontal/vertical filter to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer13_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            pictureBox1.Image = loaded = new Bitmap(image);
+            BitmapFilter.EmbossHorzVertical(loaded);
+            pictureBox2.Image = loaded;
+
+        }
         private void timer14_Tick(object sender, EventArgs e)
         {
 
         }
-
     }
 }
