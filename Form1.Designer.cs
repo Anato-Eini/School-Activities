@@ -105,6 +105,7 @@
             timer15 = new System.Windows.Forms.Timer(components);
             timer16 = new System.Windows.Forms.Timer(components);
             timer17 = new System.Windows.Forms.Timer(components);
+            embossLaplacianToolStripMenuItem1 = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -309,6 +310,7 @@
             // 
             // embossingToolStripMenuItem1
             // 
+            embossingToolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { embossLaplacianToolStripMenuItem1 });
             embossingToolStripMenuItem1.Name = "embossingToolStripMenuItem1";
             embossingToolStripMenuItem1.Size = new Size(180, 22);
             embossingToolStripMenuItem1.Text = "Embossing";
@@ -323,28 +325,28 @@
             // smoothingToolStripMenuItem
             // 
             smoothingToolStripMenuItem.Name = "smoothingToolStripMenuItem";
-            smoothingToolStripMenuItem.Size = new Size(153, 22);
+            smoothingToolStripMenuItem.Size = new Size(180, 22);
             smoothingToolStripMenuItem.Text = "Smoothing";
             smoothingToolStripMenuItem.Click += smoothingToolStripMenuItem_Click;
             // 
             // gaussianBlurToolStripMenuItem
             // 
             gaussianBlurToolStripMenuItem.Name = "gaussianBlurToolStripMenuItem";
-            gaussianBlurToolStripMenuItem.Size = new Size(153, 22);
+            gaussianBlurToolStripMenuItem.Size = new Size(180, 22);
             gaussianBlurToolStripMenuItem.Text = "Gaussian Blur";
             gaussianBlurToolStripMenuItem.Click += gaussianBlurToolStripMenuItem_Click;
             // 
             // sharpenToolStripMenuItem
             // 
             sharpenToolStripMenuItem.Name = "sharpenToolStripMenuItem";
-            sharpenToolStripMenuItem.Size = new Size(153, 22);
+            sharpenToolStripMenuItem.Size = new Size(180, 22);
             sharpenToolStripMenuItem.Text = "Sharpen";
             sharpenToolStripMenuItem.Click += sharpenToolStripMenuItem_Click;
             // 
             // meanRemovalToolStripMenuItem
             // 
             meanRemovalToolStripMenuItem.Name = "meanRemovalToolStripMenuItem";
-            meanRemovalToolStripMenuItem.Size = new Size(153, 22);
+            meanRemovalToolStripMenuItem.Size = new Size(180, 22);
             meanRemovalToolStripMenuItem.Text = "Mean Removal";
             meanRemovalToolStripMenuItem.Click += meanRemovalToolStripMenuItem_Click;
             // 
@@ -352,48 +354,48 @@
             // 
             embossingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { embossLaplacianToolStripMenuItem, horizontalVerticalToolStripMenuItem, allDirectionsToolStripMenuItem, lossyToolStripMenuItem, horizontalOnlyToolStripMenuItem, verticalOnlyToolStripMenuItem });
             embossingToolStripMenuItem.Name = "embossingToolStripMenuItem";
-            embossingToolStripMenuItem.Size = new Size(153, 22);
+            embossingToolStripMenuItem.Size = new Size(180, 22);
             embossingToolStripMenuItem.Text = "Embossing";
             // 
             // embossLaplacianToolStripMenuItem
             // 
             embossLaplacianToolStripMenuItem.Name = "embossLaplacianToolStripMenuItem";
-            embossLaplacianToolStripMenuItem.Size = new Size(172, 22);
+            embossLaplacianToolStripMenuItem.Size = new Size(180, 22);
             embossLaplacianToolStripMenuItem.Text = "Emboss Laplacian";
             embossLaplacianToolStripMenuItem.Click += embossLaplacianToolStripMenuItem_Click;
             // 
             // horizontalVerticalToolStripMenuItem
             // 
             horizontalVerticalToolStripMenuItem.Name = "horizontalVerticalToolStripMenuItem";
-            horizontalVerticalToolStripMenuItem.Size = new Size(172, 22);
+            horizontalVerticalToolStripMenuItem.Size = new Size(180, 22);
             horizontalVerticalToolStripMenuItem.Text = "Horizontal/Vertical";
             horizontalVerticalToolStripMenuItem.Click += horizontalVerticalToolStripMenuItem_Click;
             // 
             // allDirectionsToolStripMenuItem
             // 
             allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
-            allDirectionsToolStripMenuItem.Size = new Size(172, 22);
+            allDirectionsToolStripMenuItem.Size = new Size(180, 22);
             allDirectionsToolStripMenuItem.Text = "All Directions";
             allDirectionsToolStripMenuItem.Click += allDirectionsToolStripMenuItem_Click;
             // 
             // lossyToolStripMenuItem
             // 
             lossyToolStripMenuItem.Name = "lossyToolStripMenuItem";
-            lossyToolStripMenuItem.Size = new Size(172, 22);
+            lossyToolStripMenuItem.Size = new Size(180, 22);
             lossyToolStripMenuItem.Text = "Lossy";
             lossyToolStripMenuItem.Click += lossyToolStripMenuItem_Click;
             // 
             // horizontalOnlyToolStripMenuItem
             // 
             horizontalOnlyToolStripMenuItem.Name = "horizontalOnlyToolStripMenuItem";
-            horizontalOnlyToolStripMenuItem.Size = new Size(172, 22);
+            horizontalOnlyToolStripMenuItem.Size = new Size(180, 22);
             horizontalOnlyToolStripMenuItem.Text = "Horizontal Only";
             horizontalOnlyToolStripMenuItem.Click += horizontalOnlyToolStripMenuItem_Click;
             // 
             // verticalOnlyToolStripMenuItem
             // 
             verticalOnlyToolStripMenuItem.Name = "verticalOnlyToolStripMenuItem";
-            verticalOnlyToolStripMenuItem.Size = new Size(172, 22);
+            verticalOnlyToolStripMenuItem.Size = new Size(180, 22);
             verticalOnlyToolStripMenuItem.Text = "Vertical Only";
             verticalOnlyToolStripMenuItem.Click += verticalOnlyToolStripMenuItem_Click;
             // 
@@ -575,83 +577,89 @@
             // 
             // timer1
             // 
-            timer1.Interval = 30;
+            timer1.Interval = 60;
             timer1.Tick += timer1_Tick;
             // 
             // timer2
             // 
-            timer2.Interval = 30;
+            timer2.Interval = 60;
             timer2.Tick += timer2_Tick;
             // 
             // timer3
             // 
-            timer3.Interval = 30;
+            timer3.Interval = 60;
             timer3.Tick += timer3_Tick;
             // 
             // timer4
             // 
-            timer4.Interval = 30;
+            timer4.Interval = 60;
             timer4.Tick += timer4_Tick;
             // 
             // timer5
             // 
-            timer5.Interval = 30;
+            timer5.Interval = 60;
             timer5.Tick += timer5_Tick;
             // 
             // timer6
             // 
-            timer6.Interval = 30;
+            timer6.Interval = 60;
             timer6.Tick += timer6_Tick;
             // 
             // timer7
             // 
-            timer7.Interval = 30;
+            timer7.Interval = 60;
             timer7.Tick += timer7_Tick;
             // 
             // timer8
             // 
-            timer8.Interval = 30;
+            timer8.Interval = 60;
             timer8.Tick += timer8_Tick;
             // 
             // timer9
             // 
-            timer9.Interval = 30;
+            timer9.Interval = 60;
             timer9.Tick += timer9_Tick;
             // 
             // timer10
             // 
-            timer10.Interval = 30;
+            timer10.Interval = 60;
             timer10.Tick += timer10_Tick;
             // 
             // timer11
             // 
-            timer11.Interval = 30;
+            timer11.Interval = 60;
             timer11.Tick += timer11_Tick;
             // 
             // timer12
             // 
-            timer12.Interval = 30;
+            timer12.Interval = 60;
             // 
             // timer13
             // 
-            timer13.Interval = 30;
+            timer13.Interval = 60;
             // 
             // timer14
             // 
-            timer14.Interval = 30;
+            timer14.Interval = 60;
             timer14.Tick += timer14_Tick;
             // 
             // timer15
             // 
-            timer15.Interval = 30;
+            timer15.Interval = 60;
             // 
             // timer16
             // 
-            timer16.Interval = 30;
+            timer16.Interval = 60;
             // 
             // timer17
             // 
-            timer17.Interval = 30;
+            timer17.Interval = 60;
+            // 
+            // embossLaplacianToolStripMenuItem1
+            // 
+            embossLaplacianToolStripMenuItem1.Name = "embossLaplacianToolStripMenuItem1";
+            embossLaplacianToolStripMenuItem1.Size = new Size(180, 22);
+            embossLaplacianToolStripMenuItem1.Text = "Emboss Laplacian";
             // 
             // Form1
             // 
@@ -770,5 +778,6 @@
         private ToolStripMenuItem sharpenToolStripMenuItem1;
         private ToolStripMenuItem meanRemovalToolStripMenuItem1;
         private ToolStripMenuItem embossingToolStripMenuItem1;
+        private ToolStripMenuItem embossLaplacianToolStripMenuItem1;
     }
 }

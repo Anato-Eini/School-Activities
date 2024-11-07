@@ -1099,7 +1099,6 @@ namespace DIP_Activity
             pictureBox1.Image = loaded = new Bitmap(image);
             BitmapFilter.MeanRemoval(loaded);
             pictureBox2.Image = loaded;
-
         }
 
 
