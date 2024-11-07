@@ -1015,7 +1015,28 @@ namespace DIP_Activity
         /// <param name="e"></param>
         private void gaussianBlurToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
 
+            currentTimer = timer9;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies gaussian blur filter to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer9_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            pictureBox1.Image = loaded = new Bitmap(image);
+            BitmapFilter.GaussianBlur(loaded);
+            pictureBox2.Image = loaded;
         }
 
         private void timer14_Tick(object sender, EventArgs e)

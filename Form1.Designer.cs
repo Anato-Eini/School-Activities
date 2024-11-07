@@ -614,6 +614,7 @@
             // timer9
             // 
             timer9.Interval = 30;
+            timer9.Tick += timer9_Tick;
             // 
             // timer10
             // 
