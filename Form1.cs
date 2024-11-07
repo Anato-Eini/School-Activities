@@ -1166,7 +1166,7 @@ namespace DIP_Activity
         }
 
         /// <summary>
-        /// Enables emboss all directions filter to video frames
+        /// Enables emboss all directions timer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1193,6 +1193,39 @@ namespace DIP_Activity
 
             pictureBox1.Image = loaded = new Bitmap(image);
             BitmapFilter.EmbossAllDirections(loaded);
+            pictureBox2.Image = loaded;
+
+        }
+
+        /// <summary>
+        /// Enables emboss lossy timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void lossyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer15;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies emboss lossy to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer15_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            pictureBox1.Image = loaded = new Bitmap(image);
+            BitmapFilter.EmbossLossy(loaded);
             pictureBox2.Image = loaded;
 
         }
