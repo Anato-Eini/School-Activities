@@ -151,19 +151,63 @@ namespace DIP_Activity
         /// <param name="e"></param>
         private void mirrorHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //if (loaded == null)
+            //    return;
+
+            //processed = new Bitmap(loaded.Width, loaded.Height);
+
+            //int width = loaded.Width;
+            //int height = loaded.Height;
+
+            //for (int i = 0; i < width; i++)
+            //    for (int j = 0; j < height; j++)
+            //        processed.SetPixel(width - i - 1, j, loaded.GetPixel(i, j));
+
+            //pictureBox2.Image = processed;
+
             if (loaded == null)
                 return;
 
             processed = new Bitmap(loaded.Width, loaded.Height);
 
-            int width = loaded.Width;
-            int height = loaded.Height;
+            BitmapData bmLoaded = loaded.LockBits(
+                new Rectangle(0, 0, loaded.Width, loaded.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
-                    processed.SetPixel(width - i - 1, j, loaded.GetPixel(i, j));
+            BitmapData bmProcessed = processed.LockBits(
+                new Rectangle(0, 0, processed.Width, processed.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            unsafe
+            {
+                int offSet = bmLoaded.Stride - loaded.Width * 3; // Padding value
+
+                byte* pLoaded = (byte*)(void*)bmLoaded.Scan0;
+                byte* pProcessed = (byte*)bmProcessed.Scan0;
+
+                for (int i = 0; i < loaded.Height; i++)
+                {
+                    for (int j = 0; j < loaded.Width; j++)
+                    {
+                        pProcessed[0] = pLoaded[0];
+                        pProcessed[1] = pLoaded[1];
+                        pProcessed[2] = pLoaded[2];
+
+                        pLoaded += 3;
+                        pProcessed += 3;
+                    }
+
+                    pLoaded += offSet;
+                    pProcessed += offSet;
+
+                }
+            }
+
+            loaded.UnlockBits(bmLoaded);
+            processed.UnlockBits(bmProcessed);
 
             pictureBox2.Image = processed;
+
         }
 
         /// <summary>
@@ -176,14 +220,56 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
+            //processed = new Bitmap(loaded.Width, loaded.Height);
+
+            //int width = loaded.Width;
+            //int height = loaded.Height;
+
+            //for (int i = 0; i < width; i++)
+            //    for (int j = 0; j < height; j++)
+            //        processed.SetPixel(i, height - j - 1, loaded.GetPixel(i, j));
+
+            //pictureBox2.Image = processed;
+
             processed = new Bitmap(loaded.Width, loaded.Height);
 
-            int width = loaded.Width;
-            int height = loaded.Height;
+            BitmapData bmLoaded = loaded.LockBits(
+                new Rectangle(0, 0, loaded.Width, loaded.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            for (int i = 0; i < width; i++)
-                for (int j = 0; j < height; j++)
-                    processed.SetPixel(i, height - j - 1, loaded.GetPixel(i, j));
+            BitmapData bmProcessed = processed.LockBits(
+                new Rectangle(0, 0, processed.Width, processed.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            unsafe
+            {
+                int stride = bmLoaded.Stride;
+
+                byte* srcLoaded = (byte *)bmLoaded.Scan0;
+                byte* srcProcessed = (byte *)bmProcessed.Scan0 + (bmProcessed.Stride * (bmProcessed.Height - 1));
+
+                byte* pLoaded;
+                byte* pProcessed;
+
+                for (int i = 0; i < loaded.Width; i++)
+                {
+                    pLoaded = srcLoaded + i * 3;
+                    pProcessed = srcProcessed + i * 3;
+
+                    for (int j = 0; j < loaded.Height; j++)
+                    {
+                        pProcessed[0] = pLoaded[0];
+                        pProcessed[1] = pLoaded[1];
+                        pProcessed[2] = pLoaded[2];
+
+                        pLoaded += stride;
+                        pProcessed -= stride;
+                    }
+                }
+            }
+
+            loaded.UnlockBits(bmLoaded);
+            processed.UnlockBits(bmProcessed);
 
             pictureBox2.Image = processed;
         }
@@ -264,7 +350,7 @@ namespace DIP_Activity
         }
 
         /// <summary>
-        /// Applies sepia to the loaded imagej
+        /// Applies sepia to the loaded image
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
