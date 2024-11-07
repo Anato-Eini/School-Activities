@@ -298,6 +298,7 @@
             sharpenToolStripMenuItem1.Name = "sharpenToolStripMenuItem1";
             sharpenToolStripMenuItem1.Size = new Size(180, 22);
             sharpenToolStripMenuItem1.Text = "Sharpen";
+            sharpenToolStripMenuItem1.Click += sharpenToolStripMenuItem1_Click;
             // 
             // meanRemovalToolStripMenuItem1
             // 
@@ -619,6 +620,7 @@
             // timer10
             // 
             timer10.Interval = 30;
+            timer10.Tick += timer10_Tick;
             // 
             // timer11
             // 
