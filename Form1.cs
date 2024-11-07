@@ -544,26 +544,58 @@ namespace DIP_Activity
 
             processed = new Bitmap(loaded.Width, loaded.Height);
 
+            BitmapData bmLoaded = loaded.LockBits(
+                new Rectangle(0, 0, loaded.Width, loaded.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            BitmapData bmProcessed = processed.LockBits(
+                new Rectangle(0, 0, processed.Width, processed.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
             float radians = trackBar3.Value * (float)Math.PI / 180f;
             int centerX = loaded.Width / 2;
             int centerY = loaded.Height / 2;
             float cosA = (float)Math.Cos(radians);
             float sinA = (float)Math.Sin(radians);
 
-            for (int i = 0; i < loaded.Width; ++i)
-                for (int j = 0; j < loaded.Height; ++j)
+            unsafe
+            {
+                int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
+
+                byte* pProcessed = (byte*)bmProcessed.Scan0;
+
+                byte* startLoaded = (byte*)bmLoaded.Scan0;
+
+                for (int i = 0;
+                    i < loaded.Height;
+                    i++, pProcessed += paddingProcessed)
                 {
-                    int translatedX = i - centerX;
-                    int translatedY = j - centerY;
+                    for (int j = 0;
+                        j < loaded.Width;
+                        j++, pProcessed += 3)
+                    {
 
-                    int newX = (int)(translatedX * cosA - translatedY * sinA) + centerX;
-                    int newY = (int)(translatedX * sinA + translatedY * cosA) + centerY;
+                        int translatedX = j - centerX;
+                        int translatedY = i - centerY;
 
-                    processed.SetPixel(i, j,
-                            newX >= 0 && newX < loaded.Width && newY >= 0 && newY < loaded.Height ?
-                            loaded.GetPixel(newX, newY) : Color.Transparent
-                        );
+                        int newX = (int)(translatedX * cosA - translatedY * sinA) + centerX;
+                        int newY = (int)(translatedX * sinA + translatedY * cosA) + centerY;
+
+                        if ( newX >= 0 && newX < loaded.Width && newY >= 0 && newY < loaded.Height )
+                        {
+                            byte* pTarget = (startLoaded + newY * bmLoaded.Stride) + newX * 3;
+                            pProcessed[0] = pTarget[0];
+                            pProcessed[1] = pTarget[1];
+                            pProcessed[2] = pTarget[2];
+                        }                    
+                    }
                 }
+            }
+
+            loaded.UnlockBits(bmLoaded);
+            processed.UnlockBits(bmProcessed);
 
             pictureBox2.Image = processed;
         }
