@@ -353,6 +353,7 @@
             horizontalOnlyToolStripMenuItem1.Name = "horizontalOnlyToolStripMenuItem1";
             horizontalOnlyToolStripMenuItem1.Size = new Size(180, 22);
             horizontalOnlyToolStripMenuItem1.Text = "Horizontal Only";
+            horizontalOnlyToolStripMenuItem1.Click += horizontalOnlyToolStripMenuItem1_Click;
             // 
             // verticalOnlyToolStripMenuItem1
             // 
@@ -698,6 +699,7 @@
             // timer16
             // 
             timer16.Interval = 60;
+            timer16.Tick += timer16_Tick;
             // 
             // timer17
             // 
