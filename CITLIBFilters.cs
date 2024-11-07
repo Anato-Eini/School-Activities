@@ -9,10 +9,7 @@ CHRIS JORDAN ALIAC
 CITBADROBOT@GMAIL.COM
 */
 
-using System;
-using System.Drawing;
 using System.Drawing.Imaging;
-using System.Security.Policy;
 
 namespace ImageProcess2
 {
@@ -55,8 +52,9 @@ namespace ImageProcess2
 
 				int nOffset = stride - b.Width*3;
 				int nWidth = b.Width * 3;
+				int height = b.Height;
 	
-				for(int y=0;y<b.Height;++y)
+				for(int y = 0;y < height; ++y)
 				{
 					for(int x=0; x < nWidth; ++x )
 					{
@@ -71,10 +69,59 @@ namespace ImageProcess2
 			return true;
 		}
 
+		public static bool Binary(Bitmap src, Bitmap dst, int threshold)
+		{
+
+			if (threshold < 0 || threshold > 255)
+				return false;
+
+			int dstHeight = dst.Height;
+			int dstWidth = dst.Width;
+			int srcHeight = src.Height;
+			int srcWidth = src.Width;
+
+            BitmapData bmLoaded = src.LockBits(
+                new Rectangle(0, 0, srcWidth, srcHeight),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            BitmapData bmProcessed = dst.LockBits(
+                new Rectangle(0, 0, dstWidth, dstHeight),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
+                );
+
+            unsafe
+            {
+                int paddingProcessed = bmProcessed.Stride - dstWidth * 3;
+                int paddingLoaded = bmLoaded.Stride - srcWidth * 3;
+
+                byte* pProcessed = (byte*)bmProcessed.Scan0;
+                byte* pLoaded = (byte*)bmLoaded.Scan0;
+
+                for (int i = 0;
+                    i < srcHeight;
+                    i++, pProcessed += paddingProcessed, pLoaded += paddingLoaded)
+
+                    for (int j = 0;
+                        j < srcWidth;
+                        j++, pProcessed += 3, pLoaded += 3)
+                        pProcessed[0] = pProcessed[1] = pProcessed[2] = (byte)(
+                            (pLoaded[0] + pLoaded[1] + pLoaded[2]) / 3 < threshold ? 0 : 255);
+            }
+
+            src.UnlockBits(bmLoaded);
+            dst.UnlockBits(bmProcessed);
+
+			return true;
+		}
+
 		public static void Copy(Bitmap src, Bitmap dst)
 		{
+            int srcHeight = src.Height;
+            int srcWidth = src.Width;
+
             BitmapData bmLoaded = src.LockBits(
-                new Rectangle(0, 0, src.Width, src.Height),
+                new Rectangle(0, 0, srcWidth, srcHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             BitmapData bmProcessed = dst.LockBits(
@@ -83,14 +130,14 @@ namespace ImageProcess2
 
             unsafe
             {
-                int offSet = bmLoaded.Stride - src.Width * 3; // Padding value
+                int offSet = bmLoaded.Stride - srcWidth * 3; // Padding value
 
-                byte* pLoaded = (byte*)(void*)bmLoaded.Scan0;
+                byte* pLoaded = (byte*)bmLoaded.Scan0;
                 byte* pProcessed = (byte*)bmProcessed.Scan0;
 
-                for (int i = 0; i < src.Height; i++)
+                for (int i = 0; i < srcHeight; i++)
                 {
-                    for (int j = 0; j < src.Width; j++)
+                    for (int j = 0; j < srcWidth; j++)
                     {
                         pProcessed[0] = pLoaded[0];
                         pProcessed[1] = pLoaded[1];
@@ -110,71 +157,42 @@ namespace ImageProcess2
             dst.UnlockBits(bmProcessed);
 		}
 
-		public static void binary(Bitmap src, Bitmap dst, int threshold)
+
+		public static void Scale(Bitmap src, Bitmap dst)
 		{
+            int dstHeight = dst.Height;
+            int dstWidth = dst.Width;
+            int srcHeight = src.Height;
+            int srcWidth = src.Width;
+
             BitmapData bmLoaded = src.LockBits(
-                new Rectangle(0, 0, src.Width, src.Height),
+                new Rectangle(0, 0, srcWidth, srcHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
                 );
 
             BitmapData bmProcessed = dst.LockBits(
-                new Rectangle(0, 0, dst.Width, dst.Height),
+                new Rectangle(0, 0, dstWidth, dstHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
                 );
 
             unsafe
             {
-                int paddingProcessed = bmProcessed.Stride - dst.Width * 3;
-                int paddingLoaded = bmLoaded.Stride - dst.Width * 3;
+                int paddingProcessed = bmProcessed.Stride - dstWidth * 3;
+				int loadedStride = bmLoaded.Stride;
 
                 byte* pProcessed = (byte*)bmProcessed.Scan0;
-                byte* pLoaded = (byte*)bmLoaded.Scan0;
-
-                for (int i = 0;
-                    i < src.Height;
-                    i++, pProcessed += paddingProcessed, pLoaded += paddingLoaded)
-
-                    for (int j = 0;
-                        j < src.Width;
-                        j++, pProcessed += 3, pLoaded += 3)
-                        pProcessed[0] = pProcessed[1] = pProcessed[2] = (byte)(
-                            (pLoaded[0] + pLoaded[1] + pLoaded[2]) / 3 < threshold ? 0 : 255);
-            }
-
-            src.UnlockBits(bmLoaded);
-            dst.UnlockBits(bmProcessed);
-		}
-
-		public static void scale(Bitmap src, Bitmap dst)
-		{
-            BitmapData bmLoaded = src.LockBits(
-                new Rectangle(0, 0, src.Width, src.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            BitmapData bmProcessed = dst.LockBits(
-                new Rectangle(0, 0, dst.Width, dst.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            unsafe
-            {
-                int paddingProcessed = bmProcessed.Stride - dst.Width * 3;
-
-                byte* pProcessed = (byte*)bmProcessed.Scan0;
-
                 byte* startLoaded = (byte*)bmLoaded.Scan0;
 
                 for (int i = 0;
-                    i < dst.Height;
+                    i < dstHeight;
                     i++, pProcessed += paddingProcessed)
                 {
                     for (int j = 0;
-                        j < dst.Width;
+                        j < dstWidth;
                         j++, pProcessed += 3)
                     {
-                        byte* pTarget = (startLoaded + i * src.Height / dst.Height * bmLoaded.Stride)
-                            + j * src.Width / dst.Width * 3;
+                        byte* pTarget = (startLoaded + i * srcHeight / dstHeight * loadedStride)
+                            + j * srcWidth / dstWidth * 3;
 
                         pProcessed[0] = pTarget[0];
                         pProcessed[1] = pTarget[1];
@@ -187,50 +205,54 @@ namespace ImageProcess2
             dst.UnlockBits(bmProcessed);
 		}
 
-		public static void rotate(Bitmap src, Bitmap dst, int degree)
+		public static void Rotate(Bitmap src, Bitmap dst, int degree)
 		{
+			int srcHeight = src.Height;
+			int srcWidth = src.Width;
+			int dstHeight = dst.Height;
+			int dstWidth = dst.Width;
+
             BitmapData bmLoaded = src.LockBits(
-                new Rectangle(0, 0, src.Width, src.Height),
+                new Rectangle(0, 0, srcWidth, srcHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
                 );
 
             BitmapData bmProcessed = dst.LockBits(
-                new Rectangle(0, 0, dst.Width, dst.Height),
+                new Rectangle(0, 0, dstWidth, dstHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
                 );
 
             float radians = degree * (float)Math.PI / 180f;
-            int centerX = src.Width / 2;
-            int centerY = src.Height / 2;
+            int centerX = srcWidth / 2;
+            int centerY = srcHeight / 2;
             float cosA = (float)Math.Cos(radians);
             float sinA = (float)Math.Sin(radians);
 
             unsafe
             {
-                int paddingProcessed = bmProcessed.Stride - dst.Width * 3;
+                int paddingProcessed = bmProcessed.Stride - dstWidth * 3;
+				int srcStride = bmLoaded.Stride;
 
                 byte* pProcessed = (byte*)bmProcessed.Scan0;
-
                 byte* startLoaded = (byte*)bmLoaded.Scan0;
 
                 for (int i = 0;
-                    i < src.Height;
+                    i < srcHeight;
                     i++, pProcessed += paddingProcessed)
                 {
                     for (int j = 0;
-                        j < src.Width;
+                        j < srcWidth;
                         j++, pProcessed += 3)
                     {
-
                         int translatedX = j - centerX;
                         int translatedY = i - centerY;
 
                         int newX = (int)(translatedX * cosA - translatedY * sinA) + centerX;
                         int newY = (int)(translatedX * sinA + translatedY * cosA) + centerY;
 
-                        if ( newX >= 0 && newX < src.Width && newY >= 0 && newY < src.Height )
+                        if ( newX >= 0 && newX < srcWidth && newY >= 0 && newY < srcHeight )
                         {
-                            byte* pTarget = (startLoaded + newY * bmLoaded.Stride) + newX * 3;
+                            byte* pTarget = (startLoaded + newY * srcStride) + newX * 3;
                             pProcessed[0] = pTarget[0];
                             pProcessed[1] = pTarget[1];
                             pProcessed[2] = pTarget[2];
@@ -243,21 +265,27 @@ namespace ImageProcess2
             dst.UnlockBits(bmProcessed);
 		}
 
-		public static void subtract(Bitmap foreground, Bitmap background, Bitmap result)
+		public static void Subtract(Bitmap foreground, Bitmap background, Bitmap result)
 		{
+			int foregroundHeight = foreground.Height;
+			int foregroundWidth = foreground.Width;
+			int backgroundHeight = background.Height;
+			int backgroundWidth = background.Width;
+			int resultHeight = result.Height;
+			int resultWidth = result.Width;
 
             BitmapData bmLoaded = foreground.LockBits(
-                new Rectangle(0, 0, foreground.Width, foreground.Height),
+                new Rectangle(0, 0, foregroundWidth, foregroundHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
                 );
 
             BitmapData bmProcessed = background.LockBits(
-                new Rectangle(0, 0, background.Width, background.Height),
+                new Rectangle(0, 0, backgroundWidth, backgroundHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
                 );
 
             BitmapData bmSubtracted = result.LockBits(
-                new Rectangle(0, 0, result.Width, result.Height),
+                new Rectangle(0, 0, resultWidth, resultHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
                 );
 
@@ -266,9 +294,11 @@ namespace ImageProcess2
 
             unsafe
             {
-                int paddingLoaded = bmLoaded.Stride - foreground.Width * 3;
-                int paddingProcessed = bmProcessed.Stride - background.Width * 3;
-                int paddingSubtracted = bmSubtracted.Stride - result.Width * 3;
+                int paddingLoaded = bmLoaded.Stride - foregroundWidth * 3;
+                int paddingProcessed = bmProcessed.Stride - backgroundWidth * 3;
+                int paddingSubtracted = bmSubtracted.Stride - resultWidth * 3;
+
+				int processedStride = bmProcessed.Stride;
 
                 byte* pLoaded = (byte*)bmLoaded.Scan0;
                 byte* pProcessed = (byte*)bmProcessed.Scan0;
@@ -276,12 +306,15 @@ namespace ImageProcess2
 
                 byte* start_p_processed = (byte*)bmProcessed.Scan0;
 
+				int backgroundLimitHeight = background.Height - 1;
+				int backgroundLimitWidth = background.Width - 1;
+
                 for (int i = 0;
-                    i < foreground.Height;
+                    i < foregroundHeight;
                     i++, pLoaded += paddingLoaded, pSubtracted += paddingSubtracted)
                 {
                     for (int j = 0;
-                        j < foreground.Width;
+                        j < foregroundWidth;
                         j++, pLoaded += 3, pSubtracted += 3)
                     {
                         if (Math.Abs(((pLoaded[0] + pLoaded[1] + pLoaded[2]) / 3) - limitAve) < threshold)
@@ -297,12 +330,12 @@ namespace ImageProcess2
                             pSubtracted[2] = pLoaded[2];
                         }
 
-                        if (j < background.Width - 1)
+                        if (j < backgroundLimitWidth)
                             pProcessed += 3;
                     }
 
-                    if (i < background.Height)
-                        pProcessed = start_p_processed + i * bmProcessed.Stride;
+                    if (i < backgroundLimitHeight)
+                        pProcessed = start_p_processed + i * processedStride;
                 }
             }
 
@@ -314,19 +347,22 @@ namespace ImageProcess2
 		public static void Sepia(Bitmap dst)
 		{
 
+			int dstHeight = dst.Height;
+			int dstWidth = dst.Width;
+
             BitmapData bmProcessed = dst.LockBits(
-                new Rectangle(0, 0, dst.Width, dst.Height),
+                new Rectangle(0, 0, dstWidth, dstHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-            int offSet = bmProcessed.Stride - dst.Width * 3;
+            int offSet = bmProcessed.Stride - dstWidth * 3;
 
             unsafe
             {
                 byte* p = (byte*)(void*)bmProcessed.Scan0;
 
-                for (int i = 0; i < dst.Height; i++)
+                for (int i = 0; i < dstHeight; i++)
                 {
-                    for (int j = 0; j < dst.Width; j++)
+                    for (int j = 0; j < dstWidth; j++)
                     {
                         p[0] = (byte)Math.Min(255, p[2] * 0.272 + p[1] * 0.534 + p[0] * 0.131);
                         p[1] = (byte)Math.Min(255, p[2] * 0.349 + p[1] * 0.686 + p[0] * 0.168);
@@ -344,26 +380,30 @@ namespace ImageProcess2
 
 		public static void Histogram(Bitmap src, Bitmap dst)
 		{
+			int srcHeight = src.Height;
+			int srcWidth = src.Width;
+			int dstHeight = dst.Height;
+			int dstWidth = dst.Width;
 
             BitmapData bmLoaded = src.LockBits(
-                new Rectangle(0, 0, src.Width, src.Height),
+                new Rectangle(0, 0, srcWidth, srcHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             BitmapData bmProcessed = dst.LockBits(
-                new Rectangle(0, 0, dst.Width, dst.Height),
+                new Rectangle(0, 0, dstWidth, dstHeight),
                 ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
             unsafe
             {
                 int[] histData = new int[256];
                 int maxFreq = 420;
-                int offSet = bmLoaded.Stride - src.Width * 3; // Padding value
+                int offSet = bmLoaded.Stride - srcWidth * 3; // Padding value
 
                 byte* p = (byte*)(void*)bmLoaded.Scan0;
 
-                for (int i = 0; i < src.Height; i++)
+                for (int i = 0; i < srcHeight; i++)
                 {
-                    for (int j = 0; j < src.Width; j++)
+                    for (int j = 0; j < srcWidth; j++)
                     {
                         int ave = (int)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
                         p[0] = p[1] = p[2] = (byte)ave;
@@ -384,6 +424,8 @@ namespace ImageProcess2
                 int lastRow = (dst.Height - 1) * bmProcessed.Stride;
                 byte* pointerLast = (byte*)(void*)bmProcessed.Scan0 + lastRow;
 
+				int processedStride = bmProcessed.Stride;
+
                 for (int i = 0; i < 256; i++)
                 {
                     p = pointerLast + i * 3;
@@ -393,7 +435,7 @@ namespace ImageProcess2
                     {
                         p[0] = p[1] = p[2] = 255;
 
-                        p -= bmProcessed.Stride;
+						p -= processedStride;
                     }
                 }
             }
@@ -404,8 +446,11 @@ namespace ImageProcess2
 
 		public static bool GrayScale(Bitmap b)
 		{
+			int bmHeight = b.Height;
+			int bmWidth = b.Width;
+
 			// GDI+ still lies to us - the return format is BGR, NOT RGB.
-			BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+			BitmapData bmData = b.LockBits(new Rectangle(0, 0, bmWidth, bmHeight), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
 			int stride = bmData.Stride;
 			System.IntPtr Scan0 = bmData.Scan0;
@@ -416,20 +461,15 @@ namespace ImageProcess2
 
 				int nOffset = stride - b.Width*3;
 
-				byte red, green, blue;
-	
-				for(int y=0;y<b.Height;++y)
+				for(int y = 0; y < bmHeight; ++y)
 				{
-					for(int x=0; x < b.Width; ++x )
+					for(int x = 0; x < bmWidth; ++x )
 					{
-						blue = p[0];
-						green = p[1];
-						red = p[2];
-
-						p[0] = p[1] = p[2] = (byte)(.299 * red + .587 * green + .114 * blue);
+						p[0] = p[1] = p[2] = (byte)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
 
 						p += 3;
 					}
+
 					p += nOffset;
 				}
 			}
@@ -444,8 +484,11 @@ namespace ImageProcess2
 			if (nBrightness < -255 || nBrightness > 255)
 				return false;
 
+			int bmHeight = b.Height;
+			int bmWidth = b.Width;
+
 			// GDI+ still lies to us - the return format is BGR, NOT RGB.
-			BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+			BitmapData bmData = b.LockBits(new Rectangle(0, 0, bmWidth, bmHeight), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
 			int stride = bmData.Stride;
 			System.IntPtr Scan0 = bmData.Scan0;
@@ -456,14 +499,14 @@ namespace ImageProcess2
 			{
 				byte * p = (byte *)(void *)Scan0;
 
-				int nOffset = stride - b.Width*3;
-				int nWidth = b.Width * 3;
+				int nOffset = stride - bmWidth*3;
+				int nWidth = bmWidth * 3;
 
-				for(int y=0;y<b.Height;++y)
+				for(int y = 0; y < bmHeight; ++y)
 				{
-					for(int x=0; x < nWidth; ++x )
+					for(int x = 0; x < nWidth; ++x )
 					{
-						nVal = (int) (p[0] + nBrightness);
+						nVal = p[0] + nBrightness;
 		
 						if (nVal < 0) nVal = 0;
 						if (nVal > 255) nVal = 255;
@@ -483,17 +526,17 @@ namespace ImageProcess2
 
 		public static bool Contrast(Bitmap b, sbyte nContrast)
 		{
-			if (nContrast < -100) return false;
-			if (nContrast >  100) return false;
+			if (nContrast < -100 || nContrast > 100) return false;
+
+			int bmHeight = b.Height;
+			int bmWidth = b.Width;
 
 			double pixel = 0, contrast = (100.0+nContrast)/100.0;
 
 			contrast *= contrast;
 
-			int red, green, blue;
-			
 			// GDI+ still lies to us - the return format is BGR, NOT RGB.
-			BitmapData bmData = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+			BitmapData bmData = b.LockBits(new Rectangle(0, 0, bmWidth, bmHeight), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
 			int stride = bmData.Stride;
 			System.IntPtr Scan0 = bmData.Scan0;
@@ -502,17 +545,13 @@ namespace ImageProcess2
 			{
 				byte * p = (byte *)(void *)Scan0;
 
-				int nOffset = stride - b.Width*3;
+				int nOffset = stride - bmWidth *3;
 
-				for(int y=0;y<b.Height;++y)
+				for(int y = 0 ; y < bmHeight; ++y)
 				{
-					for(int x=0; x < b.Width; ++x )
+					for(int x = 0; x < bmWidth; ++x)
 					{
-						blue = p[0];
-						green = p[1];
-						red = p[2];
-				
-						pixel = red/255.0;
+						pixel = p[2] /255.0;
 						pixel -= 0.5;
 						pixel *= contrast;
 						pixel += 0.5;
@@ -521,7 +560,7 @@ namespace ImageProcess2
 						if (pixel > 255) pixel = 255;
 						p[2] = (byte) pixel;
 
-						pixel = green/255.0;
+						pixel = p[1] /255.0;
 						pixel -= 0.5;
 						pixel *= contrast;
 						pixel += 0.5;
@@ -530,7 +569,7 @@ namespace ImageProcess2
 						if (pixel > 255) pixel = 255;
 						p[1] = (byte) pixel;
 
-						pixel = blue/255.0;
+						pixel = p[0] /255.0;
 						pixel -= 0.5;
 						pixel *= contrast;
 						pixel += 0.5;
@@ -660,6 +699,16 @@ namespace ImageProcess2
 			System.IntPtr Scan0 = bmData.Scan0;
 			System.IntPtr SrcScan0 = bmSrc.Scan0;
 
+			int topLeft = m.TopLeft;
+			int topMid = m.TopMid;
+			int topRight = m.TopRight;
+			int midLeft = m.MidLeft;
+			int midRight = m.MidRight;
+			int pixel = m.Pixel;
+			int bottomLeft = m.BottomLeft;
+			int bottomMid = m.BottomMid;
+			int bottomRight = m.BottomRight;
+
 			unsafe
 			{
 				byte * p = (byte *)(void *)Scan0;
@@ -675,27 +724,27 @@ namespace ImageProcess2
 				{
 					for(int x=0; x < nWidth; ++x )
 					{
-						nPixel = ( ( ( (pSrc[2] * m.TopLeft) + (pSrc[5] * m.TopMid) + (pSrc[8] * m.TopRight) +
-							(pSrc[2 + stride] * m.MidLeft) + (pSrc[5 + stride] * m.Pixel) + (pSrc[8 + stride] * m.MidRight) +
-							(pSrc[2 + stride2] * m.BottomLeft) + (pSrc[5 + stride2] * m.BottomMid) + (pSrc[8 + stride2] * m.BottomRight)) / m.Factor) + m.Offset); 
+						nPixel = ( ( ( (pSrc[2] * topLeft) + (pSrc[5] * topMid) + (pSrc[8] * topRight) +
+							(pSrc[2 + stride] * midLeft) + (pSrc[5 + stride] * pixel) + (pSrc[8 + stride] * midRight) +
+							(pSrc[2 + stride2] * bottomLeft) + (pSrc[5 + stride2] * bottomMid) + (pSrc[8 + stride2] * bottomRight)) / m.Factor) + m.Offset); 
 
 						if (nPixel < 0) nPixel = 0;
 						if (nPixel > 255) nPixel = 255;
 
 						p[5 + stride]= (byte)nPixel;
 
-						nPixel = ( ( ( (pSrc[1] * m.TopLeft) + (pSrc[4] * m.TopMid) + (pSrc[7] * m.TopRight) +
-							(pSrc[1 + stride] * m.MidLeft) + (pSrc[4 + stride] * m.Pixel) + (pSrc[7 + stride] * m.MidRight) +
-							(pSrc[1 + stride2] * m.BottomLeft) + (pSrc[4 + stride2] * m.BottomMid) + (pSrc[7 + stride2] * m.BottomRight)) / m.Factor) + m.Offset); 
+						nPixel = ( ( ( (pSrc[1] * topLeft) + (pSrc[4] * topMid) + (pSrc[7] * topRight) +
+							(pSrc[1 + stride] * midLeft) + (pSrc[4 + stride] * pixel) + (pSrc[7 + stride] * midRight) +
+							(pSrc[1 + stride2] * bottomLeft) + (pSrc[4 + stride2] * bottomMid) + (pSrc[7 + stride2] * bottomRight)) / m.Factor) + m.Offset); 
 
 						if (nPixel < 0) nPixel = 0;
 						if (nPixel > 255) nPixel = 255;
 							
 						p[4 + stride] = (byte)nPixel;
 
-						nPixel = ( ( ( (pSrc[0] * m.TopLeft) + (pSrc[3] * m.TopMid) + (pSrc[6] * m.TopRight) +
-							(pSrc[0 + stride] * m.MidLeft) + (pSrc[3 + stride] * m.Pixel) + (pSrc[6 + stride] * m.MidRight) +
-							(pSrc[0 + stride2] * m.BottomLeft) + (pSrc[3 + stride2] * m.BottomMid) + (pSrc[6 + stride2] * m.BottomRight)) / m.Factor) + m.Offset); 
+						nPixel = ( ( ( (pSrc[0] * topLeft) + (pSrc[3] * topMid) + (pSrc[6] * topRight) +
+							(pSrc[0 + stride] * midLeft) + (pSrc[3 + stride] * pixel) + (pSrc[6 + stride] * midRight) +
+							(pSrc[0 + stride2] * bottomLeft) + (pSrc[3 + stride2] * bottomMid) + (pSrc[6 + stride2] * bottomRight)) / m.Factor) + m.Offset); 
 
 						if (nPixel < 0) nPixel = 0;
 						if (nPixel > 255) nPixel = 255;
