@@ -332,6 +332,9 @@ namespace DIP_Activity
         private void offToolStripMenuItem_Click(object sender, EventArgs e)
         {
             devices[0].Stop();
+
+            if(currentTimer != null) 
+                currentTimer.Enabled = false;
         }
 
         /// <summary>
@@ -971,6 +974,11 @@ namespace DIP_Activity
 
         }
 
+        /// <summary>
+        /// Enables emboss horizontal timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void horizontalOnlyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (currentTimer != null)
@@ -980,6 +988,11 @@ namespace DIP_Activity
             currentTimer.Enabled = true;
         }
 
+        /// <summary>
+        /// Applies emboss horizontal to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer16_Tick(object sender, EventArgs e)
         {
             Image image = getData();
@@ -993,6 +1006,11 @@ namespace DIP_Activity
 
         }
 
+        /// <summary>
+        /// Enables emboss vertical
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void verticalOnlyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
@@ -1003,6 +1021,11 @@ namespace DIP_Activity
             currentTimer.Enabled = true;
         }
 
+        /// <summary>
+        /// Applies emboss vertical to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer17_Tick(object sender, EventArgs e)
         {
             Image image = getData();
