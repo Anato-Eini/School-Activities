@@ -1070,9 +1070,43 @@ namespace DIP_Activity
             pictureBox2.Image = loaded;
         }
 
+        /// <summary>
+        /// Enables timer for mean removal filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void meanRemovalToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (currentTimer != null)
+                currentTimer.Enabled = false;
+
+            currentTimer = timer11;
+            currentTimer.Enabled = true;
+        }
+
+        /// <summary>
+        /// Applies mean removal filter to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timer11_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            pictureBox1.Image = loaded = new Bitmap(image);
+            BitmapFilter.MeanRemoval(loaded);
+            pictureBox2.Image = loaded;
+
+        }
+
+
         private void timer14_Tick(object sender, EventArgs e)
         {
 
         }
+
     }
 }

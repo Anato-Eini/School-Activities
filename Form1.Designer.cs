@@ -305,6 +305,7 @@
             meanRemovalToolStripMenuItem1.Name = "meanRemovalToolStripMenuItem1";
             meanRemovalToolStripMenuItem1.Size = new Size(180, 22);
             meanRemovalToolStripMenuItem1.Text = "Mean Removal";
+            meanRemovalToolStripMenuItem1.Click += meanRemovalToolStripMenuItem1_Click;
             // 
             // embossingToolStripMenuItem1
             // 
@@ -625,6 +626,7 @@
             // timer11
             // 
             timer11.Interval = 30;
+            timer11.Tick += timer11_Tick;
             // 
             // timer12
             // 
