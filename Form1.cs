@@ -977,7 +977,12 @@ namespace DIP_Activity
             pictureBox2.Image = processed;
         }
 
-        private void shrinkToolStripMenuItem1_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Enables timer for smooth filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (currentTimer != null)
                 currentTimer.Enabled = false;
@@ -986,27 +991,36 @@ namespace DIP_Activity
             currentTimer.Enabled = true;
         }
 
+        /// <summary>
+        /// Applies smooth filter to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timer8_Tick(object sender, EventArgs e)
+        {
+            Image image = getData();
+
+            if (image == null)
+                return;
+
+            pictureBox1.Image = loaded = new Bitmap(image);
+            BitmapFilter.Smooth(loaded);
+            pictureBox2.Image = loaded;
+        }
+
+        /// <summary>
+        /// Enables timer for gaussian blur filter to video frames
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gaussianBlurToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
         }
 
         private void timer14_Tick(object sender, EventArgs e)
         {
-
-            Image image = getData();
-
-            if (image == null)
-                return;
-
-            loaded = new Bitmap(image);
-
-
         }
 
-        private void convolutionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
