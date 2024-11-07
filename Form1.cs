@@ -52,41 +52,7 @@ namespace DIP_Activity
 
             processed = new Bitmap(loaded.Width, loaded.Height);
 
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            unsafe
-            {
-                int offSet = bmLoaded.Stride - loaded.Width * 3; // Padding value
-
-                byte* pLoaded = (byte*)(void*)bmLoaded.Scan0;
-                byte* pProcessed = (byte*)bmProcessed.Scan0;
-
-                for (int i = 0; i < loaded.Height; i++)
-                {
-                    for (int j = 0; j < loaded.Width; j++)
-                    {
-                        pProcessed[0] = pLoaded[0];
-                        pProcessed[1] = pLoaded[1];
-                        pProcessed[2] = pLoaded[2];
-
-                        pLoaded += 3;
-                        pProcessed += 3;
-                    }
-
-                    pLoaded += offSet;
-                    pProcessed += offSet;
-
-                }
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
+            BitmapFilter.Copy(loaded, processed);
 
             pictureBox2.Image = processed;
         }
@@ -154,46 +120,9 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            processed = new Bitmap(loaded.Width, loaded.Height);
-
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            unsafe
-            {
-                int offSet = bmLoaded.Stride - loaded.Width * 3; // Padding value
-
-                byte* pLoaded = (byte*)(void*)bmLoaded.Scan0;
-                byte* pProcessed = (byte*)bmProcessed.Scan0;
-
-                for (int i = 0; i < loaded.Height; i++)
-                {
-                    for (int j = 0; j < loaded.Width; j++)
-                    {
-                        pProcessed[0] = pLoaded[0];
-                        pProcessed[1] = pLoaded[1];
-                        pProcessed[2] = pLoaded[2];
-
-                        pLoaded += 3;
-                        pProcessed += 3;
-                    }
-
-                    pLoaded += offSet;
-                    pProcessed += offSet;
-
-                }
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
-
+            processed = (Bitmap)loaded.Clone(); 
+            BitmapFilter.Flip(processed, true, false);
             pictureBox2.Image = processed;
-
         }
 
         /// <summary>
@@ -206,46 +135,8 @@ namespace DIP_Activity
             if (loaded == null)
                 return;
 
-            processed = new Bitmap(loaded.Width, loaded.Height);
-
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            unsafe
-            {
-                int stride = bmLoaded.Stride;
-
-                byte* srcLoaded = (byte *)bmLoaded.Scan0;
-                byte* srcProcessed = (byte *)bmProcessed.Scan0 + (bmProcessed.Stride * (bmProcessed.Height - 1));
-
-                byte* pLoaded;
-                byte* pProcessed;
-
-                for (int i = 0; i < loaded.Width; i++)
-                {
-                    pLoaded = srcLoaded + i * 3;
-                    pProcessed = srcProcessed + i * 3;
-
-                    for (int j = 0; j < loaded.Height; j++)
-                    {
-                        pProcessed[0] = pLoaded[0];
-                        pProcessed[1] = pLoaded[1];
-                        pProcessed[2] = pLoaded[2];
-
-                        pLoaded += stride;
-                        pProcessed -= stride;
-                    }
-                }
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
-
+            processed = (Bitmap)loaded.Clone();
+            BitmapFilter.Flip(processed, false, true);
             pictureBox2.Image = processed;
         }
 
@@ -261,61 +152,7 @@ namespace DIP_Activity
 
             processed = new Bitmap(256, 420);
 
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            unsafe
-            {
-                int[] histData = new int[256];
-                int maxFreq = 420;
-                int offSet = bmLoaded.Stride - loaded.Width * 3; // Padding value
-
-                byte* p = (byte*)(void*)bmLoaded.Scan0;
-
-                for (int i = 0; i < loaded.Height; i++)
-                {
-                    for (int j = 0; j < loaded.Width; j++)
-                    {
-                        int ave = (int)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
-                        p[0] = p[1] = p[2] = (byte)ave;
-                        histData[ave]++;
-
-                        if (histData[ave] > maxFreq)
-                            maxFreq = histData[ave];
-
-                        p += 3;
-                    }
-
-                    p += offSet;
-                }
-
-                int mFactor = maxFreq / 420;
-                int count;
-
-                int lastRow = (processed.Height - 1) * bmProcessed.Stride;
-                byte* pointerLast = (byte*)(void*)bmProcessed.Scan0 + lastRow;
-
-                for (int i = 0; i < 256; i++)
-                {
-                    p = pointerLast + i * 3;
-                    count = Math.Min(420, histData[i] / mFactor);
-
-                    for (int j = 0; j < count; j++)
-                    {
-                        p[0] = p[1] = p[2] = 255;
-
-                        p -= bmProcessed.Stride;
-                    }
-                }
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
+            BitmapFilter.Histogram(loaded, processed);
 
             pictureBox2.Image = processed;
         }
@@ -366,34 +203,7 @@ namespace DIP_Activity
                 return;
 
             processed = new Bitmap(loaded);
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-
-            int offSet = bmProcessed.Stride - processed.Width * 3;
-
-            unsafe
-            {
-                byte* p = (byte*)(void*)bmProcessed.Scan0;
-
-                for (int i = 0; i < processed.Height; i++)
-                {
-                    for (int j = 0; j < processed.Width; j++)
-                    {
-                        p[0] = (byte)Math.Min(255, p[2] * 0.272 + p[1] * 0.534 + p[0] * 0.131);
-                        p[1] = (byte)Math.Min(255, p[2] * 0.349 + p[1] * 0.686 + p[0] * 0.168);
-                        p[2] = (byte)Math.Min(255, p[2] * 0.393 + p[1] * 0.769 + p[0] * 0.189);
-
-                        p += 3;
-                    }
-
-                    p += offSet;
-                }
-            }
-
-            processed.UnlockBits(bmProcessed);
-
+            BitmapFilter.Sepia(processed);
             pictureBox2.Image = processed;
         }
 
@@ -427,98 +237,8 @@ namespace DIP_Activity
             if (loaded == null || processed == null)
                 return;
 
-            //int greyGreen = 255 / 3;
-            //int threshold = 5;
-
-            //Color pixel;
-            //subtracted = new Bitmap(loaded.Width, loaded.Height);
-
-            //for (int i = 0; i < loaded.Width; i++)
-            //{
-            //    if (i >= processed.Width)
-            //        break;
-
-            //    for (int j = 0; j < loaded.Height; j++)
-            //    {
-            //        if (j >= processed.Height)
-            //            break;
-
-            //        pixel = loaded.GetPixel(i, j);
-
-            //        subtracted.SetPixel(i, j,
-            //            Math.Abs((pixel.R + pixel.G + pixel.B) / 3 - greyGreen) < threshold ?
-            //            processed.GetPixel(i, j) : pixel
-            //            );
-            //    }
-            //}
-            //pictureBox3.Image = subtracted;
-
             subtracted = new Bitmap(loaded.Width, loaded.Height);
-
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            BitmapData bmSubtracted = subtracted.LockBits(
-                new Rectangle(0, 0, subtracted.Width, subtracted.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            int limitAve = 255 / 3;
-            int threshold = 5;
-
-            unsafe
-            {
-                int paddingLoaded = bmLoaded.Stride - loaded.Width * 3;
-                int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
-                int paddingSubtracted = bmSubtracted.Stride - subtracted.Width * 3;
-
-                byte* pLoaded = (byte*)bmLoaded.Scan0;
-                byte* pProcessed = (byte*)bmProcessed.Scan0;
-                byte* pSubtracted = (byte*)bmSubtracted.Scan0;
-
-                byte* start_p_processed = (byte*)bmProcessed.Scan0;
-
-                for (int i = 0;
-                    i < loaded.Height;
-                    i++, pLoaded += paddingLoaded, pSubtracted += paddingSubtracted)
-                {
-                    for (int j = 0;
-                        j < loaded.Width;
-                        j++, pLoaded += 3, pSubtracted += 3)
-                    {
-                        if (Math.Abs(((pLoaded[0] + pLoaded[1] + pLoaded[2]) / 3) - limitAve) < threshold)
-                        {
-                            pSubtracted[0] = pProcessed[0];
-                            pSubtracted[1] = pProcessed[1];
-                            pSubtracted[2] = pProcessed[2];
-                        }
-                        else
-                        {
-                            pSubtracted[0] = pLoaded[0];
-                            pSubtracted[1] = pLoaded[1];
-                            pSubtracted[2] = pLoaded[2];
-                        }
-
-                        if (j < processed.Width - 1)
-                            pProcessed += 3;
-                    }
-
-                    if (i < processed.Height)
-                        pProcessed = start_p_processed + i * bmProcessed.Stride;
-                }
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
-            subtracted.UnlockBits(bmSubtracted);
-
+            BitmapFilter.subtract(loaded, processed, subtracted);
             pictureBox3.Image = subtracted;
         }
 
@@ -544,58 +264,7 @@ namespace DIP_Activity
 
             processed = new Bitmap(loaded.Width, loaded.Height);
 
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            float radians = trackBar3.Value * (float)Math.PI / 180f;
-            int centerX = loaded.Width / 2;
-            int centerY = loaded.Height / 2;
-            float cosA = (float)Math.Cos(radians);
-            float sinA = (float)Math.Sin(radians);
-
-            unsafe
-            {
-                int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
-
-                byte* pProcessed = (byte*)bmProcessed.Scan0;
-
-                byte* startLoaded = (byte*)bmLoaded.Scan0;
-
-                for (int i = 0;
-                    i < loaded.Height;
-                    i++, pProcessed += paddingProcessed)
-                {
-                    for (int j = 0;
-                        j < loaded.Width;
-                        j++, pProcessed += 3)
-                    {
-
-                        int translatedX = j - centerX;
-                        int translatedY = i - centerY;
-
-                        int newX = (int)(translatedX * cosA - translatedY * sinA) + centerX;
-                        int newY = (int)(translatedX * sinA + translatedY * cosA) + centerY;
-
-                        if ( newX >= 0 && newX < loaded.Width && newY >= 0 && newY < loaded.Height )
-                        {
-                            byte* pTarget = (startLoaded + newY * bmLoaded.Stride) + newX * 3;
-                            pProcessed[0] = pTarget[0];
-                            pProcessed[1] = pTarget[1];
-                            pProcessed[2] = pTarget[2];
-                        }                    
-                    }
-                }
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
+            BitmapFilter.rotate(loaded, processed, trackBar3.Value);
 
             pictureBox2.Image = processed;
         }
@@ -615,44 +284,7 @@ namespace DIP_Activity
 
             processed = new Bitmap(newWidth, newHeight);
 
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            unsafe
-            {
-                int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
-
-                byte* pProcessed = (byte*)bmProcessed.Scan0;
-
-                byte* startLoaded = (byte*)bmLoaded.Scan0;
-
-                for (int i = 0;
-                    i < newHeight;
-                    i++, pProcessed += paddingProcessed)
-                {
-                    for (int j = 0;
-                        j < newWidth;
-                        j++, pProcessed += 3)
-                    {
-                        byte* pTarget = (startLoaded + i * loaded.Height / newHeight * bmLoaded.Stride)
-                            + j * loaded.Width / newWidth * 3;
-
-                        pProcessed[0] = pTarget[0];
-                        pProcessed[1] = pTarget[1];
-                        pProcessed[2] = pTarget[2];
-                    }
-                }
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
+            BitmapFilter.scale(loaded, processed);
 
             pictureBox2.Image = processed;
         }
@@ -670,37 +302,7 @@ namespace DIP_Activity
             processed = new Bitmap(loaded.Width, loaded.Height);
             int threshold = trackBar5.Value;
 
-            BitmapData bmLoaded = loaded.LockBits(
-                new Rectangle(0, 0, loaded.Width, loaded.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            BitmapData bmProcessed = processed.LockBits(
-                new Rectangle(0, 0, processed.Width, processed.Height),
-                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb
-                );
-
-            unsafe
-            {
-                int paddingProcessed = bmProcessed.Stride - processed.Width * 3;
-                int paddingLoaded = bmLoaded.Stride - loaded.Width * 3;
-
-                byte* pProcessed = (byte*)bmProcessed.Scan0;
-                byte* pLoaded = (byte*)bmLoaded.Scan0;
-
-                for (int i = 0;
-                    i < loaded.Height;
-                    i++, pProcessed += paddingProcessed, pLoaded += paddingLoaded)
-
-                    for (int j = 0;
-                        j < loaded.Width;
-                        j++, pProcessed += 3, pLoaded += 3)
-                        pProcessed[0] = pProcessed[1] = pProcessed[2] = (byte)(
-                            (pLoaded[0] + pLoaded[1] + pLoaded[2]) / 3 < threshold ? 0 : 255);
-            }
-
-            loaded.UnlockBits(bmLoaded);
-            processed.UnlockBits(bmProcessed);
+            BitmapFilter.binary(loaded, processed, threshold);
 
             pictureBox2.Image = processed;
         }
