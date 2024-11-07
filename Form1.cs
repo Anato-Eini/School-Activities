@@ -52,9 +52,41 @@ namespace DIP_Activity
 
             processed = new Bitmap(loaded.Width, loaded.Height);
 
-            for (int i = 0; i < loaded.Width; i++)
-                for (int j = 0; j < loaded.Height; j++)
-                    processed.SetPixel(i, j, loaded.GetPixel(i, j));
+            BitmapData bmLoaded = loaded.LockBits(
+                new Rectangle(0, 0, loaded.Width, loaded.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            BitmapData bmProcessed = processed.LockBits(
+                new Rectangle(0, 0, processed.Width, processed.Height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+            unsafe
+            {
+                int offSet = bmLoaded.Stride - loaded.Width * 3; // Padding value
+
+                byte* pLoaded = (byte*)(void*)bmLoaded.Scan0;
+                byte* pProcessed = (byte*)bmProcessed.Scan0;
+
+                for (int i = 0; i < loaded.Height; i++)
+                {
+                    for (int j = 0; j < loaded.Width; j++)
+                    {
+                        pProcessed[0] = pLoaded[0];
+                        pProcessed[1] = pLoaded[1];
+                        pProcessed[2] = pLoaded[2];
+
+                        pLoaded += 3;
+                        pProcessed += 3;
+                    }
+
+                    pLoaded += offSet;
+                    pProcessed += offSet;
+
+                }
+            }
+
+            loaded.UnlockBits(bmLoaded);
+            processed.UnlockBits(bmProcessed);
 
             pictureBox2.Image = processed;
         }
