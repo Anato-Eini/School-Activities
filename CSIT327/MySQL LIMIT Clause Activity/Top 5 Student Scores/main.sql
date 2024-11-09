@@ -1,0 +1,1 @@
+SELECT * FROM StudentScores ORDER BY score DESC LIMIT 5;
