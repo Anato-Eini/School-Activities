@@ -1,0 +1,47 @@
+CREATE TABLE HotelBookings (
+    booking_id INT AUTO_INCREMENT PRIMARY KEY,
+    guest_name VARCHAR(100),
+    room_type VARCHAR(50),
+    check_in_date DATE,
+    check_out_date DATE,
+    num_guests INT,
+    special_requests TEXT,
+    booking_status VARCHAR(50),
+    total_price DECIMAL(10, 2),
+    contact_email VARCHAR(100),
+    contact_phone VARCHAR(15)
+);
+
+
+INSERT INTO HotelBookings (booking_id, guest_name, room_type, check_in_date, check_out_date, num_guests, special_requests, booking_status)
+VALUES
+(1, 'John Doe', 'Deluxe', '2024-03-01', '2024-03-05', 2, 'Late check-in', 'Confirmed'),
+(2, 'Emily Clark', 'Standard', '2024-03-02', '2024-03-06', 1, NULL, 'Confirmed'),
+(3, 'Michael Smith', 'Suite', '2024-03-10', '2024-03-15', 4, 'Extra bed Baby crib', 'Confirmed'),
+(4, 'Anna Johnson', 'Deluxe', '2024-03-05', '2024-03-08', 3, 'Allergy-friendly room', 'Confirmed'),
+(5, 'Robert Brown', 'Standard', '2024-03-15', '2024-03-20', 2, NULL, 'Confirmed'),
+(6, 'Laura Wilson', 'Suite', '2024-03-11', '2024-03-14', 5, 'Adjoining rooms request', 'Pending'),
+(7, 'Linda Taylor', 'Deluxe', '2024-03-07', '2024-03-10', 2, 'Early check-in', 'Cancelled'),
+(8, 'James Moore', 'Standard', '2024-03-17', '2024-03-21', 1, NULL, 'Confirmed'),
+(9, 'Patricia Jones', 'Suite', '2024-03-18', '2024-03-23', 3, 'Vegan meals', 'Confirmed'),
+(10, 'David Miller', 'Deluxe', '2024-03-20', '2024-03-22', 2, 'High floor request', 'Pending'),
+(11, 'Jennifer Davis', 'Standard', '2024-03-22', '2024-03-27', 1, NULL, 'Confirmed'),
+(12, 'Richard Garcia', 'Suite', '2024-03-25', '2024-03-30', 4, 'Balcony room', 'Confirmed'),
+(13, 'Sarah Martinez', 'Deluxe', '2024-03-28', '2024-04-02', 2, 'Quiet room request', 'Confirmed'),
+(14, 'Charles Hernandez', 'Standard', '2024-04-01', '2024-04-05', 1, NULL, 'Cancelled'),
+(15, 'Elizabeth Lopez', 'Suite', '2024-04-03', '2024-04-08', 3, 'Pet friendly room', 'Confirmed'),
+(16, 'Mark Gonzalez', 'Deluxe', '2024-04-06', '2024-04-10', 2, 'Sea view request', 'Pending'),
+(17, 'Mary Perez', 'Standard', '2024-04-07', '2024-04-12', 1, NULL, 'Confirmed'),
+(18, 'Thomas Young', 'Suite', '2024-04-09', '2024-04-14', 4, 'No feather pillows', 'Confirmed'),
+(19, 'Susan Rodriguez', 'Deluxe', '2024-04-11', '2024-04-15', 2, 'Room near elevator', 'Confirmed'),
+(20, 'Joseph Lee', 'Standard', '2024-04-13', '2024-04-17', 1, NULL, 'Cancelled'),
+(21, 'Jessica Anderson', 'Suite', '2024-04-15', '2024-04-20', 3, 'Additional towels', 'Confirmed'),
+(22, 'Daniel Thomas', 'Deluxe', '2024-04-18', '2024-04-22', 2, 'Lower floor request', 'Pending'),
+(23, 'Lisa Jackson', 'Standard', '2024-04-19', '2024-04-24', 1, NULL, 'Confirmed'),
+(24, 'Kevin White', 'Suite', '2024-04-21', '2024-04-26', 4, 'Gluten-free breakfast', 'Confirmed'),
+(25, 'Karen Harris', 'Deluxe', '2024-04-23', '2024-04-28', 2, 'Away from elevator', 'Confirmed'),
+(26, 'Brian Martin', 'Standard', '2024-04-25', '2024-04-30', 1, NULL, 'Cancelled'),
+(27, 'Nancy Thompson', 'Suite', '2024-04-27', '2024-05-02', 3, 'Late check-out', 'Confirmed'),
+(28, 'Gary Martinez', 'Deluxe', '2024-05-01', '2024-05-05', 2, 'Extra pillows', 'Pending'),
+(29, 'Rebecca Robinson', 'Standard', '2024-05-03', '2024-05-07', 1, NULL, 'Confirmed'),
+(30, 'Eric Clark', 'Suite', '2024-05-06', '2024-05-10', 4, 'Connecting rooms', 'Confirmed');
