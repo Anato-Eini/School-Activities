@@ -582,7 +582,7 @@ namespace DIP_Activity
                 return;
 
             processed = new Bitmap(loaded);
-            BitmapFilter.Smooth(processed);
+            BitmapFilter.GaussianBlur(processed);
             pictureBox2.Image = processed;
         }
 
