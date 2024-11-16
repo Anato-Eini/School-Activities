@@ -1,3 +1,5 @@
+using ImageProcess2;
+
 namespace DIP_Coins_Activity
 {
     public partial class Form1 : Form
@@ -25,9 +27,13 @@ namespace DIP_Coins_Activity
             if (loaded == null)
                 return;
 
+            processed = new Bitmap(loaded.Width, loaded.Height);
+            BitmapFilter.Binary(loaded, processed, 200);
 
-            /// Use Edge Detection?
+            Coins.CountCoin(processed, ref label2, ref label5);
 
+            pictureBox2.Image = processed;
         }
+
     }
 }

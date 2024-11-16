@@ -10,6 +10,7 @@ CITBADROBOT@GMAIL.COM
 */
 
 using System.Drawing.Imaging;
+using System.Runtime.CompilerServices;
 
 namespace ImageProcess2
 {
@@ -30,6 +31,110 @@ namespace ImageProcess2
 	{
 		public double X;
 		public double Y;
+	}
+
+	public class Coins
+	{
+		public const float PESO_5 = 5f;
+		public const float PESO_1 = 1f;
+		public const float CENT_25 = .25f;
+		public const float CENT_10 = .10f;
+		public const float CENT_5 = .05f;
+
+		/// <summary>
+		/// Count the total value and number of coins in the image
+		/// </summary>
+		/// <param name="bmp"></param>
+		/// <param name="countLabel"></param>
+		/// <param name="valueLabel"></param>
+		public static void CountCoin(Bitmap bmp, ref Label countLabel, ref Label valueLabel)
+		{
+			int count = 0; //Expected 64
+			float value = 0; //Expected 46.45
+
+			int height = bmp.Height;
+			int width = bmp.Width;
+
+			bool[,] visited = new bool[height, width];
+
+			for (int i = 0; i < height; i++)
+				for (int j = 0; j < width; j++)
+				{
+					Color pixel = bmp.GetPixel(j, i);
+					if (!visited[i, j] && pixel.R == 0)
+					{
+						count++;
+						value += Classify(BFS(bmp, ref visited, j, i), ref count);
+					}
+				}
+
+			countLabel.Text = count.ToString();
+			valueLabel.Text = value.ToString("F2");
+		}
+
+		/// <summary>
+		/// Classify what coin given the pixel count
+		/// </summary>
+		/// <param name="pixel"></param>
+		/// <returns></returns>
+		private static float Classify(int pixel, ref int count)
+		{
+			if (pixel >= 18000)
+				return PESO_5;
+			else if (pixel >= 15000)
+				return PESO_1;
+			else if (pixel >= 11000)
+				return CENT_25;
+			else if (pixel >= 8000)
+				return CENT_10;
+			else if (pixel >= 6500)
+				return CENT_5;
+
+			count--;
+			return 0; 
+		}
+
+		/// Given a bitmap image in binary format, visited 2d array, initial point(x, y),
+		/// do BFS and count all pixels
+		/// </summary>
+		/// <param name="bmp"></param>
+		/// <param name="visited"></param>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns>Total pixel count</returns>
+		private static int BFS(Bitmap bmp, ref bool[,] visited, int x, int y)
+		{
+			int height = bmp.Height;
+			int width = bmp.Width;
+			int count = 0;
+
+			Queue<Point> queue = new();
+			queue.Enqueue(new Point(x, y));
+
+			while (queue.Count > 0)
+			{
+				Point point = queue.Dequeue();
+				int dx = point.X, dy = point.Y;
+
+				if (visited[dy, dx])
+					continue;
+
+				count++;
+
+				visited[dy, dx] = true;
+
+				if (dx - 1 >= 0 && bmp.GetPixel(dx - 1, dy).R == 0 && !visited[dy, dx - 1])
+					queue.Enqueue(new Point(dx - 1, dy));
+				if (dx + 1 < width && bmp.GetPixel(dx + 1, dy).R == 0 && !visited[dy, dx + 1])
+					queue.Enqueue(new Point(dx + 1, dy));
+				if (dy - 1 >= 0 && bmp.GetPixel(dx, dy - 1).R == 0 && !visited[dy - 1, dx])
+					queue.Enqueue(new Point(dx, dy - 1));
+				if (dy + 1 < height && bmp.GetPixel(dx, dy + 1).R == 0 && !visited[dy + 1, dx])
+					queue.Enqueue(new Point(dx, dy + 1));
+			}
+
+			return count;
+		}
 	}
 
 	public class BitmapFilter
@@ -71,7 +176,6 @@ namespace ImageProcess2
 
 		public static bool Binary(Bitmap src, Bitmap dst, int threshold)
 		{
-
 			if (threshold < 0 || threshold > 255)
 				return false;
 
@@ -396,6 +500,8 @@ namespace ImageProcess2
             unsafe
             {
                 int[] histData = new int[256];
+				Array.Fill(histData, 0);
+
                 int maxFreq = 420;
                 int offSet = bmLoaded.Stride - srcWidth * 3; // Padding value
 
@@ -406,7 +512,6 @@ namespace ImageProcess2
                     for (int j = 0; j < srcWidth; j++)
                     {
                         int ave = (int)(.299 * p[2] + .587 * p[1] + .114 * p[0]);
-                        p[0] = p[1] = p[2] = (byte)ave;
                         histData[ave]++;
 
                         if (histData[ave] > maxFreq)
@@ -444,7 +549,34 @@ namespace ImageProcess2
             dst.UnlockBits(bmProcessed);
 		}
 
-		public static bool GrayScale(Bitmap b)
+        public static int[] GetHistArray(Bitmap image)
+        {
+            int[] array = new int[256];
+			Array.Fill(array, 0);
+
+			int height = image.Height;
+			int width = image.Width;
+
+            BitmapData bmImage = image.LockBits(
+                new Rectangle(0, 0, width, height),
+                ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
+			unsafe
+			{
+				byte * p = (byte*)bmImage.Scan0;
+				int pad = bmImage.Stride - width * 3;
+
+				for (int i = 0; i < height; i++, p += pad)
+					for (int j = 0; j < width; j++, p += 3)
+						array[(int)(.299 * p[2] + .587 * p[1] + .114 * p[0])]++;
+			}
+
+			image.UnlockBits(bmImage);
+
+            return array;
+        }
+
+        public static bool GrayScale(Bitmap b)
 		{
 			int bmHeight = b.Height;
 			int bmWidth = b.Width;
