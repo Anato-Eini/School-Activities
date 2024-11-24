@@ -1,0 +1,1 @@
+SELECT * FROM BookInventory WHERE genre IN ("Fiction", "Non-Fiction") AND price > 20.00;
