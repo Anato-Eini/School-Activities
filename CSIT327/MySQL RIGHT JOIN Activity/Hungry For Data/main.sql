@@ -1,0 +1,2 @@
+SELECT Customers.customer_id, Customers.customer_name, Customers.age, Restaurants.restaurant_name, Restaurants.location
+FROM Customers RIGHT JOIN Restaurants ON Customers.restaurant_id = Restaurants.restaurant_id;
