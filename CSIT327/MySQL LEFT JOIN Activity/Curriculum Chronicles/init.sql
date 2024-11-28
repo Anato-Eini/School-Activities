@@ -1,0 +1,100 @@
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100),
+    instructor VARCHAR(100),
+    department VARCHAR(50),
+    credits INT
+);
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    major VARCHAR(50),
+    year_enrolled INT
+);
+CREATE TABLE Registrations (
+    registration_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    semester VARCHAR(50),
+    grade CHAR(2),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+INSERT INTO Students (student_id, first_name, last_name, major, year_enrolled) VALUES
+(2001, 'John', 'Doe', 'Computer Science', 2020),
+(2002, 'Jane', 'Smith', 'Biology', 2021),
+(2003, 'William', 'Johnson', 'History', 2019),
+(2004, 'Emma', 'Brown', 'Psychology', 2022),
+(2005, 'Olivia', 'Jones', 'Economics', 2020),
+(2006, 'Michael', 'Davis', 'Mathematics', 2021),
+(2007, 'Emily', 'Garcia', 'Chemistry', 2019),
+(2008, 'Daniel', 'Miller', 'Physics', 2022),
+(2009, 'Sophia', 'Wilson', 'Anthropology', 2020),
+(2010, 'James', 'Moore', 'Computer Science', 2021),
+(2011, 'Anna', 'Taylor', 'Biology', 2019),
+(2012, 'Christopher', 'Anderson', 'History', 2022),
+(2013, 'Amanda', 'Thomas', 'Psychology', 2020),
+(2014, 'Ethan', 'Jackson', 'Economics', 2021),
+(2015, 'Isabella', 'White', 'Mathematics', 2019),
+(2016, 'Matthew', 'Harris', 'Chemistry', 2022),
+(2017, 'Ava', 'Martin', 'Physics', 2020),
+(2018, 'David', 'Thompson', 'Anthropology', 2021),
+(2019, 'Madison', 'Garcia', 'Computer Science', 2019),
+(2020, 'Andrew', 'Martinez', 'Biology', 2022),
+(2021, 'Samantha', 'Robinson', 'History', 2020),
+(2022, 'Joseph', 'Clark', 'Psychology', 2021),
+(2023, 'Ashley', 'Rodriguez', 'Economics', 2019),
+(2024, 'Ryan', 'Lewis', 'Mathematics', 2022),
+(2025, 'Mia', 'Lee', 'Chemistry', 2020),
+(2026, 'Jacob', 'Walker', 'Physics', 2021),
+(2027, 'Abigail', 'Hall', 'Anthropology', 2019),
+(2028, 'Nathan', 'Allen', 'Computer Science', 2022),
+(2029, 'Elizabeth', 'Young', 'Biology', 2020),
+(2030, 'Anthony', 'Hernandez', 'History', 2021);
+
+INSERT INTO Courses (course_id, course_name, instructor, department, credits) VALUES
+(101, 'Introduction to Psychology', 'Dr. Jane Smith', 'Psychology', 3),
+(102, 'Principles of Microeconomics', 'Dr. Robert Brown', 'Economics', 3),
+(103, 'Organic Chemistry', 'Dr. Emily White', 'Chemistry', 4),
+(104, 'Calculus I', 'Dr. Michael Johnson', 'Mathematics', 4),
+(105, 'World History', 'Dr. Jessica Williams', 'History', 3),
+(106, 'Fundamentals of Physics', 'Dr. David Jones', 'Physics', 4),
+(107, 'Introduction to Programming', 'Dr. William Garcia', 'Computer Science', 4),
+(108, 'Molecular Biology', 'Dr. Elizabeth Miller', 'Biology', 4),
+(109, 'Contemporary Literature', 'Dr. Jennifer Davis', 'English', 3),
+(110, 'Social Anthropology', 'Dr. Richard Wilson', 'Anthropology', 3);
+
+
+INSERT INTO Registrations (registration_id, student_id, course_id, semester, grade) VALUES
+(3001, 2001, 101, 'Fall 2023', 'A'),
+(3002, 2002, 102, 'Fall 2023', 'B'),
+(3003, 2003, 103, 'Fall 2023', 'A'),
+(3004, 2004, 104, 'Spring 2023', 'B'),
+(3005, 2005, 105, 'Spring 2023', 'C'),
+(3006, 2006, 106, 'Fall 2023', 'B'),
+(3007, 2007, 107, 'Fall 2023', 'A'),
+(3008, 2008, 108, 'Spring 2023', 'A'),
+(3009, 2009, 109, 'Spring 2023', 'C'),
+(3010, 2010, 110, 'Fall 2023', 'B'),
+(3011, 2011, 101, 'Spring 2023', 'A'),
+(3012, 2012, 102, 'Fall 2023', 'C'),
+(3013, 2013, 103, 'Spring 2023', 'B'),
+(3014, 2014, 104, 'Fall 2023', 'A'),
+(3015, 2015, 105, 'Spring 2023', 'B'),
+(3016, 2016, 106, 'Fall 2023', 'C'),
+(3017, 2017, 107, 'Spring 2023', 'A'),
+(3018, 2018, 108, 'Fall 2023', 'B'),
+(3019, 2019, 109, 'Spring 2023', 'C'),
+(3020, 2020, 110, 'Fall 2023', 'A'),
+(3021, 2021, 101, 'Spring 2023', 'B'),
+(3022, 2022, 102, 'Fall 2023', 'C'),
+(3023, 2023, 103, 'Spring 2023', 'A'),
+(3024, 2024, 104, 'Fall 2023', 'B'),
+(3025, 2025, 105, 'Spring 2023', 'A'),
+(3026, 2026, 106, 'Fall 2023', 'C'),
+(3027, 2027, 107, 'Spring 2023', 'B'),
+(3028, 2028, 108, 'Fall 2023', 'A'),
+(3029, 2029, 109, 'Spring 2023', 'B'),
+(3030, 2030, 110, 'Fall 2023', 'C');
