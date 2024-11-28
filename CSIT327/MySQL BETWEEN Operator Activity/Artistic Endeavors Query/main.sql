@@ -1,0 +1,11 @@
+SELECT * FROM ArtGallery WHERE year_created BETWEEN 2015 AND 2020;
+
+SELECT * FROM ArtGallery WHERE price BETWEEN 500 AND 2000;
+
+SELECT * FROM ArtGallery WHERE exhibition_start_date BETWEEN '2024-01-01' AND '2024-06-30';
+
+SELECT * FROM ArtGallery WHERE width_cm BETWEEN 40 AND 100;
+
+SELECT *
+FROM ArtGallery
+WHERE artist BETWEEN 'A' AND 'M' AND year_created BETWEEN 2010 AND 2022;

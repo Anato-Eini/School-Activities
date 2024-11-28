@@ -1,0 +1,1 @@
+SELECT * FROM CarInventory WHERE production_year BETWEEN 2018 AND 2020;
