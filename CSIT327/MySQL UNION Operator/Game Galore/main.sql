@@ -1,0 +1,40 @@
+CREATE TABLE GameStoreInventory (
+    game_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(100),
+    platform ENUM('PC', 'PlayStation', 'Xbox', 'Switch', 'Mobile'),
+    genre VARCHAR(50),
+    release_year INT,
+    developer VARCHAR(100),
+    price DECIMAL(6, 2),
+    stock_quantity INT
+);
+
+INSERT INTO GameStoreInventory (title, platform, genre, release_year, developer, price, stock_quantity) 
+VALUES 
+('Elden Ring', 'PC', 'RPG', 2022, 'FromSoftware', 59.99, 30),
+('The Last of Us Part II', 'PlayStation', 'Action-Adventure', 2020, 'Naughty Dog', 49.99, 40),
+('Halo Infinite', 'Xbox', 'FPS', 2021, '343 Industries', 59.99, 50),
+('Cyberpunk 2077', 'PC', 'RPG', 2020, 'CD Projekt', 49.99, 25),
+('Death Stranding', 'PC', 'Adventure', 2020, 'Kojima Productions', 39.99, 35),
+('God of War', 'PlayStation', 'Action-Adventure', 2018, 'Santa Monica Studio', 29.99, 45),
+('Forza Horizon 5', 'Xbox', 'Racing', 2021, 'Playground Games', 59.99, 40),
+('Resident Evil Village', 'PC', 'Horror', 2021, 'Capcom', 49.99, 30),
+('Spider-Man: Miles Morales', 'PlayStation', 'Action-Adventure', 2020, 'Insomniac Games', 49.99, 50),
+('Gears 5', 'Xbox', 'Shooter', 2019, 'The Coalition', 39.99, 20),
+('Doom Eternal', 'PC', 'FPS', 2020, 'id Software', 29.99, 45),
+('Ghost of Tsushima', 'PlayStation', 'Action-Adventure', 2020, 'Sucker Punch Productions', 59.99, 35),
+('Assassin''s Creed Valhalla', 'Xbox', 'RPG', 2020, 'Ubisoft', 59.99, 40),
+('Red Dead Redemption 2', 'PC', 'Action-Adventure', 2019, 'Rockstar Games', 59.99, 25),
+('The Witcher 3: Wild Hunt', 'PlayStation', 'RPG', 2015, 'CD Projekt RED', 19.99, 30),
+('Hades', 'PC', 'Roguelike', 2020, 'Supergiant Games', 24.99, 20),
+('Horizon Zero Dawn', 'PlayStation', 'Action RPG', 2017, 'Guerrilla Games', 19.99, 30),
+('Hitman 3', 'Xbox', 'Stealth', 2021, 'IO Interactive', 59.99, 25),
+('Control', 'PC', 'Action-Adventure', 2019, 'Remedy Entertainment', 29.99, 40),
+('Final Fantasy VII Remake', 'PlayStation', 'RPG', 2020, 'Square Enix', 59.99, 35),
+('Battlefield 2042', 'Xbox', 'FPS', 2021, 'EA DICE', 59.99, 50),
+('Sekiro: Shadows Die Twice', 'PC', 'Action-Adventure', 2019, 'FromSoftware', 39.99, 20),
+('Ratchet & Clank: Rift Apart', 'PlayStation', 'Platformer', 2021, 'Insomniac Games', 69.99, 40),
+('Ori and the Will of the Wisps', 'Xbox', 'Platformer', 2020, 'Moon Studios', 29.99, 30),
+('Monster Hunter World', 'PC', 'Action RPG', 2018, 'Capcom', 29.99, 25),
+('Uncharted 4: A Thief''s End', 'PlayStation', 'Action-Adventure', 2016, 'Naughty Dog', 19.99, 40),
+('Sea of Thieves', 'Xbox', 'Adventure', 2018, 'Rare', 39.99, 35);
