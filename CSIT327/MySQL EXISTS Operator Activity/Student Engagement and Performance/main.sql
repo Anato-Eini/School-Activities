@@ -1,0 +1,43 @@
+CREATE TABLE StudentRecords (
+    student_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    grade_level INT,
+    birthdate DATE,
+    gender CHAR(1),
+    class_id VARCHAR(10),
+    gpa DECIMAL(3, 2),
+    attendance_rate DECIMAL(4, 2),
+    extracurricular_activity VARCHAR(100)
+);
+
+INSERT INTO StudentRecords (first_name, last_name, grade_level, birthdate, gender, class_id, gpa, attendance_rate, extracurricular_activity) 
+VALUES 
+('Emily', 'Johnson', 11, '2007-04-16', 'F', '11B', 4.0, 99.00, 'Science Club'),
+('Michael', 'Brown', 9, '2009-02-20', 'M', '9D', 3.2, 94.00, 'Math Club'),
+('Sarah', 'Wilson', 10, '2008-07-30', 'F', '10E', 3.6, 92.00, 'Orchestra'),
+('David', 'Miller', 12, '2006-09-05', 'M', '12A', 3.9, 97.00, 'Football'),
+('Sophia', 'Davis', 11, '2007-12-11', 'F', '11C', 3.7, 93.50, 'Art Club'),
+('James', 'Garcia', 9, '2009-06-24', 'M', '9F', 2.9, 90.00, 'Chess Club'),
+('Emma', 'Rodriguez', 10, '2008-03-17', 'F', '10G', 3.8, 95.00, 'Debate Club'),
+('William', 'Martinez', 12, '2006-01-29', 'M', '12B', 3.4, 88.00, NULL),
+('Olivia', 'Hernandez', 11, '2007-10-23', 'F', '11D', 3.1, 89.50, 'Basketball'),
+('Daniel', 'Lopez', 9, '2009-05-05', 'M', '9A', 3.3, 91.00, 'Soccer'),
+('Isabella', 'Gonzalez', 10, '2008-08-09', 'F', '10H', 3.5, 96.50, 'Drama Club'),
+('Matthew', 'Perez', 12, '2006-04-14', 'M', '12C', 3.6, 92.00, 'Baseball'),
+('Ava', 'Wilson', 11, '2007-03-22', 'F', '11E', 3.2, 94.50, 'Volleyball'),
+('Ethan', 'Anderson', 9, '2009-01-30', 'M', '9B', 2.8, 85.00, NULL),
+('Sophia', 'Thomas', 10, '2008-12-12', 'F', '10I', 3.7, 97.00, 'Science Club'),
+('Jacob', 'Taylor', 12, '2006-07-07', 'M', '12D', 3.0, 89.00, 'Football'),
+('Mia', 'Moore', 11, '2007-06-18', 'F', '11F', 3.9, 98.00, 'Orchestra'),
+('Lucas', 'Jackson', 9, '2009-10-10', 'M', '9C', 3.4, 90.50, 'Math Club'),
+('Lily', 'Martin', 10, '2008-11-23', 'F', '10J', 3.3, 93.00, 'Art Club'),
+('Benjamin', 'Lee', 12, '2006-05-19', 'M', '12E', 3.1, 87.00, 'Soccer'),
+('Chloe', 'Harris', 11, '2007-09-15', 'F', '11G', 3.6, 95.50, 'Drama Club'),
+('Alexander', 'Clark', 9, '2009-08-22', 'M', '9E', 2.7, 84.00, NULL),
+('Grace', 'Lewis', 10, '2008-02-14', 'F', '10K', 3.8, 96.00, 'Debate Club'),
+('Noah', 'Robinson', 12, '2006-03-31', 'M', '12F', 3.5, 92.50, 'Basketball'),
+('Zoe', 'Walker', 11, '2007-01-26', 'F', '11H', 3.4, 94.00, 'Volleyball'),
+('Aiden', 'Young', 9, '2009-12-05', 'M', '9G', 3.0, 88.00, 'Chess Club'),
+('Ella', 'Hernandez', 10, '2008-06-09', 'F', '10L', 3.7, 97.50, 'Science Club'),
+('Ryan', 'King', 12, '2006-08-17', 'M', '12G', 2.9, 86.00, 'Baseball');
