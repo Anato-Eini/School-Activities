@@ -1,0 +1,1 @@
+SELECT traveler_name FROM TravelLog WHERE expenses > 1000;
