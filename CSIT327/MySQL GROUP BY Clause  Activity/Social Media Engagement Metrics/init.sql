@@ -1,0 +1,72 @@
+CREATE TABLE Posts (
+    post_id INT PRIMARY KEY,
+    title VARCHAR(100),
+    content TEXT,
+    user_id INT
+);
+
+CREATE TABLE Comments (
+    comment_id INT PRIMARY KEY,
+    post_id INT,
+    user_id INT,
+    comment_text TEXT,
+    FOREIGN KEY (post_id) REFERENCES Posts(post_id)
+);
+
+INSERT INTO Posts (post_id, title, content, user_id) VALUES
+(101, 'First Post', 'This is my first post.', 201),
+(102, 'Introduction', 'Hello everyone, I am new here.', 202),
+(103, 'Thoughts on the latest news', 'What do you all think about the recent developments?', 203),
+(104, 'Travel Diaries', 'Sharing some memories from my recent trip.', 204),
+(105, 'Book Recommendations', 'Looking for some new books to read. Any suggestions?', 205),
+(106, 'Tech Updates', 'Discussing the latest advancements in technology.', 206),
+(107, 'Fitness Journey', 'Sharing my fitness progress and tips.', 207);
+
+INSERT INTO Comments (comment_id, post_id, user_id, comment_text) VALUES
+(201, 101, 301, 'Great post!'),
+(202, 101, 302, 'Interesting read.'),
+(203, 101, 303, 'Looking forward to more content.'),
+(204, 102, 301, 'Welcome!'),
+(205, 102, 302, 'Nice to meet you.'),
+(206, 102, 303, 'Hope you enjoy your time here.'),
+(207, 103, 301, 'It was quite surprising.'),
+(208, 103, 302, 'I agree.'),
+(209, 104, 301, 'Amazing photos!'),
+(210, 104, 302, 'Looks like a fantastic trip.'),
+(211, 105, 301, 'Try "The Catcher in the Rye" by J.D. Salinger.'),
+(212, 105, 302, 'I recommend "To Kill a Mockingbird" by Harper Lee.'),
+(213, 105, 303, 'How about "1984" by George Orwell?'),
+(214, 106, 301, 'Exciting news!'),
+(215, 106, 302, 'Can''t wait to hear more.'),
+(216, 106, 303, 'Impressive advancements!'),
+(217, 107, 301, 'Keep up the good work!'),
+(218, 107, 302, 'Inspiring journey!'),
+(219, 107, 303, 'Motivating content.'),
+(220, 101, 301, 'Looking forward to more posts!'),
+(221, 102, 302, 'Let me know if you need any help.'),
+(222, 103, 303, 'Interesting topic!'),
+(223, 104, 301, 'Wish I could travel there!'),
+(224, 105, 302, 'Thanks for the recommendations!'),
+(225, 106, 303, 'Tech is fascinating!'),
+(226, 107, 301, 'You are doing great!'),
+(227, 101, 302, 'Agreed!'),
+(228, 102, 303, 'Welcome aboard!'),
+(229, 103, 301, 'I had a similar thought.'),
+(230, 104, 302, 'Incredible shots!'),
+(231, 105, 303, 'Classic recommendations!'),
+(232, 106, 301, 'Looking forward to more updates!'),
+(233, 107, 302, 'Your progress is impressive!'),
+(234, 101, 303, 'Can''t wait to read more from you!'),
+(235, 102, 301, 'Glad to have you here!'),
+(236, 103, 302, 'Let''s discuss further!'),
+(237, 104, 303, 'What a journey!'),
+(238, 105, 301, 'Love these suggestions!'),
+(239, 106, 302, 'Technology is evolving rapidly!'),
+(240, 107, 303, 'Keep pushing forward!'),
+(241, 101, 301, 'This is just the beginning!'),
+(242, 102, 302, 'Exciting times ahead!'),
+(243, 103, 303, 'Looking forward to more discussions!'),
+(244, 104, 301, 'A trip to remember!'),
+(245, 105, 302, 'Great choices!'),
+(246, 106, 303, 'The future is bright!'),
+(247, 107, 301, 'You inspire us all!');
