@@ -1,4 +1,5 @@
 using Backprop;
+using System.CodeDom;
 
 namespace Backpropagation_Neural_Networks
 {
@@ -45,10 +46,8 @@ namespace Backpropagation_Neural_Networks
         private void button1_Click(object sender, EventArgs e)
         {
             label8.Text = "";
-            currentEpoch = 0;
             neuralNet = new NeuralNet(4, 20, 1);
             textBox9.Text = 20.ToString();
-            textBox10.Text = currentEpoch.ToString();
         }
 
         /// <summary>
@@ -76,7 +75,42 @@ namespace Backpropagation_Neural_Networks
         }
 
         /// <summary>
-        /// Neural Network learns from the dataset
+        /// Trains 1 epoch
+        /// </summary>
+        private void train()
+        {
+            if (neuralNet == null)
+                return;
+
+            for (int i = 0; i < 16; i++)
+            {
+                neuralNet.setInputs(0, dataset[i, 0]);
+                neuralNet.setInputs(1, dataset[i, 1]);
+                neuralNet.setInputs(2, dataset[i, 2]);
+                neuralNet.setInputs(3, dataset[i, 3]);
+                neuralNet.setDesiredOutput(0, dataset[i, 4]);
+                neuralNet.learn();
+            }
+        }
+
+        /// <summary>
+        /// Trains the model until it correctly fits the desired outputs
+        /// </summary>
+        private void trainUntilFit()
+        {
+            textBox10.Text = 0.ToString();
+            currentEpoch = 0;
+
+            while (!fitTest())
+            {
+                train();
+
+                textBox10.Text = (++currentEpoch).ToString();
+            }
+        }
+
+        /// <summary>
+        /// Button for model learning
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -90,22 +124,14 @@ namespace Backpropagation_Neural_Networks
 
             label8.Text = "";
 
-            while (!fitTest())
-            {
-                for (int i = 0; i < 16; i++)
-                {
-                    neuralNet.setInputs(0, dataset[i, 0]);
-                    neuralNet.setInputs(1, dataset[i, 1]);
-                    neuralNet.setInputs(2, dataset[i, 2]);
-                    neuralNet.setInputs(3, dataset[i, 3]);
-                    neuralNet.setDesiredOutput(0, dataset[i, 4]);
-                    neuralNet.learn();
-                }
-                
-                textBox10.Text = (++currentEpoch).ToString();
-            }
+            trainUntilFit();
         }
 
+        /// <summary>
+        /// Outputs a data from the model friven a set of inputs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button3_Click(object sender, EventArgs e)
         {
             label8.Text = "";
@@ -122,10 +148,46 @@ namespace Backpropagation_Neural_Networks
                 textBox5.Text = output.ToString();
                 textBox6.Text = Convert.ToInt32(Math.Round(output)).ToString();
             }
+            catch (NullReferenceException ex)
+            {
+                label8.Text = "Model is not yet initialized!";
+            }
             catch (Exception ex)
             {
                 label8.Text = "Incorrect Inputs!";
             }
+        }
+
+        /// <summary>
+        /// Finds minimum number of hidden neuron.
+        /// Note that the maximum epoch is 1000
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void button4_Click(object sender, EventArgs e)
+        {
+            while (true)
+            {
+                for (int i = 1; i <= 100; i++)
+                {
+                    textBox7.Text = i.ToString();
+
+                    neuralNet = new NeuralNet(4, i, 1);
+                    for (int j = 1; j <= 2000; j++)
+                    {
+                        train();
+                        textBox10.Text = j.ToString();
+                    }
+
+                    if (fitTest())
+                        return;
+                }
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

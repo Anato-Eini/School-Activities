@@ -160,6 +160,7 @@
             button4.TabIndex = 13;
             button4.Text = "Find Minimum Hidden Neurons";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // label2
             // 
@@ -201,6 +202,7 @@
             button5.TabIndex = 16;
             button5.Text = "Find Minimum Epochs";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // textBox9
             // 
