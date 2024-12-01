@@ -41,10 +41,6 @@
             button2 = new Button();
             button3 = new Button();
             button4 = new Button();
-            label2 = new Label();
-            textBox7 = new TextBox();
-            textBox8 = new TextBox();
-            label5 = new Label();
             button5 = new Button();
             textBox9 = new TextBox();
             label6 = new Label();
@@ -154,7 +150,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(80, 368);
+            button4.Location = new Point(227, 285);
             button4.Name = "button4";
             button4.Size = new Size(100, 70);
             button4.TabIndex = 13;
@@ -162,41 +158,9 @@
             button4.UseVisualStyleBackColor = true;
             button4.Click += button4_Click;
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(80, 337);
-            label2.Name = "label2";
-            label2.Size = new Size(108, 15);
-            label2.TabIndex = 14;
-            label2.Text = "Minimum Neurons";
-            // 
-            // textBox7
-            // 
-            textBox7.Location = new Point(203, 334);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(100, 23);
-            textBox7.TabIndex = 15;
-            // 
-            // textBox8
-            // 
-            textBox8.Location = new Point(484, 334);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(100, 23);
-            textBox8.TabIndex = 18;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(361, 337);
-            label5.Name = "label5";
-            label5.Size = new Size(101, 15);
-            label5.TabIndex = 17;
-            label5.Text = "Minimum Epochs";
-            // 
             // button5
             // 
-            button5.Location = new Point(361, 368);
+            button5.Location = new Point(508, 285);
             button5.Name = "button5";
             button5.Size = new Size(100, 70);
             button5.TabIndex = 16;
@@ -256,11 +220,7 @@
             Controls.Add(label7);
             Controls.Add(textBox9);
             Controls.Add(label6);
-            Controls.Add(textBox8);
-            Controls.Add(label5);
             Controls.Add(button5);
-            Controls.Add(textBox7);
-            Controls.Add(label2);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(button2);
@@ -295,10 +255,6 @@
         private Button button2;
         private Button button3;
         private Button button4;
-        private Label label2;
-        private TextBox textBox7;
-        private TextBox textBox8;
-        private Label label5;
         private Button button5;
         private TextBox textBox9;
         private Label label6;

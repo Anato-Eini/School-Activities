@@ -160,7 +160,7 @@ namespace Backpropagation_Neural_Networks
 
         /// <summary>
         /// Finds minimum number of hidden neuron.
-        /// Note that the maximum epoch is 1000
+        /// Note that the maximum epoch is 5000
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -168,26 +168,43 @@ namespace Backpropagation_Neural_Networks
         {
             while (true)
             {
-                for (int i = 1; i <= 100; i++)
+                for (int i = 1; i <= 100; i++)//neurons
                 {
-                    textBox7.Text = i.ToString();
+                    textBox9.Text = i.ToString();
 
                     neuralNet = new NeuralNet(4, i, 1);
-                    for (int j = 1; j <= 2000; j++)
-                    {
-                        train();
-                        textBox10.Text = j.ToString();
-                    }
 
-                    if (fitTest())
-                        return;
+                    trainUntilFit();
                 }
             }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            int minimumEpoch = int.MaxValue;
+            int attempts = 0;
 
+            for (int i = 1; i <= 10000; i++) //Neurons
+            {
+                textBox9.Text = i.ToString();
+
+                neuralNet = new NeuralNet(4, i, 1);
+
+                trainUntilFit();
+
+                if (currentEpoch < minimumEpoch)
+                {
+                    minimumEpoch = currentEpoch;
+                    attempts = 0;
+                }
+                else
+                {
+                    attempts++;
+
+                    if (attempts == 100)
+                        return;
+                }
+            }
         }
     }
 }
