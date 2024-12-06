@@ -7,27 +7,23 @@ public class UserService(IUserRepository userRepository) : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
 
-    public async Task<IEnumerable<UserDTO>> GetUsers()
+    public async Task<IEnumerable<UserResponseDTO>> GetUsers()
     {
-        List<UserDTO> users = new();
-        foreach (var user in await _userRepository.GetUsers())
+        List<UserResponseDTO> users = (await _userRepository.GetUsers()).Select(user => new UserResponseDTO
         {
-            users.Add(new UserDTO
-            {
-                Username = user.Username,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                PhoneNumber = user.PhoneNumber,
-                Address = user.Address
-            });
-        }
+            Username = user.Username,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            PhoneNumber = user.PhoneNumber,
+            Address = user.Address
+        }).ToList();
 
         return users;
     }
-    public async Task<UserDTO> GetUser(int id)
+    public async Task<UserResponseDTO> GetUser(int id)
     {
         User user = await _userRepository.GetUserById(id);
-        return new UserDTO
+        return new UserResponseDTO
         {
             Username = user.Username,
             FirstName = user.FirstName,
@@ -36,38 +32,24 @@ public class UserService(IUserRepository userRepository) : IUserService
             Address = user.Address
         };
     }
-    public async Task<UserDTO> CreateUser(UserDTO user)
+    public async Task<UserResponseDTO> CreateUser(UserCreateDTO  user)
     {
-        User useMade = await _userRepository.CreateUser(new User
-        {
-            Username = user.Username,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        });
+        User userMade = await _userRepository.CreateUser(user);
 
-        return new UserDTO
+        return new UserResponseDTO
         {
-            Username = useMade.Username,
-            FirstName = useMade.FirstName,
-            LastName = useMade.LastName,
-            PhoneNumber = useMade.PhoneNumber,
-            Address = useMade.Address
+            Username = userMade.Username,
+            FirstName = userMade.FirstName,
+            LastName = userMade.LastName,
+            PhoneNumber = userMade.PhoneNumber,
+            Address = userMade.Address
         };
     }
-    public async Task<UserDTO> UpdateUser(int id, UserDTO user)
+    public async Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user)
     {
-        User userUpdated = await _userRepository.UpdateUser(new User
-        {
-            Username = user.Username,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        });
+        User userUpdated = await _userRepository.UpdateUser(user);
 
-        return new UserDTO
+        return new UserResponseDTO
         {
             Username = userUpdated.Username,
             FirstName = userUpdated.FirstName,
@@ -76,11 +58,11 @@ public class UserService(IUserRepository userRepository) : IUserService
             Address = userUpdated.Address
         };
     }
-    public async Task<UserDTO> DeleteUser(int id)
+    public async Task<UserResponseDTO> DeleteUser(int id)
     {
         User userdeleted = await _userRepository.DeleteUser(id);
 
-        return new UserDTO
+        return new UserResponseDTO
         {
             Username = userdeleted.Username,
             FirstName = userdeleted.FirstName,

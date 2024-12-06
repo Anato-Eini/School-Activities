@@ -12,14 +12,14 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // GET: api/UserDTOs
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserDTO>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<UserResponseDTO>>> GetUsers()
     {
         return Ok(await _userService.GetUsers());
     }
 
     // GET: api/UserDTOs/5
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserDTO>> GetUser(int id)
+    public async Task<ActionResult<UserResponseDTO>> GetUser(int id)
     {
         try
         {
@@ -33,14 +33,20 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // POST: api/UserDTOs
     [HttpPost]
-    public async Task<ActionResult<UserDTO>> PostUser(UserDTO user)
+    public async Task<ActionResult<UserResponseDTO>> PostUser([FromBody] UserCreateDTO user)
     {
-        return Ok(await _userService.CreateUser(user));
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        UserResponseDTO createdUser = await _userService.CreateUser(user);
+        return CreatedAtAction(nameof(GetUser), createdUser);
     }
 
     // PUT: api/UserDTOs/5
     [HttpPut("{id}")]
-    public async Task<ActionResult<UserDTO>> PutUser(int id, UserDTO user)
+    public async Task<ActionResult<UserResponseDTO>> PutUser(int id, UserCreateDTO user)
     {
         try
         {
@@ -54,7 +60,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // DELETE: api/UserDTOs/5
     [HttpDelete("{id}")]
-    public async Task<ActionResult<UserDTO>> DeleteUser(int id)
+    public async Task<ActionResult<UserResponseDTO>> DeleteUser(int id)
     {
         try
         {

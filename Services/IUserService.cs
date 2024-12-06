@@ -4,9 +4,9 @@ namespace ANI.Services;
 
 public interface IUserService
 {
-    public Task<IEnumerable<UserDTO>> GetUsers();
-    public Task<UserDTO> GetUser(int id);
-    public Task<UserDTO> CreateUser(UserDTO user);
-    public Task<UserDTO> UpdateUser(int id, UserDTO user);
-    public Task<UserDTO> DeleteUser(int id);
+    public Task<IEnumerable<UserResponseDTO>> GetUsers();
+    public Task<UserResponseDTO> GetUser(int id);
+    public Task<UserResponseDTO> CreateUser(UserCreateDTO user);
+    public Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user);
+    public Task<UserResponseDTO> DeleteUser(int id);
 }
