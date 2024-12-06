@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-lg">
+        <h5>Banned Users</h5>
+        <hr>
+        {% for user in banned_users %}
+        <div class="card mb-2">
+            <div class="card-body p-2 p-sm-3">
+                <div class="media forum-item">
+                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/media/{{ user.picture }}" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                    <div class="media-body align-self-center">
+                        <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">{{ user.username }}</a></h6>
+                    </div>
+                    <div class="text-muted small text-center align-self-center">
+                        <form method="POST" action="{% url 'unban_user' user.id %}" onsubmit="return confirm('Are you sure you want to unban this user?')">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Unban user</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .banned-message {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .banned-message h1 {
+            color: red;
+            font-size: 2em;
+        }
+        .banned-message p {
+            font-size: 1.2em;
+        }
+        .banned-message .btn {
+            margin-top: 20px;
+        }
+    </style>
+    {% include 'header.html' %}
+    <div class="banned-message">
+        <h1>Access Denied</h1>
+        <h1>{{ userban.user_ref.username }}</h1>
+        <p>Your account has been banned by {{ userban.admin_ref.username }}. Please make a ban appeal explaining why you should be unbanned.</p><br>
+        <p>Reason: {{ userban.reason }}</p>
+        <form method = "POST" action = "{% url 'ban_appeal' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark" data-toggle="tooltip" data-placement="top" title="Appeal ban">
+                <i class="fas fa-biohazard"></i>Appeal ban
+            </button>
+        </form>
+    </div>
+</html>

@@ -1,0 +1,32 @@
+.slider_container{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider_button{
+    background-color: #d2d2d2;
+    width: 100px;
+    height: 50px;
+    border-radius: 100px;
+    cursor: pointer;
+}
+
+.slider_button::before{
+    position: absolute;
+    content: '';
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+    margin: 5px;
+}
+
+input:checked + .slider_button{
+    background-color: blue;
+}
+
+input:checked + .slider_button::before{
+    transform: translateX(-50px);
+}

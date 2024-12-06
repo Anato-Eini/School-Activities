@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/css/global.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/css/home.css' %}">
+</head>
+<body>
+
+{% include 'header.html' %}
+
+<div class="container">
+    <div class="main-body p-0">
+        <div class="inner-wrapper">
+            {% include 'sidebar.html' %}
+          
+            <div class="inner-main">
+                <div class="inner-main-header">
+                    <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#" data-toggle="inner-sidebar"> <i class="material-icons">arrow_forward_ios</i></a>
+                    <button type="button" class="black-button" onclick= "location.href = '{% url 'new_post' %}'">New Post</button>
+                    <span class="input-icon input-icon-sm ml-auto w-auto">
+                        <form action="" method="post" class="d-flex align-items-center">
+                            {% csrf_token %}
+                            {{ search_form.content }}
+                            &nbsp&nbsp
+                            {{ search_form.choices }}
+                            &nbsp&nbsp
+                            <button class="orange-button" type="submit">Submit</button>
+                        </form>
+                    </span> 
+                </div>
+
+                <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
+                    {% for post in posts %}
+                        <div class="card mb-2" onclick="window.location.href='{% url 'post_detail' pk=post.id page_number=1 %}'" style="cursor: pointer;">
+                            <input type="hidden" name="user_post_id" value="{{ post.id }}">
+                            <div class="card-body p-2 p-sm-3">
+                                <div class="media forum-item">
+                                    <a href="#" data-toggle="collapse" data-target=".forum-content">
+                                        <img src="/media/{{ post.post_ref__user_ref__picture }}" class="mr-3 rounded-circle" width="50" height="50" alt="User" onclick="event.stopPropagation(); window.location.href='/profile/{{ post.user_ref__id }}/'"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <h6>
+                                            <p class="text-body">{{ post.post_ref__title }}</p>
+                                        </h6>
+                                        <p class="text-secondary">
+                                            {{ post.post_ref__content }}
+                                        </p>
+                                    </div>
+                                    <div class="text-muted small text-center align-self-center">
+                                        <span class="d-none d-sm-inline-block">
+                                            <i class="far fa-eye"></i>
+                                        </span>
+                                        <span>
+                                            <i class="far fa-comment ml-2"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var csrf_token = '{% csrf_token %}'
+</script>
+<script type="module" src="{% static 'blog/js/home.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,33 @@
+.update-delete-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    align-items: center; 
+}
+
+.update-delete-buttons form {
+    flex: 0 0 auto; 
+    margin: 0; 
+    padding: 0; 
+}
+
+.comments{
+    border: 1px solid black;
+    margin-top:5px;
+}
+
+.create-comment{
+    margin-top:10px;
+    border: 1px solid black;
+}
+
+.post-content{
+    border: 1px solid black;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-bottom: 8px;
+}
+
+.h2{
+    font-weight: 500;
+}

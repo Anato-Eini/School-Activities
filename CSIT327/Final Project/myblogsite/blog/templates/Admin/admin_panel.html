@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/css/profile.css' %}">
+    <style>
+        .profile-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .profile-pic {
+        max-width: 300px;
+        max-height: 300px;
+        border-radius: 50%; 
+        margin-bottom: 20px;
+    }
+
+    .profile-info h5 {
+        margin: 10px 0;
+    }
+
+    h2 {
+        margin-bottom: 30px;
+    }
+
+    .row{
+        margin: 60px;
+    }
+    </style>
+    
+</head>
+<body>
+    {% include 'header.html' %}
+    
+        <div class="container-fluid m-3">
+            <div class="row d-flex">
+                <div class="left-column p-2 border border-primary" style="flex: 0 0 20%; max-width: 20%;">
+                    <!-- 20% content here -->
+                    <div class="profile-container">
+                        <h2>Profile</h2>
+                        <img src="{{ picture }}" alt="Profile Picture" class="profile-pic" style="height: 100px;">
+                        
+                        <div>
+                            <div style="display: inline;">
+                                <button id="showUsers" class="btn btn-dark" style="margin: 10px;">Users</button>
+                                </br>
+                                <button id="showPosts" class="btn btn-dark" style="margin: 10px;">Reported Posts</button>
+                                </br>
+                                <button id="showComments" class="btn btn-dark" style="margin: 10px;">Reported Comments</button>
+                                <br>
+                                <button id="showAppeals" class="btn btn-dark" style="margin: 10px;">Appeals</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-2 border border-secondary">
+                    
+                
+                    <div id="UsersDashboard" style="display: block;">
+                        {% include 'Admin/admin_dashboard.html' %}
+                    </div>
+                
+                    <div id="PostsDashboard" style="display: none;">
+                        {% include 'Admin/reported_posts.html' %}
+                    </div>
+                    
+                    <div id="CommentsDashboard" style="display: none;">
+                        {% include 'Admin/reported_comments.html' %}
+                    </div>
+
+                    <div id="AppealsDashboard" style="display: none;">
+                        {% include 'Admin/appeals.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        var csrf_token = '{% csrf_token %}'
+    </script>
+    <script type="module" src="{% static 'blog/js/profile.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+asgiref
+Deprecated
+Django
+pillow
+sqlparse
+wrapt

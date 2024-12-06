@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-lg">
+        <h5>Posts</h5>
+        <hr>
+        {% for user_post in user_posts %}
+        <div class="card mb-2" onclick="window.location.href = '/post_detail/{{ user_post.id }}/1/'">
+            <div class="card-body p-2 p-sm-3">
+                <div class="media forum-item">
+                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/media/{{ user_post.user_ref.picture }}" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                    <div class="media-body align-self-center">
+                        <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">{{ user_post.post_ref.title }}</a></h6>
+                    </div>
+                    <div class="text-muted small text-center align-self-center">
+                        <span class="d-none d-sm-inline-block favorite-views" data-value="{{ user_post.id }}"><i class="far fa-eye"></i></span>
+                        <span class="favorite-comments-num" data-value="{{ user_post.id }}"><i class="far fa-comment ml-2"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-lg">
+        <h5>Comments</h5>
+        <hr>
+        {% for user_comment in user_comments %}
+        <div class="card mb-2">
+            <div class="card-body p-2 p-sm-3">
+                <div class="media forum-item">
+                    <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="/media/{{ user_comment.user_ref.picture }}" class="mr-3 rounded-circle" width="50" alt="User" /></a>
+                    <div class="media-body align-self-center">
+                        <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">{{ user_comment.content }}</a></h6>
+                    </div>
+                    <div class="text-muted small text-center align-self-center">
+                        <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i></span>
+                        <span><i class="far fa-comment ml-2"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

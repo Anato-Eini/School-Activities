@@ -1,0 +1,60 @@
+<style>
+    .row{
+        margin: 60px;
+    }
+</style>
+
+<div class="row">
+    <!-- Total Post count -->
+    <div class="col">
+        <div class="col-sm">
+            <div class="card text-center mb-3"> 
+                <div class="card-header">
+                    <h5 class="card-title">Total Posts</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_posts.count }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Total Comment count -->
+    <div class="col">
+        <div class="col-sm">
+            <div class="card text-center mb-3"> 
+                <div class="card-header">
+                    <h5 class="card-title">Total Comment</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_comments.count }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Upvoted Posts -->
+    <div class="col">
+        <div class="col-sm">
+            <div class="card text-center mb-3"> 
+                <div class="card-header">
+                    <h5 class="card-title">Upvoted Posts</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_upvotes.count }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--- Downvote Posts -->
+    <div class="col">
+        <div class="col-sm">
+            <div class="card text-center mb-3"> 
+                <div class="card-header">
+                    <h5 class="card-title">Downvoted Posts</h5>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user_downvotes.count }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h5>Deleted Posts</h5>
+            <hr>
+            {% if deleted_user_posts %}
+                {% for post in deleted_user_posts %}
+                    <div class="card mb-2">
+                        <div class="card-body p-2 p-sm-3">
+                            <div class="media forum-item">
+                                <a href="#" data-toggle="collapse" data-target=".forum-content">
+                                    <img src="/media/{{post.user_ref.picture}}" class="mr-3 rounded-circle" width="50" alt="User" />
+                                </a>
+                                <div class="media-body align-self-center">
+                                    <h6>
+                                        <a href="#" class="text-body">{{ post.post_ref.title }}</a>
+                                    </h6>
+
+                                </div>
+                                <div class="text-muted small text-center align-self-center">
+                                    <span class="d-none d-sm-inline-block favorite-views"><i class="far fa-eye"></i></span>
+                                    <span class="favorite-comments-num"><i class="far fa-comment ml-2"></i></span>
+                                    <div style = "display: flex;">
+                                        <form action="{% url 'perma_delete' pk=post.pk %}" method="POST" onsubmit="return confirm('Are you sure you want to permanently delete this post?')">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-dark" style = "margin: 0 10px;">Delete post</button>
+                                        </form>
+                                        <form action="{% url 'restore_post' pk=post.pk %}" method="POST" onsubmit="return confirm('Are you sure you want to restore this post?')">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-dark">Restore</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No deleted posts found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+nav{
+    background-color: #091057;
+}
+.navbar-custom {
+    padding-top: 0.2rem !important;
+    padding-bottom: 0.2rem !important;
+    min-height: 40px !important;
+}
+
+.navbar-custom .nav-link {
+    padding-top: 0.1rem !important;
+    padding-bottom: 0.1rem !important;
+    font-size: 0.9rem !important;
+}
+
+.navbar-custom .navbar-brand {
+    font-size: 1rem !important;
+    padding-top: 0.1rem !important;
+    padding-bottom: 0.1rem !important;
+}
+
+.profile-img {
+    max-width: 50px !important;
+    max-height: 50px !important;
+    border-radius: 50% !important; 
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Comment</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/css/global.css' %}">
+</head>
+<body>
+    {% include 'header.html' %}
+    <h3>Edit comment</h3>
+
+    {{ comment.content }}
+    {{ comment.image }}
+
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {{ form.content }}
+        {{ form.image }}
+        <br>
+        <button type="submit" class="btn btn-dark">Submit</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <h5>Ban appeals</h5>
+            <hr>
+            {% if appeals %}
+                {% for appeal in appeals %}
+                    <div class="card mb-2">
+                        <div class="card-body p-2 p-sm-3">
+                            <div class="media forum-item">
+                                <a href="#" data-toggle="collapse" data-target=".forum-content">
+                                    <img src="/media/{{ appeal.userban_ref.user_ref.picture }}" class="mr-3 rounded-circle" width="50" alt="User" />
+                                </a>
+                                <div class="media-body align-self-center">
+                                    <h6>
+                                        <a href="#" class="text-body">Banned by: {{ appeal.userban_ref.admin_ref.username }}</a><br>
+                                        <a href="#" class="text-body">Ban Reason: {{ appeal.userban_ref.reason }}</a><br>
+                                        <a href="#" class="text-body">Name: {{ appeal.userban_ref.user_ref.username }}</a><br>
+                                        <a href="#" class="text-body">Justification: {{ appeal.justification }}</a><br>
+                                        <a href="#" class="text-body">Time of ban: {{ appeal.time }}</a><br>
+                                    </h6>
+                                </div>
+                                <div class="text-muted small text-center align-self-center">
+                                    <span class="d-none d-sm-inline-block favorite-views"><i class="far fa-eye"></i></span>
+                                    <span class="favorite-comments-num"><i class="far fa-comment ml-2"></i></span>
+                                    <div style = "display: flex;">
+                                        <form method="POST" action="{% url 'accept_appeal' appeal.id %}" onsubmit="return confirm('Are you sure you want to unban this user?')">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-dark" style = "margin: 0 10px;">Unban</button>
+                                        </form>
+                                        <form method = "POST" action="{% url 'reject_appeal' appeal.id %}" onsubmit="return confirm('Are you sure you want to reject this appeal?')">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-dark">Reject</button>
+                                        </form>
+                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No ban appeals found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

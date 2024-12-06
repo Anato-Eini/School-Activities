@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'blog/css/update_post.css' %}">
+    </head>
+    <body>
+        {% include 'header.html' %}
+        <div class="update-post">
+            <h3>Update Post</h3>
+            <div class = "form-group row">
+                <!-- update title -->
+                <form class="form-inline" method="POST" action="{% url 'update_post_title' user_post_pk %}" onsubmit="return confirm('Are you sure?')">
+                    {% csrf_token %}
+                    <label class="col-sm-2 col-form-label" for="new_title">New Title:</label>
+                    <input class="form-control" type="text" id="new_title" name="new_title" value="{{ post.title }}">
+                    <button type="submit" class = "btn btn-dark">Update Title</button>
+                </form>
+            </div>
+            <div class = "form-group row">
+                <!-- update content -->
+                <form class="form-inline" method="POST" action="{% url 'update_post_content' user_post_pk %}" onsubmit="return confirm('Are you sure?')">
+                    {% csrf_token %}
+                    <label class="col-sm-2 col-form-label" for="new_content">New Content:</label>
+                    <textarea class="form-control" id="new_content" name="new_content">{{ post.content }}</textarea>
+                    <button type="submit" class = "btn btn-dark">Update Content</button>
+                </form>
+            </div>
+            
+        </div>
+    </body>
+</html>

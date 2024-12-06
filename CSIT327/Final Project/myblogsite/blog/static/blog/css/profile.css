@@ -1,0 +1,27 @@
+.main-container{
+    display: grid;
+    grid-template-columns: repeat(11, 100px);
+    grid-template-rows: 1fr 2fr 1fr;
+}
+
+.profile-container {
+max-width: 600px;
+margin: 0 auto;
+text-align: center;
+padding: 20px;
+}
+
+.profile-pic {
+max-width: 300px;
+max-height: 300px;
+border-radius: 50%; 
+margin-bottom: 20px;
+}
+
+.profile-info h5 {
+margin: 10px 0;
+}
+
+h2 {
+margin-bottom: 30px;
+}

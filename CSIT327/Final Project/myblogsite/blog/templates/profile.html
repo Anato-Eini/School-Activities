@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/css/profile.css' %}">
+    <style>
+        .profile-container {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .profile-pic {
+        max-width: 300px;
+        max-height: 300px;
+        border-radius: 50%; 
+        margin-bottom: 20px;
+    }
+
+    .profile-info h5 {
+        margin: 10px 0;
+    }
+
+    h2 {
+        margin-bottom: 30px;
+    }
+    </style>
+    
+</head>
+<body>
+    {% include 'header.html' %}
+    
+        {% include 'Profile/profile_count.html' %}
+
+        <div class="container-fluid">
+            <div class="row d-flex">
+                <div class="left-column p-2 border border-primary" style="flex: 0 0 20%; max-width: 20%;">
+                    <!-- 20% content here -->
+                    <div class="profile-container">
+                        <h2>Profile</h2>
+                        <img src="{{ user.picture.url }}" alt="Profile Picture" class="profile-pic" style="height: 100px; " onclick="window.location.href='{{ user.picture.url }}'">
+                        
+                        <div class="profile-info">
+                            <h5>Username: <i>{{ user.username }}</i></h5>
+                            <h5>Is Staff: <i>{{ user.is_staff }}</i></h5>
+                            {% if user.is_staff == True %}
+                                <p style="color: red; font-weight: bold; font-size: 18px;">Admin</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col p-2 border border-secondary">
+                    <div style="display: flex;">
+                        <button id="showOverview" class="btn btn-dark" style="margin: 10px;">Overview</button>
+                        <button id="showFavorites" class="btn btn-dark" style="margin: 10px;">Favorites</button>
+
+                    {% if user.id == current_user.id %}
+                        <button id="showDeleted" class="btn btn-dark" style="margin: 10px;">Deleted</button>
+                    {% endif %}
+                    </div>
+                
+                    <div id="OverviewDashboard" style="display: block;">
+                        {% include 'Profile/profile_dashboard.html' %}
+                     </div>
+                
+                    <div id="FavoritesDashboard" style="display: none;">
+                        {% include 'Profile/profile_test.html' %}
+                    </div>
+                    <div id="DeleteDashboard" style="display: none;">
+                        {% include 'Profile/profile_deleted_posts.html' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        var csrf_token = '{% csrf_token %}'
+    </script>
+    <script type="module" src="{% static 'blog/js/profile.js' %}"></script>
+</body>
+</html>

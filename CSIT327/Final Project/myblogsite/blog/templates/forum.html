@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/css/global.css' %}">
+</head>
+<body>
+    <h1>Forums</h1>
+    
+    {% for forum in forums%}
+        <div class="forums" onclick="{% url 'posts' forum.id %}">
+            <h3>forum.title</h3>
+            <p>forum.description</p>
+        </div>
+    {% endfor %}
+
+</body>
+</html>

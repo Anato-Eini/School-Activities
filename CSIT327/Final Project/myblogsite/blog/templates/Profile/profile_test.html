@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-lg">
+        <h5>Favorite Posts</h5>
+        <hr>
+        {% for favorite in user_favorites %}
+            <div class="card mb-2">
+                <div class="card-body p-2 p-sm-3">
+                    <div class="media forum-item">
+                        <a href="/profile/{{ favorite.user_post_ref.user_ref.id }}" data-toggle="collapse" data-target=".forum-content"><img src="/media/{{ favorite.user_post_ref.user_ref.picture }}" class="mr-3 rounded-circle" width="50" alt="{{ favorite.user_post_ref.user_ref.picture }}" /></a>
+                        <div class="media-body align-self-center">
+                            <h6><a href="/post_detail/{{ favorite.user_post_ref.id }}/1/" data-toggle="collapse" data-target=".forum-content" class="text-body">{{ favorite.user_post_ref.post_ref.title }}</a></h6>
+                        </div>
+                        <div class="text-muted small text-center align-self-center">
+                            <span class="d-none d-sm-inline-block favorite-views" data-value="{{ favorite.user_post_ref.id }}"><i class="far fa-eye"></i></span>
+                            <span class="favorite-comments-num" data-value="{{ favorite.user_post_ref.id }}"><i class="far fa-comment ml-2"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
