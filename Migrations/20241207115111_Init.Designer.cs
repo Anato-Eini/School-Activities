@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ANI.Migrations
 {
     [DbContext(typeof(AniContext))]
-    [Migration("20241205102403_Init")]
+    [Migration("20241207115111_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -50,6 +50,9 @@ namespace ANI.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("UserID");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });

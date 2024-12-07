@@ -16,7 +16,7 @@ $(document).ready(function () {
             success: function (response) {
                 if (response !== null && response.token) {
                     localStorage.setItem('authToken', response.token);
-                    window.location.href = 'index.html'; 
+                    window.location.href = 'home.html'; 
                 } else {
                     $('#login-error').html(response);
                 }

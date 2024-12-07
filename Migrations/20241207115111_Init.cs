@@ -27,6 +27,12 @@ namespace ANI.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.UserID);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />
