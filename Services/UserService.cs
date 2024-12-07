@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ANI.Services;
 
-public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher<User> passwordHasher) : IUserService
+public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher<User> passwordHasher, ITokenService tokenService) : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
     private readonly IPasswordHasher<User> _passwordHasher = passwordHasher;
+    private readonly ITokenService _tokenService = tokenService;
 
     public async Task<IEnumerable<UserResponseDTO>> GetUsers()
     {
@@ -20,6 +21,23 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     public async Task<UserResponseDTO> GetUser(int id)
     {
         return _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(id));
+    }
+
+    public async Task<string> Authenticate(UserLoginDTO userLoginDTO)
+    {
+        try
+        {
+            User userFetch = await _userRepository.GetUser(userLoginDTO.Username);
+
+            if (_passwordHasher.VerifyHashedPassword(userFetch, userFetch.Password, userLoginDTO.Password) == PasswordVerificationResult.Failed)
+                throw new KeyNotFoundException("Invalid password.");
+
+            return _tokenService.GenerateToken(_mapper.Map<UserLoginDTO>(userFetch));
+        }
+        catch (KeyNotFoundException e)
+        {
+            throw new KeyNotFoundException(e.Message);
+        }
     }
 
     public async Task<UserResponseDTO> GetUser(UserLoginDTO userLoginDTO)
@@ -32,7 +50,8 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
                 throw new KeyNotFoundException("Invalid password.");
 
             return _mapper.Map<UserResponseDTO>(userFetch);
-        } catch (KeyNotFoundException e)
+        }
+        catch (KeyNotFoundException e)
         {
             throw new KeyNotFoundException(e.Message);
         }
