@@ -41,13 +41,17 @@ public class UserDTOsController(IUserService userService) : ControllerBase
         }
 
         UserResponseDTO createdUser = await _userService.CreateUser(user);
-        return CreatedAtAction(nameof(GetUser), createdUser);
+
+        return CreatedAtAction(nameof(GetUser), new { id = createdUser.Username }, createdUser);
     }
 
     // PUT: api/UserDTOs/5
     [HttpPut("{id}")]
-    public async Task<ActionResult<UserResponseDTO>> PutUser(int id, UserCreateDTO user)
+    public async Task<ActionResult<UserResponseDTO>> PutUser(int id, [FromBody] UserCreateDTO user)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         try
         {
             return Ok(await _userService.UpdateUser(id, user));

@@ -18,41 +18,28 @@ public class UserRepository(AniContext context) : IUserRepository
         return await _context.Users.FindAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found.");
     }
 
-    public async Task<User> CreateUser(UserCreateDTO user)
+    public async Task<User> CreateUser(User user)
     {
-        _context.Users.Add(new User{
-            Username = user.Username,
-            Password = user.Password,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        });
+        _context.Users.Add(user);
 
         await _context.SaveChangesAsync();
 
-        return new User
-        {
-            Username = user.Username,
-            Password = user.Password,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        };
+        return user;
     }
 
-    public async Task<User> UpdateUser(UserCreateDTO userDto)
+    public async Task<User> UpdateUser(User userUpdate)
     {
-        User user = await _context.Users.FindAsync(userDto.Username) ?? throw new KeyNotFoundException($"User with username {userDto.Username} not found.");
-        user.Username = userDto.Username;
-        user.Password = userDto.Password;
-        user.FirstName = userDto.FirstName;
-        user.LastName = userDto.LastName;
-        user.PhoneNumber = userDto.PhoneNumber;
-        user.Address = userDto.Address;
+        User user = await _context.Users.FindAsync(userUpdate.Username) ?? throw new KeyNotFoundException($"User with username {userUpdate.Username} not found.");
+
+        user.Username = userUpdate.Username;
+        user.Password = userUpdate.Password;
+        user.FirstName = userUpdate.FirstName;
+        user.LastName = userUpdate.LastName;
+        user.PhoneNumber = userUpdate.PhoneNumber;
+        user.Address = userUpdate.Address;
 
         _context.Entry(user).State = EntityState.Modified;
+
         await _context.SaveChangesAsync();
 
         return user;
@@ -60,7 +47,7 @@ public class UserRepository(AniContext context) : IUserRepository
 
     public async Task<User> DeleteUser(int id)
     {
-        var user = await _context.Users.FindAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found.");
+        User user = await _context.Users.FindAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found.");
 
         _context.Users.Remove(user);
         await _context.SaveChangesAsync();

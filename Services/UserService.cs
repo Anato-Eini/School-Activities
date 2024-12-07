@@ -34,7 +34,14 @@ public class UserService(IUserRepository userRepository) : IUserService
     }
     public async Task<UserResponseDTO> CreateUser(UserCreateDTO  user)
     {
-        User userMade = await _userRepository.CreateUser(user);
+        User userMade = await _userRepository.CreateUser(new User{
+            Username = user.Username,
+            Password = user.Password,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            PhoneNumber = user.PhoneNumber,
+            Address = user.Address
+        });
 
         return new UserResponseDTO
         {
@@ -47,7 +54,14 @@ public class UserService(IUserRepository userRepository) : IUserService
     }
     public async Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user)
     {
-        User userUpdated = await _userRepository.UpdateUser(user);
+        User userUpdated = await _userRepository.UpdateUser(new User{
+            Username = user.Username,
+            Password = user.Password,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            PhoneNumber = user.PhoneNumber,
+            Address = user.Address
+        });
 
         return new UserResponseDTO
         {
