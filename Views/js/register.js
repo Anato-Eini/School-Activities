@@ -3,7 +3,7 @@ $(document).ready(function() {
         e.preventDefault();
         var formData = $(this).serialize();
         $.ajax({
-            url: 'php/register.php',
+            url: 'localhost:5088/api/userDTOs',
             type: 'POST',
             data: formData,
             success: function(response) {
