@@ -1,17 +1,27 @@
 $(document).ready(function() {
     $('#register-form').submit(function(e) {
         e.preventDefault();
-        var formData = $(this).serialize();
+        var formData = $(this).serializeArray();
+        var jsonData = {};
+        $.each(formData, function () {
+            jsonData[this.name] = this.value;
+        });
+        console.log(jsonData)
         $.ajax({
-            url: 'localhost:5088/api/userDTOs',
+            url: 'http://localhost:5088/api/UserDTOs',
             type: 'POST',
-            data: formData,
+            contentType: 'application/json',
+            data: JSON.stringify(jsonData),
             success: function(response) {
-                if (response == 'success') {
+                if (response !== null) {
                     window.location.href = 'login.html';
                 } else {
                     $('#register-error').html(response);
                 }
+            },
+            error: function (response) {
+                console.log("Error")
+                $('#register-error').html(response);
             }
         });
     });
