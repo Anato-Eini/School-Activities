@@ -17,6 +17,25 @@ public class UserDTOsController(IUserService userService) : ControllerBase
         return Ok(await _userService.GetUsers());
     }
 
+    // POST: api/UserDTOs/login
+    [HttpPost("login")]
+    public async Task<ActionResult<UserResponseDTO>> Login([FromBody] UserLoginDTO user)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            return Ok(await _userService.GetUser(user));
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
     // GET: api/UserDTOs/5
     [HttpGet("{id}")]
     public async Task<ActionResult<UserResponseDTO>> GetUser(int id)

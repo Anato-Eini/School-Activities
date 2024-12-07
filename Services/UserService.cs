@@ -19,7 +19,23 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
 
     public async Task<UserResponseDTO> GetUser(int id)
     {
-        return _mapper.Map<UserResponseDTO>(await _userRepository.GetUserById(id));
+        return _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(id));
+    }
+
+    public async Task<UserResponseDTO> GetUser(UserLoginDTO userLoginDTO)
+    {
+        try
+        {
+            User userFetch = await _userRepository.GetUser(userLoginDTO.Username);
+
+            if (_passwordHasher.VerifyHashedPassword(userFetch, userFetch.Password, userLoginDTO.Password) == PasswordVerificationResult.Failed)
+                throw new KeyNotFoundException("Invalid password.");
+
+            return _mapper.Map<UserResponseDTO>(userFetch);
+        } catch (KeyNotFoundException e)
+        {
+            throw new KeyNotFoundException(e.Message);
+        }
     }
 
     public async Task<UserResponseDTO> CreateUser(UserCreateDTO user)

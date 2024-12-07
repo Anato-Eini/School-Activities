@@ -12,9 +12,14 @@ public class UserRepository(AniContext context) : IUserRepository
         return await _context.Users.ToListAsync();
     }
 
-    public async Task<User> GetUserById(int id)
+    public async Task<User> GetUser(int id)
     {
         return await _context.Users.FindAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found.");
+    }
+
+    public async Task<User> GetUser(string username)
+    {
+        return await _context.Users.SingleOrDefaultAsync(u => u.Username == username) ?? throw new KeyNotFoundException($"User with username {username} not found.");
     }
 
     public async Task<User> CreateUser(User user)
