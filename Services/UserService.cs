@@ -1,88 +1,35 @@
 using ANI.DTO;
 using ANI.Models;
 using ANI.Repository;
+using ANI.Mappings;
+using AutoMapper;
 
 namespace ANI.Services;
-public class UserService(IUserRepository userRepository) : IUserService
+public class UserService(IUserRepository userRepository, IMapper mapper) : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<IEnumerable<UserResponseDTO>> GetUsers()
     {
-        List<UserResponseDTO> users = (await _userRepository.GetUsers()).Select(user => new UserResponseDTO
-        {
-            Username = user.Username,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        }).ToList();
-
-        return users;
+        return _mapper.Map<IEnumerable<UserResponseDTO>>(await _userRepository.GetUsers());
     }
+
     public async Task<UserResponseDTO> GetUser(int id)
     {
-        User user = await _userRepository.GetUserById(id);
-        return new UserResponseDTO
-        {
-            Username = user.Username,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        };
+        return _mapper.Map<UserResponseDTO>(await _userRepository.GetUserById(id));
     }
-    public async Task<UserResponseDTO> CreateUser(UserCreateDTO  user)
-    {
-        User userMade = await _userRepository.CreateUser(new User{
-            Username = user.Username,
-            Password = user.Password,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        });
 
-        return new UserResponseDTO
-        {
-            Username = userMade.Username,
-            FirstName = userMade.FirstName,
-            LastName = userMade.LastName,
-            PhoneNumber = userMade.PhoneNumber,
-            Address = userMade.Address
-        };
+    public async Task<UserResponseDTO> CreateUser(UserCreateDTO user)
+    {
+        return _mapper.Map<UserResponseDTO>(await _userRepository.CreateUser(_mapper.Map<User>(user)));
     }
     public async Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user)
     {
-        User userUpdated = await _userRepository.UpdateUser(new User{
-            Username = user.Username,
-            Password = user.Password,
-            FirstName = user.FirstName,
-            LastName = user.LastName,
-            PhoneNumber = user.PhoneNumber,
-            Address = user.Address
-        });
-
-        return new UserResponseDTO
-        {
-            Username = userUpdated.Username,
-            FirstName = userUpdated.FirstName,
-            LastName = userUpdated.LastName,
-            PhoneNumber = userUpdated.PhoneNumber,
-            Address = userUpdated.Address
-        };
+        return _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(_mapper.Map<User>(user)));
     }
     public async Task<UserResponseDTO> DeleteUser(int id)
     {
-        User userdeleted = await _userRepository.DeleteUser(id);
-
-        return new UserResponseDTO
-        {
-            Username = userdeleted.Username,
-            FirstName = userdeleted.FirstName,
-            LastName = userdeleted.LastName,
-            PhoneNumber = userdeleted.PhoneNumber,
-            Address = userdeleted.Address
-        };
+        return _mapper.Map<UserResponseDTO>(await _userRepository.DeleteUser(id));
     }
 }
