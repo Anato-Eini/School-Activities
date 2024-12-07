@@ -14,12 +14,8 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(jsonData),
             success: function (response) {
-                if (response !== null && response.token) {
-                    localStorage.setItem('authToken', response.token);
-                    window.location.href = 'home.html'; 
-                } else {
-                    $('#login-error').html(response);
-                }
+                sessionStorage.setItem('userDetails', JSON.stringify(response));
+                window.location.href = 'home.html';
             },
             error: function (xhr, status, error) {
                 $('#login-error').html('An error occurred: ' + error);

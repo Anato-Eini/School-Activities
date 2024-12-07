@@ -6,16 +6,20 @@ using Microsoft.AspNetCore.Identity;
 
 namespace ANI.Services;
 
-public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher<User> passwordHasher, ITokenService tokenService) : IUserService
+public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher<User> passwordHasher) : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
     private readonly IPasswordHasher<User> _passwordHasher = passwordHasher;
-    private readonly ITokenService _tokenService = tokenService;
 
     public async Task<IEnumerable<UserResponseDTO>> GetUsers()
     {
         return _mapper.Map<IEnumerable<UserResponseDTO>>(await _userRepository.GetUsers());
+    }
+
+    public async Task<UserResponseDTO> GetUser(string username)
+    {
+        return _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(username));
     }
 
     public async Task<UserResponseDTO> GetUser(int id)
@@ -23,7 +27,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
         return _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(id));
     }
 
-    public async Task<string> Authenticate(UserLoginDTO userLoginDTO)
+    public async Task<UserResponseDTO> Authenticate(UserLoginDTO userLoginDTO)
     {
         try
         {
@@ -32,7 +36,14 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
             if (_passwordHasher.VerifyHashedPassword(userFetch, userFetch.Password, userLoginDTO.Password) == PasswordVerificationResult.Failed)
                 throw new KeyNotFoundException("Invalid password.");
 
-            return _tokenService.GenerateToken(_mapper.Map<UserLoginDTO>(userFetch));
+            return new UserResponseDTO
+            {
+                Username = userFetch.Username,
+                FirstName = userFetch.FirstName,
+                LastName = userFetch.LastName,
+                PhoneNumber = userFetch.PhoneNumber,
+                Address = userFetch.Address
+            };
         }
         catch (KeyNotFoundException e)
         {

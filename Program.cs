@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
 //Database
 builder.Services.AddDbContext<AniContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -20,7 +23,6 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 // Singletons
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddSingleton<ITokenService, TokenService>();
 
 // CORS
 builder.Services.AddCors(options =>

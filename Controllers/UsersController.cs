@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using ANI.DTO;
 using ANI.Services;
 
-namespace Ani.Controllers;
+namespace ANI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -19,7 +19,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // POST: api/UserDTOs/login
     [HttpPost("login")]
-    public async Task<ActionResult<LoginResponseDTO>> Login([FromBody] UserLoginDTO user)
+    public async Task<ActionResult<UserResponseDTO>> Login([FromBody] UserLoginDTO user)
     {
         if (!ModelState.IsValid)
         {
@@ -28,7 +28,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
         try
         {
-            return Ok(new LoginResponseDTO { Token = await _userService.Authenticate(user) });
+            return Ok(await _userService.Authenticate(user));
         }
         catch (KeyNotFoundException e)
         {
@@ -37,12 +37,12 @@ public class UserDTOsController(IUserService userService) : ControllerBase
     }
 
     // GET: api/UserDTOs/5
-    [HttpGet("{id}")]
-    public async Task<ActionResult<UserResponseDTO>> GetUser(int id)
+    [HttpGet("{username}")]
+    public async Task<ActionResult<UserResponseDTO>> GetUser(string username)
     {
         try
         {
-            return Ok(await _userService.GetUser(id));
+            return Ok(await _userService.GetUser(username));
         }
         catch (KeyNotFoundException e)
         {

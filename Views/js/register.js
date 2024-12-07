@@ -6,7 +6,6 @@ $(document).ready(function() {
         $.each(formData, function () {
             jsonData[this.name] = this.value;
         });
-        console.log(jsonData)
         $.ajax({
             url: 'http://localhost:5088/api/UserDTOs',
             type: 'POST',
@@ -20,7 +19,6 @@ $(document).ready(function() {
                 }
             },
             error: function (response) {
-                console.log("Error")
                 $('#register-error').html(response);
             }
         });
