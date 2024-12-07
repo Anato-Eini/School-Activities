@@ -7,6 +7,7 @@ public class UserRepository(AniContext context) : IUserRepository
 {
     private readonly AniContext _context = context;
 
+    public async Task<IEnumerable<User>> GetUsers()
     {
         return await _context.Users.ToListAsync();
     }
@@ -18,7 +19,7 @@ public class UserRepository(AniContext context) : IUserRepository
 
     public async Task<User> GetUser(string username)
     {
-        return await _context.Users.FirstOrDefaultAsync(u => u.Username == username) ?? throw new KeyNotFoundException($"User with username {username} not found.");
+        return await _context.Users.SingleOrDefaultAsync(u => u.Username == username) ?? throw new KeyNotFoundException($"User with username {username} not found.");
     }
 
     public async Task<User> CreateUser(User user)
