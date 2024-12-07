@@ -18,8 +18,9 @@ builder.Services.AddDbContext<AniContext>(options =>
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-//PaswordHasher
+// Singletons
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddSingleton<ITokenService, TokenService>();
 
 // CORS
 builder.Services.AddCors(options =>

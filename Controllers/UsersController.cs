@@ -19,7 +19,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // POST: api/UserDTOs/login
     [HttpPost("login")]
-    public async Task<ActionResult<UserResponseDTO>> Login([FromBody] UserLoginDTO user)
+    public async Task<ActionResult<LoginResponseDTO>> Login([FromBody] UserLoginDTO user)
     {
         if (!ModelState.IsValid)
         {
@@ -28,7 +28,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
         try
         {
-            return Ok(await _userService.GetUser(user));
+            return Ok(new LoginResponseDTO { Token = await _userService.Authenticate(user) });
         }
         catch (KeyNotFoundException e)
         {

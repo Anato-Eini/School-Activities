@@ -14,9 +14,9 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(jsonData),
             success: function (response) {
-                if (response !== null) {
-                    window.location.href = 'index.html';
-                    
+                if (response !== null && response.token) {
+                    localStorage.setItem('authToken', response.token);
+                    window.location.href = 'index.html'; 
                 } else {
                     $('#login-error').html(response);
                 }
