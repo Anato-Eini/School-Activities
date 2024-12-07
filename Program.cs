@@ -3,6 +3,7 @@ using ANI.Models;
 using ANI.Services;
 using ANI.Repository;
 using ANI.Mappings;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,9 @@ builder.Services.AddDbContext<AniContext>(options =>
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+//PaswordHasher
+builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

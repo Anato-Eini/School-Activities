@@ -1,14 +1,16 @@
 using ANI.DTO;
 using ANI.Models;
 using ANI.Repository;
-using ANI.Mappings;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace ANI.Services;
-public class UserService(IUserRepository userRepository, IMapper mapper) : IUserService
+
+public class UserService(IUserRepository userRepository, IMapper mapper, IPasswordHasher<User> passwordHasher) : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly IMapper _mapper = mapper;
+    private readonly IPasswordHasher<User> _passwordHasher = passwordHasher;
 
     public async Task<IEnumerable<UserResponseDTO>> GetUsers()
     {
@@ -22,7 +24,11 @@ public class UserService(IUserRepository userRepository, IMapper mapper) : IUser
 
     public async Task<UserResponseDTO> CreateUser(UserCreateDTO user)
     {
-        return _mapper.Map<UserResponseDTO>(await _userRepository.CreateUser(_mapper.Map<User>(user)));
+        User userModel = _mapper.Map<User>(user);
+
+        userModel.Password = _passwordHasher.HashPassword(userModel, userModel.Password);
+
+        return _mapper.Map<UserResponseDTO>(await _userRepository.CreateUser(_mapper.Map<User>(userModel)));
     }
     public async Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user)
     {
