@@ -9,5 +9,8 @@ namespace ANI.Models
         public string LastName { get; set; } = null!;
         public string PhoneNumber { get; set; } = null!;
         public string Address { get; set; } = null!;
+        public bool IsStaff { get; set; } = false;
+        public bool IsFarmer { get; set; } = false;
+        public virtual ICollection<Product> Products { get; set; } = null!;
     }
 }

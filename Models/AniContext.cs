@@ -11,6 +11,7 @@ namespace ANI.Models
     public class AniContext(DbContextOptions<AniContext> options) : DbContext(options)
     {
         public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
