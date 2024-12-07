@@ -13,7 +13,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
-        .gradient {
+        body{
             background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
         }
     </style>
@@ -22,7 +22,7 @@
 <body>
 <div class="min-h-screen flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-2xl font-bold mb-6 text-gray-800">Sell Item</h2>
+        <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Sell Item</h2>
         <form action="#" method="POST">
             <div class="mb-4">
                 <label for="productName" class="block text-gray-700 font-bold mb-2">Product Name</label>
@@ -41,7 +41,7 @@
                 <input type="number" id="stock" name="stock" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
             </div>
             <div class="flex items-center justify-between">
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
             </div>
         </form>
     </div>

@@ -5,14 +5,20 @@ $(document).ready(function () {
     }
 
     user = JSON.parse(user);
-    if (user.isFarmer == false) {
+    if (user.isFarmer == true) {
         console.log("TRUE");
-        
-        $('#sell-item').append('<button id="sellButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-green-200">Sell Item</button>');
+
+        $('#sell-item').append(
+            '<button id="sellButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-green-200">Sell Item</button>'
+        );
     }
 
     $('#logout').on('click', function () {
         sessionStorage.removeItem('authToken');
         window.location.href = 'login.html';
+    });
+
+    $('#sellButton').on('click', function () {
+        window.location.href = 'sell_item.html';
     });
 });
