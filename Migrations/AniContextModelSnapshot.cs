@@ -48,6 +48,9 @@ namespace ANI.Migrations
 
                     b.HasKey("UserID");
 
+                    b.HasIndex("Username")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 #pragma warning restore 612, 618

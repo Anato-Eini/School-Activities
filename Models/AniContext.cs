@@ -12,11 +12,16 @@ namespace ANI.Models
     {
         public DbSet<User> Users { get; set; } = null!;
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.LogTo(System.Console.WriteLine, [RelationalEventId.CommandExecuted]);
+            optionsBuilder.LogTo(Console.WriteLine, [RelationalEventId.CommandExecuted]);
         }
     }
-
 }
