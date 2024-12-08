@@ -72,10 +72,26 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     {
         User userModel = _mapper.Map<User>(user);
 
+        if (user.ProfilePictureUrl != null)
+            userModel.ProfilePictureUrl = await SaveProfilePicture(user.ProfilePictureUrl);
+
         userModel.Password = _passwordHasher.HashPassword(userModel, userModel.Password);
 
-        return _mapper.Map<UserResponseDTO>(await _userRepository.CreateUser(_mapper.Map<User>(userModel)));
+        return _mapper.Map<UserResponseDTO>(await _userRepository.CreateUser(userModel));
     }
+
+    private static async Task<string> SaveProfilePicture(IFormFile profilePicture)
+    {
+        string filePath = Path.Combine("/Media", "/Images", "/Profiles/", profilePicture.FileName);
+
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        {
+            await profilePicture.CopyToAsync(stream);
+        }
+
+        return filePath;
+    }
+
     public async Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user)
     {
         return _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(_mapper.Map<User>(user)));

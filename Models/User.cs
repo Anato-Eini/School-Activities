@@ -11,6 +11,7 @@ namespace ANI.Models
         public string Address { get; set; } = null!;
         public bool IsStaff { get; set; } = false;
         public bool IsFarmer { get; set; } = false;
+        public string? ProfilePictureUrl { get; set; } = "/Media/Images/Profiles/blank-profile-picture-973460_128012234212.png";
         public virtual ICollection<Product> Products { get; set; } = null!;
     }
 }

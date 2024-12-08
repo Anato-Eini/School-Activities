@@ -13,42 +13,51 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
-        body{
+        body {
             background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
         }
     </style>
 </head>
 
 <body>
-<div class="min-h-screen flex items-center justify-center">
-    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Sell Item</h2>
-        <form action="#" method="POST">
-            <div class="mb-4">
-                <label for="productName" class="block text-gray-700 font-bold mb-2">Product Name</label>
-                <input type="text" id="productName" name="productName" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-            <div class="mb-4">
-                <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
-                <textarea id="description" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" rows="3" required></textarea>
-            </div>
-            <div class="mb-4">
-                <label for="price" class="block text-gray-700 font-bold mb-2">Price</label>
-                <input type="number" id="price" name="price" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-            <div class="mb-4">
-                <label for="stock" class="block text-gray-700 font-bold mb-2">Stock</label>
-                <input type="number" id="stock" name="stock" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-            </div>
-            <div class="flex items-center justify-between">
-                <button type="submit" class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
-            </div>
-        </form>
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Sell Item</h2>
+            <form action="#" method="POST" id="sell-item-form">
+                <div class="mb-4">
+                    <label for="productName" class="block text-gray-700 font-bold mb-2">Product Name</label>
+                    <input type="text" id="productName" name="productName"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
+                    <textarea id="description" name="description"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        rows="3" required></textarea>
+                </div>
+                <div class="mb-4">
+                    <label for="price" class="block text-gray-700 font-bold mb-2">Price</label>
+                    <input type="number" id="price" name="price"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                </div>
+                <div class="mb-4">
+                    <label for="stock" class="block text-gray-700 font-bold mb-2">Stock</label>
+                    <input type="number" id="stock" name="stock"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        required>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button type="submit"
+                        class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="js/sell_item.js"></script>
 </body>
 
 </html>

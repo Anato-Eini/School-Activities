@@ -6,15 +6,13 @@ $(document).ready(function () {
 
     user = JSON.parse(user);
     if (user.isFarmer == true) {
-        console.log("TRUE");
-
         $('#sell-item').append(
             '<button id="sellButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-green-200">Sell Item</button>'
         );
     }
 
     $('#logout').on('click', function () {
-        sessionStorage.removeItem('authToken');
+        sessionStorage.removeItem('userDetails');
         window.location.href = 'login.html';
     });
 

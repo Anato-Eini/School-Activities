@@ -21,5 +21,7 @@ public class UserCreateDTO
     [Required]
     [MaxLength(11), MinLength(11)]
     public string PhoneNumber { get; set; } = null!;
+    [Required]
     public string Address { get; set; } = null!;
+    public IFormFile ProfilePictureUrl { get; set; } = null!;
 }

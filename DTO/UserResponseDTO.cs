@@ -22,4 +22,5 @@ public class UserResponseDTO
     public string? Address { get; set; }
     public bool IsStaff { get; set; } = false;
     public bool IsFarmer { get; set; } = false;
+    public string ProfilePictureUrl { get; set; } = "/Media/Images/Profiles/blank-profile-picture-973460_128012234212.png";
 }
