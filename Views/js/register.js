@@ -1,17 +1,16 @@
-$(document).ready(function() {
-    $('#register-form').submit(function(e) {
+$(document).ready(function () {
+    $('#register-form').submit(function (e) {
         e.preventDefault();
-        var formData = $(this).serializeArray();
-        var jsonData = {};
-        $.each(formData, function () {
-            jsonData[this.name] = this.value;
-        });
+
+        var formData = new FormData(this);
+
         $.ajax({
             url: 'http://localhost:5088/api/UserDTOs',
             type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(jsonData),
-            success: function(response) {
+            contentType: false, 
+            processData: false, 
+            data: formData,
+            success: function (response) {
                 if (response !== null) {
                     window.location.href = 'login.html';
                 } else {

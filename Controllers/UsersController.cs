@@ -59,7 +59,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
         UserResponseDTO createdUser = await _userService.CreateUser(user);
 
-        return CreatedAtAction(nameof(GetUser), new { id = createdUser.Username }, createdUser);
+        return CreatedAtAction(nameof(GetUser), new { username = createdUser.Username }, createdUser);
     }
 
 

@@ -18,6 +18,10 @@ namespace ANI.Models
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .Property(user => user.ProfilePictureUrl)
+                .HasDefaultValue("/Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

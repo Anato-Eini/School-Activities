@@ -16,6 +16,10 @@ $(document).ready(function () {
         window.location.href = 'login.html';
     });
 
+    $('#profile-picture').on('click', function () {
+        window.location.href = 'profile.html';
+    })
+
     $('#sellButton').on('click', function () {
         window.location.href = 'sell_item.html';
     });

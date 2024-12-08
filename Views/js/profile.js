@@ -1,14 +1,17 @@
 $(document).ready(function () {
     var user = sessionStorage.getItem('userDetails');
 
-    if (!user) 
+    if (!user)
         window.location.href = 'login.html';
 
-    $('#username').html(JSON.parse(user).username);
-    $('#first-name').html(JSON.parse(user).firstName);
-    $('#last-name').html(JSON.parse(user).lastName);
-    $('#phone-number').html(JSON.parse(user).phoneNumber);
-    $('#address').html(JSON.parse(user).address);
-    $('#is-staff').html(JSON.parse(user).isStaff);
-    $('#is-farmer').html(JSON.parse(user).isFarmer);
+    var userParsed = JSON.parse(user);
+
+    $('#username').html(userParsed.username);
+    $('#first-name').html(userParsed.firstName);
+    $('#last-name').html(userParsed.lastName);
+    $('#phone-number').html(userParsed.phoneNumber);
+    $('#address').html(userParsed.address);
+    $('#is-staff').html(userParsed.isStaff.toString());
+    $('#is-farmer').html(userParsed.isFarmer.toString());
+    $('#profile-picture').attr('src', userParsed.profilePictureUrl);
 });

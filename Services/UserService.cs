@@ -3,6 +3,7 @@ using ANI.Models;
 using ANI.Repository;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Razor.Language;
 
 namespace ANI.Services;
 
@@ -14,17 +15,28 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
 
     public async Task<IEnumerable<UserResponseDTO>> GetUsers()
     {
-        return _mapper.Map<IEnumerable<UserResponseDTO>>(await _userRepository.GetUsers());
+        return _mapper.Map<IEnumerable<UserResponseDTO>>(await _userRepository.GetUsers()).Select(user =>
+        {
+            user.ProfilePictureUrl = PrependUrl(user.ProfilePictureUrl);
+            return user;
+        });
     }
 
     public async Task<UserResponseDTO> GetUser(string username)
     {
-        return _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(username));
+        UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(username));
+        userResponseDTO.ProfilePictureUrl = PrependUrl(userResponseDTO.ProfilePictureUrl);
+
+        return userResponseDTO;
     }
 
     public async Task<UserResponseDTO> GetUser(int id)
     {
-        return _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(id));
+        UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(id));
+
+        userResponseDTO.ProfilePictureUrl = PrependUrl(userResponseDTO.ProfilePictureUrl);
+
+        return userResponseDTO;
     }
 
     public async Task<UserResponseDTO> Authenticate(UserLoginDTO userLoginDTO)
@@ -36,19 +48,21 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
             if (_passwordHasher.VerifyHashedPassword(userFetch, userFetch.Password, userLoginDTO.Password) == PasswordVerificationResult.Failed)
                 throw new KeyNotFoundException("Invalid password.");
 
-            return new UserResponseDTO
-            {
-                Username = userFetch.Username,
-                FirstName = userFetch.FirstName,
-                LastName = userFetch.LastName,
-                PhoneNumber = userFetch.PhoneNumber,
-                Address = userFetch.Address
-            };
+            UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(userFetch);
+
+            userResponseDTO.ProfilePictureUrl = PrependUrl(userFetch.ProfilePictureUrl);
+
+            return _mapper.Map<UserResponseDTO>(userResponseDTO);
         }
         catch (KeyNotFoundException e)
         {
             throw new KeyNotFoundException(e.Message);
         }
+    }
+
+    public static string PrependUrl(string url)
+    {
+        return string.Concat("http://localhost:5088/", url);
     }
 
     public async Task<UserResponseDTO> GetUser(UserLoginDTO userLoginDTO)
@@ -60,7 +74,11 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
             if (_passwordHasher.VerifyHashedPassword(userFetch, userFetch.Password, userLoginDTO.Password) == PasswordVerificationResult.Failed)
                 throw new KeyNotFoundException("Invalid password.");
 
-            return _mapper.Map<UserResponseDTO>(userFetch);
+            UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(userFetch);
+
+            userResponseDTO.ProfilePictureUrl = PrependUrl(userFetch.ProfilePictureUrl);
+
+            return userResponseDTO;
         }
         catch (KeyNotFoundException e)
         {
@@ -82,9 +100,14 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
 
     private static async Task<string> SaveProfilePicture(IFormFile profilePicture)
     {
-        string filePath = Path.Combine("/Media", "/Images", "/Profiles/", profilePicture.FileName);
+        string directoryPath = Path.Combine("Media", "Images", "Profiles");
 
-        using (var stream = new FileStream(filePath, FileMode.Create))
+        if (!Directory.Exists(directoryPath))
+            Directory.CreateDirectory(directoryPath);
+
+        string filePath = Path.Combine(directoryPath, $"{Guid.NewGuid()}_{profilePicture.FileName}");
+
+        using (FileStream stream = new(filePath, FileMode.Create))
         {
             await profilePicture.CopyToAsync(stream);
         }
@@ -94,10 +117,15 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
 
     public async Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user)
     {
-        return _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(_mapper.Map<User>(user)));
+        UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(_mapper.Map<User>(user)));
+        userResponseDTO.ProfilePictureUrl = PrependUrl(userResponseDTO.ProfilePictureUrl);
+        return userResponseDTO;
     }
+
     public async Task<UserResponseDTO> DeleteUser(int id)
     {
-        return _mapper.Map<UserResponseDTO>(await _userRepository.DeleteUser(id));
+        UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.DeleteUser(id));
+        userResponseDTO.ProfilePictureUrl = PrependUrl(userResponseDTO.ProfilePictureUrl);
+        return userResponseDTO;
     }
 }

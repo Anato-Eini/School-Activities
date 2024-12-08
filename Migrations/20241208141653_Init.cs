@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -23,7 +24,8 @@ namespace ANI.Migrations
                     PhoneNumber = table.Column<string>(type: "TEXT", nullable: false),
                     Address = table.Column<string>(type: "TEXT", nullable: false),
                     IsStaff = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsFarmer = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IsFarmer = table.Column<bool>(type: "INTEGER", nullable: false),
+                    ProfilePictureUrl = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "/Media/Images/Profiles/blank-profile-picture-973460_128012234212.png")
                 },
                 constraints: table =>
                 {
@@ -34,8 +36,7 @@ namespace ANI.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ProductID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                    ProductID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),

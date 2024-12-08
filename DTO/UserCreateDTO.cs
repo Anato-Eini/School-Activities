@@ -23,5 +23,5 @@ public class UserCreateDTO
     public string PhoneNumber { get; set; } = null!;
     [Required]
     public string Address { get; set; } = null!;
-    public IFormFile ProfilePictureUrl { get; set; } = null!;
+    public IFormFile? ProfilePictureUrl { get; set; }
 }
