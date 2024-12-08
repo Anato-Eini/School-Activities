@@ -65,14 +65,14 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // PUT: api/UserDTOs/5
     [HttpPut("{id}")]
-    public async Task<ActionResult<UserResponseDTO>> PutUser(int id, [FromBody] UserCreateDTO user)
+    public async Task<ActionResult<UserResponseDTO>> PutUser([FromBody] UserCreateDTO user)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            return Ok(await _userService.UpdateUser(id, user));
+            return Ok(await _userService.UpdateUser(user));
         }
         catch (KeyNotFoundException e)
         {

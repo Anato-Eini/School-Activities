@@ -115,7 +115,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
         return filePath;
     }
 
-    public async Task<UserResponseDTO> UpdateUser(int id, UserCreateDTO user)
+    public async Task<UserResponseDTO> UpdateUser(UserCreateDTO user)
     {
         UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(_mapper.Map<User>(user)));
         userResponseDTO.ProfilePictureUrl = PrependUrl(userResponseDTO.ProfilePictureUrl);

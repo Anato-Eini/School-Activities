@@ -2,7 +2,8 @@ namespace ANI.Models;
 
 public class User
 {
-    public int UserID { get; set; }
+    [System.ComponentModel.DataAnnotations.Key]
+    public Guid UserID { get; set; }
     public string Username { get; set; } = null!;
     public string Password { get; set; } = null!;
     public string FirstName { get; set; } = null!;

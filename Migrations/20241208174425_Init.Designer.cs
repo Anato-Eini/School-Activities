@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ANI.Migrations
 {
     [DbContext(typeof(AniContext))]
-    [Migration("20241208141653_Init")]
+    [Migration("20241208174425_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -40,8 +40,8 @@ namespace ANI.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ProductID");
 
@@ -52,9 +52,9 @@ namespace ANI.Migrations
 
             modelBuilder.Entity("ANI.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Address")
                         .IsRequired()

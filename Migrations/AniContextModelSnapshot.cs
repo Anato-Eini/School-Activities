@@ -37,8 +37,8 @@ namespace ANI.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ProductID");
 
@@ -49,9 +49,9 @@ namespace ANI.Migrations
 
             modelBuilder.Entity("ANI.Models.User", b =>
                 {
-                    b.Property<int>("UserID")
+                    b.Property<Guid>("UserID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Address")
                         .IsRequired()
