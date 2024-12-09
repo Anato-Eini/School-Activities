@@ -29,7 +29,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
         return userResponseDTO;
     }
 
-    public async Task<UserResponseDTO> GetUser(int id)
+    public async Task<UserResponseDTO> GetUser(Guid id)
     {
         UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(id));
 
@@ -114,10 +114,28 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
         return filePath;
     }
 
-    public async Task<UserResponseDTO> UpdateUser(UserCreateDTO user)
+    public async Task<UserResponseDTO> UpdateUser(UserUpdateDTO newUser, Guid guid)
     {
-        UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(_mapper.Map<User>(user)));
+        User user = await _userRepository.GetUser(guid);
+
+        if (string.IsNullOrEmpty(newUser.Password) && _passwordHasher.VerifyHashedPassword(user, user.Password, newUser.Password) == PasswordVerificationResult.Failed)
+            throw new KeyNotFoundException("Invalid password.");
+
+        if (newUser.ProfilePictureUrl != null)
+            user.ProfilePictureUrl = await SaveProfilePicture(newUser.ProfilePictureUrl);
+
+        user.Username = newUser.Username;
+        user.Password = newUser.Password;
+        user.FirstName = newUser.FirstName;
+        user.LastName = newUser.LastName;
+        user.PhoneNumber = newUser.PhoneNumber;
+        user.Address = newUser.Address;
+        user.IsFarmer = newUser.IsFarmer;
+        
+        UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(user));
+
         userResponseDTO.ProfilePictureUrl = PrependUrl(userResponseDTO.ProfilePictureUrl);
+
         return userResponseDTO;
     }
 

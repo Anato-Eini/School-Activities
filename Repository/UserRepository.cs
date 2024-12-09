@@ -12,7 +12,7 @@ public class UserRepository(AniContext context) : IUserRepository
         return await _context.Users.ToListAsync();
     }
 
-    public async Task<User> GetUser(int id)
+    public async Task<User> GetUser(Guid id)
     {
         return await _context.Users.FindAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found.");
     }
@@ -33,20 +33,11 @@ public class UserRepository(AniContext context) : IUserRepository
 
     public async Task<User> UpdateUser(User userUpdate)
     {
-        User user = await _context.Users.FindAsync(userUpdate.Username) ?? throw new KeyNotFoundException($"User with username {userUpdate.Username} not found.");
-
-        user.Username = userUpdate.Username;
-        user.Password = userUpdate.Password;
-        user.FirstName = userUpdate.FirstName;
-        user.LastName = userUpdate.LastName;
-        user.PhoneNumber = userUpdate.PhoneNumber;
-        user.Address = userUpdate.Address;
-
-        _context.Entry(user).State = EntityState.Modified;
+        _context.Entry(userUpdate).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
 
-        return user;
+        return userUpdate;
     }
 
     public async Task<User> DeleteUser(int id)

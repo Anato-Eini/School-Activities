@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace ANI.DTO;
 
 public class UserResponseDTO

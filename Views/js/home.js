@@ -5,6 +5,7 @@ $(document).ready(function () {
     }
 
     user = JSON.parse(user);
+
     if (user.isFarmer == true) {
         $('#sell-item').append(
             '<button id="sellButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-green-200">Sell Item</button>'

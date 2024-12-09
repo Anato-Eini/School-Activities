@@ -37,12 +37,12 @@ public class UserDTOsController(IUserService userService) : ControllerBase
     }
 
     // GET: api/UserDTOs/5
-    [HttpGet("{username}")]
-    public async Task<ActionResult<UserResponseDTO>> GetUser(string username)
+    [HttpGet("{userID}")]
+    public async Task<ActionResult<UserResponseDTO>> GetUser(Guid userID)
     {
         try
         {
-            return Ok(await _userService.GetUser(username));
+            return Ok(await _userService.GetUser(userID));
         }
         catch (KeyNotFoundException e)
         {
@@ -65,14 +65,14 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // PUT: api/UserDTOs/5
     [HttpPut("{id}")]
-    public async Task<ActionResult<UserResponseDTO>> PutUser([FromBody] UserCreateDTO user)
+    public async Task<ActionResult<UserResponseDTO>> PutUser([FromForm] UserUpdateDTO user, Guid id)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
         try
         {
-            return Ok(await _userService.UpdateUser(user));
+            return Ok(await _userService.UpdateUser(user, id));
         }
         catch (KeyNotFoundException e)
         {
