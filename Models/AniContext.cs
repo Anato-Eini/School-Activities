@@ -23,6 +23,18 @@ namespace ANI.Models
             modelBuilder.Entity<User>()
                 .Property(user => user.ProfilePictureUrl)
                 .HasDefaultValue("Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
+
+             modelBuilder.Entity<Rating>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Rating>()
+                .HasOne(r => r.Product)
+                .WithMany()
+                .HasForeignKey(r => r.ProductID)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
