@@ -36,8 +36,12 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
 
         productCreate.User = await _userRepository.GetUser(product.UserID) ?? throw new KeyNotFoundException($"User with id {product.UserID} not found.");
         productCreate.UserID = product.UserID;
+        productCreate.ProductPictureUrl = await Library.SaveImage("Products", product.ProductPictureUrl);
+        
+        ProductResponseDTO productResponseDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.CreateProduct(_mapper.Map<Product>(productCreate)));
+        productResponseDTO.ProductPictureUrl = Library.PrependUrl(productResponseDTO.ProductPictureUrl);
 
-        return _mapper.Map<ProductResponseDTO>(await _productRepository.CreateProduct(_mapper.Map<Product>(product)));
+        return productResponseDTO;
     }
 
     public async Task<ProductResponseDTO> UpdateProduct(ProductUpdateDTO product)

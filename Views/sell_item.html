@@ -26,7 +26,7 @@
             <form action="#" method="POST" id="sell-item-form">
                 <div class="mb-4">
                     <label for="productName" class="block text-gray-700 font-bold mb-2">Product Name</label>
-                    <input type="text" id="productName" name="productName"
+                    <input type="text" id="productName" name="name"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required>
                 </div>
@@ -34,11 +34,11 @@
                     <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
                     <textarea id="description" name="description"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        rows="3" required></textarea>
+                        rows="3"></textarea>
                 </div>
                 <div class="mb-4">
                     <label for="price" class="block text-gray-700 font-bold mb-2">Price</label>
-                    <input type="number" id="price" name="price"
+                    <input type="text" id="price" name="price" pattern="^\d+(\.\d{1,2})?$"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required>
                 </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="mb-4">
                     <label for="images" class="block text-gray-700 font-bold mb-2">Upload Images</label>
-                    <input type="file" id="images" name="images" accept="image/*" multiple
+                    <input type="file" id="images" name="productPictureUrl" 
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         required>
                 </div>

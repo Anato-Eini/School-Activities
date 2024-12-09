@@ -33,3 +33,8 @@ public class ProductUpdateDTO : ProductBaseDTO
     public Guid ProductID { get; set; }
     public IFormFile? ProductPictureUrl { get; set; } = null!;
 }
+
+public class ProductSecDTO : ProductBaseDTO
+{
+    public string ProductPictureUrl { get; set; } = null!;
+}

@@ -9,28 +9,27 @@ $(document).ready(function () {
         window.location.href = 'home.html';
     }
 
+    user = JSON.parse(user);
 
     $('#sell-item-form').on('submit', function (e) {
         e.preventDefault();
-        var formData = $(this).serializeArray();
-        var jsonData = {};
 
-        $.each(formData, function () {
-            jsonData[this.name] = this.value;
-        });
+        var formData = new FormData(this);
+        formData.append('userID', user.userID);
 
-/*         $.ajax({
-            url: 'http://localhost:5088/api/ItemDTOs',
+        $.ajax({
+            url: 'http://localhost:5088/api/Products',
             type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(jsonData),
+            contentType: false,
+            processData: false,
+            data: formData,
             success: function (response) {
                 window.location.href = 'home.html';
             },
             error: function (xhr, status, error) {
                 $('#sell-item-error').html('An error occurred: ' + error);
             }
-        }); */
+        });
     });
 
 });

@@ -30,7 +30,7 @@ $(document).ready(function () {
                 window.location.href = 'profile.html';
             },
             error: function (response) {
-                $('#error-messages').html(response);
+                $('#error-messages').html(response.responseText);
             }
         });
 

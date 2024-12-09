@@ -18,7 +18,7 @@ public class ProductsController(IProductService productService) : ControllerBase
 
     // GET: api/ProductDTOs/{id}
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserResponseDTO>> GetProduct(Guid id)
+    public async Task<ActionResult<ProductResponseDTO>> GetProduct(Guid id)
     {
         try
         {
