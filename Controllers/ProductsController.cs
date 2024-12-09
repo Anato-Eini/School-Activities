@@ -11,7 +11,7 @@ public class ProductsController(IProductService productService) : ControllerBase
 
     // GET: api/ProductDTOs
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductDTO>>> GetProducts()
+    public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetProducts()
     {
         return Ok(await _produceService.GetProducts());
     }
@@ -32,19 +32,19 @@ public class ProductsController(IProductService productService) : ControllerBase
 
     // POST: api/ProductDTOs
     [HttpPost]
-    public async Task<ActionResult<ProductDTO>> PostProduct([FromForm] ProductDTO productDTO)
+    public async Task<ActionResult<ProductResponseDTO>> PostProduct([FromForm] ProductCreateDTO productDTO)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        ProductDTO createdProduct = await _produceService.CreateProduct(productDTO);
+        ProductResponseDTO createdProduct = await _produceService.CreateProduct(productDTO);
 
         return CreatedAtAction(nameof(GetProduct), new { id = createdProduct.ProductID }, createdProduct);
     }
 
     // PUT: api/ProductDTOs/5
     [HttpPut]
-    public async Task<ActionResult<ProductDTO>> PutProduct([FromBody] ProductDTO product)
+    public async Task<ActionResult<ProductResponseDTO>> PutProduct([FromBody] ProductUpdateDTO product)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -59,9 +59,9 @@ public class ProductsController(IProductService productService) : ControllerBase
         }
     }
 
-    // DELETE: api/ProductDTOs/5
+    // DELETE: api/ProductResponseDTOs/5
     [HttpDelete("{id}")]
-    public async Task<ActionResult<ProductDTO>> DeleteProduct(Guid id)
+    public async Task<ActionResult<ProductResponseDTO>> DeleteProduct(Guid id)
     {
         try
         {

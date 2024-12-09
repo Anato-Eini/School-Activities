@@ -30,7 +30,7 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
         return productDTO;
     }
 
-    public async Task<ProductResponseDTO> CreateProduct(ProductResponseDTO product)
+    public async Task<ProductResponseDTO> CreateProduct(ProductCreateDTO product)
     {
         Product productCreate = _mapper.Map<Product>(product);
 
@@ -52,8 +52,6 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
         if (product.ProductPictureUrl != null)
             origProduct.ProductPictureUrl = await Library.SaveImage("Products", product.ProductPictureUrl);
         
-        product.ProductPictureUrl = product.ProductPictureUrl;
-
         return _mapper.Map<ProductResponseDTO>(await _productRepository.UpdateProduct(_mapper.Map<Product>(product)));
     }
 

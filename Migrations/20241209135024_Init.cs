@@ -40,6 +40,7 @@ namespace ANI.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
                     Stock = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductPictureUrl = table.Column<string>(type: "TEXT", nullable: false),
                     UserID = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -53,9 +54,47 @@ namespace ANI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Ratings",
+                columns: table => new
+                {
+                    RatingID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    Stars = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProductID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    UserID = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ratings", x => x.RatingID);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Products_ProductID",
+                        column: x => x.ProductID,
+                        principalTable: "Products",
+                        principalColumn: "ProductID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ratings_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "UserID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UserID",
                 table: "Products",
+                column: "UserID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_ProductID",
+                table: "Ratings",
+                column: "ProductID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ratings_UserID",
+                table: "Ratings",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(
@@ -68,6 +107,9 @@ namespace ANI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Ratings");
+
             migrationBuilder.DropTable(
                 name: "Products");
 

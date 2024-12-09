@@ -12,8 +12,11 @@ public class MappingProfile : Profile
         CreateMap<UserCreateDTO, User>();
         CreateMap<User, UserCreateDTO>();
         CreateMap<UserLoginDTO, User>();
-        CreateMap<Product, ProductDTO>();
-        CreateMap<ProductDTO, Product>();
+        CreateMap<Product, ProductCreateDTO>();
+        CreateMap<ProductCreateDTO, Product>();
+        CreateMap<Product, ProductResponseDTO>();
+        CreateMap<ProductUpdateDTO, Product>();
+        CreateMap<Product, ProductUpdateDTO>();
         CreateMap<User, UserSecDTO>();
         CreateMap<UserSecDTO, User>();
     }
