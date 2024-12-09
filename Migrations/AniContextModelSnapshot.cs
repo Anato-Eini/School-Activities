@@ -83,7 +83,7 @@ namespace ANI.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasDefaultValue("/Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
+                        .HasDefaultValue("Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
 
                     b.Property<string>("Username")
                         .IsRequired()

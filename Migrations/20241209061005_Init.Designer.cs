@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ANI.Migrations
 {
     [DbContext(typeof(AniContext))]
-    [Migration("20241208174425_Init")]
+    [Migration("20241209061005_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -86,7 +86,7 @@ namespace ANI.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT")
-                        .HasDefaultValue("/Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
+                        .HasDefaultValue("Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
 
                     b.Property<string>("Username")
                         .IsRequired()

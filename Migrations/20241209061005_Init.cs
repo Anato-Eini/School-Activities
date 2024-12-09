@@ -24,7 +24,7 @@ namespace ANI.Migrations
                     Address = table.Column<string>(type: "TEXT", nullable: false),
                     IsStaff = table.Column<bool>(type: "INTEGER", nullable: false),
                     IsFarmer = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ProfilePictureUrl = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "/Media/Images/Profiles/blank-profile-picture-973460_128012234212.png")
+                    ProfilePictureUrl = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "Media/Images/Profiles/blank-profile-picture-973460_128012234212.png")
                 },
                 constraints: table =>
                 {
