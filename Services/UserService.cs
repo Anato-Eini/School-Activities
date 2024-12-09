@@ -12,9 +12,9 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     private readonly IMapper _mapper = mapper;
     private readonly IPasswordHasher<User> _passwordHasher = passwordHasher;
 
-    public async Task<IEnumerable<UserResponseDTO>> GetUsers()
+    public async Task<IEnumerable<UserSecDTO>> GetUsers()
     {
-        return _mapper.Map<IEnumerable<UserResponseDTO>>(await _userRepository.GetUsers()).Select(user =>
+        return _mapper.Map<IEnumerable<UserSecDTO>>(await _userRepository.GetUsers()).Select(user =>
         {
             user.ProfilePictureUrl = PrependUrl(user.ProfilePictureUrl);
             return user;
@@ -125,7 +125,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
             user.ProfilePictureUrl = await SaveProfilePicture(newUser.ProfilePictureUrl);
 
         user.Username = newUser.Username;
-        user.Password = newUser.Password;
+        user.Password = _passwordHasher.HashPassword(user, newUser.Password);
         user.FirstName = newUser.FirstName;
         user.LastName = newUser.LastName;
         user.PhoneNumber = newUser.PhoneNumber;
@@ -139,7 +139,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
         return userResponseDTO;
     }
 
-    public async Task<UserResponseDTO> DeleteUser(int id)
+    public async Task<UserResponseDTO> DeleteUser(Guid id)
     {
         UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.DeleteUser(id));
         userResponseDTO.ProfilePictureUrl = PrependUrl(userResponseDTO.ProfilePictureUrl);

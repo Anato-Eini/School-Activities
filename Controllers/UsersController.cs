@@ -12,7 +12,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // GET: api/UserDTOs
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<UserResponseDTO>>> GetUsers()
+    public async Task<ActionResult<IEnumerable<UserSecDTO>>> GetUsers()
     {
         return Ok(await _userService.GetUsers());
     }
@@ -59,7 +59,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
         UserResponseDTO createdUser = await _userService.CreateUser(user);
 
-        return CreatedAtAction(nameof(GetUser), new { username = createdUser.Username }, createdUser);
+        return CreatedAtAction(nameof(GetUser), new { userID = createdUser.UserID }, createdUser);
     }
 
 
@@ -82,7 +82,7 @@ public class UserDTOsController(IUserService userService) : ControllerBase
 
     // DELETE: api/UserDTOs/5
     [HttpDelete("{id}")]
-    public async Task<ActionResult<UserResponseDTO>> DeleteUser(int id)
+    public async Task<ActionResult<UserResponseDTO>> DeleteUser(Guid id)
     {
         try
         {

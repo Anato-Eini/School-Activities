@@ -40,7 +40,7 @@ public class UserRepository(AniContext context) : IUserRepository
         return userUpdate;
     }
 
-    public async Task<User> DeleteUser(int id)
+    public async Task<User> DeleteUser(Guid id)
     {
         User user = await _context.Users.FindAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found.");
 
