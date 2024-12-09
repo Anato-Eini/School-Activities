@@ -78,7 +78,9 @@ function checkParent(t, elm) {
 }
 
 $(document).ready(function () {
+
     $("#navAction").click(function () {
         window.location.href = "login.html";
     });
+   
 });
