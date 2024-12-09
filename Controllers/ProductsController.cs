@@ -16,7 +16,7 @@ public class ProductsController(IProductService productService) : ControllerBase
         return Ok(await _produceService.GetProducts());
     }
 
-    // GET: api/ProductDTOs/5
+    // GET: api/ProductDTOs/{id}
     [HttpGet("{id}")]
     public async Task<ActionResult<UserResponseDTO>> GetProduct(Guid id)
     {
@@ -32,12 +32,10 @@ public class ProductsController(IProductService productService) : ControllerBase
 
     // POST: api/ProductDTOs
     [HttpPost]
-    public async Task<ActionResult<ProductDTO>> PostProduct([FromBody] ProductDTO productDTO)
+    public async Task<ActionResult<ProductDTO>> PostProduct([FromForm] ProductDTO productDTO)
     {
         if (!ModelState.IsValid)
-        {
             return BadRequest(ModelState);
-        }
 
         ProductDTO createdProduct = await _produceService.CreateProduct(productDTO);
 
@@ -45,7 +43,7 @@ public class ProductsController(IProductService productService) : ControllerBase
     }
 
     // PUT: api/ProductDTOs/5
-    [HttpPut("{id}")]
+    [HttpPut]
     public async Task<ActionResult<ProductDTO>> PutProduct([FromBody] ProductDTO product)
     {
         if (!ModelState.IsValid)

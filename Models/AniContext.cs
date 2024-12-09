@@ -20,6 +20,12 @@ namespace ANI.Models
                 .IsUnique();
 
             modelBuilder.Entity<User>()
+                .HasMany(u => u.Products)
+                .WithOne(p => p.User)
+                .HasForeignKey(p => p.UserID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
                 .Property(user => user.ProfilePictureUrl)
                 .HasDefaultValue("Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
         }

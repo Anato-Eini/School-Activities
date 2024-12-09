@@ -13,5 +13,5 @@ public class User
     public bool IsStaff { get; set; } = false;
     public bool IsFarmer { get; set; } = false;
     public string ProfilePictureUrl { get; set; } = null!;
-    public virtual ICollection<Product> Products { get; set; } = null!;
+    public virtual ICollection<Product> Products { get; set; } = [];
 }

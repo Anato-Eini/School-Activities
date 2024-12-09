@@ -29,14 +29,7 @@ public class ProductRepository(AniContext context) : IProductRepository
 
     public async Task<Product> UpdateProduct(Product product)
     {
-        Product updateProduct = await _context.Products.FindAsync(product.ProductID) ?? throw new KeyNotFoundException($"Product with id {product.ProductID} not found.");
-
-        updateProduct.Name = product.Name;
-        updateProduct.Description = product.Description;
-        updateProduct.Price = product.Price;
-        updateProduct.Stock = product.Stock;
-
-        _context.Entry(updateProduct).State = EntityState.Modified;
+        _context.Entry(product).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
 
