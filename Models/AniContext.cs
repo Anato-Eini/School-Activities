@@ -12,6 +12,7 @@ namespace ANI.Models
     {
         public DbSet<User> Users { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
+        public DbSet<Rating> Ratings { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
