@@ -19,4 +19,14 @@ $(document).ready(function () {
     $('#stock').html(product.stock);
     $('#productPictureUrl').attr('src', product.productPictureUrl);
 
+    if (user.userID === product.userID) 
+        $('#owner').append(
+            '<button id="editButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-blue-200">Edit</button>'
+        );
+
+    $('#editButton').on('click', function () {
+        sessionStorage.setItem('product', JSON.stringify(product));
+        window.location.href = 'edit_product.html';
+    });
+    
 });
