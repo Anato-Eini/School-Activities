@@ -19,10 +19,12 @@ $(document).ready(function () {
     $('#stock').html(product.stock);
     $('#productPictureUrl').attr('src', product.productPictureUrl);
 
-    if (user.userID === product.userID) 
+    if (user.userID === product.userID) {
         $('#owner').append(
-            '<button id="editButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-blue-200">Edit</button>'
+            `<button id="editButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-blue-200">Edit</button>
+            <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-red-200">Delete</button>`
         );
+    }
 
     $('#editButton').on('click', function () {
         sessionStorage.setItem('product', JSON.stringify(product));
