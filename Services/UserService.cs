@@ -118,14 +118,15 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     {
         User user = await _userRepository.GetUser(guid);
 
-        if (string.IsNullOrEmpty(newUser.Password) && _passwordHasher.VerifyHashedPassword(user, user.Password, newUser.Password) == PasswordVerificationResult.Failed)
+        if (_passwordHasher.VerifyHashedPassword(user, user.Password, newUser.Password) == PasswordVerificationResult.Failed)
             throw new KeyNotFoundException("Invalid password.");
 
         if (newUser.ProfilePictureUrl != null)
             user.ProfilePictureUrl = await SaveProfilePicture(newUser.ProfilePictureUrl);
 
         user.Username = newUser.Username;
-        user.Password = _passwordHasher.HashPassword(user, newUser.Password);
+        if (!string.IsNullOrEmpty(newUser.NewPassword))
+            user.Password = _passwordHasher.HashPassword(user, newUser.NewPassword);
         user.FirstName = newUser.FirstName;
         user.LastName = newUser.LastName;
         user.PhoneNumber = newUser.PhoneNumber;
