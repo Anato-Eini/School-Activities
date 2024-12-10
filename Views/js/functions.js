@@ -3,7 +3,6 @@
 * 'It's a global thing' :)
 */
 
-
 export function redirectToProductPage(productID) {
     fetch(`http://localhost:5088/api/Products/${productID}`)
         .then(response => response.json())

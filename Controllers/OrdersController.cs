@@ -6,19 +6,15 @@ namespace ANI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-
 public class OrdersController(IOrderService orderService) : ControllerBase
 {
     private readonly IOrderService _orderService = orderService;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<OrderDTO>>> GetOrders(Guid userID)
-    {
-        return Ok(await _orderService.GetOrders(userID));
-    }
+    public async Task<ActionResult<IEnumerable<OrderDTO>>> GetOrders(Guid userID) => Ok(await _orderService.GetOrders(userID));
 
     
-    [HttpGet("{id}")]
+    [HttpGet("{orderID}")]
     public async Task<ActionResult<OrderDTO>> GetOrder(Guid orderID)
     {
         try
@@ -42,7 +38,7 @@ public class OrdersController(IOrderService orderService) : ControllerBase
 
         OrderDTO createdOrder = await _orderService.CreateOrder(order);
 
-        return CreatedAtAction(nameof(GetOrder), new { id = createdOrder.OrderID }, createdOrder);
+        return CreatedAtAction(nameof(GetOrder), new { orderID = createdOrder.OrderID }, createdOrder);
     }
 
     

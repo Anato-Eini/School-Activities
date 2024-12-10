@@ -32,8 +32,6 @@ $(document).ready(function () {
     fetch('http://localhost:5088/api/Ratings/product/' + product.productID)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
-            
             data.forEach(function (rating) {
                 $('#comments').prepend(
                     `<div class="bg-gray-200 border border-gray-300 p-2 rounded-lg mb-2">
@@ -50,8 +48,7 @@ $(document).ready(function () {
         });
 
     $('#deleteButton').on('click', function () {
-        $.ajax({
-            url: `http://localhost:5088/api/Products/${product.productID}`,
+        $.ajax({ url: `http://localhost:5088/api/Products/${product.productID}`,
             type: 'DELETE',
             success: function () {
                 alert('Product deleted!');

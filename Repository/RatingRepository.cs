@@ -14,7 +14,8 @@ public class RatingRepository(AniContext context) : IRatingRepository
     /// Retrieves all ratings from the database.
     /// </summary>
     /// <returns>A list of all ratings.</returns>
-    public async Task<IEnumerable<Rating>> GetRatings() => await _context.Ratings.ToListAsync();
+    public async Task<IEnumerable<Rating>> GetRatings() 
+            => await _context.Ratings.ToListAsync();
 
     /// <summary>
     /// Retrieves all ratings for a specific product.
@@ -22,7 +23,8 @@ public class RatingRepository(AniContext context) : IRatingRepository
     /// <param name="productID">The ID of the product to retrieve ratings for.</param>
     /// <returns>A list of all ratings for the specified product.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when a product with the specified ID is not found.</exception>
-    public async Task<IEnumerable<Rating>> GetRatingsByProduct(Guid productID) => await _context.Ratings.Where(rating => rating.ProductID == productID).ToListAsync();
+    public async Task<IEnumerable<Rating>> GetRatingsByProduct(Guid productID) 
+            => await _context.Ratings.Where(rating => rating.ProductID == productID).ToListAsync();
 
     /// <summary>
     /// Retrieves a specific rating by its ID.
@@ -30,7 +32,8 @@ public class RatingRepository(AniContext context) : IRatingRepository
     /// <param name="ratingID">The ID of the rating to retrieve.</param>
     /// <returns>The rating with the specified ID.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when a rating with the specified ID is not found.</exception>
-    public async Task<Rating> GetRating(Guid ratingID) => await _context.Ratings.FindAsync(ratingID) ?? throw new KeyNotFoundException($"Product with id {ratingID} not found.");
+    public async Task<Rating> GetRating(Guid ratingID) 
+            => await _context.Ratings.FindAsync(ratingID) ?? throw new KeyNotFoundException($"Product with id {ratingID} not found.");
 
     /// <summary>
     /// Creates a new rating in the database.

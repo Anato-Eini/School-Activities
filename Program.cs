@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 

@@ -2,17 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace ANI.Repository;
+
 public class OrderRepository(AniContext context) : IOrderRepository
 {
     private readonly AniContext _context = context;
 
-    
     public async Task<IEnumerable<Order>> GetOrders(Guid userID) => await _context.Orders
                         .Where(order => order.UserID == userID)
                         .ToListAsync();
 
-    
-    public async Task<Order> GetOrder(Guid orderID) => await _context.Orders.FindAsync(orderID) ?? throw new KeyNotFoundException($"Order with id {orderID} not found.");
+    public async Task<Order> GetOrder(Guid orderID) 
+            => await _context.Orders.FindAsync(orderID) ?? throw new KeyNotFoundException($"Order with id {orderID} not found.");
 
     public async Task<Order> CreateOrder(Order order)
     {
@@ -22,7 +22,6 @@ public class OrderRepository(AniContext context) : IOrderRepository
 
         return order;
     }
-
     
     public async Task<Order> UpdateOrder(Order order)
     {
@@ -32,7 +31,6 @@ public class OrderRepository(AniContext context) : IOrderRepository
 
         return order;
     }
-
  
     public async Task<Order> DeleteOrder(Guid orderID)
     {
@@ -43,5 +41,4 @@ public class OrderRepository(AniContext context) : IOrderRepository
 
         return order;
     }
-
 }

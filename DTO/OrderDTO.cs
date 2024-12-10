@@ -7,4 +7,3 @@ public class OrderDTO
     public Guid ProductID { get; set; }
     public Guid UserID { get; set; }
 }
-
