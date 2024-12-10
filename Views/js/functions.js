@@ -28,3 +28,10 @@ export function displayProductDetail(htmlObject, product){
         </div>`
     )
 }
+
+export function displayOrders(htmlObject, order) {
+    //change later
+    console.log(order)
+}
+
+
