@@ -3,7 +3,6 @@ using ANI.DTO;
 using ANI.Repository;
 using AutoMapper;
 using ANI.Libraries;
-
 namespace ANI.Services;
 
 /// <summary>
@@ -104,8 +103,10 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
         if (product.Description != null)
             origProduct.Description = product.Description;
 
-        if (product.ProductPictureUrl != null)
+        if (product.ProductPictureUrl != null){
+            Library.DeleteImage(origProduct.ProductPictureUrl);
             origProduct.ProductPictureUrl = await Library.SaveImage("Products", product.ProductPictureUrl);
+        }
 
         ProductResponseDTO productResponseDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.UpdateProduct(_mapper.Map<Product>(origProduct)));
 
@@ -127,6 +128,8 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
     /// </remarks>
     public async Task<ProductResponseDTO> DeleteProduct(Guid productID)
     {
-        return _mapper.Map<ProductResponseDTO>(await _productRepository.DeleteProduct(productID));
+        ProductResponseDTO productResponseDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.DeleteProduct(productID));
+        Library.DeleteImage(productResponseDTO.ProductPictureUrl);
+        return productResponseDTO;
     }
 }

@@ -38,4 +38,10 @@ public static class Library
         }
         return filePath;
     }
+
+    public static void DeleteImage(string filePath)
+    {
+        if (File.Exists(filePath))
+            File.Delete(filePath);
+    }
 }
