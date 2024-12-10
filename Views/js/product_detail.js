@@ -1,12 +1,12 @@
 $(document).ready(function () {
     let user = sessionStorage.getItem('userDetails');
-    if (!user) 
+    if (!user)
         window.location.href = 'login.html';
 
     user = JSON.parse(user);
     let product = sessionStorage.getItem('product');
 
-    if (!product) 
+    if (!product)
         window.location.href = 'home.html';
 
     product = JSON.parse(product);
@@ -28,5 +28,18 @@ $(document).ready(function () {
         sessionStorage.setItem('product', JSON.stringify(product));
         window.location.href = 'edit_product.html';
     });
-    
+
+    $('#deleteButton').on('click', function () {
+        $.ajax({
+            url: `http://localhost:5088/api/Products/${product.productID}`,
+            type: 'DELETE',
+            success: function () {
+                alert('Product deleted!');
+                window.location.href = 'home.html';
+            },
+            error: function () {
+                alert('Error deleting product!');
+            }
+        })
+    });
 });
