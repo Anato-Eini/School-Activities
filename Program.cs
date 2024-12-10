@@ -13,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddTransient<IRatingService, RatingService>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 

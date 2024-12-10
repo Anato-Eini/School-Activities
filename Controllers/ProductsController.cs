@@ -4,19 +4,34 @@ using ANI.Services;
 
 namespace ANI.Controllers;
 
+/// <summary>
+/// Controller for managing products.
+/// </summary>
+/// <remarks>
+/// Initializes a new instance of the <see cref="ProductsController"/> class.
+/// </remarks>
+/// <param name="productService">The product service.</param>
+[ApiController]
 [Route("api/[controller]")]
 public class ProductsController(IProductService productService) : ControllerBase
 {
     private readonly IProductService _produceService = productService;
 
-    // GET: api/ProductDTOs
+    /// <summary>
+    /// Gets the list of products.
+    /// </summary>
+    /// <returns>A list of <see cref="ProductResponseDTO"/>.</returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ProductResponseDTO>>> GetProducts()
     {
         return Ok(await _produceService.GetProducts());
     }
 
-    // GET: api/ProductDTOs/{id}
+    /// <summary>
+    /// Gets a product by its identifier.
+    /// </summary>
+    /// <param name="id">The product identifier.</param>
+    /// <returns>A <see cref="ProductResponseDTO"/>.</returns>
     [HttpGet("{id}")]
     public async Task<ActionResult<ProductResponseDTO>> GetProduct(Guid id)
     {
@@ -30,7 +45,11 @@ public class ProductsController(IProductService productService) : ControllerBase
         }
     }
 
-    // POST: api/ProductDTOs
+    /// <summary>
+    /// Creates a new product.
+    /// </summary>
+    /// <param name="productDTO">The product creation data transfer object.</param>
+    /// <returns>The created <see cref="ProductResponseDTO"/>.</returns>
     [HttpPost]
     public async Task<ActionResult<ProductResponseDTO>> PostProduct([FromForm] ProductCreateDTO productDTO)
     {
@@ -42,7 +61,11 @@ public class ProductsController(IProductService productService) : ControllerBase
         return CreatedAtAction(nameof(GetProduct), new { id = createdProduct.ProductID }, createdProduct);
     }
 
-    // PUT: api/ProductDTOs/5
+    /// <summary>
+    /// Updates an existing product.
+    /// </summary>
+    /// <param name="product">The product update data transfer object.</param>
+    /// <returns>The updated <see cref="ProductResponseDTO"/>.</returns>
     [HttpPut]
     public async Task<ActionResult<ProductResponseDTO>> PutProduct([FromForm] ProductUpdateDTO product)
     {
@@ -59,7 +82,11 @@ public class ProductsController(IProductService productService) : ControllerBase
         }
     }
 
-    // DELETE: api/ProductResponseDTOs/5
+    /// <summary>
+    /// Deletes a product by its identifier.
+    /// </summary>
+    /// <param name="id">The product identifier.</param>
+    /// <returns>The deleted <see cref="ProductResponseDTO"/>.</returns>
     [HttpDelete("{id}")]
     public async Task<ActionResult<ProductResponseDTO>> DeleteProduct(Guid id)
     {

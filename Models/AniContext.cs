@@ -10,10 +10,26 @@ namespace ANI.Models
     /// <param name="options"></param>
     public class AniContext(DbContextOptions<AniContext> options) : DbContext(options)
     {
+        /// <summary>
+        /// Gets or sets the Users DbSet.
+        /// </summary>
         public DbSet<User> Users { get; set; } = null!;
+
+        /// <summary>
+        /// Gets or sets the Products DbSet.
+        /// </summary>
         public DbSet<Product> Products { get; set; } = null!;
+
+        /// <summary>
+        /// Gets or sets the Ratings DbSet.
+        /// </summary>
         public DbSet<Rating> Ratings { get; set; } = null!;
 
+        /// <summary>
+        /// Configures the model that was discovered by convention from the entity types
+        /// exposed in DbSet properties on your derived context.
+        /// </summary>
+        /// <param name="modelBuilder">The builder being used to construct the model for this context.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()

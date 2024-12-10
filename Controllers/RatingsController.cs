@@ -4,21 +4,32 @@ using ANI.Services;
 
 namespace ANI.Controllers;
 
+/// <summary>
+/// Controller for managing ratings.
+/// </summary>
 [Route("api/[controller]")]
+[ApiController]
 public class RatingsController(IRatingService ratingService) : ControllerBase
 {
     private readonly IRatingService _ratingService = ratingService;
 
-    // GET: api/RatingDTOs
+    /// <summary>
+    /// Gets all ratings.
+    /// </summary>
+    /// <returns>A list of RatingDTO objects.</returns>
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RatingDTO>>> GetRatings()
     {
         return Ok(await _ratingService.GetRatings());
     }
 
-    // GET: api/RatingDTOs/5
+    /// <summary>
+    /// Gets a rating by ID.
+    /// </summary>
+    /// <param name="id">The ID of the rating.</param>
+    /// <returns>A RatingDTO object.</returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<UserResponseDTO>> GetRating(Guid id)
+    public async Task<ActionResult<RatingDTO>> GetRating(Guid id)
     {
         try
         {
@@ -30,7 +41,11 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
         }
     }
 
-    // POST: api/ProductDTOs
+    /// <summary>
+    /// Creates a new rating.
+    /// </summary>
+    /// <param name="rating">The RatingDTO object to create.</param>
+    /// <returns>The created RatingDTO object.</returns>
     [HttpPost]
     public async Task<ActionResult<RatingDTO>> PostRating([FromBody] RatingDTO rating)
     {
@@ -44,8 +59,12 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
         return CreatedAtAction(nameof(GetRating), new { id = createdRating.RatingID }, createdRating);
     }
 
-    // PUT: api/RatingDTOs/5
-    [HttpPut("{id}")]
+    /// <summary>
+    /// Updates an existing rating.
+    /// </summary>
+    /// <param name="rating">The RatingDTO object to update.</param>
+    /// <returns>The updated RatingDTO object.</returns>
+    [HttpPut]
     public async Task<ActionResult<RatingDTO>> PutRating([FromBody] RatingDTO rating)
     {
         if (!ModelState.IsValid)
@@ -61,7 +80,11 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
         }
     }
 
-    // DELETE: api/RatingDTOs/5
+    /// <summary>
+    /// Deletes a rating by ID.
+    /// </summary>
+    /// <param name="id">The ID of the rating to delete.</param>
+    /// <returns>The deleted RatingDTO object.</returns>
     [HttpDelete("{id}")]
     public async Task<ActionResult<RatingDTO>> DeleteRating(Guid id)
     {
