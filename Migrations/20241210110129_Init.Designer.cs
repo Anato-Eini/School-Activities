@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ANI.Migrations
 {
     [DbContext(typeof(AniContext))]
-    [Migration("20241210053213_Init")]
+    [Migration("20241210110129_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -63,7 +63,9 @@ namespace ANI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Content")
-                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")

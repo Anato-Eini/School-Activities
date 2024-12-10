@@ -60,7 +60,8 @@ namespace ANI.Migrations
                 {
                     RatingID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: true),
                     Stars = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductID = table.Column<Guid>(type: "TEXT", nullable: false),
                     UserID = table.Column<Guid>(type: "TEXT", nullable: false)

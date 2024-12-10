@@ -22,7 +22,10 @@ public class Rating
     /// <summary>
     /// Gets or sets the content of the rating.
     /// </summary>
-    public string Content { get; set; } = null!;
+    public string? Content { get; set; } = null!;
+
+    
+    public string? ImageUrl { get; set; }
 
     /// <summary>
     /// Gets or sets the number of stars given in the rating.

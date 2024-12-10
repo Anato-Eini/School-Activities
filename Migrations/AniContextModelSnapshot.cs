@@ -60,7 +60,9 @@ namespace ANI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Content")
-                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
