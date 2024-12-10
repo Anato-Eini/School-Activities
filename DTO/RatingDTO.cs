@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace ANI.DTO;
 
@@ -8,18 +9,12 @@ namespace ANI.DTO;
 public class RatingDTO
 {
     /// <summary>
-    /// Gets or sets the unique identifier for the rating.
-    /// </summary>
-    [Required]
-    public Guid RatingID { get; set; }
-
-    /// <summary>
     /// Gets or sets the content of the rating.
     /// </summary>
     public string? Content { get; set; }
 
     /// <summary>
-    /// Gets or sets the number of stars given in the rating.
+    /// Gets or sets the numbkjer of stars given in the rating.
     /// </summary>
     [Range(1, 5)]
     [Required]
@@ -44,12 +39,30 @@ public class RatingCreateDTO : RatingDTO
     /// Gets or sets the URL of the image associated with the rating.
     /// </summary>
     public IFormFile? ImageUrl { get; set; }
+
 }
 
 public class RatingResponseDTO : RatingDTO
 {
+
+    /// <summary>
+    /// Gets or sets the unique identifier for the rating.
+    /// </summary>
+    [Required]
+    public Guid RatingID { get; set; }
     /// <summary>
     /// Gets or sets the URL of the image associated with the rating.
     /// </summary>
+    public string? ImageUrl { get; set; }
+}
+
+/// <summary>
+/// Data Transfer Object for fetching ratings by product.
+/// </summary>
+public class RatingFetchDTO
+{
+    public string Username { get; set; } = null!;
+    public int Stars { get; set; }
+    public string? Content { get; set; }
     public string? ImageUrl { get; set; }
 }

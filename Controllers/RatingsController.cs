@@ -20,6 +20,7 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RatingResponseDTO>>> GetRatings() => Ok(await _ratingService.GetRatings());
 
+
     /// <summary>
     /// Gets a rating by ID.
     /// </summary>
@@ -38,18 +39,21 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
         }
     }
 
+
+    [HttpGet("product/{productID}")]
+    public async Task<IEnumerable<RatingFetchDTO>> GetRatingsByProduct(Guid productID) => 
+                await _ratingService.GetRatingsByProduct(productID);
+
     /// <summary>
     /// Creates a new rating.
     /// </summary>
     /// <param name="rating">The RatingDTO object to create.</param>
     /// <returns>The created RatingDTO object.</returns>
     [HttpPost]
-    public async Task<ActionResult<RatingResponseDTO>> PostRating([FromBody] RatingCreateDTO rating)
+    public async Task<ActionResult<RatingResponseDTO>> PostRating([FromForm] RatingCreateDTO rating)
     {
         if (!ModelState.IsValid)
-        {
             return BadRequest(ModelState);
-        }
 
         RatingResponseDTO createdRating = await _ratingService.CreateRating(rating);
 
@@ -62,7 +66,7 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
     /// <param name="rating">The RatingDTO object to update.</param>
     /// <returns>The updated RatingDTO object.</returns>
     [HttpPut]
-    public async Task<ActionResult<RatingResponseDTO>> PutRating([FromBody] RatingCreateDTO rating)
+    public async Task<ActionResult<RatingResponseDTO>> PutRating([FromForm] RatingCreateDTO rating)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
