@@ -25,7 +25,9 @@ namespace ANI.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("The user has not provided a description for this product.");
 
                     b.Property<string>("Name")
                         .IsRequired()

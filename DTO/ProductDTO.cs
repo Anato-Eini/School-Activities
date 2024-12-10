@@ -30,8 +30,9 @@ public class ProductCreateDTO : ProductBaseDTO
 
 public class ProductUpdateDTO : ProductBaseDTO
 {
+    [Required]
     public Guid ProductID { get; set; }
-    public IFormFile? ProductPictureUrl { get; set; } = null!;
+    public IFormFile? ProductPictureUrl { get; set; }
 }
 
 public class ProductSecDTO : ProductBaseDTO

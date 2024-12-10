@@ -30,11 +30,15 @@ namespace ANI.Models
                 .Property(user => user.ProfilePictureUrl)
                 .HasDefaultValue("Media/Images/Profiles/blank-profile-picture-973460_128012234212.png");
 
-             modelBuilder.Entity<Rating>()
-                .HasOne(r => r.User)
-                .WithMany()
-                .HasForeignKey(r => r.UserID)
-                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Product>()
+                .Property(product => product.Description)
+                .HasDefaultValue("The user has not provided a description for this product.");
+
+            modelBuilder.Entity<Rating>()
+               .HasOne(r => r.User)
+               .WithMany()
+               .HasForeignKey(r => r.UserID)
+               .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Rating>()
                 .HasOne(r => r.Product)

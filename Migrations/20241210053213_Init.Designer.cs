@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ANI.Migrations
 {
     [DbContext(typeof(AniContext))]
-    [Migration("20241209135024_Init")]
+    [Migration("20241210053213_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -28,7 +28,9 @@ namespace ANI.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValue("The user has not provided a description for this product.");
 
                     b.Property<string>("Name")
                         .IsRequired()

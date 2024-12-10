@@ -44,7 +44,7 @@ public class ProductsController(IProductService productService) : ControllerBase
 
     // PUT: api/ProductDTOs/5
     [HttpPut]
-    public async Task<ActionResult<ProductResponseDTO>> PutProduct([FromBody] ProductUpdateDTO product)
+    public async Task<ActionResult<ProductResponseDTO>> PutProduct([FromForm] ProductUpdateDTO product)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

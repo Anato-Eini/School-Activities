@@ -48,15 +48,21 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
     {
         Product origProduct = await _productRepository.GetProduct(product.ProductID) ?? throw new KeyNotFoundException($"Product with id {product.ProductID} not found.");
 
-        product.Name = product.Name;
-        product.Description = product.Description;
-        product.Price = product.Price;
-        product.Stock = product.Stock;
+        origProduct.Name = product.Name;
+        origProduct.Price = product.Price;
+        origProduct.Stock = product.Stock;
+
+        if(product.Description != null)
+            origProduct.Description = product.Description;
 
         if (product.ProductPictureUrl != null)
             origProduct.ProductPictureUrl = await Library.SaveImage("Products", product.ProductPictureUrl);
         
-        return _mapper.Map<ProductResponseDTO>(await _productRepository.UpdateProduct(_mapper.Map<Product>(product)));
+        ProductResponseDTO productResponseDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.UpdateProduct(_mapper.Map<Product>(origProduct)));
+
+        productResponseDTO.ProductPictureUrl = Library.PrependUrl(productResponseDTO.ProductPictureUrl);
+
+        return productResponseDTO;
     }
 
     public async Task<ProductResponseDTO> DeleteProduct(Guid productID)

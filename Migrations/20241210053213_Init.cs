@@ -37,7 +37,7 @@ namespace ANI.Migrations
                 {
                     ProductID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false, defaultValue: "The user has not provided a description for this product."),
                     Price = table.Column<decimal>(type: "TEXT", nullable: false),
                     Stock = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductPictureUrl = table.Column<string>(type: "TEXT", nullable: false),

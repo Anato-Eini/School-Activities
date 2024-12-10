@@ -9,8 +9,6 @@ $(document).ready(function () {
     if (!product) 
         window.location.href = 'home.html';
 
-    console.log(product);
-
     product = JSON.parse(product);
 
     $('#name').html(product.name);
