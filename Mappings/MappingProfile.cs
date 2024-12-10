@@ -1,7 +1,6 @@
 using AutoMapper;
 using ANI.Models;
 using ANI.DTO;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace ANI.Mappings;
 
@@ -38,5 +37,9 @@ public class MappingProfile : Profile
         CreateMap<RatingDTO, Rating>();
         CreateMap<Rating, RatingResponseDTO>();
         CreateMap<RatingCreateDTO, Rating>();
+
+        // Order mappings
+        CreateMap<Order, OrderDTO>();
+        CreateMap<OrderDTO, Order>();
     }
 }

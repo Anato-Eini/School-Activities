@@ -25,6 +25,8 @@ namespace ANI.Models
         /// </summary>
         public DbSet<Rating> Ratings { get; set; } = null!;
 
+        public DbSet<Order> Orders { get; set; } = null!;
+
         /// <summary>
         /// Configures the model that was discovered by convention from the entity types
         /// exposed in DbSet properties on your derived context.
@@ -57,6 +59,18 @@ namespace ANI.Models
                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Rating>()
+                .HasOne(r => r.Product)
+                .WithMany()
+                .HasForeignKey(r => r.ProductID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+               .HasOne(r => r.User)
+               .WithMany()
+               .HasForeignKey(r => r.UserID)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
                 .HasOne(r => r.Product)
                 .WithMany()
                 .HasForeignKey(r => r.ProductID)
