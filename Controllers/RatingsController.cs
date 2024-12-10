@@ -18,10 +18,7 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
     /// </summary>
     /// <returns>A list of RatingDTO objects.</returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<RatingDTO>>> GetRatings()
-    {
-        return Ok(await _ratingService.GetRatings());
-    }
+    public async Task<ActionResult<IEnumerable<RatingResponseDTO>>> GetRatings() => Ok(await _ratingService.GetRatings());
 
     /// <summary>
     /// Gets a rating by ID.
@@ -29,7 +26,7 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
     /// <param name="id">The ID of the rating.</param>
     /// <returns>A RatingDTO object.</returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<RatingDTO>> GetRating(Guid id)
+    public async Task<ActionResult<RatingResponseDTO>> GetRating(Guid id)
     {
         try
         {
@@ -47,14 +44,14 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
     /// <param name="rating">The RatingDTO object to create.</param>
     /// <returns>The created RatingDTO object.</returns>
     [HttpPost]
-    public async Task<ActionResult<RatingDTO>> PostRating([FromBody] RatingDTO rating)
+    public async Task<ActionResult<RatingResponseDTO>> PostRating([FromBody] RatingCreateDTO rating)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        RatingDTO createdRating = await _ratingService.CreateRating(rating);
+        RatingResponseDTO createdRating = await _ratingService.CreateRating(rating);
 
         return CreatedAtAction(nameof(GetRating), new { id = createdRating.RatingID }, createdRating);
     }
@@ -65,7 +62,7 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
     /// <param name="rating">The RatingDTO object to update.</param>
     /// <returns>The updated RatingDTO object.</returns>
     [HttpPut]
-    public async Task<ActionResult<RatingDTO>> PutRating([FromBody] RatingDTO rating)
+    public async Task<ActionResult<RatingResponseDTO>> PutRating([FromBody] RatingCreateDTO rating)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -86,7 +83,7 @@ public class RatingsController(IRatingService ratingService) : ControllerBase
     /// <param name="id">The ID of the rating to delete.</param>
     /// <returns>The deleted RatingDTO object.</returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<RatingDTO>> DeleteRating(Guid id)
+    public async Task<ActionResult<RatingResponseDTO>> DeleteRating(Guid id)
     {
         try
         {

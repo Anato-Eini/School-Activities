@@ -24,14 +24,11 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
     /// This method fetches products from the repository, maps them to ProductResponseDTO objects, and updates the ProductPictureUrl property
     /// by prepending a URL using the Library.PrependUrl method.
     /// </remarks>
-    public async Task<IEnumerable<ProductResponseDTO>> GetProducts()
-    {
-        return _mapper.Map<IEnumerable<ProductResponseDTO>>(await _productRepository.GetProducts()).Select(static product =>
-        {
-            product.ProductPictureUrl = Library.PrependUrl(product.ProductPictureUrl);
-            return product;
-        });
-    }
+    public async Task<IEnumerable<ProductResponseDTO>> GetProducts() => _mapper.Map<IEnumerable<ProductResponseDTO>>(await _productRepository.GetProducts()).Select(static product =>
+                                                                {
+                                                                    product.ProductPictureUrl = Library.PrependUrl(product.ProductPictureUrl)!;
+                                                                    return product;
+                                                                });
 
     /// <summary>
     /// Asynchronously retrieves a product by its ID and maps it to a ProductResponseDTO object.
@@ -47,9 +44,7 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
     public async Task<ProductResponseDTO> GetProduct(Guid productID)
     {
         ProductResponseDTO productDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.GetProduct(productID));
-
-        productDTO.ProductPictureUrl = Library.PrependUrl(productDTO.ProductPictureUrl);
-
+        productDTO.ProductPictureUrl = Library.PrependUrl(productDTO.ProductPictureUrl)!;
         return productDTO;
     }
 
@@ -69,12 +64,12 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
     {
         Product productCreate = _mapper.Map<Product>(product);
 
-        productCreate.User = await _userRepository.GetUser(product.UserID) ?? throw new KeyNotFoundException($"User with id {product.UserID} not found.");
+        productCreate.User = await _userRepository.GetUser(product.UserID);
         productCreate.UserID = product.UserID;
         productCreate.ProductPictureUrl = await Library.SaveImage("Products", product.ProductPictureUrl);
 
         ProductResponseDTO productResponseDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.CreateProduct(_mapper.Map<Product>(productCreate)));
-        productResponseDTO.ProductPictureUrl = Library.PrependUrl(productResponseDTO.ProductPictureUrl);
+        productResponseDTO.ProductPictureUrl = Library.PrependUrl(productResponseDTO.ProductPictureUrl)!;
 
         return productResponseDTO;
     }
@@ -94,7 +89,7 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
     /// </remarks>
     public async Task<ProductResponseDTO> UpdateProduct(ProductUpdateDTO product)
     {
-        Product origProduct = await _productRepository.GetProduct(product.ProductID) ?? throw new KeyNotFoundException($"Product with id {product.ProductID} not found.");
+        Product origProduct = await _productRepository.GetProduct(product.ProductID);
 
         origProduct.Name = product.Name;
         origProduct.Price = product.Price;
@@ -110,7 +105,7 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
 
         ProductResponseDTO productResponseDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.UpdateProduct(_mapper.Map<Product>(origProduct)));
 
-        productResponseDTO.ProductPictureUrl = Library.PrependUrl(productResponseDTO.ProductPictureUrl);
+        productResponseDTO.ProductPictureUrl = Library.PrependUrl(productResponseDTO.ProductPictureUrl)!;
 
         return productResponseDTO;
     }
@@ -130,6 +125,7 @@ public class ProductService(IProductRepository productRepository, IMapper mapper
     {
         ProductResponseDTO productResponseDTO = _mapper.Map<ProductResponseDTO>(await _productRepository.DeleteProduct(productID));
         Library.DeleteImage(productResponseDTO.ProductPictureUrl);
+        productResponseDTO.ProductPictureUrl = Library.PrependUrl(productResponseDTO.ProductPictureUrl)!;
         return productResponseDTO;
     }
 }

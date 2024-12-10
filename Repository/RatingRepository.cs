@@ -28,13 +28,7 @@ namespace ANI.Repository
 
         public async Task<Rating> UpdateRating(Rating rating)
         {
-            Rating updateProduct = await _context.Ratings.FindAsync(rating.ProductID) ?? throw new KeyNotFoundException($"Product with id {rating.ProductID} not found.");
-
-            updateProduct.Name = rating.Name;
-            updateProduct.Content = rating.Content;
-            updateProduct.Stars = rating.Stars;
-
-            _context.Entry(updateProduct).State = EntityState.Modified;
+            _context.Entry(rating).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
 

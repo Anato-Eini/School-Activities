@@ -36,5 +36,7 @@ public class MappingProfile : Profile
         // Rating mappings
         CreateMap<Rating, RatingDTO>();
         CreateMap<RatingDTO, Rating>();
+        CreateMap<Rating, RatingResponseDTO>();
+        CreateMap<RatingCreateDTO, Rating>();
     }
 }

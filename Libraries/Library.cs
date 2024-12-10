@@ -12,9 +12,12 @@ public static class Library
     /// </summary>
     /// <param name="url">The URL to prepend the base URL to.</param>
     /// <returns>The combined URL.</returns>
-    public static string PrependUrl(string url)
+    public static string? PrependUrl(string? url)
     {
-        return string.Concat(BaseUrl, url);
+        if (url is not null)
+            return string.Concat(BaseUrl, url);
+
+        return null;        
     }
 
     /// <summary>
@@ -39,9 +42,9 @@ public static class Library
         return filePath;
     }
 
-    public static void DeleteImage(string filePath)
+    public static void DeleteImage(string? filePath)
     {
-        if (File.Exists(filePath))
+        if (string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             File.Delete(filePath);
     }
 }
