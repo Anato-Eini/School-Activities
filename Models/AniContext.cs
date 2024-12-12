@@ -75,6 +75,10 @@ namespace ANI.Models
                 .WithMany()
                 .HasForeignKey(r => r.ProductID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Order>()
+                .Property(b => b.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
