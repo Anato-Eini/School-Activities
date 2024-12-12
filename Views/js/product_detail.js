@@ -37,9 +37,9 @@ $(document).ready(function () {
                     `<div class="bg-gray-200 border border-gray-300 p-2 rounded-lg mb-2">
                         <p class="text-lg font-bold">${rating.username}</p>
                         <p>${rating.content == null ? "" : rating.content}</p>
-                        <p>Rating: ${rating.stars}</p>
-                        <img src="${rating.imageUrl}" alt="Product Image" class="w-full h-auto rounded-lg mt-2">
-                    </div>`
+                        <p>Rating: ${rating.stars}</p>` +
+                            (rating.imageUrl == null ? "" : `<img src="${rating.imageUrl}" alt="Product Image" class="w-full h-auto rounded-lg mt-2">`) + 
+                        `</div>`
                 );
             })
         })
