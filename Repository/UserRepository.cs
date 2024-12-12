@@ -33,7 +33,8 @@ public class UserRepository(AniContext context) : IUserRepository
     /// <returns>The user with the specified username.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when a user with the specified username is not found.</exception>
     public async Task<User> GetUser(string username) => 
-                    await _context.Users.SingleOrDefaultAsync(u => u.Username == username) ?? throw new KeyNotFoundException($"User with username {username} not found.");
+                    await _context.Users.SingleOrDefaultAsync(u => u.Username == username)
+                        ?? throw new KeyNotFoundException($"User with username {username} not found.");
 
     /// <summary>
     /// Creates a new user.
