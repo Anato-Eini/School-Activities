@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -18,6 +17,9 @@ builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
+builder.Services.AddTransient<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 //Database
 builder.Services.AddDbContext<AniContext>(options =>

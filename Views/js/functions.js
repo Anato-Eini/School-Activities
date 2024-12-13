@@ -3,7 +3,6 @@
 * 'It's a global thing' :)
 */
 
-
 export function redirectToProductPage(productID) {
     fetch(`http://localhost:5088/api/Products/${productID}`)
         .then(response => response.json())
@@ -28,3 +27,17 @@ export function displayProductDetail(htmlObject, product){
         </div>`
     )
 }
+
+export function displayOrders(htmlObject, order) {
+    //change later
+    console.log(order)
+    var currUser;
+    order.forEach(function (item) {
+        htmlObject.append(
+            item.createdAt
+        )
+    })
+    
+}
+
+

@@ -14,10 +14,8 @@ public class ProductRepository(AniContext context) : IProductRepository
     /// Retrieves all products from the database.
     /// </summary>
     /// <returns>A list of products.</returns>
-    public async Task<IEnumerable<Product>> GetProducts()
-    {
-        return await _context.Products.ToListAsync();
-    }
+    public async Task<IEnumerable<Product>> GetProducts() 
+            => await _context.Products.ToListAsync();
 
     /// <summary>
     /// Retrieves a product by its ID.
@@ -26,9 +24,7 @@ public class ProductRepository(AniContext context) : IProductRepository
     /// <returns>The product with the specified ID.</returns>
     /// <exception cref="KeyNotFoundException">Thrown when a product with the specified ID is not found.</exception>
     public async Task<Product> GetProduct(Guid productID)
-    {
-        return await _context.Products.FindAsync(productID) ?? throw new KeyNotFoundException($"Product with id {productID} not found.");
-    }
+            => await _context.Products.FindAsync(productID) ?? throw new KeyNotFoundException($"Product with id {productID} not found.");
 
     /// <summary>
     /// Creates a new product in the database.

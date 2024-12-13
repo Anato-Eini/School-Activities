@@ -20,14 +20,12 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     /// Retrieves all users.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains a collection of UserSecDTO.</returns>
-    public async Task<IEnumerable<UserSecDTO>> GetUsers()
-    {
-        return _mapper.Map<IEnumerable<UserSecDTO>>(await _userRepository.GetUsers()).Select(user =>
-        {
-            user.ProfilePictureUrl = Library.PrependUrl(user.ProfilePictureUrl);
-            return user;
-        });
-    }
+    public async Task<IEnumerable<UserSecDTO>> GetUsers() => 
+                _mapper.Map<IEnumerable<UserSecDTO>>(await _userRepository.GetUsers()).Select(user =>
+                    {
+                        user.ProfilePictureUrl = Library.PrependUrl(user.ProfilePictureUrl)!;
+                        return user;
+                    });
 
     /// <summary>
     /// Retrieves a user by username.
@@ -37,7 +35,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     public async Task<UserResponseDTO> GetUser(string username)
     {
         UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(username));
-        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl);
+        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl)!;
 
         return userResponseDTO;
     }
@@ -50,8 +48,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     public async Task<UserResponseDTO> GetUser(Guid id)
     {
         UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.GetUser(id));
-
-        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl);
+        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl)!;
 
         return userResponseDTO;
     }
@@ -71,8 +68,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
                 throw new KeyNotFoundException("Invalid password.");
 
             UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(userFetch);
-
-            userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userFetch.ProfilePictureUrl);
+            userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userFetch.ProfilePictureUrl)!;
 
             return _mapper.Map<UserResponseDTO>(userResponseDTO);
         }
@@ -97,8 +93,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
                 throw new KeyNotFoundException("Invalid password.");
 
             UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(userFetch);
-
-            userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userFetch.ProfilePictureUrl);
+            userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userFetch.ProfilePictureUrl)!;
 
             return userResponseDTO;
         }
@@ -117,7 +112,7 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     {
         User userModel = _mapper.Map<User>(user);
 
-        if (user.ProfilePictureUrl != null)
+        if (user.ProfilePictureUrl is not null)
             userModel.ProfilePictureUrl = await Library.SaveImage("Profiles", user.ProfilePictureUrl);
 
         userModel.Password = _passwordHasher.HashPassword(userModel, userModel.Password);
@@ -149,10 +144,10 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
         user.PhoneNumber = newUser.PhoneNumber;
         user.Address = newUser.Address;
         user.IsFarmer = newUser.IsFarmer;
-        
+
         UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.UpdateUser(user));
 
-        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl);
+        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl)!;
 
         return userResponseDTO;
     }
@@ -165,7 +160,8 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     public async Task<UserResponseDTO> DeleteUser(Guid id)
     {
         UserResponseDTO userResponseDTO = _mapper.Map<UserResponseDTO>(await _userRepository.DeleteUser(id));
-        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl);
+        Library.DeleteImage(userResponseDTO.ProfilePictureUrl);
+        userResponseDTO.ProfilePictureUrl = Library.PrependUrl(userResponseDTO.ProfilePictureUrl)!;
         return userResponseDTO;
     }
 }

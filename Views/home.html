@@ -19,13 +19,29 @@
     </style>
 </head>
 
-
 <body class="gradient">
     <div id="sell-item" class="flex justify-center mt-4">
     </div>
 
+    <div class="flex justify-end p-4">
+        <button class="relative" id="goToCart">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5M17 13l1.4 5M9 21h6M9 21a2 2 0 11-4 0M15 21a2 2 0 104 0">
+                </path>
+            </svg>
+            <span
+                class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"
+                id="cart-count">
+                0
+            </span>
+        </button>
+    </div>
+
     <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="logout">Logout</button>
-    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" id="profile-picture">Profile Picture</button>
+    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" id="profile-picture">Profile
+        Picture</button>
 
     <div class="min-h-screen flex items-center justify-center">
         <div class="container mx-auto px-4">

@@ -1,108 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-        ANI
-    </title>
+    <title>ANI</title>
     <!--Replace with your tailwind.css once created-->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
-        .gradient {
-            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-        }
+      body {
+        font-family: Poppins;
+      }
+      .gradient {
+        background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+      }
     </style>
-</head>
+  </head>
 
-<body class="gradient">
-    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-            <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">
-            ANI
-        </a>
-        <div
-            class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                    Create an account
-                </h1>
-                <form id="register-form" class="space-y-4 md:space-y-6" method="POST" action="#">
-                    <div>
-                        <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Username
-                        </label>
-                        <input type="text" name="username" id="username"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="jeremtherock" required="">
-                    </div>
-                    <div>
-                        <label for="password"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                        <input type="password" name="password" id="password" placeholder="••••••••"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            required="">
-                    </div>
-                    <div>
-                        <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            First Name
-                        </label>
-                        <input type="text" name="firstName" id="first-name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="John" required="">
-                    </div>
-                    <div>
-                        <label for="last-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Last Name
-                        </label>
-                        <input type="text" name="lastName" id="last-name"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Doe" required="">
-                    </div>
-                    <div>
-                        <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Phone Number
-                        </label>
-                        <input type="tel" name="phoneNumber" id="phone-number"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="09243574356" required="">
-                    </div>
-                    <div>
-                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Address
-                        </label>
-                        <input type="text" name="address" id="address"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="123 Main St" required="">
-                    </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                            for="user_avatar">Upload file</label>
-                        <input
-                            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            aria-describedby="user_avatar_help" id="user_avatar" type="file" name="profilePictureUrl">
-                    </div>
-                    <button type="submit"
-                        class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        Create
-                        an account
-                    </button>
-                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Already have an account? <a href="login.html"
-                            class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
-                    </p>
-                </form>
-                <div id="register-error" class="text-red-500 text-sm mt-2"></div>
-            </div>
+  <body class="overflow-y-auto max-h-[calc(100vh-200px)]">
+    <header
+      class="bg-white"
+      style="
+        background-color: #fbfada;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <p class="sr-only">ANI</p>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="" />
+          </a>
         </div>
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+              data-slot="icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Explore</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >About</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Products</a
+          >
+        </div>
+        <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="register.html" class="text-sm/6 font-semibold text-gray-900"
+            >Get Started <span aria-hidden="true">&rarr;</span></a
+          >
+        </div> -->
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div class="lg:hidden" role="dialog" aria-modal="true">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 z-10"></div>
+        <div
+          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        >
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only">ANI</span>
+              <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+            </a>
+            <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >Explore</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >About</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >Products</a
+                >
+              </div>
+              <!-- <div class="py-6">
+                <a
+                  href="register.html"
+                  class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >Get Started</a
+                >
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div
+        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+      >
+        <a
+          href="index.html"
+          class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+        >
+          <img class="h-10 mt-5" src="assets/images/ani.png" alt="logo" />
+        </a>
+        <div class="p-3 space-y-4 md:space-y-6 sm:p-8">
+          <!-- <h1
+            class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+          > -->
+          <h1
+            class="text-4xl font-extrabold text-[#436850] text-center dark:text-white"
+          >
+            Sign-Up
+          </h1>
+          <form
+            id="register-form"
+            class="space-y-4 md:space-y-6"
+            method="POST"
+            action="#"
+          >
+            <div>
+              <label
+                for="username"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Username
+              </label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="jeremtherock"
+                required=""
+              />
+            </div>
+            <div>
+              <label
+                for="password"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Password</label
+              >
+              <input
+                type="password"
+                name="password"
+                id="password"
+                placeholder="••••••••"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required=""
+              />
+            </div>
+            <div>
+              <label
+                for="first-name"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                First Name
+              </label>
+              <input
+                type="text"
+                name="firstName"
+                id="first-name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="John"
+                required=""
+              />
+            </div>
+            <div>
+              <label
+                for="last-name"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                id="last-name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Doe"
+                required=""
+              />
+            </div>
+            <div>
+              <label
+                for="phoneNumber"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                name="phoneNumber"
+                id="phone-number"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="09243574356"
+                required=""
+              />
+            </div>
+            <div>
+              <label
+                for="address"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                Address
+              </label>
+              <input
+                type="text"
+                name="address"
+                id="address"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="123 Main St"
+                required=""
+              />
+            </div>
+            <!-- <div>
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="user_avatar"
+                >Upload file</label
+              >
+              <input
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                aria-describedby="user_avatar_help"
+                id="user_avatar"
+                type="file"
+                name="profilePictureUrl"
+              />
+            </div> -->
+            <button
+              type="submit"
+              class="w-full bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]"
+            >
+              Create an account
+            </button>
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+              Already have an account?
+              <a
+                href="login.html"
+                class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                >Login here</a
+              >
+            </p>
+          </form>
+          <div id="register-error" class="text-red-500 text-sm mt-2"></div>
+        </div>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
     <script src="js/register.js"></script>
-</body>
-
+  </body>
 </html>

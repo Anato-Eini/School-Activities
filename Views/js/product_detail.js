@@ -29,9 +29,26 @@ $(document).ready(function () {
         window.location.href = 'edit_product.html';
     });
 
+    fetch('http://localhost:5088/api/Ratings/product/' + product.productID)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(function (rating) {
+                $('#comments').prepend(
+                    `<div class="bg-gray-200 border border-gray-300 p-2 rounded-lg mb-2">
+                        <p class="text-lg font-bold">${rating.username}</p>
+                        <p>${rating.content == null ? "" : rating.content}</p>
+                        <p>Rating: ${rating.stars}</p>` +
+                            (rating.imageUrl == null ? "" : `<img src="${rating.imageUrl}" alt="Product Image" class="w-full h-auto rounded-lg mt-2">`) + 
+                        `</div>`
+                );
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
     $('#deleteButton').on('click', function () {
-        $.ajax({
-            url: `http://localhost:5088/api/Products/${product.productID}`,
+        $.ajax({ url: `http://localhost:5088/api/Products/${product.productID}`,
             type: 'DELETE',
             success: function () {
                 alert('Product deleted!');
@@ -41,5 +58,28 @@ $(document).ready(function () {
                 alert('Error deleting product!');
             }
         })
+    });
+
+    $('#ratingForm').on('submit', function (e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+        formData.append('userID', user.userID);
+        formData.append('productID', product.productID);
+
+        $.ajax({
+            url: 'http://localhost:5088/api/Ratings',
+            type: 'POST',
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function (response) {
+                alert('Rating added!');
+                window.location.reload();
+            },
+            error: function () {
+                alert('Error adding rating!');
+            }
+        });
     });
 });

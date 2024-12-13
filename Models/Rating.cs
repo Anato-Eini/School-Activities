@@ -15,16 +15,13 @@ public class Rating
     public Guid RatingID { get; set; }
 
     /// <summary>
-    /// Gets or sets the name of the rating.
-    /// </summary>
-    public string Name { get; set; } = null!;
-
-    /// <summary>
     /// Gets or sets the content of the rating.
     /// </summary>
-    public string? Content { get; set; } = null!;
+    public string? Content { get; set; }
 
-    
+    /// <summary>
+    /// Gets or sets the URL of the image associated with the rating.
+    /// </summary>
     public string? ImageUrl { get; set; }
 
     /// <summary>

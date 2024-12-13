@@ -1,4 +1,5 @@
-﻿using ANI.Models;
+﻿using ANI.DTO;
+using ANI.Models;
 
 namespace ANI.Repository;
 
@@ -13,6 +14,12 @@ public interface IRatingRepository
     /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable collection of ratings.</returns>
     Task<IEnumerable<Rating>> GetRatings();
 
+    /// <summary>
+    /// Retrieves all ratings for a specific product.
+    /// </summary>
+    /// <param name="productID">The ID of the product to retrieve ratings for.</param>
+    /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable collection of ratings for the specified product.</returns>
+    Task<IEnumerable<Rating>> GetRatingsByProduct(Guid productID);
     /// <summary>
     /// Retrieves a rating by its ID.
     /// </summary>

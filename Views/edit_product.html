@@ -1,68 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-        ANI
-    </title>
+    <title>ANI</title>
     <!--Replace with your tailwind.css once created-->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
-        .gradient {
-            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-        }
+      body {
+        /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%); */
+        font-family: Poppins;
+      }
     </style>
-</head>
+  </head>
 
-<body class="gradient">
-    <div class="container mx-auto px-4 py-8">
-        <div class="bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800 text-center">Edit Item</h2>
-            <form action="#" method="POST" id="sell-item-form">
-                <div class="mb-4">
-                    <label for="productName" class="block text-gray-700 font-bold mb-2">Product Name</label>
-                    <input type="text" id="productName" name="name"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required>
-                </div>
-                <div class="mb-4">
-                    <label for="description" class="block text-gray-700 font-bold mb-2">Description</label>
-                    <textarea id="description" name="description"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        rows="3"></textarea>
-                </div>
-                <div class="mb-4">
-                    <label for="price" class="block text-gray-700 font-bold mb-2">Price</label>
-                    <input type="text" id="price" name="price" pattern="^\d+(\.\d{1,2})?$"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required>
-                </div>
-                <div class="mb-4">
-                    <label for="stock" class="block text-gray-700 font-bold mb-2">Stock</label>
-                    <input type="number" id="stock" name="stock"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        required>
-                </div>
-                <div class="mb-4">
-                    <label for="images" class="block text-gray-700 font-bold mb-2">Upload Images</label>
-                    <input type="file" id="images" name="productPictureUrl"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div class="flex items-center justify-between">
-                    <button type="submit"
-                        class="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Submit</button>
-                </div>
-            </form>
+  <body>
+    <header
+      class="bg-white"
+      style="
+        background-color: #fbfada;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <p class="sr-only">ANI</p>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="" />
+          </a>
         </div>
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+              data-slot="icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Explore</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >About</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Products</a
+          >
+        </div>
+        <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="register.html" class="text-sm/6 font-semibold text-gray-900"
+            >Get Started <span aria-hidden="true">&rarr;</span></a
+          >
+        </div> -->
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div class="lg:hidden" role="dialog" aria-modal="true">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 z-10"></div>
+        <div
+          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        >
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only">ANI</span>
+              <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+            </a>
+            <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >Explore</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >About</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >Products</a
+                >
+              </div>
+              <!-- <div class="py-6">
+                <a
+                  href="register.html"
+                  class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >Get Started</a
+                >
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div
+      class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div
+        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+      >
+        <a
+          href="index.html"
+          class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+        >
+          <img class="h-10 mt-5" src="assets/images/ani.png" alt="logo" />
+        </a>
+        <div class="p-3 space-y-4 md:space-y-6 sm:p-8">
+          <h1
+            class="text-4xl font-extrabold text-[#436850] text-center dark:text-white"
+          >
+            Edit Product
+          </h1>
+          <form action="#" method="POST" id="sell-item-form">
+            <div class="mb-4">
+              <label
+                for="productName"
+                class="block text-gray-700 font-bold mb-2"
+                >Product Name</label
+              >
+              <input
+                type="text"
+                id="productName"
+                name="name"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label
+                for="description"
+                class="block text-gray-700 font-bold mb-2"
+                >Description</label
+              >
+              <textarea
+                id="description"
+                name="description"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                rows="3"
+              ></textarea>
+            </div>
+            <div class="mb-4">
+              <label for="price" class="block text-gray-700 font-bold mb-2"
+                >Price</label
+              >
+              <input
+                type="text"
+                id="price"
+                name="price"
+                pattern="^\d+(\.\d{1,2})?$"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="stock" class="block text-gray-700 font-bold mb-2"
+                >Stock</label
+              >
+              <input
+                type="number"
+                id="stock"
+                name="stock"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                required
+              />
+            </div>
+            <div class="mb-4">
+              <label for="images" class="block text-gray-700 font-bold mb-2"
+                >Upload Images</label
+              >
+              <input
+                type="file"
+                id="images"
+                name="productPictureUrl"
+                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div class="flex items-center justify-between">
+              <button
+                type="submit"
+                class="w-full bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]"
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="js/edit_product.js"></script>
-</body>
-
+  </body>
 </html>

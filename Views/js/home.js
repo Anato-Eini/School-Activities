@@ -18,6 +18,8 @@ $(document).ready(function () {
         );
     }
 
+    let cart = [];
+
     fetch('http://localhost:5088/api/Products')
         .then(response => response.json())
         .then(data => {
@@ -28,7 +30,6 @@ $(document).ready(function () {
             $('.buy-now-button').on('click', function () {
                 functions.redirectToProductPage($(this).data('product'));
             });
-
         })
         .catch(error => {
             console.log(error);
@@ -46,4 +47,8 @@ $(document).ready(function () {
     $('#sellButton').on('click', function () {
         window.location.href = 'sell_item.html';
     });
+
+    $('#goToCart').on('click', function () {
+        window.location.href = 'checkout.html';
+    })
 });
