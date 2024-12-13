@@ -5,17 +5,20 @@ namespace ANI.Services;
 public interface IOrderService
 {
    //get all orders with matching userID foreign key
-    Task<IEnumerable<OrderDTO>> GetOrders(Guid userID);
+    Task<IEnumerable<OrderResponseDTO>> GetOrders(Guid userID);
+
+
+    Task<IEnumerable<OrderResponseDTO>> GetOrdersToFarmer(Guid userID);
 
    
-    Task<OrderDTO> GetOrder(Guid orderID);
+    Task<OrderResponseDTO> GetOrder(Guid orderID);
 
    
-    Task<OrderDTO> CreateOrder(OrderDTO order);
+    Task<OrderResponseDTO> CreateOrder(OrderCreateDTO order);
 
    
-    Task<OrderDTO> UpdateOrder(OrderDTO order);
+    Task<OrderResponseDTO> UpdateOrder(OrderUpdateDTO order);
 
     
-    Task<OrderDTO> DeleteOrder(Guid orderID);
+    Task<OrderResponseDTO> DeleteOrder(Guid orderID);
 }

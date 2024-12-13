@@ -8,6 +8,9 @@ public interface IOrderRepository
     Task<IEnumerable<Order>> GetOrders(Guid userID);
 
 
+    Task<IEnumerable<Order>> GetOrdersToFarmer(Guid userID);
+
+
     Task<Order> GetOrder(Guid orderID);
 
 

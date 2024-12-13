@@ -14,6 +14,8 @@ public class OrderRepository(AniContext context) : IOrderRepository
     public async Task<Order> GetOrder(Guid orderID) 
             => await _context.Orders.FindAsync(orderID) ?? throw new KeyNotFoundException($"Order with id {orderID} not found.");
 
+    public async Task<IEnumerable<Order>> GetOrdersToFarmer(Guid userID) => await _context.Orders.Where(order => order.Product.UserID == userID).ToListAsync();
+
     public async Task<Order> CreateOrder(Order order)
     {
         _context.Orders.Add(order);

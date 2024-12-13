@@ -11,11 +11,18 @@ public class OrdersController(IOrderService orderService) : ControllerBase
     private readonly IOrderService _orderService = orderService;
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<OrderDTO>>> GetOrders(Guid userID) => Ok(await _orderService.GetOrders(userID));
+    public async Task<ActionResult<IEnumerable<OrderResponseDTO>>> GetOrders(Guid userID) => Ok(await _orderService.GetOrders(userID));
+
+
+    [HttpGet("farmer/{userID}")]
+    public async Task<ActionResult<IEnumerable<OrderResponseDTO>>> GetOrdersToFarmer(Guid userID)
+    {
+        return Ok(await _orderService.GetOrders(userID));
+    }
 
     
     [HttpGet("{orderID}")]
-    public async Task<ActionResult<OrderDTO>> GetOrder(Guid orderID)
+    public async Task<ActionResult<OrderResponseDTO>> GetOrder(Guid orderID)
     {
         try
         {
@@ -29,21 +36,21 @@ public class OrdersController(IOrderService orderService) : ControllerBase
 
    
     [HttpPost]
-    public async Task<ActionResult<OrderDTO>> PostOrder([FromBody] OrderDTO order)
+    public async Task<ActionResult<OrderResponseDTO>> PostOrder([FromBody] OrderCreateDTO order)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        OrderDTO createdOrder = await _orderService.CreateOrder(order);
+        OrderResponseDTO createdOrder = await _orderService.CreateOrder(order);
 
         return CreatedAtAction(nameof(GetOrder), new { orderID = createdOrder.OrderID }, createdOrder);
     }
 
     
-    [HttpPut]
-    public async Task<ActionResult<OrderDTO>> PutOrder([FromBody] OrderDTO order)
+/*     [HttpPut]
+    public async Task<ActionResult<OrderResponseDTO>> PutOrder([FromBody] OrderUpdateDTO order)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
@@ -56,11 +63,11 @@ public class OrdersController(IOrderService orderService) : ControllerBase
         {
             return NotFound(e.Message);
         }
-    }
+    } */
 
     
-    [HttpDelete("{id}")]
-    public async Task<ActionResult<OrderDTO>> DeleteOrder(Guid orderID)
+    [HttpDelete("{orderID}")]
+    public async Task<ActionResult<OrderResponseDTO>> DeleteOrder(Guid orderID)
     {
         try
         {

@@ -14,5 +14,4 @@ public class Order
     public virtual User User { get; set; } = null!;
     [ForeignKey("ProductID")]
     public virtual Product Product { get; set; } = null!;
-
 }
