@@ -40,7 +40,9 @@ public class MappingProfile : Profile
         CreateMap<Rating, RatingFetchDTO>();
 
         // Order mappings
-        CreateMap<Order, OrderDTO>();
-        CreateMap<OrderDTO, Order>();
+        CreateMap<Order, OrderResponseDTO>();
+        CreateMap<OrderResponseDTO, Order>();
+        CreateMap<OrderCreateDTO, Order>();
+        CreateMap<Order, OrderCreateDTO>();
     }
 }

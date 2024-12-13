@@ -1,18 +1,28 @@
-﻿$(document).ready(function () {
-    fetch('http://localhost:5088/api/Orders')
-        .then(response => response.json())
-        .then(data => {
-            //change later
-            data.forEach(function (product) {
-                functions.displayOrderDetail($("#orders"), order);
-            })
-            //change later
-            $('.buy-now-button').on('click', function () {
-                functions.redirectToProductPage($(this).data('product'));
-            });
+﻿import * as functions from "./functions.js";
 
-        })
-        .catch(error => {
-            console.log(error);
-        });
+
+$(document).ready(function () {
+    var user = sessionStorage.getItem('userDetails')
+    user = JSON.parse(user)
+    var orders = []
+
+
+    $.ajax({
+        url: 'http://localhost:5088/api/Orders/',
+        type: 'GET',
+        contentType: 'application/json',
+        data: {userID : user.userID},
+        success: function (response) {
+            orders = response
+            console.log(orders)
+            var obj = document.getElementById('orders')
+            functions.displayOrders(obj,orders)
+        },
+        error: function (error) {
+            console.log(error)
+        }
+    });
+
+
+
 })

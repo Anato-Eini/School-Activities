@@ -47,4 +47,8 @@ $(document).ready(function () {
     $('#sellButton').on('click', function () {
         window.location.href = 'sell_item.html';
     });
+
+    $('#goToCart').on('click', function () {
+        window.location.href = 'checkout.html';
+    })
 });

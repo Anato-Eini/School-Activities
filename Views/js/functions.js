@@ -31,6 +31,13 @@ export function displayProductDetail(htmlObject, product){
 export function displayOrders(htmlObject, order) {
     //change later
     console.log(order)
+    var currUser;
+    order.forEach(function (item) {
+        htmlObject.append(
+            item.createdAt
+        )
+    })
+    
 }
 
 
