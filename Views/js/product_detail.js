@@ -77,8 +77,12 @@ $(document).ready(function () {
                 alert('Rating added!');
                 window.location.reload();
             },
-            error: function () {
-                alert('Error adding rating!');
+            error: function (xhr) {
+                if (xhr.status === 409) {
+                    alert("You have already created a rating!")
+                } else {
+                    alert('Error adding rating!')
+                }
             }
         });
     });
