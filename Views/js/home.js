@@ -3,12 +3,14 @@ import * as functions from "./functions.js";
 $(document).ready(function () {
 
     var user = sessionStorage.getItem('userDetails');
+    
     if (!user) {
         window.location.href = 'login.html';
     }
 
-    // product must be constantly cleaned up
     sessionStorage.removeItem('product');
+
+    let cart = sessionStorage.getItem('cart');
 
     user = JSON.parse(user);
 
@@ -18,13 +20,11 @@ $(document).ready(function () {
         );
     }
 
-    let cart = [];
-
     fetch('http://localhost:5088/api/Products')
         .then(response => response.json())
         .then(data => {
             data.forEach(function (product) {
-                    functions.displayProductDetail($("#products"), product);
+                functions.displayProductDetail($("#products"), product);
             })
 
             $('.buy-now-button').on('click', function () {
@@ -48,7 +48,8 @@ $(document).ready(function () {
         window.location.href = 'sell_item.html';
     });
 
-    $('#goToCart').on('click', function () {
-        window.location.href = 'checkout.html';
-    })
+    $('#cart-count').html(cart ? JSON.parse(cart).length : 0);
+    $('#cart-count').on('click', function () {
+        window.location.href = '../checkout.html';
+    });
 });

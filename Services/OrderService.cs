@@ -5,10 +5,11 @@ using AutoMapper;
 
 namespace ANI.Services;
 
-public class OrderService(IOrderRepository orderRepository, IMapper mapper) : IOrderService
+public class OrderService(IOrderRepository orderRepository, IMapper mapper, IProductRepository productRepository) : IOrderService
 {
     private readonly IMapper _mapper = mapper;
     private readonly IOrderRepository _orderRepository = orderRepository;
+    private readonly IProductRepository _productRepository = productRepository;
 
     public async Task<IEnumerable<OrderResponseDTO>> GetOrders(Guid userID)
     {
@@ -24,6 +25,14 @@ public class OrderService(IOrderRepository orderRepository, IMapper mapper) : IO
     
     public async Task<OrderResponseDTO> CreateOrder(OrderCreateDTO order)
     {
+        Product product = await _productRepository.GetProduct(order.ProductID);
+
+        if (product.Stock < order.Quantity)
+            throw new InvalidOperationException("Not enough stock");
+
+        product.Stock -= order.Quantity;
+        await _productRepository.UpdateProduct(product);
+
         return _mapper.Map<OrderResponseDTO>(await _orderRepository.CreateOrder(_mapper.Map<Order>(order)));
     }
 

@@ -11,6 +11,9 @@ $(document).ready(function () {
 
     product = JSON.parse(product);
 
+    let cart = sessionStorage.getItem('cart');
+    cart = cart ? JSON.parse(cart) : [];
+
     $('#name').html(product.name);
     $('#description').html(product.description);
     $('#price').html(product.price);
@@ -81,5 +84,50 @@ $(document).ready(function () {
                 alert('Error adding rating!');
             }
         });
+    });
+
+    let currentQuantity = 1;
+
+    $('#add-quantity').on('click', function () {
+        if(product.stock > currentQuantity)
+            currentQuantity++;
+        $('#quantity-count').html(currentQuantity);
+    });
+
+    $('#dec-quantity').on('click', function () {
+        if(currentQuantity > 1)
+            currentQuantity--;
+        $('#quantity-count').html(currentQuantity);
+    });
+
+    $('#addToCartButton').on('click', function () {
+        let productInCart = cart.find(p => p.productID === product.productID);
+
+        if (productInCart) {
+
+            if (productInCart.quantity + currentQuantity > product.stock) {
+                alert('Not enough stock!');
+                return;
+            }
+
+
+            productInCart.quantity += currentQuantity;
+        } else {
+            cart.push({
+                productID: product.productID,
+                name: product.name,
+                price: product.price,
+                quantity: currentQuantity
+            });
+        }
+
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        sessionStorage.removeItem('product');
+        alert('Product added to cart');
+
+        currentQuantity = 1;
+        $('#quantity-count').html(currentQuantity);
+
+        window.location.reload();
     });
 });
