@@ -80,8 +80,12 @@ $(document).ready(function () {
                 alert('Rating added!');
                 window.location.reload();
             },
-            error: function () {
-                alert('Error adding rating!');
+            error: function (xhr) {
+                if (xhr.status === 409) {
+                    alert("You have already created a rating!")
+                } else {
+                    alert('Error adding rating!')
+                }
             }
         });
     });
@@ -109,8 +113,6 @@ $(document).ready(function () {
                 alert('Not enough stock!');
                 return;
             }
-
-
             productInCart.quantity += currentQuantity;
         } else {
             cart.push({
