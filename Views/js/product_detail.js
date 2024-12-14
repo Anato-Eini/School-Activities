@@ -27,11 +27,6 @@ $(document).ready(function () {
         );
     }
 
-    $('#editButton').on('click', function () {
-        sessionStorage.setItem('product', JSON.stringify(product));
-        window.location.href = 'edit_product.html';
-    });
-
     fetch('http://localhost:5088/api/Ratings/product/' + product.productID)
         .then(response => response.json())
         .then(data => {
@@ -41,27 +36,14 @@ $(document).ready(function () {
                         <p class="text-lg font-bold">${rating.username}</p>
                         <p>${rating.content == null ? "" : rating.content}</p>
                         <p>Rating: ${rating.stars}</p>` +
-                            (rating.imageUrl == null ? "" : `<img src="${rating.imageUrl}" alt="Product Image" class="w-full h-auto rounded-lg mt-2">`) + 
-                        `</div>`
+                    (rating.imageUrl == null ? "" : `<img src="${rating.imageUrl}" alt="Product Image" class="w-full h-auto rounded-lg mt-2">`) +
+                    `</div>`
                 );
             })
         })
         .catch(error => {
             console.log(error);
         });
-
-    $('#deleteButton').on('click', function () {
-        $.ajax({ url: `http://localhost:5088/api/Products/${product.productID}`,
-            type: 'DELETE',
-            success: function () {
-                alert('Product deleted!');
-                window.location.href = 'home.html';
-            },
-            error: function () {
-                alert('Error deleting product!');
-            }
-        })
-    });
 
     $('#ratingForm').on('submit', function (e) {
         e.preventDefault();
@@ -93,13 +75,13 @@ $(document).ready(function () {
     let currentQuantity = 1;
 
     $('#add-quantity').on('click', function () {
-        if(product.stock > currentQuantity)
+        if (product.stock > currentQuantity)
             currentQuantity++;
         $('#quantity-count').html(currentQuantity);
     });
 
     $('#dec-quantity').on('click', function () {
-        if(currentQuantity > 1)
+        if (currentQuantity > 1)
             currentQuantity--;
         $('#quantity-count').html(currentQuantity);
     });
@@ -131,4 +113,50 @@ $(document).ready(function () {
 
         window.location.reload();
     });
+
+    $('#button-operation').prepend(
+        product.userID !== user.userID ?
+            `<div class="flex items-center mt-6"> 
+            <span class="text-lg font-medium mr-4">Quantity</span>
+            <div class="flex items-center border rounded-lg px-2">
+                <button class="text-gray-700 text-lg font-bold" id="dec-quantity">-</button>
+                <span class="px-4 text-gray-700" id="quantity-count">1</span>
+                <button class="text-gray-700 text-lg font-bold" id="add-quantity">+</button>
+            </div>
+            </div>
+            <button
+            class="bg-green-700 text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-5"
+            id="addToCartButton">
+            Add to Cart
+            </button>
+            <button id="openModalButton"
+            class="bg-[#436850] mt-5 text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]">
+            Add Rating
+            </button>
+            `
+        : 
+            `<button id="editButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-blue-200">Edit</button>
+            <button id="deleteButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-red-200">Delete</button>
+            `
+    );
+
+    $('#editButton').on('click', function () {
+        sessionStorage.setItem('product', JSON.stringify(product));
+        window.location.href = 'edit_product.html';
+    });
+
+    $('#deleteButton').on('click', function () {
+        $.ajax({
+            url: `http://localhost:5088/api/Products/${product.productID}`,
+            type: 'DELETE',
+            success: function () {
+                alert('Product deleted!');
+                window.location.href = 'home.html';
+            },
+            error: function () {
+                alert('Error deleting product!');
+            }
+        })
+    });
+
 });
