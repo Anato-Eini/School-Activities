@@ -4,25 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="assets/images/ani.png" />
     <title>ANI</title>
-    <!--Replace with your tailwind.css once created-->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
       rel="stylesheet"
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
       body {
-        /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%); */
-        font-family: Poppins;
+        font-family: Poppins, sans-serif;
       }
     </style>
   </head>
-
   <body>
+    <!-- Navbar -->
     <header
-      class="bg-white"
+      class="bg-white shadow"
       style="
         background-color: #fbfada;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
@@ -30,275 +29,146 @@
     >
       <nav
         class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
-        aria-label="Global"
       >
         <div class="flex lg:flex-1">
           <a href="#" class="-m-1.5 p-1.5">
             <p class="sr-only">ANI</p>
-            <img class="h-8 w-auto" src="assets/images/ani.png" alt="" />
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
           </a>
         </div>
-        <div class="flex lg:hidden">
-          <button
-            type="button"
-            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-          >
-            <span class="sr-only">Open main menu</span>
-            <svg
-              class="size-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-              data-slot="icon"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-          </button>
-        </div>
         <div class="hidden lg:flex lg:gap-x-12">
-          <a
-            href="#"
-            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
-            >Explore</a
-          >
-          <a
-            href="#"
-            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
-            >About</a
-          >
-          <a
-            href="#"
-            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
-            >Products</a
-          >
+          <a href="#" class="text-sm font-semibold text-[#436850]">Explore</a>
+          <a href="#" class="text-sm font-semibold text-[#436850]">About</a>
+          <a href="#" class="text-sm font-semibold text-[#436850]">Products</a>
         </div>
-        <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="register.html" class="text-sm/6 font-semibold text-gray-900"
-            >Get Started <span aria-hidden="true">&rarr;</span></a
-          >
-        </div> -->
       </nav>
-      <!-- Mobile menu, show/hide based on menu open state. -->
-      <div class="lg:hidden" role="dialog" aria-modal="true">
-        <!-- Background backdrop, show/hide based on slide-over state. -->
-        <div class="fixed inset-0 z-10"></div>
-        <div
-          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
-        >
-          <div class="flex items-center justify-between">
-            <a href="#" class="-m-1.5 p-1.5">
-              <span class="sr-only">ANI</span>
-              <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
-            </a>
-            <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-              <span class="sr-only">Close menu</span>
-              <svg
-                class="size-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-                data-slot="icon"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </div>
-          <div class="mt-6 flow-root">
-            <div class="-my-6 divide-y divide-gray-500/10">
-              <div class="space-y-2 py-6">
-                <a
-                  href="#"
-                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
-                  >Explore</a
-                >
-                <a
-                  href="#"
-                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
-                  >About</a
-                >
-                <a
-                  href="#"
-                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
-                  >Products</a
-                >
-              </div>
-              <!-- <div class="py-6">
-                <a
-                  href="register.html"
-                  class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                  >Get Started</a
-                >
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
     </header>
-    <div
-      class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 dark:bg-gray-800 dark:border-gray-700"
-    >
+
+    <!-- Scrollable Form -->
+    <div class="h-screen overflow-y-auto">
       <div
-        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+        class="flex flex-col items-center justify-start px-6 py-8 mx-auto lg:py-10"
       >
-        <a
-          href="index.html"
-          class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
-        >
-          <img class="h-10 mt-5" src="assets/images/ani.png" alt="logo" />
-        </a>
-        <div class="p-3 space-y-4 md:space-y-6 sm:p-8">
+        <div class="w-full bg-white rounded-lg shadow-md md:max-w-md">
+          <!-- Logo -->
+          <div class="flex justify-center mt-5">
+            <img class="h-10" src="assets/images/ani.png" alt="logo" />
+          </div>
+          <!-- Form Header -->
           <h1
-            class="text-4xl font-extrabold text-[#436850] text-center dark:text-white"
+            class="text-4xl font-extrabold text-[#436850] text-center mt-4 mb-6"
           >
             Edit Profile
           </h1>
+          <!-- Form -->
           <form
             action="#"
             method="post"
             enctype="multipart/form-data"
             id="update-profile-form"
+            class="p-6 space-y-4"
           >
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="username"
+            <!-- Username -->
+            <div>
+              <label for="username" class="block text-gray-700 text-sm mb-2"
                 >Username</label
               >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="username"
                 type="text"
+                id="username"
                 name="username"
                 maxlength="50"
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
               />
             </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="oldPassword"
+
+            <!-- Old Password -->
+            <div>
+              <label for="oldPassword" class="block text-gray-700 text-sm mb-2"
                 >Old Password</label
               >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="oldPassword"
                 type="password"
+                id="oldPassword"
                 name="password"
                 minlength="8"
                 maxlength="50"
                 required
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
               />
             </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="newPassword"
+
+            <!-- New Password -->
+            <div>
+              <label for="newPassword" class="block text-gray-700 text-sm mb-2"
                 >New Password</label
               >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="newPassword"
                 type="password"
+                id="newPassword"
                 name="newPassword"
                 minlength="8"
                 maxlength="50"
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
               />
             </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="firstName"
+
+            <!-- Other Fields -->
+            <div>
+              <label for="firstName" class="block text-gray-700 text-sm mb-2"
                 >First Name</label
               >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="firstName"
                 type="text"
+                id="firstName"
                 name="firstName"
                 maxlength="50"
                 required
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
               />
             </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="lastName"
+            <div>
+              <label for="lastName" class="block text-gray-700 text-sm mb-2"
                 >Last Name</label
               >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="lastName"
                 type="text"
+                id="lastName"
                 name="lastName"
                 maxlength="50"
                 required
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
               />
             </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="phoneNumber"
-                >Phone Number</label
-              >
-              <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="phoneNumber"
-                type="text"
-                name="phoneNumber"
-                maxlength="11"
-                minlength="11"
-                required
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="address"
+
+            <div>
+              <label for="address" class="block text-gray-700 text-sm mb-2"
                 >Address</label
               >
               <textarea
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="address"
                 name="address"
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
               ></textarea>
             </div>
-            <div class="mb-4 inline-flex">
-              <label
-                class="block mr-2 text-gray-700 text-sm font-bold mb-2"
-                for="isFarmer"
+
+            <div class="flex items-center">
+              <label for="isFarmer" class="text-gray-700 text-sm mr-2"
                 >Are you a farmer?</label
               >
-              <input id="isFarmer" type="checkbox" name="isFarmer" />
-            </div>
-            <div class="mb-4">
-              <label
-                class="block text-gray-700 text-sm font-bold mb-2"
-                for="profilePictureUrl"
-                >Profile Picture</label
-              >
               <input
-                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="profilePictureUrl"
-                type="file"
-                name="profilePictureUrl"
+                id="isFarmer"
+                type="checkbox"
+                name="isFarmer"
+                class="text-[#436850] focus:ring-[#436850]"
               />
             </div>
-            <div id="error-messages" class="text-red-500 text-sm mt-4"></div>
-            <div class="flex items-center justify-between">
+
+            <!-- Submit Button -->
+            <div>
               <button
                 type="submit"
-                class="w-full bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]"
+                class="w-full bg-[#436850] text-white py-2.5 rounded-lg hover:bg-[#365c45] focus:outline-none focus:ring focus:ring-[#365c45]"
               >
                 Update Profile
               </button>
@@ -312,7 +182,6 @@
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"
     ></script>
-    💩
     <script src="js/update_profile.js"></script>
   </body>
 </html>

@@ -1,196 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" type="image/png" href="assets/images/ani.png" />
+    <title>ANI</title>
+    <!--Replace with your tailwind.css once created-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+    <style>
+      .gradient {
+        /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%); */
+        font-family: Poppins;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <title>ANI</title>
-  <!--Replace with your tailwind.css once created-->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
-  <style>
-    .gradient {
-      /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%); */
-      font-family: Poppins;
-    }
-  </style>
-</head>
-
-<body class="gradient">
-  <header class="bg-white" style="
+  <body class="gradient">
+    <header
+      class="bg-white"
+      style="
         background-color: #fbfada;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-      ">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
-      <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
-          <p class="sr-only">ANI</p>
-          <img class="h-8 w-auto" src="assets/images/ani.png" alt="" />
-        </a>
-      </div>
-      <div class="flex lg:hidden">
-        <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700">
-          <span class="sr-only">Open main menu</span>
-          <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            aria-hidden="true" data-slot="icon">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-        </button>
-      </div>
-      <div class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900">Explore</a>
-        <a href="#" class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900">About</a>
-        <a href="#" class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900">Products</a>
-      </div>
-      <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      "
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <p class="sr-only">ANI</p>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="" />
+          </a>
+        </div>
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+              data-slot="icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Explore</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >About</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Products</a
+          >
+        </div>
+        <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="register.html" class="text-sm/6 font-semibold text-gray-900"
             >Get Started <span aria-hidden="true">&rarr;</span></a
           >
         </div> -->
-    </nav>
-    <!-- Mobile menu, show/hide based on menu open state. -->
-    <div class="lg:hidden" role="dialog" aria-modal="true">
-      <!-- Background backdrop, show/hide based on slide-over state. -->
-      <div class="fixed inset-0 z-10"></div>
-      <div
-        class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-        <div class="flex items-center justify-between">
-          <a href="#" class="-m-1.5 p-1.5">
-            <span class="sr-only">ANI</span>
-            <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
-          </a>
-          <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-            <span class="sr-only">Close menu</span>
-            <svg class="size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-              aria-hidden="true" data-slot="icon">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div class="mt-6 flow-root">
-          <div class="-my-6 divide-y divide-gray-500/10">
-            <div class="space-y-2 py-6">
-              <a href="#"
-                class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50">Explore</a>
-              <a href="#"
-                class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50">About</a>
-              <a href="#"
-                class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50">Products</a>
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div class="lg:hidden" role="dialog" aria-modal="true">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 z-10"></div>
+        <div
+          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        >
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only">ANI</span>
+              <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+            </a>
+            <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >Explore</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >About</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >Products</a
+                >
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
-  <main class="container mx-auto mt-8 p-4">
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <a href="home.html" class="text-green-700 font-medium mb-4 inline-block">Back</a>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <img id="productPictureUrl" alt="Product Picture" class="w-full rounded-lg shadow-lg" />
-        <div>
-          <h1 id="name" class="text-4xl font-bold text-green-800">Carrot</h1>
-          <p id="price" class="text-2xl font-bold text-green-700 mt-4">
-            Php 230.00
-            <span class="text-base font-normal text-gray-500">per kilo</span>
-          </p>
-          <p id="description" class="text-gray-700 mt-4">
-            Discover the natural goodness of carrots – the vibrant, crunchy
-            superfood packed with nutrients like beta-carotene and vitamin K
-            to boost your health. Enjoy their delicious sweetness in every
-            bite, whether raw, cooked, or juiced. Add carrots to your diet
-            today and fuel your body with nature’s vibrant energy!
-          </p>
-          <p id="stock" class="mt-2 text-base font-normal text-gray-500">
-            Current Stock: 50
-          </p>
+    </header>
+    <main class="container mx-auto mt-8 p-4">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <a href="home.html" class="text-green-700 font-medium mb-4 inline-block"
+          >Back</a
+        >
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <img
+            id="productPictureUrl"
+            alt="Product Picture"
+            class="w-full rounded-lg shadow-lg"
+          />
+          <div>
+            <h1 id="name" class="text-4xl font-bold text-green-800">Carrot</h1>
+            <p id="price" class="text-2xl font-bold text-green-700 mt-4">
+              Php 230.00
+              <span class="text-base font-normal text-gray-500">per kilo</span>
+            </p>
+            <p id="description" class="text-gray-700 mt-4">
+              Discover the natural goodness of carrots – the vibrant, crunchy
+              superfood packed with nutrients like beta-carotene and vitamin K
+              to boost your health. Enjoy their delicious sweetness in every
+              bite, whether raw, cooked, or juiced. Add carrots to your diet
+              today and fuel your body with nature’s vibrant energy!
+            </p>
+            <p id="stock" class="mt-2 text-base font-normal text-gray-500">
+              Current Stock: 50
+            </p>
 
-          <div class="flex flex-col md:flex-row gap-4" id="button-operation">
-          </div>
+            <div
+              class="flex flex-col md:flex-row gap-4"
+              id="button-operation"
+            ></div>
 
-          <!-- Modal -->
-          <div id="ratingModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
-            <div class="bg-white w-96 p-6 rounded-lg shadow-lg relative">
-              <button id="closeModalButton" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
-                &times;
-              </button>
-              <h2 class="text-2xl font-extrabold text-[#436850] text-center dark:text-white">
-                Add a Rating
-              </h2>
-              <hr class="mt-1 mb-1" />
-              <form id="ratingForm">
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-lg font-semibold mb-2" for="content">How was the
-                    product?</label>
-                  <textarea id="content" name="content" class="w-full p-2 border rounded-lg" rows="4"></textarea>
-                </div>
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-lg font-semibold mb-2" for="stars">Rating</label>
-                  <select id="stars" name="stars" class="w-full p-2 border rounded-lg">
-                    <option value="1">1 Star</option>
-                    <option value="2">2 Stars</option>
-                    <option value="3">3 Stars</option>
-                    <option value="4">4 Stars</option>
-                    <option value="5">5 Stars</option>
-                  </select>
-                </div>
-                <div class="mb-4">
-                  <label class="block text-gray-700 text-lg font-semibold mb-2" for="imageUrl">Image</label>
-                  <input type="file" id="imageUrl" name="imageUrl" class="w-full p-2 border rounded-lg" />
-                </div>
-                <button type="submit"
-                  class="w-full bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]">
-                  Submit Rating
+            <!-- Modal -->
+            <div
+              id="ratingModal"
+              class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden"
+            >
+              <div class="bg-white w-96 p-6 rounded-lg shadow-lg relative">
+                <button
+                  id="closeModalButton"
+                  class="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                >
+                  &times;
                 </button>
-              </form>
+                <h2
+                  class="text-2xl font-extrabold text-[#436850] text-center dark:text-white"
+                >
+                  Add a Rating
+                </h2>
+                <hr class="mt-1 mb-1" />
+                <form id="ratingForm">
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-lg font-semibold mb-2"
+                      for="content"
+                      >How was the product?</label
+                    >
+                    <textarea
+                      id="content"
+                      name="content"
+                      class="w-full p-2 border rounded-lg"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-lg font-semibold mb-2"
+                      for="stars"
+                      >Rating</label
+                    >
+                    <select
+                      id="stars"
+                      name="stars"
+                      class="w-full p-2 border rounded-lg"
+                    >
+                      <option value="1">1 Star</option>
+                      <option value="2">2 Stars</option>
+                      <option value="3">3 Stars</option>
+                      <option value="4">4 Stars</option>
+                      <option value="5">5 Stars</option>
+                    </select>
+                  </div>
+                  <div class="mb-4">
+                    <label
+                      class="block text-gray-700 text-lg font-semibold mb-2"
+                      for="imageUrl"
+                      >Image</label
+                    >
+                    <input
+                      type="file"
+                      id="imageUrl"
+                      name="imageUrl"
+                      class="w-full p-2 border rounded-lg"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    class="w-full bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]"
+                  >
+                    Submit Rating
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="mt-3 mb-6">
-      <h2 class="text-2xl text-center text-[#436850] font-bold mb-4">
-        Ratings
-      </h2>
-      <div id="comments" class="bg-gray-100 p-4 rounded-lg shadow-inner"></div>
-    </div>
-    <section class="mt-8">
-      <h2 class="text-2xl text-center font-bold text-green-800 mb-6">
-        Similar Products
-      </h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <!-- Product Card -->
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-          <img src="carrot1.jpg" alt="Carrot" class="w-full rounded-md mb-4" />
-          <h3 class="text-lg font-bold text-gray-800">Carrot</h3>
-          <p class="text-sm text-gray-600">Carrie Roth</p>
-          <button class="bg-green-700 text-white rounded-lg px-4 py-2 mt-4">
-            +
-          </button>
-        </div>
-
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-          <img src="carrot2.jpg" alt="Baby Carrot" class="w-full rounded-md mb-4" />
-          <h3 class="text-lg font-bold text-gray-800">Baby Carrot</h3>
-          <p class="text-sm text-gray-600">Carl Rotzen</p>
-          <button class="bg-green-700 text-white rounded-lg px-4 py-2 mt-4">
-            +
-          </button>
-        </div>
-
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-          <img src="carrot3.jpg" alt="Carrot" class="w-full rounded-md mb-4" />
-          <h3 class="text-lg font-bold text-gray-800">Carrot</h3>
-          <p class="text-sm text-gray-600">Cara Rotkins</p>
-          <button class="bg-green-700 text-white rounded-lg px-4 py-2 mt-4">
-            +
-          </button>
-        </div>
+      <div class="mt-3 mb-6">
+        <h2 class="text-2xl text-center text-[#436850] font-bold mb-4">
+          Ratings
+        </h2>
+        <div
+          id="comments"
+          class="bg-gray-100 p-4 rounded-lg shadow-inner"
+        ></div>
       </div>
-    </section>
-  </main>
-  <!-- <div class="container mx-auto p-4">
+      <section class="mt-8">
+        <h2 class="text-2xl text-center font-bold text-green-800 mb-6">
+          Similar Products
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <!-- Product Card -->
+          <div class="bg-white p-4 rounded-lg shadow-lg">
+            <img
+              src="carrot1.jpg"
+              alt="Carrot"
+              class="w-full rounded-md mb-4"
+            />
+            <h3 class="text-lg font-bold text-gray-800">Carrot</h3>
+            <p class="text-sm text-gray-600">Carrie Roth</p>
+            <button class="bg-green-700 text-white rounded-lg px-4 py-2 mt-4">
+              +
+            </button>
+          </div>
+
+          <div class="bg-white p-4 rounded-lg shadow-lg">
+            <img
+              src="carrot2.jpg"
+              alt="Baby Carrot"
+              class="w-full rounded-md mb-4"
+            />
+            <h3 class="text-lg font-bold text-gray-800">Baby Carrot</h3>
+            <p class="text-sm text-gray-600">Carl Rotzen</p>
+            <button class="bg-green-700 text-white rounded-lg px-4 py-2 mt-4">
+              +
+            </button>
+          </div>
+
+          <div class="bg-white p-4 rounded-lg shadow-lg">
+            <img
+              src="carrot3.jpg"
+              alt="Carrot"
+              class="w-full rounded-md mb-4"
+            />
+            <h3 class="text-lg font-bold text-gray-800">Carrot</h3>
+            <p class="text-sm text-gray-600">Cara Rotkins</p>
+            <button class="bg-green-700 text-white rounded-lg px-4 py-2 mt-4">
+              +
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- <div class="container mx-auto p-4">
       <div class="bg-white p-6 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">
           Product Detail
@@ -297,23 +411,25 @@
           </form>
         </div>
       </div> -->
-  </div>
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-  <script type="module" src="js/product_detail.js"></script>
-  <script>
-    const openModalButton = document.getElementById("openModalButton");
-    const closeModalButton = document.getElementById("closeModalButton");
-    const ratingModal = document.getElementById("ratingModal");
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="js/product_detail.js"></script>
+    <script>
+      const openModalButton = document.getElementById("openModalButton");
+      const closeModalButton = document.getElementById("closeModalButton");
+      const ratingModal = document.getElementById("ratingModal");
 
-    openModalButton.addEventListener("click", () => {
-      ratingModal.classList.remove("hidden");
-    });
+      openModalButton.addEventListener("click", () => {
+        ratingModal.classList.remove("hidden");
+      });
 
-    closeModalButton.addEventListener("click", () => {
-      ratingModal.classList.add("hidden");
-    });
-  </script>
-</body>
-
+      closeModalButton.addEventListener("click", () => {
+        ratingModal.classList.add("hidden");
+      });
+    </script>
+  </body>
 </html>

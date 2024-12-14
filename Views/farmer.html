@@ -1,35 +1,237 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-        ANI
-    </title>
+    <link rel="shortcut icon" type="image/png" href="assets/images/ani.png" />
+    <title>ANI</title>
     <!--Replace with your tailwind.css once created-->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
-        body {
-            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-        }
+      body {
+        font-family: Poppins;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <h1>Orders from people</h1>
-    <div class="min-h-screen flex items-center justify-center">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md" id="orders">
-            <!-- orders go here -->
-
+  <body>
+    <header
+      class="bg-white"
+      style="
+        background-color: #fbfada;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <p class="sr-only">ANI</p>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="" />
+          </a>
         </div>
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="size-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+              data-slot="icon"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Explore</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >About</a
+          >
+          <a
+            href="#"
+            class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+            >Products</a
+          >
+        </div>
+        <!-- <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="register.html" class="text-sm/6 font-semibold text-gray-900"
+            >Get Started <span aria-hidden="true">&rarr;</span></a
+          >
+        </div> -->
+      </nav>
+      <!-- Mobile menu, show/hide based on menu open state. -->
+      <div class="lg:hidden" role="dialog" aria-modal="true">
+        <!-- Background backdrop, show/hide based on slide-over state. -->
+        <div class="fixed inset-0 z-10"></div>
+        <div
+          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        >
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only">ANI</span>
+              <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+            </a>
+            <button type="button" class="-m-2.5 rounded-md p-2.5 text-gray-700">
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="size-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >Explore</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >About</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-[#436850] hover:bg-gray-50"
+                  >Products</a
+                >
+              </div>
+              <!-- <div class="py-6">
+                <a
+                  href="register.html"
+                  class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >Get Started</a
+                >
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <h1
+      class="text-4xl font-extrabold text-[#436850] text-center dark:text-white mt-3"
+    >
+      Orders from people
+    </h1>
+    <div class="bg-white shadow-md p-6 rounded-md mb-6 mt-5 mr-6 ml-6">
+      <div class="flex justify-between items-center border-b pb-2 mb-4">
+        <h2 class="text-[#436850] font-bold uppercase text-md">
+          STATUS: Order is being shipped
+        </h2>
+        <button
+          class="text-sm border border-[#436850] px-2 py-1 text-[#436850] rounded-md hover:bg-[#436850] hover:text-white"
+        >
+          Update Order
+        </button>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        id="orders"
+      ></div>
+      <table class="w-full text-left">
+        <thead>
+          <tr class="text-gray-700 border-b">
+            <th class="py-2">Products Ordered</th>
+            <th class="py-2 text-center">Unit Price</th>
+            <th class="py-2 text-center">Quantity</th>
+            <th class="py-2 text-right">Item Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-3 flex items-center space-x-4">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Tomato"
+                class="h-12 w-12 rounded-md"
+              />
+              <div
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+                id="orders"
+              >
+                Tomato
+              </div>
+            </td>
+            <td class="text-center text-gray-700">XX.X Php/kg</td>
+            <td class="text-center text-gray-700">1</td>
+            <td class="text-right text-gray-700">XX.X Php</td>
+          </tr>
+          <tr>
+            <td class="py-3 flex items-center space-x-4">
+              <img
+                src="https://via.placeholder.com/50"
+                alt="Eggplant"
+                class="h-12 w-12 rounded-md"
+              />
+              <div>
+                <p class="font-medium text-gray-700">Eggplant</p>
+                <p class="text-sm text-gray-500">Long</p>
+              </div>
+            </td>
+            <td class="text-center text-gray-700">XX.X Php/kg</td>
+            <td class="text-center text-gray-700">1</td>
+            <td class="text-right text-gray-700">XX.X Php</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr class="font-bold">
+            <td colspan="3" class="text-right py-3">TOTAL</td>
+            <td class="text-right text-[#436850]">XXX.X Php</td>
+          </tr>
+        </tfoot>
+      </table>
     </div>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <div class="min-h-screen flex items-center justify-center">
+      <div
+        class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
+        id="orders"
+      >
+        <!-- orders go here -->
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
     <script src="js/farmer.js"></script>
-</body>
-
+  </body>
 </html>
