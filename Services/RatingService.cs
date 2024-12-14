@@ -67,6 +67,12 @@ public class RatingService(IRatingRepository ratingRepository, IMapper mapper, I
     /// <returns>A RatingResponseDTO object representing the created rating.</returns>
     public async Task<RatingResponseDTO> CreateRating(RatingCreateDTO rating)
     {
+        IEnumerable<Rating> allRatings = await _ratingRepository.GetRatingsByProduct(rating.ProductID);
+        
+        foreach (Rating rate in allRatings)
+            if(rating.UserID == rate.UserID)
+                throw new InvalidOperationException("The user has already rated this product.");
+
         Rating ratingForDB = _mapper.Map<Rating>(rating);
 
         if (rating.ImageUrl is not null)

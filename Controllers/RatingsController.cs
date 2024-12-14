@@ -9,10 +9,9 @@ namespace ANI.Controllers;
 /// </summary>
 [Route("api/[controller]")]
 [ApiController]
-public class RatingsController(IRatingService ratingService, IUserService userService) : ControllerBase
+public class RatingsController(IRatingService ratingService) : ControllerBase
 {
     private readonly IRatingService _ratingService = ratingService;
-    private readonly IUserService _userService = userService;
 
     /// <summary>
     /// Gets all ratings.
@@ -42,7 +41,7 @@ public class RatingsController(IRatingService ratingService, IUserService userSe
 
 
     [HttpGet("product/{productID}")]
-    public async Task<IEnumerable<RatingFetchDTO>> GetRatingsByProduct(Guid productID) => 
+    public async Task<IEnumerable<RatingFetchDTO>> GetRatingsByProduct(Guid productID) =>
                 await _ratingService.GetRatingsByProduct(productID);
 
     /// <summary>
@@ -57,21 +56,15 @@ public class RatingsController(IRatingService ratingService, IUserService userSe
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        IEnumerable<RatingFetchDTO> allRatings = await _ratingService.GetRatingsByProduct(rating.ProductID);
-        foreach (RatingFetchDTO rate in allRatings)
+        try
         {
-            //checking if the user has already rated the given product
-            UserResponseDTO userResponseDTO = await _userService.GetUser(rate.Username);
-            if(rating.UserID == userResponseDTO.UserID)
-            {
-                //duplicate rating, not allowed
-                return Conflict("The user has already rated this product.");
-            }
-        } //endfor
-
-        RatingResponseDTO createdRating = await _ratingService.CreateRating(rating);
-
-        return CreatedAtAction(nameof(GetRating), new { id = createdRating.RatingID }, createdRating);
+            RatingResponseDTO createdRating = await _ratingService.CreateRating(rating);
+            return CreatedAtAction(nameof(GetRating), new { id = createdRating.RatingID }, createdRating);
+        }
+        catch (InvalidOperationException e)
+        {
+            return Conflict(e.Message);
+        }
     }
 
     /// <summary>

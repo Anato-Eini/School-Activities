@@ -125,6 +125,7 @@ $(document).ready(function () {
 
         sessionStorage.setItem('cart', JSON.stringify(cart));
         sessionStorage.removeItem('product');
+
         alert('Product added to cart');
 
         currentQuantity = 1;
