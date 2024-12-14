@@ -43,6 +43,7 @@ $(document).ready(function () {
 
     $('#logout').on('click', function () {
         sessionStorage.removeItem('userDetails');
+        sessionStorage.removeItem('cart');
         window.location.href = 'login.html';
     });
 
@@ -55,7 +56,9 @@ $(document).ready(function () {
     });
 
     $('#cart-count').html(cart ? JSON.parse(cart).length : 0);
+
     $('#cart-count').on('click', function () {
         window.location.href = '../checkout.html';
     });
+
 });

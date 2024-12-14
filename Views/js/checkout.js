@@ -57,7 +57,7 @@
                     quantity: product.quantity
                 }),
                 success: function () {
-                    console.log('Order placed!');
+                    alert('Order placed!');
                 },
                 error: function () {
                     alert('Error placing order!');
@@ -65,12 +65,9 @@
             });
         });
 
-        alert('Order placed!');
-
         cart = []
         sessionStorage.setItem('cart', JSON.stringify(cart));
 
         window.location.href = 'home.html';
     });
-
 });

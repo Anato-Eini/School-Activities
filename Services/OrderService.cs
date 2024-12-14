@@ -33,6 +33,14 @@ public class OrderService(IOrderRepository orderRepository, IMapper mapper, IPro
         product.Stock -= order.Quantity;
         await _productRepository.UpdateProduct(product);
 
+        Order? existingOrder = await _orderRepository.GetOrder(order.UserID, order.ProductID);
+
+        if (existingOrder != null)
+        {
+            existingOrder.Quantity += order.Quantity;
+            return _mapper.Map<OrderResponseDTO>(await _orderRepository.UpdateOrder(existingOrder));
+        }
+
         return _mapper.Map<OrderResponseDTO>(await _orderRepository.CreateOrder(_mapper.Map<Order>(order)));
     }
 

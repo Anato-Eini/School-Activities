@@ -24,6 +24,10 @@ public class OrderRepository(AniContext context) : IOrderRepository
 
         return order;
     }
+
+    public async Task<Order?> GetOrder(Guid userID, Guid productID){
+        return await _context.Orders.FirstOrDefaultAsync(order => order.UserID == userID && order.ProductID == productID);
+    }
     
     public async Task<Order> UpdateOrder(Order order)
     {
