@@ -9,31 +9,39 @@
     let cart = sessionStorage.getItem('cart');
     cart = cart ? JSON.parse(cart) : [];
 
-    cart.forEach(function (product) {
-        fetch('http://localhost:5088/api/Products/' + product.productID)
-            .then(response => response.json())
-            .then(data => {
-                $('#orders').append(
-                    `<div class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
+    let fetchPromises = cart.map(async function (product) {
+        try {
+            const response = await fetch('http://localhost:5088/api/Products/' + product.productID);
+            const data = await response.json();
+            $('#orders').append(
+                `<div class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
                     <div class="p-4">
-                        <h2 class="text-xl font-semibold text-gray-800">${product.name}</h2>
+                        <h2 class="text-xl font-semibold text-gray-800">${data.name}</h2>
                         <div class="flex justify-between items-center mt-4">
-                            <span class="text-lg font-bold text-gray-900">Price: $${product.price}</span>
+                            <span class="text-lg font-bold text-gray-900">Price: $${data.price}</span>
                             <span class="text-sm text-gray-500">Stock: ${product.quantity}</span>
                         </div>
+                        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4 cancelOrder" data-product="${product.productID}">Cancel Order</button>
                     </div>
                     <img src="${data.productPictureUrl}" alt="Product Image" class="w-full h-48 object-cover">
                 </div>`
-                );
-            }).catch
-            (error => {
-                alert('Error: ' + error);
-            });
+            );
+        } catch (error) {
+            alert('Error: ' + error);
+        }
     });
 
+    Promise.all(fetchPromises).then(() => {
+        $('.cancelOrder').on('click', function () {
+            let productID = $(this).data('product');
+            cart = cart.filter(product => product.productID !== productID);
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+            window.location.reload();
+        });
+    });
 
     $('#placeOrder').on('click', function () {
-        if(cart.length === 0) {
+        if (cart.length === 0) {
             alert('Cart is empty!');
             return;
         }
@@ -58,9 +66,10 @@
         });
 
         alert('Order placed!');
+
         cart = []
         sessionStorage.setItem('cart', JSON.stringify(cart));
-        
+
         window.location.href = 'home.html';
     });
 

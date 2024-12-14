@@ -117,8 +117,6 @@ $(document).ready(function () {
         } else {
             cart.push({
                 productID: product.productID,
-                name: product.name,
-                price: product.price,
                 quantity: currentQuantity
             });
         }

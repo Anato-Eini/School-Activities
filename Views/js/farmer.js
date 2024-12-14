@@ -31,7 +31,6 @@
         .then(response => response.json())
         .then(data => {
             data.forEach(function (order) {
-                console.log(order);
 
                 let buyerName;
                 let productName;
