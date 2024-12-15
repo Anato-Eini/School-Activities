@@ -61,6 +61,7 @@ public class RatingResponseDTO : RatingDTO
 /// </summary>
 public class RatingFetchDTO
 {
+    public Guid RatingID { get; set; }
     public string Username { get; set; } = null!;
     public int Stars { get; set; }
     public string? Content { get; set; }
