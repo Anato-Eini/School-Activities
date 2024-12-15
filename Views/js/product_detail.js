@@ -34,12 +34,12 @@ $(document).ready(function () {
           stars += "⭐";
         }
         $("#comments").prepend(
-          `<div class="bg-white border border-[#436850] p-5 mb-2 shadow-md">
+          `<div class="bg-white border border-[#436850] p-5 mb-2">
                         <p class="text-lg font-bold mb-2">${rating.username}</p>
                         <p class="mb-2">${
                           rating.content == null ? "" : rating.content
                         }</p>
-                        <p>Rating: ${stars}</p>` +
+                        <p class="font-semibold text-[#436850]">Rating: ${stars}</p>` +
             (rating.imageUrl == null
               ? ""
               : `<img src="${rating.imageUrl}" alt="Product Image" class="w-auto h-20 rounded-lg mt-2">`) +
