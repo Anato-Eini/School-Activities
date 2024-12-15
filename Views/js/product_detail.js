@@ -34,10 +34,17 @@ $(document).ready(function () {
                         <p class="text-lg font-bold">${rating.username}</p>
                         <p>${rating.content == null ? "" : rating.content}</p>
                         <p>Rating: ${rating.stars}</p>` +
-                    (rating.imageUrl == null
-                        ? ""
-                        : `<img src="${rating.imageUrl}" alt="Product Image" class="w-full h-auto rounded-lg mt-2">`) +
-                    `</div>`
+                        (rating.imageUrl == null
+                            ? ""
+                            : `<img 
+                                src="${rating.imageUrl}" 
+                                alt="Product Image" 
+                                class="w-full h-auto rounded-lg mt-2">`) +
+                        (rating.username == user.username) ? 
+                            `<button 
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" 
+                                onclick="deleteRating(${rating.ratingID})">Delete</button>` : ""
+                        `</div>`
                 );
             });
         })
@@ -162,10 +169,10 @@ $(document).ready(function () {
     const ratingModal = document.getElementById("ratingModal");
 
     openModalButton.addEventListener("click", () => {
-      ratingModal.classList.remove("hidden");
+        ratingModal.classList.remove("hidden");
     });
 
     closeModalButton.addEventListener("click", () => {
-      ratingModal.classList.add("hidden");
+        ratingModal.classList.add("hidden");
     });
 });

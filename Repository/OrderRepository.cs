@@ -8,7 +8,7 @@ public class OrderRepository(AniContext context) : IOrderRepository
     private readonly AniContext _context = context;
 
     public async Task<IEnumerable<Order>> GetOrders(Guid userID) => await _context.Orders
-                        .Where(order => order.UserID == userID && !order.IsFinished)
+                        .Where(order => order.Product.UserID == userID && !order.IsFinished)
                         .ToListAsync();
 
     public async Task<Order> GetOrder(Guid orderID) 
