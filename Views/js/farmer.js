@@ -50,10 +50,9 @@
             .catch((error) => {
               console.log("Error fetching user data:", error);
             }),
-        ])
-          .then(() => {
-            $("#orders").prepend(
-              `<tr>
+        ]).then(() => {
+          $("#orders").prepend(
+            `<tr>
             <td class="py-3 flex items-center space-x-4">
               <img
                 src="${productPic}"
@@ -69,15 +68,17 @@
             <td class="text-center text-gray-700">${order.quantity}</td>
             <td class="text-center text-gray-700">${buyerName}</td>
             <td class="text-right text-gray-700">${order.createdAt}</td>
+            <td class="text-center">
+              <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" data-order="${order.orderID}">
+                Finished
+              </button>
+              <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" data-order="${order.orderID}">
+                Cancel
+              </button>
+            </td>
           </tr>`
-            );
-          })
-          .catch((error) => {
-            console.log("Error processing order:", error);
-          });
+          );
+        }).catch((error) => alert("Error processing order:", error));
       });
-    })
-    .catch((error) => {
-      console.log("Error fetching orders:", error);
-    });
+    }).catch((error) => alert("Error fetching orders:", error));
 });

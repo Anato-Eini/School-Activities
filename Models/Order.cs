@@ -10,6 +10,9 @@ public class Order
     public Guid UserID { get; set; }
     public Guid ProductID { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime FinishedAt { get; set; }
+    public bool IsFinished { get; set; }
+
     [ForeignKey("UserID")]
     public virtual User User { get; set; } = null!;
     [ForeignKey("ProductID")]

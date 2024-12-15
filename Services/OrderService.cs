@@ -53,4 +53,23 @@ public class OrderService(IOrderRepository orderRepository, IMapper mapper, IPro
     {
         return _mapper.Map<OrderResponseDTO>(await _orderRepository.DeleteOrder(orderID));
     }
+
+    public async Task<OrderResponseDTO> FinishOrder(Guid orderID){
+        Order order = await _orderRepository.GetOrder(orderID);
+        order.FinishedAt = DateTime.Now;
+        order.IsFinished = true;
+        return _mapper.Map<OrderResponseDTO>(await _orderRepository.UpdateOrder(order));
+    }
+
+    public async Task<OrderResponseDTO> CancelOrder(Guid orderID){
+        Order order = await _orderRepository.GetOrder(orderID);
+        Product product = await _productRepository.GetProduct(order.ProductID);
+
+        product.Stock += order.Quantity;
+
+        await _productRepository.UpdateProduct(product);
+        await _orderRepository.DeleteOrder(orderID);
+
+        return _mapper.Map<OrderResponseDTO>(order);
+    }
 }

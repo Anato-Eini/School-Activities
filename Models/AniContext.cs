@@ -79,6 +79,10 @@ namespace ANI.Models
             modelBuilder.Entity<Order>()
                 .Property(b => b.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Order>()
+                .Property(b => b.IsFinished)
+                .HasDefaultValue(false);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

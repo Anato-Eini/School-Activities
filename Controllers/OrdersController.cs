@@ -20,7 +20,6 @@ public class OrdersController(IOrderService orderService) : ControllerBase
         return Ok(await _orderService.GetOrders(userID));
     }
 
-    
     [HttpGet("{orderID}")]
     public async Task<ActionResult<OrderResponseDTO>> GetOrder(Guid orderID)
     {
@@ -34,7 +33,6 @@ public class OrdersController(IOrderService orderService) : ControllerBase
         }
     }
 
-   
     [HttpPost]
     public async Task<ActionResult<OrderResponseDTO>> PostOrder([FromBody] OrderCreateDTO order)
     {
@@ -43,29 +41,45 @@ public class OrdersController(IOrderService orderService) : ControllerBase
             return BadRequest(ModelState);
         }
 
-        OrderResponseDTO createdOrder = await _orderService.CreateOrder(order);
-
-        return CreatedAtAction(nameof(GetOrder), new { orderID = createdOrder.OrderID }, createdOrder);
+        try
+        {
+            OrderResponseDTO createdOrder = await _orderService.CreateOrder(order);
+            return CreatedAtAction(nameof(GetOrder), new { orderID = createdOrder.OrderID }, createdOrder);
+        }catch(InvalidOperationException e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
-    
-/*     [HttpPut]
-    public async Task<ActionResult<OrderResponseDTO>> PutOrder([FromBody] OrderUpdateDTO order)
+
+    [HttpPut("finished/{orderID}")]
+    public async Task<ActionResult<OrderResponseDTO>> PutOrder(Guid orderID)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
 
         try
         {
-            return Ok(await _orderService.UpdateOrder(order));
+            return Ok(await _orderService.FinishOrder(orderID));
         }
         catch (KeyNotFoundException e)
         {
             return NotFound(e.Message);
         }
-    } */
+    }
 
-    
+    [HttpPut("cancel/{orderID}")]
+    public async Task<ActionResult<OrderResponseDTO>> CancelOrder(Guid orderID)
+    {
+        try
+        {
+            return Ok(await _orderService.CancelOrder(orderID));
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+
     [HttpDelete("{orderID}")]
     public async Task<ActionResult<OrderResponseDTO>> DeleteOrder(Guid orderID)
     {
