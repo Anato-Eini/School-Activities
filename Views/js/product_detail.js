@@ -1,82 +1,123 @@
 $(document).ready(function () {
-    let user = sessionStorage.getItem("userDetails");
-    if (!user) window.location.href = "login.html";
+  let user = sessionStorage.getItem("userDetails");
+  if (!user) window.location.href = "login.html";
 
-    user = JSON.parse(user);
-    let product = sessionStorage.getItem("product");
+  user = JSON.parse(user);
+  let product = sessionStorage.getItem("product");
 
-    if (!product) window.location.href = "home.html";
+  if (!product) window.location.href = "home.html";
 
-    product = JSON.parse(product);
+  product = JSON.parse(product);
 
-    let cart = sessionStorage.getItem("cart");
-    cart = cart ? JSON.parse(cart) : [];
+  let cart = sessionStorage.getItem("cart");
+  cart = cart ? JSON.parse(cart) : [];
 
-    $("#name").html(product.name);
-    $("#description").html(product.description);
-    $("#price").html(product.price);
-    $("#stock").html(product.stock);
-    $("#productPictureUrl").attr("src", product.productPictureUrl);
+  $("#name").html(product.name);
+  $("#description").html(product.description);
+  $("#price").html(product.price);
+  $("#stock").html(product.stock);
+  $("#productPictureUrl").attr("src", product.productPictureUrl);
 
-    if (user.userID === product.userID) {
-        $("#owner").append(
-            `<button id="editButton" class="bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]">Edit</button>
+  if (user.userID === product.userID) {
+    $("#owner").append(
+      `<button id="editButton" class="bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]">Edit</button>
             <button id="deleteButton" class="bg-[#436850] hover:bg-[#436850] text-white font-bold py-2 px-4 rounded text-white">Delete</button>`
+    );
+  }
+
+  fetch("http://localhost:5088/api/Ratings/product/" + product.productID)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach(function (rating) {
+        let stars = "";
+        for (let i = 0; i < rating.stars; i++) {
+          stars += "⭐";
+        }
+        $("#comments").prepend(
+          `<div class="bg-white border border-[#436850] p-5 mb-2 shadow-md">
+                        <p class="text-lg font-bold mb-2">${rating.username}</p>
+                        <p class="mb-2">${
+                          rating.content == null ? "" : rating.content
+                        }</p>
+                        <p>Rating: ${stars}</p>` +
+            (rating.imageUrl == null
+              ? ""
+              : `<img src="${rating.imageUrl}" alt="Product Image" class="w-auto h-20 rounded-lg mt-2">`) +
+            `</div>`
         );
-    }
-
-    fetch("http://localhost:5088/api/Ratings/product/" + product.productID)
-        .then((response) => response.json())
-        .then((data) => {
-            data.forEach(function (rating) {
-                $("#comments").prepend(
-                    `<div class="bg-gray-200 border border-gray-300 p-2 rounded-lg mb-2">
-                        <p class="text-lg font-bold">${rating.username}</p>
-                        <p>${rating.content == null ? "" : rating.content}</p>
-                        <p>Rating: ${rating.stars}</p>` +
-                    (rating.imageUrl == null
-                        ? ""
-                        : `<img src="${rating.imageUrl}" alt="Product Image" class="w-full h-auto rounded-lg mt-2">`) +
-                    `</div>`
-                );
-            });
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-
-    $("#ratingForm").on("submit", function (e) {
-        e.preventDefault();
-
-        var formData = new FormData(this);
-        formData.append("userID", user.userID);
-        formData.append("productID", product.productID);
-
-        $.ajax({
-            url: "http://localhost:5088/api/Ratings",
-            type: "POST",
-            contentType: false,
-            processData: false,
-            data: formData,
-            success: function (response) {
-                alert("Rating added!");
-                window.location.reload();
-            },
-            error: function (xhr) {
-                if (xhr.status === 409) {
-                    alert("You have already created a rating!");
-                } else {
-                    alert("Error adding rating!");
-                }
-            },
-        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
 
-    let currentQuantity = 1;
+  $("#ratingForm").on("submit", function (e) {
+    e.preventDefault();
 
-    $("#button-operation").prepend(
-        product.userID !== user.userID
-            ? `<div class="flex items-center mt-6"> 
+    var formData = new FormData(this);
+    formData.append("userID", user.userID);
+    formData.append("productID", product.productID);
+
+    $.ajax({
+      url: "http://localhost:5088/api/Ratings",
+      type: "POST",
+      contentType: false,
+      processData: false,
+      data: formData,
+      success: function (response) {
+        Swal.fire({
+          icon: "success",
+          title: "SUCCESS!",
+          text: "Order successfully placed",
+          confirmButtonText: "YEY!",
+          confirmButtonColor: "#436850",
+          allowEscapeKey: true,
+          customClass: "bg-[#FBFADA]",
+          preConfirm: () => {
+            window.location.reload();
+          },
+        });
+        // alert("Rating added!");
+      },
+      error: function (xhr) {
+        if (xhr.status === 409) {
+          //   alert("You have already created a rating!");
+          Swal.fire({
+            icon: "warning",
+            title: "Already Rated",
+            text: "You can only rate once.",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#436850",
+            allowEscapeKey: true,
+            customClass: "bg-[#FBFADA]",
+            preConfirm: () => {
+              window.location.reload();
+            },
+          });
+        } else {
+          //   alert("Error adding rating!");
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Cannot add rating, something wrong",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#436850",
+            allowEscapeKey: true,
+            customClass: "bg-[#FBFADA]",
+            preConfirm: () => {
+              window.location.reload();
+            },
+          });
+        }
+      },
+    });
+  });
+
+  let currentQuantity = 1;
+
+  $("#button-operation").prepend(
+    product.userID !== user.userID
+      ? `<div class="flex items-center mt-6"> 
             <span class="text-lg font-medium mr-4">Quantity</span>
             <div class="flex items-center border rounded-lg px-2">
                 <button class="text-gray-700 text-lg font-bold" id="dec-quantity">-</button>
@@ -94,78 +135,85 @@ $(document).ready(function () {
             Add Rating
             </button>
             `
-            : `<button id="editButton" class="bg-[#436850] hover:bg-green-500 text-white font-bold py-2 px-4 rounded text-white">Edit</button>
+      : `<button id="editButton" class="bg-[#436850] hover:bg-green-500 text-white font-bold py-2 px-4 rounded text-white">Edit</button>
             <button id="deleteButton" class="bg-red-700 text-white hover:bg-red-500 font-bold py-2 px-4 rounded">Delete</button>
             `
-    );
+  );
 
-    $("#editButton").on("click", function () {
-        sessionStorage.setItem("product", JSON.stringify(product));
-        window.location.href = "edit_product.html";
+  $("#editButton").on("click", function () {
+    sessionStorage.setItem("product", JSON.stringify(product));
+    window.location.href = "edit_product.html";
+  });
+
+  $("#deleteButton").on("click", function () {
+    $.ajax({
+      url: `http://localhost:5088/api/Products/${product.productID}`,
+      type: "DELETE",
+      success: function () {
+        alert("Product deleted!");
+        window.location.href = "home.html";
+      },
+      error: function () {
+        alert("Error deleting product!");
+      },
     });
+  });
 
-    $('#deleteButton').on('click', function () {
-        $.ajax({
-            url: `http://localhost:5088/api/Products/${product.productID}`,
-            type: 'DELETE',
-            success: function () {
-                alert('Product deleted!');
-                window.location.href = 'home.html';
-            },
-            error: function () {
-                alert('Error deleting product!');
-            }
-        })
-    });
+  $("#add-quantity").on("click", function () {
+    if (product.stock > currentQuantity) currentQuantity++;
+    $("#quantity-count").html(currentQuantity);
+  });
 
-    $('#add-quantity').on('click', function () {
-        if (product.stock > currentQuantity)
-            currentQuantity++;
-        $('#quantity-count').html(currentQuantity);
-    });
+  $("#dec-quantity").on("click", function () {
+    if (currentQuantity > 1) currentQuantity--;
+    $("#quantity-count").html(currentQuantity);
+  });
 
-    $('#dec-quantity').on('click', function () {
-        if (currentQuantity > 1)
-            currentQuantity--;
-        $('#quantity-count').html(currentQuantity);
-    });
+  $("#addToCartButton").on("click", function () {
+    let productInCart = cart.find((p) => p.productID === product.productID);
 
-    $('#addToCartButton').on('click', function () {
-        let productInCart = cart.find(p => p.productID === product.productID);
+    if (productInCart) {
+      if (productInCart.quantity + currentQuantity > product.stock) {
+        alert("Not enough stock!");
+        return;
+      }
+      productInCart.quantity += currentQuantity;
+    } else {
+      cart.push({
+        productID: product.productID,
+        quantity: currentQuantity,
+      });
+    }
 
-        if (productInCart) {
+    sessionStorage.setItem("cart", JSON.stringify(cart));
 
-            if (productInCart.quantity + currentQuantity > product.stock) {
-                alert('Not enough stock!');
-                return;
-            }
-            productInCart.quantity += currentQuantity;
-        } else {
-            cart.push({
-                productID: product.productID,
-                quantity: currentQuantity
-            });
-        }
-
-        sessionStorage.setItem('cart', JSON.stringify(cart));
-
-        alert('Product added to cart');
-
-        currentQuantity = 1;
-        $('#quantity-count').html(currentQuantity);
-
+    // alert("Product added to cart");
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: "Product added to cart",
+      confirmButtonText: "YEY!",
+      confirmButtonColor: "#436850",
+      allowEscapeKey: true,
+      background: "#FBFADA",
+      preConfirm: () => {
         window.location.reload();
+      },
     });
 
-    const openModalButton = document.getElementById("openModalButton");
-    const closeModalButton = document.getElementById("closeModalButton");
-    const ratingModal = document.getElementById("ratingModal");
+    currentQuantity = 1;
+    $("#quantity-count").html(currentQuantity);
+  });
 
-    openModalButton.addEventListener("click", () => {
-      ratingModal.classList.remove("hidden");
-    });
+  const openModalButton = document.getElementById("openModalButton");
+  const closeModalButton = document.getElementById("closeModalButton");
+  const ratingModal = document.getElementById("ratingModal");
 
-    closeModalButton.addEventListener("click", () => {
-      ratingModal.classList.add("hidden");
-    });
+  openModalButton.addEventListener("click", () => {
+    ratingModal.classList.remove("hidden");
+  });
+
+  closeModalButton.addEventListener("click", () => {
+    ratingModal.classList.add("hidden");
+  });
 });
