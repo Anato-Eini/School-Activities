@@ -145,17 +145,52 @@ $(document).ready(function () {
     window.location.href = "edit_product.html";
   });
 
+  // $("#deleteButton").on("click", function () {
+  //   $.ajax({
+  //     url: `http://localhost:5088/api/Products/${product.productID}`,
+  //     type: "DELETE",
+  //     success: function () {
+  //       alert("Product deleted!");
+  //       window.location.href = "home.html";
+  //     },
+  //     error: function () {
+  //       alert("Error deleting product!");
+  //     },
+  //   });
+  // });
   $("#deleteButton").on("click", function () {
-    $.ajax({
-      url: `http://localhost:5088/api/Products/${product.productID}`,
-      type: "DELETE",
-      success: function () {
-        alert("Product deleted!");
-        window.location.href = "home.html";
-      },
-      error: function () {
-        alert("Error deleting product!");
-      },
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this action!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+      confirmButtonColor: "#436850",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: `http://localhost:5088/api/Products/${product.productID}`,
+          type: "DELETE",
+          success: function () {
+            Swal.fire(
+              "Deleted!",
+              "The product has been deleted.",
+              "success"
+            ).then(() => {
+              window.location.href = "home.html";
+            });
+          },
+          error: function () {
+            // Show error message if deletion fails
+            Swal.fire(
+              "Error!",
+              "There was an error deleting the product.",
+              "error"
+            );
+          },
+        });
+      }
     });
   });
 
@@ -205,6 +240,16 @@ $(document).ready(function () {
     $("#quantity-count").html(currentQuantity);
   });
 
+  document.getElementById("menu-toggle").addEventListener("click", function () {
+    document.getElementById("mobile-menu").classList.remove("translate-x-full");
+    document.getElementById("mobile-menu").classList.add("translate-x-0");
+  });
+
+  document.getElementById("menu-close").addEventListener("click", function () {
+    document.getElementById("mobile-menu").classList.remove("translate-x-0");
+    document.getElementById("mobile-menu").classList.add("translate-x-full");
+  });
+
   const openModalButton = document.getElementById("openModalButton");
   const closeModalButton = document.getElementById("closeModalButton");
   const ratingModal = document.getElementById("ratingModal");
@@ -216,4 +261,10 @@ $(document).ready(function () {
   closeModalButton.addEventListener("click", () => {
     ratingModal.classList.add("hidden");
   });
+
+  //   $("#cart-count").html(cart ? JSON.parse(cart).length : 0);
+
+  //   $("#cart-count").on("click", function () {
+  //     window.location.href = "checkout.html";
+  //   });
 });
