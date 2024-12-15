@@ -40,12 +40,26 @@ $(document).ready(function () {
                                 src="${rating.imageUrl}" 
                                 alt="Product Image" 
                                 class="w-full h-auto rounded-lg mt-2">`) +
-                        (rating.username == user.username) ? 
+                        (rating.username == user.username ? 
                             `<button 
-                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" 
-                                onclick="deleteRating(${rating.ratingID})">Delete</button>` : ""
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded delete-rating" 
+                                data-ratingid="${rating.ratingID}">Delete</button>` : "") + 
                         `</div>`
                 );
+            });
+
+            $(".delete-rating").on("click", function () {
+                $.ajax({
+                    url: `http://localhost:5088/api/Ratings/${$(this).data("ratingid")}`,
+                    type: "DELETE",
+                    success: function () {
+                        alert("Rating deleted!");
+                        window.location.reload();
+                    },
+                    error: function () {
+                        alert("Error deleting rating!");
+                    },
+                });
             });
         })
         .catch((error) => {
