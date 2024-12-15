@@ -11,6 +11,8 @@ $(document).ready(function () {
   let cart = sessionStorage.getItem("cart");
   cart = cart ? JSON.parse(cart) : [];
 
+  let total = 0;
+
   let fetchPromises = cart.map(async function (product) {
     try {
       const response = await fetch(
@@ -33,11 +35,21 @@ $(document).ready(function () {
               </td>
               <td class="text-center text-gray-700">${data.price} Php/kg</td>
               <td class="text-center text-gray-700">${product.quantity}</td>
-              <td class="text-right text-gray-700">${
-                data.price * product.quantity
-              }Php</td>
+              <td class="text-right text-gray-700">${data.price * product.quantity}Php</td>
+            <td class="text-right">
+              <button
+                class="cancelOrder bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                data-product="${product.productID}"
+              >
+                Cancel
+              </button>
+            </td>
             </tr>`
       );
+
+      total += data.price * product.quantity;
+      $("#total").html(total + "Php");
+
     } catch (error) {
       alert("Error: " + error);
     }
@@ -90,6 +102,11 @@ $(document).ready(function () {
             confirmButtonColor: "#436850",
             allowEscapeKey: true,
             customClass: "bg-[#FBFADA]",
+            preConfirm: () => {
+              cart = [];
+              sessionStorage.setItem("cart", JSON.stringify(cart));
+              window.location.href = "home.html";
+            }
           });
         },
         error: function () {
@@ -102,14 +119,15 @@ $(document).ready(function () {
             confirmButtonColor: "#436850",
             allowEscapeKey: true,
             customClass: "bg-[#FBFADA]",
+            preConfirm: () => {
+              window.location.href = "home.html";
+            }
           });
         },
       });
     });
-
-    cart = [];
-    sessionStorage.setItem("cart", JSON.stringify(cart));
-
-    window.location.href = "home.html";
   });
+
+  $('#contact-number').html(user.phoneNumber);
+  $('#customer-name').html(user.firstName + " " + user.lastName);
 });
