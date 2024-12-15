@@ -1,4 +1,7 @@
-﻿$(document).ready(function () {
+﻿// import Swal from "sweetalert2/dist/sweetalert2.js";
+// import "sweetalert2/src/sweetalert2.css";
+
+$(document).ready(function () {
   let user = sessionStorage.getItem("userDetails");
 
   if (!user) window.location.href = "login.html";
@@ -56,10 +59,13 @@
         icon: "error",
         title: "Oops...",
         text: "Cart is empty!",
-        confirmButtonText: "Go to Shop",
+        confirmButtonText: "Let's go shopping!",
         confirmButtonColor: "#436850",
         allowEscapeKey: true,
         customClass: "bg-[#FBFADA]",
+        willClose: () => {
+          window.location.href = "home.html";
+        },
       });
       return;
     }
