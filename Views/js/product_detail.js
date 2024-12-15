@@ -233,25 +233,15 @@ $(document).ready(function () {
     $("#quantity-count").html(currentQuantity);
   });
 
-  document.getElementById("menu-toggle").addEventListener("click", function () {
-    document.getElementById("mobile-menu").classList.remove("translate-x-full");
-    document.getElementById("mobile-menu").classList.add("translate-x-0");
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const closeMobileMenuButton = document.getElementById("close-mobile-menu");
+
+  mobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
   });
 
-  document.getElementById("menu-close").addEventListener("click", function () {
-    document.getElementById("mobile-menu").classList.remove("translate-x-0");
-    document.getElementById("mobile-menu").classList.add("translate-x-full");
-  });
-
-  const openModalButton = document.getElementById("openModalButton");
-  const closeModalButton = document.getElementById("closeModalButton");
-  const ratingModal = document.getElementById("ratingModal");
-
-  openModalButton.addEventListener("click", () => {
-    ratingModal.classList.remove("hidden");
-  });
-
-  closeModalButton.addEventListener("click", () => {
-    ratingModal.classList.add("hidden");
+  closeMobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.add("hidden");
   });
 });
