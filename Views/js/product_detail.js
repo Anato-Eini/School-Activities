@@ -77,11 +77,9 @@ $(document).ready(function () {
             window.location.reload();
           },
         });
-        // alert("Rating added!");
       },
       error: function (xhr) {
         if (xhr.status === 409) {
-          //   alert("You have already created a rating!");
           Swal.fire({
             icon: "warning",
             title: "Already Rated",
@@ -95,7 +93,6 @@ $(document).ready(function () {
             },
           });
         } else {
-          //   alert("Error adding rating!");
           Swal.fire({
             icon: "error",
             title: "Oops...",
@@ -145,19 +142,6 @@ $(document).ready(function () {
     window.location.href = "edit_product.html";
   });
 
-  // $("#deleteButton").on("click", function () {
-  //   $.ajax({
-  //     url: `http://localhost:5088/api/Products/${product.productID}`,
-  //     type: "DELETE",
-  //     success: function () {
-  //       alert("Product deleted!");
-  //       window.location.href = "home.html";
-  //     },
-  //     error: function () {
-  //       alert("Error deleting product!");
-  //     },
-  //   });
-  // });
   $("#deleteButton").on("click", function () {
     Swal.fire({
       title: "Are you sure?",
@@ -209,7 +193,18 @@ $(document).ready(function () {
 
     if (productInCart) {
       if (productInCart.quantity + currentQuantity > product.stock) {
-        alert("Not enough stock!");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Not enough stocks, will get restocked soon!",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#436850",
+          allowEscapeKey: true,
+          customClass: "bg-[#FBFADA]",
+          preConfirm: () => {
+            window.location.reload();
+          },
+        });
         return;
       }
       productInCart.quantity += currentQuantity;
@@ -221,8 +216,6 @@ $(document).ready(function () {
     }
 
     sessionStorage.setItem("cart", JSON.stringify(cart));
-
-    // alert("Product added to cart");
     Swal.fire({
       icon: "success",
       title: "Success!",
@@ -261,10 +254,4 @@ $(document).ready(function () {
   closeModalButton.addEventListener("click", () => {
     ratingModal.classList.add("hidden");
   });
-
-  //   $("#cart-count").html(cart ? JSON.parse(cart).length : 0);
-
-  //   $("#cart-count").on("click", function () {
-  //     window.location.href = "checkout.html";
-  //   });
 });

@@ -1,7 +1,4 @@
-﻿// import Swal from "sweetalert2/dist/sweetalert2.js";
-// import "sweetalert2/src/sweetalert2.css";
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
   let user = sessionStorage.getItem("userDetails");
 
   if (!user) window.location.href = "login.html";
