@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" type="image/png" href="assets/images/ani.png" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/favicon.png"
+    />
     <title>ANI</title>
     <!--Replace with your tailwind.css once created-->
     <link
@@ -170,23 +174,20 @@
         <thead>
           <tr class="text-gray-700 border-b">
             <th class="py-2">Products Ordered</th>
-            <th class="py-2 text-center">Unit Price</th>
             <th class="py-2 text-center">Quantity</th>
-            <th class="py-2 text-right">Item Subtotal</th>
+            <th class="py-2 text-center">Buyer</th>
+            <th class="py-2 text-right">Date</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
+        <tbody id="orders">
+          <!-- <tr>
             <td class="py-3 flex items-center space-x-4">
               <img
                 src="https://via.placeholder.com/50"
                 alt="Tomato"
                 class="h-12 w-12 rounded-md"
               />
-              <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-                id="orders"
-              >
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 Tomato
               </div>
             </td>
@@ -209,9 +210,9 @@
             <td class="text-center text-gray-700">XX.X Php/kg</td>
             <td class="text-center text-gray-700">1</td>
             <td class="text-right text-gray-700">XX.X Php</td>
-          </tr>
+          </tr> -->
         </tbody>
-        <tfoot>
+        <tfoot class="border-t">
           <tr class="font-bold">
             <td colspan="3" class="text-right py-3">TOTAL</td>
             <td class="text-right text-[#436850]">XXX.X Php</td>
@@ -219,19 +220,11 @@
         </tfoot>
       </table>
     </div>
-    <div class="min-h-screen flex items-center justify-center">
-      <div
-        class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md"
-        id="orders"
-      >
-        <!-- orders go here -->
-      </div>
-    </div>
     <script
       src="https://code.jquery.com/jquery-3.7.1.js"
       integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
       crossorigin="anonymous"
     ></script>
-    <script src="js/farmer.js"></script>
+    <!-- <script src="js/farmer.js"></script> -->
   </body>
 </html>

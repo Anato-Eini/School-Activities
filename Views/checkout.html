@@ -3,8 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/favicon.png"
+    />
     <title>Checkout Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="sweetalert2.all.min.js"></script>
     <style>
       body {
         font-family: Poppins;
@@ -13,10 +19,9 @@
     </style>
   </head>
   <body class="bg-[#FBFADA]">
-    <!-- Header -->
     <header class="bg-[#FBFADA] border-b shadow-sm py-4 px-6 flex items-center">
       <div class="flex items-center space-x-2 h-20">
-        <div>
+        <div class="pr-5 border-r border-black">
           <img class="h-8 w-auto" src="assets/images/ani.png" alt="" />
         </div>
         <h1 class="text-lg font-semibold text-[#436850]">
@@ -25,20 +30,16 @@
       </div>
     </header>
 
-    <!-- Content -->
     <div class="container mx-auto p-4 md:p-8">
-      <!-- Delivery Details -->
       <div
         class="bg-white shadow-md rounded-md p-4 flex items-start justify-between"
         style="box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1)"
       >
-        <!-- Left Section: Delivery Details -->
         <div class="flex-1">
           <div class="flex items-center mb-2">
             <h2 class="text-[#436850] font-bold text-lg">Delivery Details</h2>
           </div>
 
-          <!-- Details -->
           <div class="flex space-x-10">
             <div>
               <p class="text-[#436850] font-semibold text-sm mb-1">
@@ -55,7 +56,6 @@
           </div>
         </div>
 
-        <!-- Right Section: Change Button -->
         <div class="mt-5">
           <button
             class="text-[#436850] border border-[#436850] px-4 py-1 rounded-md hover:bg-[#436850] hover:text-white transition"
@@ -65,7 +65,6 @@
         </div>
       </div>
 
-      <!-- Products Ordered -->
       <div class="bg-white shadow-md p-6 rounded-md mb-6 mt-5">
         <div class="flex justify-between items-center border-b pb-2 mb-4">
           <h2 class="text-[#436850] font-bold uppercase text-md">
@@ -77,10 +76,6 @@
             Chat Now
           </button>
         </div>
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-          id="orders"
-        ></div>
         <table class="w-full text-left">
           <thead>
             <tr class="text-gray-700 border-b">
@@ -90,9 +85,8 @@
               <th class="py-2 text-right">Item Subtotal</th>
             </tr>
           </thead>
-          <tbody>
-            <!-- Product 1 -->
-            <tr>
+          <tbody id="orders">
+            <!-- <tr>
               <td class="py-3 flex items-center space-x-4">
                 <img
                   src="https://via.placeholder.com/50"
@@ -109,27 +103,9 @@
               <td class="text-center text-gray-700">XX.X Php/kg</td>
               <td class="text-center text-gray-700">1</td>
               <td class="text-right text-gray-700">XX.X Php</td>
-            </tr>
-
-            <!-- Product 2 -->
-            <tr>
-              <td class="py-3 flex items-center space-x-4">
-                <img
-                  src="https://via.placeholder.com/50"
-                  alt="Eggplant"
-                  class="h-12 w-12 rounded-md"
-                />
-                <div>
-                  <p class="font-medium text-gray-700">Eggplant</p>
-                  <p class="text-sm text-gray-500">Long</p>
-                </div>
-              </td>
-              <td class="text-center text-gray-700">XX.X Php/kg</td>
-              <td class="text-center text-gray-700">1</td>
-              <td class="text-right text-gray-700">XX.X Php</td>
-            </tr>
+            </tr> -->
           </tbody>
-          <tfoot>
+          <tfoot class="border-t">
             <tr class="font-bold">
               <td colspan="3" class="text-right py-3">TOTAL</td>
               <td class="text-right text-[#436850]">XXX.X Php</td>
@@ -137,70 +113,6 @@
           </tfoot>
         </table>
       </div>
-
-      <!-- Bottom Section -->
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- Message for the Seller -->
-        <div class="bg-white shadow-md p-6 rounded-md">
-          <h2
-            class="text-[#436850] font-bold text-md uppercase border-b pb-2 mb-4"
-          >
-            Message for the Seller
-          </h2>
-          <textarea
-            class="w-full border p-2 rounded-md focus:ring-[#436850] focus:outline-none"
-            rows="5"
-            placeholder="Type your message here..."
-          ></textarea>
-          <div class="mt-4 flex items-center justify-between">
-            <p class="text-sm text-gray-600">
-              Do you want an <strong>E-receipt?</strong>
-            </p>
-            <button
-              class="bg-[#436850] text-white px-4 py-2 rounded-md hover:bg-[#365c45]"
-            >
-              Request Here
-            </button>
-          </div>
-        </div>
-
-        <!-- Payment Summary -->
-        <div class="bg-white shadow-md p-6 rounded-md">
-          <h2
-            class="text-[#436850] font-bold text-md uppercase border-b pb-2 mb-4"
-          >
-            Payment
-          </h2>
-          <div class="space-y-2 text-gray-700">
-            <p class="flex justify-between">
-              <span>Products Total</span> <span>Php</span>
-            </p>
-            <p class="flex justify-between">
-              <span>Delivery Fee</span> <span>Php</span>
-            </p>
-            <p class="flex justify-between">
-              <span>Discount Vouchers</span> <span>Php</span>
-            </p>
-          </div>
-          <div
-            class="mt-4 font-bold text-lg text-[#436850] flex justify-between"
-          >
-            <span>Total Payment</span>
-            <span>Php</span>
-          </div>
-          <hr class="my-4" />
-          <div class="space-y-4">
-            <p>Payment Channel</p>
-            <select
-              class="w-full border px-3 py-2 rounded-md focus:ring-[#436850]"
-            >
-              <option>Select</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Place Order -->
       <div class="mt-6 text-right">
         <button
           class="bg-[#436850] text-white font-semibold px-6 py-2 rounded-md hover:bg-[#365c45]"

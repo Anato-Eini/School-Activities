@@ -1,59 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>
-        ANI
-    </title>
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/favicon.png"
+    />
+    <title>ANI</title>
     <!--Replace with your tailwind.css once created-->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
     <style>
-        .gradient {
-            background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
-        }
+      .gradient {
+        background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+      }
     </style>
-</head>
+  </head>
 
-<body class="gradient">
-    <div id="farmer-buttons" class="flex justify-center mt-4">
-    </div>
+  <body class="gradient">
+    <div id="farmer-buttons" class="flex justify-center mt-4"></div>
 
     <div class="flex justify-end p-4">
-        <button class="relative" id="goToCart">
-            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5M17 13l1.4 5M9 21h6M9 21a2 2 0 11-4 0M15 21a2 2 0 104 0">
-                </path>
-            </svg>
-            <span
-                class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"
-                id="cart-count">
-                0
-            </span>
-        </button>
+      <button class="relative" id="goToCart">
+        <svg
+          class="w-8 h-8 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.4 5M17 13l1.4 5M9 21h6M9 21a2 2 0 11-4 0M15 21a2 2 0 104 0"
+          ></path>
+        </svg>
+        <span
+          class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"
+          id="cart-count"
+        >
+          0
+        </span>
+      </button>
     </div>
 
-    <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" id="logout">Logout</button>
-    <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" id="profile-picture">Profile
-        Picture</button>
+    <button
+      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+      id="logout"
+    >
+      Logout
+    </button>
+    <button
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+      id="profile-picture"
+    >
+      Profile Picture
+    </button>
 
     <div class="min-h-screen flex items-center justify-center">
-        <div class="container mx-auto px-4">
-            <h1 class="text-4xl font-bold text-center mb-8">Our Products</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="products">
-            </div>
-        </div>
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-center mb-8">Our Products</h1>
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          id="products"
+        ></div>
+      </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
     <script type="module" src="js/home.js"></script>
-</body>
-
+  </body>
 </html>
