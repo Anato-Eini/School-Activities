@@ -13,7 +13,7 @@ $(document).ready(function () {
   cart = cart ? JSON.parse(cart) : [];
 
   $('#cart-count').html(cart.length);
-  $('#cart-count').on('click', function () {
+  $('#goToCart').on('click', function () {
     window.location.href = "checkout.html";
   });
 

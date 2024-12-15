@@ -13,12 +13,9 @@ $(document).ready(function () {
 
   user = JSON.parse(user);
 
-  // if (user.isFarmer == true) {
-  //   $("#farmer-buttons").append(
-  //     `<button id="sellButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2">Sell Item</button>
-  //           <button id="orders" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2">Orders</button>`
-  //   );
-  // }
+  $('#profile-picture').attr('src', user.profilePictureUrl);
+  
+
   if (user.isFarmer == true) {
     $("#farmer-buttons").append(
       `<a
