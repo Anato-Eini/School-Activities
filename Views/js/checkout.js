@@ -16,6 +16,7 @@
         "http://localhost:5088/api/Products/" + product.productID
       );
       const data = await response.json();
+
       $("#orders").append(
         `<tr>
               <td class="py-3 flex items-center space-x-4">
@@ -47,7 +48,9 @@
       );
 
       total += data.price * product.quantity;
+
       $("#total").html(total + "Php");
+
     } catch (error) {
       alert("Error: " + error);
     }

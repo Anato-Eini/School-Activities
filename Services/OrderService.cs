@@ -41,6 +41,7 @@ public class OrderService(IOrderRepository orderRepository, IMapper mapper, IPro
             existingOrder.Quantity += order.Quantity;
             return _mapper.Map<OrderResponseDTO>(await _orderRepository.UpdateOrder(existingOrder));
         } 
+
         Order newOrder = _mapper.Map<Order>(order);
 
         newOrder.User = await _userRepository.GetUser(order.UserID);

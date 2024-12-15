@@ -34,9 +34,11 @@
   public string ProductPictureUrl { get; set; } = null!;
   */
   let total = 0;
+
   fetch("http://localhost:5088/api/Orders/farmer/" + user.userID) // Fetch data type is OrderResponseDTO
     .then((response) => response.json())
     .then((data) => {
+
       data.forEach(function (order) {
         let buyerName;
         let productName;

@@ -36,8 +36,7 @@ $(document).ready(function () {
         $("#comments").prepend(
           `<div class="bg-gray-200 border border-gray-300 p-2 rounded-lg mb-2">
                         <p class="text-lg font-bold">${rating.username}</p>
-                        <p>${rating.content == null ? "" : rating.content}</p>
-                        <p>Rating: ${rating.stars}</p>` +
+                        <p>${rating.content == null ? "" : rating.content}</p>` +
           `<p class="font-semibold text-[#436850]">Rating: ${stars}</p>` +
           (rating.imageUrl == null
             ? ""
@@ -238,10 +237,8 @@ $(document).ready(function () {
       confirmButtonColor: "#436850",
       allowEscapeKey: true,
       background: "#FBFADA",
-      preConfirm: () => {
-        window.location.reload();
+      preConfirm: () =>  window.location.reload()
       });
-
   });
 
   const openModalButton = document.getElementById("openModalButton");
