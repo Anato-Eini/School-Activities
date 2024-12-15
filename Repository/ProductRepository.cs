@@ -15,7 +15,7 @@ public class ProductRepository(AniContext context) : IProductRepository
     /// </summary>
     /// <returns>A list of products.</returns>
     public async Task<IEnumerable<Product>> GetProducts() 
-            => await _context.Products.ToListAsync();
+            => await _context.Products.Where(p => p.Stock > 0).ToListAsync();
 
     /// <summary>
     /// Retrieves a product by its ID.
