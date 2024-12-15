@@ -51,6 +51,7 @@
               console.log("Error fetching user data:", error);
             }),
         ]).then(() => {
+            console.log("nigger")
           $("#orders").prepend(
             `<tr>
             <td class="py-3 flex items-center space-x-4">
@@ -80,15 +81,31 @@
           ).then(() => {
             $('.finished').click(function () {
               let action = $(this).text().toLowerCase();
-              fetch(`http://localhost:5088/api/Orders/${order.orderID}/${action}`, {
+              fetch(`http://localhost:5088/api/Orders/finished/${order.orderID}`, {
                 method: "PUT",
               }).then(() => {
                 alert("Order status updated successfully");
                 window.location.reload();
               }).catch((error) => alert("Error updating order status:", error));
             });
+
+              $('.cancel').click(function () {
+                  let action = $(this).text().toLowerCase();
+                  fetch(`http://localhost:5088/api/Orders/cancel/${order.orderID}`, {
+                      method: "PUT",
+                  }).then(() => {
+                      alert("Order status updated successfully");
+                      window.location.reload();
+                  }).catch((error) => alert("Error updating order status:", error));
+              });
+
           });
         }).catch((error) => alert("Error processing order:", error));
       });
     }).catch((error) => alert("Error fetching orders:", error));
+    //end fetch
+
+  
+
+
 });
