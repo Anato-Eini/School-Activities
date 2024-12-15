@@ -72,6 +72,8 @@ $(document).ready(function () {
         });
     });
 
+    let currentQuantity = 1;
+
     $("#button-operation").prepend(
         product.userID !== user.userID
             ? `<div class="flex items-center mt-6"> 
