@@ -1,126 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/favicon.png"
+    />
+    <title>ANI</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: Poppins, sans-serif;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link rel="shortcut icon" type="image/png" href="assets/images/favicon.png" />
-  <title>ANI</title>
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
-  <style>
-    body {
-      font-family: Poppins, sans-serif;
-    }
-  </style>
-</head>
-
-<body>
-  <header class="bg-white shadow" style="
+  <body>
+    <header
+      class="bg-white"
+      style="
         background-color: #fbfada;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-      ">
-    <nav class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
-      <div class="flex lg:flex-1">
-        <a href="#" class="-m-1.5 p-1.5">
-          <p class="sr-only">ANI</p>
-          <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
-        </a>
-      </div>
-      <div class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="text-sm font-semibold text-[#436850]">Explore</a>
-        <a href="#" class="text-sm font-semibold text-[#436850]">About</a>
-        <a href="#" class="text-sm font-semibold text-[#436850]">Products</a>
-      </div>
-    </nav>
-  </header>
-
-  <!-- Scrollable Form -->
-  <div class="h-screen overflow-y-auto">
-    <div class="flex flex-col items-center justify-start px-6 py-8 mx-auto lg:py-10">
-      <div class="w-full bg-white rounded-lg shadow-md md:max-w-md">
+      "
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
         <!-- Logo -->
-        <div class="flex justify-center mt-5">
-          <img class="h-10" src="assets/images/ani.png" alt="logo" />
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">ANI</span>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+          </a>
         </div>
-        <!-- Form Header -->
-        <h1 class="text-4xl font-extrabold text-[#436850] text-center mt-4 mb-6">
-          Edit Profile
-        </h1>
-        <!-- Form -->
-        <form action="#" method="post" enctype="multipart/form-data" id="update-profile-form" class="p-6 space-y-4">
-          <!-- Username -->
-          <div>
-            <label for="username" class="block text-gray-700 text-sm mb-2">Username</label>
-            <input type="text" id="username" name="username" maxlength="50"
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]" />
-          </div>
 
-          <!-- Old Password -->
-          <div>
-            <label for="oldPassword" class="block text-gray-700 text-sm mb-2">Old Password</label>
-            <input type="password" id="oldPassword" name="password" minlength="8" maxlength="50" required
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]" />
-          </div>
+        <!-- Hamburger Button (Small Screens) -->
+        <div class="flex lg:hidden">
+          <button
+            id="menu-toggle"
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
 
-          <!-- New Password -->
-          <div>
-            <label for="newPassword" class="block text-gray-700 text-sm mb-2">New Password</label>
-            <input type="password" id="newPassword" name="newPassword" minlength="8" maxlength="50"
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]" />
-          </div>
+        <!-- Navigation Links (Large Screens) -->
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="index.html"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >Explore</a
+          >
+          <a
+            href="#"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >About</a
+          >
+          <a
+            href="home.html"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >Products</a
+          >
+        </div>
+      </nav>
 
-          <!-- Other Fields -->
-          <div>
-            <label for="firstName" class="block text-gray-700 text-sm mb-2">First Name</label>
-            <input type="text" id="firstName" name="firstName" maxlength="50" required
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]" />
+      <!-- Mobile Sidebar -->
+      <div
+        id="mobile-menu"
+        class="fixed inset-y-0 right-0 z-20 w-3/4 max-w-sm bg-white px-6 py-6 transform translate-x-full transition-transform lg:hidden"
+      >
+        <div class="flex items-center justify-between">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">ANI</span>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+          </a>
+          <button
+            id="menu-close"
+            type="button"
+            class="-m-2.5 rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Close menu</span>
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="space-y-2 py-6">
+              <a
+                href="index.html"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-[#436850] hover:bg-gray-50"
+                >Explore</a
+              >
+              <a
+                href="#"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-[#436850] hover:bg-gray-50"
+                >About</a
+              >
+              <a
+                href="home.html"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-[#436850] hover:bg-gray-50"
+                >Products</a
+              >
+            </div>
           </div>
+        </div>
+      </div>
+    </header>
 
-          <div>
-            <label for="lastName" class="block text-gray-700 text-sm mb-2">Last Name</label>
-            <input type="text" id="lastName" name="lastName" maxlength="50" required
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]" />
+    <!-- Scrollable Form -->
+    <div class="h-screen overflow-y-auto">
+      <div
+        class="flex flex-col items-center justify-start px-6 py-8 mx-auto lg:py-10"
+      >
+        <div class="w-full bg-white rounded-lg shadow-md md:max-w-md">
+          <!-- Logo -->
+          <div class="flex justify-center mt-5">
+            <img class="h-10" src="assets/images/ani.png" alt="logo" />
           </div>
+          <!-- Form Header -->
+          <h1
+            class="text-4xl font-extrabold text-[#436850] text-center mt-4 mb-6"
+          >
+            Edit Profile
+          </h1>
+          <!-- Form -->
+          <form
+            action="#"
+            method="post"
+            enctype="multipart/form-data"
+            id="update-profile-form"
+            class="p-6 space-y-4"
+          >
+            <!-- Username -->
+            <div>
+              <label for="username" class="block text-gray-700 text-sm mb-2"
+                >Username</label
+              >
+              <input
+                type="text"
+                id="username"
+                name="username"
+                maxlength="50"
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              />
+            </div>
 
-          <div>
-            <label for="phoneNumber" class="block text-gray-700 text-sm mb-2">Phone Number</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber" maxlength="15" required
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]" />
-          </div>
+            <!-- Old Password -->
+            <div>
+              <label for="oldPassword" class="block text-gray-700 text-sm mb-2"
+                >Old Password</label
+              >
+              <input
+                type="password"
+                id="oldPassword"
+                name="password"
+                minlength="8"
+                maxlength="50"
+                required
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              />
+            </div>
 
-          <div>
-            <label for="address" class="block text-gray-700 text-sm mb-2">Address</label>
-            <textarea id="address" name="address"
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"></textarea>
-          </div>
+            <!-- New Password -->
+            <div>
+              <label for="newPassword" class="block text-gray-700 text-sm mb-2"
+                >New Password</label
+              >
+              <input
+                type="password"
+                id="newPassword"
+                name="newPassword"
+                minlength="8"
+                maxlength="50"
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              />
+            </div>
 
-          <div class="flex items-center">
-            <label for="isFarmer" class="text-gray-700 text-sm mr-2">Are you a farmer?</label>
-            <input id="isFarmer" type="checkbox" name="isFarmer" class="text-[#436850] focus:ring-[#436850]" />
-          </div>
-          <div>
-            <label for="profilePicture" class="block text-gray-700 text-sm mb-2">Profile Picture</label>
-            <input type="file" id="profilePicture" name="profilePictureUrl" accept="image/*"
-              class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]" />
-          </div>
+            <!-- Other Fields -->
+            <div>
+              <label for="firstName" class="block text-gray-700 text-sm mb-2"
+                >First Name</label
+              >
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                maxlength="50"
+                required
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              />
+            </div>
 
-          <!-- Submit Button -->
-          <div>
-            <button type="submit"
-              class="w-full bg-[#436850] text-white py-2.5 rounded-lg hover:bg-[#365c45] focus:outline-none focus:ring focus:ring-[#365c45]">
-              Update Profile
-            </button>
-          </div>
-        </form>
+            <div>
+              <label for="lastName" class="block text-gray-700 text-sm mb-2"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                maxlength="50"
+                required
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              />
+            </div>
+
+            <div>
+              <label for="phoneNumber" class="block text-gray-700 text-sm mb-2"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                maxlength="15"
+                required
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              />
+            </div>
+
+            <div>
+              <label for="address" class="block text-gray-700 text-sm mb-2"
+                >Address</label
+              >
+              <textarea
+                id="address"
+                name="address"
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              ></textarea>
+            </div>
+
+            <div class="flex items-center">
+              <label for="isFarmer" class="text-gray-700 text-sm mr-2"
+                >Are you a farmer?</label
+              >
+              <input
+                id="isFarmer"
+                type="checkbox"
+                name="isFarmer"
+                class="text-[#436850] focus:ring-[#436850]"
+              />
+            </div>
+            <div>
+              <label
+                for="profilePicture"
+                class="block text-gray-700 text-sm mb-2"
+                >Profile Picture</label
+              >
+              <input
+                type="file"
+                id="profilePicture"
+                name="profilePictureUrl"
+                accept="image/*"
+                class="w-full rounded border px-3 py-2 text-gray-700 shadow-sm focus:outline-none focus:ring focus:ring-[#436850]"
+              />
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+              <button
+                type="submit"
+                class="w-full bg-[#436850] text-white py-2.5 rounded-lg hover:bg-[#365c45] focus:outline-none focus:ring focus:ring-[#365c45]"
+              >
+                Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
-    crossorigin="anonymous"></script>
-  <script src="js/update_profile.js"></script>
-</body>
-
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/update_profile.js"></script>
+  </body>
 </html>

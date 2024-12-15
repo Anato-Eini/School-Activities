@@ -1,7 +1,4 @@
-﻿// import Swal from "sweetalert2/dist/sweetalert2.js";
-// import "sweetalert2/src/sweetalert2.css";
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
   let user = sessionStorage.getItem("userDetails");
 
   if (!user) window.location.href = "login.html";
@@ -35,7 +32,9 @@ $(document).ready(function () {
               </td>
               <td class="text-center text-gray-700">${data.price} Php/kg</td>
               <td class="text-center text-gray-700">${product.quantity}</td>
-              <td class="text-right text-gray-700">${data.price * product.quantity}Php</td>
+              <td class="text-right text-gray-700">${
+                data.price * product.quantity
+              }Php</td>
             <td class="text-right">
               <button
                 class="cancelOrder bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -49,7 +48,6 @@ $(document).ready(function () {
 
       total += data.price * product.quantity;
       $("#total").html(total + "Php");
-
     } catch (error) {
       alert("Error: " + error);
     }
@@ -106,7 +104,7 @@ $(document).ready(function () {
               cart = [];
               sessionStorage.setItem("cart", JSON.stringify(cart));
               window.location.href = "home.html";
-            }
+            },
           });
         },
         error: function () {
@@ -121,13 +119,13 @@ $(document).ready(function () {
             customClass: "bg-[#FBFADA]",
             preConfirm: () => {
               window.location.href = "home.html";
-            }
+            },
           });
         },
       });
     });
   });
 
-  $('#contact-number').html(user.phoneNumber);
-  $('#customer-name').html(user.firstName + " " + user.lastName);
+  $("#contact-number").html(user.phoneNumber);
+  $("#customer-name").html(user.firstName + " " + user.lastName);
 });
