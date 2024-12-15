@@ -13,6 +13,8 @@ public interface IUserService
     /// <returns>A task that represents the asynchronous operation. The task result contains a collection of UserSecDTO.</returns>
     Task<IEnumerable<UserSecDTO>> GetUsers();
 
+    Task<IEnumerable<UserSecDTO>> GetFarmers();
+
     /// <summary>
     /// Retrieves a user by username.
     /// </summary>

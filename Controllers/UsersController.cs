@@ -23,6 +23,12 @@ public class UserDTOsController(IUserService userService) : ControllerBase
         return Ok(await _userService.GetUsers());
     }
 
+    [HttpGet("farmers")]
+    public async Task<ActionResult<IEnumerable<UserSecDTO>>> GetFarmers()
+    {
+        return Ok(await _userService.GetFarmers());
+    }
+
     /// <summary>
     /// Authenticates a user based on the provided login details.
     /// </summary>

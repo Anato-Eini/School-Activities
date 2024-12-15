@@ -20,12 +20,19 @@ public class UserService(IUserRepository userRepository, IMapper mapper, IPasswo
     /// Retrieves all users.
     /// </summary>
     /// <returns>A task that represents the asynchronous operation. The task result contains a collection of UserSecDTO.</returns>
-    public async Task<IEnumerable<UserSecDTO>> GetUsers() => 
+    public async Task<IEnumerable<UserSecDTO>> GetUsers() =>
                 _mapper.Map<IEnumerable<UserSecDTO>>(await _userRepository.GetUsers()).Select(user =>
                     {
                         user.ProfilePictureUrl = Library.PrependUrl(user.ProfilePictureUrl)!;
                         return user;
                     });
+
+    public async Task<IEnumerable<UserSecDTO>> GetFarmers() =>
+        _mapper.Map<IEnumerable<UserSecDTO>>(await _userRepository.GetFarmers()).Select(static user =>
+        {
+            user.ProfilePictureUrl = Library.PrependUrl(user.ProfilePictureUrl)!;
+            return user;
+        });
 
     /// <summary>
     /// Retrieves a user by username.

@@ -16,6 +16,8 @@ public class UserRepository(AniContext context) : IUserRepository
     /// <returns>A list of users.</returns>
     public async Task<IEnumerable<User>> GetUsers() => 
                     await _context.Users.ToListAsync();
+    public async Task<IEnumerable<User>> GetFarmers() => 
+                    await _context.Users.Where(u => u.IsFarmer).ToListAsync();
 
     /// <summary>
     /// Gets a user by their unique identifier.

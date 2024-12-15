@@ -15,6 +15,24 @@ $(document).ready(function () {
 
   $('#profile-picture').attr('src', user.profilePictureUrl);
   
+    fetch('http://localhost:5088/api/userDTOs/farmers')
+        .then((response) => response.json())
+        .then((data) => {
+            data.forEach(function (farmer) {
+                $('#farmers').append(
+                    `<div class="flex flex-col items-center text-center space-y-1">
+                        <img
+                        src="${farmer.profilePictureUrl}"
+                        alt="Farmer"
+                        class="h-20 w-20 rounded-full object-cover"
+                        />
+                        <p class="text-[#436850] text-sm font-medium">${farmer.username}</p>
+                    </div>`
+                )
+            });
+        }
+        );
+
 
   if (user.isFarmer == true) {
     $("#farmer-buttons").append(

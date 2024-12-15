@@ -13,6 +13,8 @@ public interface IUserRepository
     /// <returns>A task that represents the asynchronous operation. The task result contains an enumerable of users.</returns>
     Task<IEnumerable<User>> GetUsers();
 
+    Task<IEnumerable<User>> GetFarmers();
+
     /// <summary>
     /// Gets a user by their unique identifier.
     /// </summary>
