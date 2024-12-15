@@ -156,4 +156,16 @@ $(document).ready(function () {
 
         window.location.reload();
     });
+
+    const openModalButton = document.getElementById("openModalButton");
+    const closeModalButton = document.getElementById("closeModalButton");
+    const ratingModal = document.getElementById("ratingModal");
+
+    openModalButton.addEventListener("click", () => {
+      ratingModal.classList.remove("hidden");
+    });
+
+    closeModalButton.addEventListener("click", () => {
+      ratingModal.classList.add("hidden");
+    });
 });
