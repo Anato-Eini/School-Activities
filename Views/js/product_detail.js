@@ -242,29 +242,19 @@ $(document).ready(function () {
       confirmButtonColor: "#436850",
       allowEscapeKey: true,
       background: "#FBFADA",
-      preConfirm: () =>  window.location.reload()
-      });
+      preConfirm: () => window.location.reload()
+    });
   });
 
-  const openModalButton = document.getElementById("openModalButton");
-  const closeModalButton = document.getElementById("closeModalButton");
-  const ratingModal = document.getElementById("ratingModal");
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const closeMobileMenuButton = document.getElementById("close-mobile-menu");
 
-  document.getElementById("menu-toggle").addEventListener("click", function () {
-    document.getElementById("mobile-menu").classList.remove("translate-x-full");
-    document.getElementById("mobile-menu").classList.add("translate-x-0");
+  mobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
   });
 
-  document.getElementById("menu-close").addEventListener("click", function () {
-    document.getElementById("mobile-menu").classList.remove("translate-x-0");
-    document.getElementById("mobile-menu").classList.add("translate-x-full");
-  });
-
-  openModalButton.addEventListener("click", () => {
-    ratingModal.classList.remove("hidden");
-  });
-
-  closeModalButton.addEventListener("click", () => {
-    ratingModal.classList.add("hidden");
+  closeMobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.add("hidden");
   });
 });

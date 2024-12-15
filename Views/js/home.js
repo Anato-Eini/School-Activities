@@ -13,10 +13,22 @@ $(document).ready(function () {
 
   user = JSON.parse(user);
 
+  // if (user.isFarmer == true) {
+  //   $("#farmer-buttons").append(
+  //     `<button id="sellButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2">Sell Item</button>
+  //           <button id="orders" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2">Orders</button>`
+  //   );
+  // }
   if (user.isFarmer == true) {
     $("#farmer-buttons").append(
-      `<button id="sellButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2">Sell Item</button>
-            <button id="orders" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded m-2">Orders</button>`
+      `<a
+        href="sell_item.html"
+        class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+      >Sell Items</a>
+      <a
+        href="farmer.html"
+        class="text-sm/6 font-semibold text-[#436850] hover:text-gray-900"
+      >&nbsp&nbsp&nbspOrders</a>`
     );
   }
 
@@ -58,5 +70,17 @@ $(document).ready(function () {
 
   $("#cart-count").on("click", function () {
     window.location.href = "checkout.html";
+  });
+
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const closeMobileMenuButton = document.getElementById("close-mobile-menu");
+
+  mobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+  closeMobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.add("hidden");
   });
 });
