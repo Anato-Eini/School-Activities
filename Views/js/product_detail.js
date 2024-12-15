@@ -74,46 +74,6 @@ $(document).ready(function () {
 
     let currentQuantity = 1;
 
-    $('#add-quantity').on('click', function () {
-        if (product.stock > currentQuantity)
-            currentQuantity++;
-        $('#quantity-count').html(currentQuantity);
-    });
-
-    $('#dec-quantity').on('click', function () {
-        if (currentQuantity > 1)
-            currentQuantity--;
-        $('#quantity-count').html(currentQuantity);
-    });
-
-    $('#addToCartButton').on('click', function () {
-        let productInCart = cart.find(p => p.productID === product.productID);
-
-        if (productInCart) {
-
-            if (productInCart.quantity + currentQuantity > product.stock) {
-                alert('Not enough stock!');
-                return;
-            }
-            productInCart.quantity += currentQuantity;
-        } else {
-            cart.push({
-                productID: product.productID,
-                quantity: currentQuantity
-            });
-        }
-
-        sessionStorage.setItem('cart', JSON.stringify(cart));
-
-        sessionStorage.removeItem('product');
-
-        alert('Product added to cart');
-
-        currentQuantity = 1;
-        $('#quantity-count').html(currentQuantity);
-
-        window.location.reload();
-    });
 
     $('#button-operation').prepend(
         product.userID !== user.userID ?
@@ -160,4 +120,42 @@ $(document).ready(function () {
         })
     });
 
+    $('#add-quantity').on('click', function () {
+        if (product.stock > currentQuantity)
+            currentQuantity++;
+        $('#quantity-count').html(currentQuantity);
+    });
+
+    $('#dec-quantity').on('click', function () {
+        if (currentQuantity > 1)
+            currentQuantity--;
+        $('#quantity-count').html(currentQuantity);
+    });
+
+    $('#addToCartButton').on('click', function () {
+        let productInCart = cart.find(p => p.productID === product.productID);
+
+        if (productInCart) {
+
+            if (productInCart.quantity + currentQuantity > product.stock) {
+                alert('Not enough stock!');
+                return;
+            }
+            productInCart.quantity += currentQuantity;
+        } else {
+            cart.push({
+                productID: product.productID,
+                quantity: currentQuantity
+            });
+        }
+
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+
+        alert('Product added to cart');
+
+        currentQuantity = 1;
+        $('#quantity-count').html(currentQuantity);
+
+        window.location.reload();
+    });
 });
