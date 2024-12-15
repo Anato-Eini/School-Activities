@@ -12,6 +12,11 @@ $(document).ready(function () {
   let cart = sessionStorage.getItem("cart");
   cart = cart ? JSON.parse(cart) : [];
 
+  $('#cart-count').html(cart.length);
+  $('#cart-count').on('click', function () {
+    window.location.href = "checkout.html";
+  });
+
   $("#name").html(product.name);
   $("#description").html(product.description);
   $("#price").html(product.price);
