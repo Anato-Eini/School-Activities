@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/favicon.png"
+    />
+    <title>ANI</title>
+    <meta name="description" content="Simple landind page" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <!--   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" /> -->
+    <!--Replace with your tailwind.css once created-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
+    <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .gradient {
+        background: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+      }
+    </style>
+  </head>
+
+  <body
+    class="leading-normal tracking-normal"
+    style="font-family: Poppins, 'Source Sans Pro', sans-serif"
+  >
+    <!--Nav-->
+
+    <header
+      class="bg-white"
+      style="
+        background-color: #fbfada;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <p class="sr-only">ANI</p>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <div class="flex lg:hidden">
+          <button
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            id="mobileMenuButton"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Desktop menu -->
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="index.html"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >Explore</a
+          >
+          <a
+            href="#"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >About</a
+          >
+          <a
+            href="home.html"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >Products</a
+          >
+        </div>
+
+        <!-- Desktop Get Started -->
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="register.html" class="text-sm font-semibold text-gray-900"
+            >Get Started <span aria-hidden="true">&rarr;</span></a
+          >
+        </div>
+      </nav>
+
+      <!-- Mobile menu -->
+      <div
+        id="mobileMenu"
+        class="lg:hidden hidden"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div class="fixed inset-0 z-10 bg-gray-500 bg-opacity-50"></div>
+        <div
+          class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10"
+        >
+          <div class="flex items-center justify-between">
+            <a href="#" class="-m-1.5 p-1.5">
+              <span class="sr-only">ANI</span>
+              <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+            </a>
+            <button
+              type="button"
+              class="-m-2.5 rounded-md p-2.5 text-gray-700"
+              id="closeMenuButton"
+            >
+              <span class="sr-only">Close menu</span>
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-6 flow-root">
+            <div class="-my-6 divide-y divide-gray-500/10">
+              <div class="space-y-2 py-6">
+                <a
+                  href="index.html"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                  >Explore</a
+                >
+                <a
+                  href="#"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                  >About</a
+                >
+                <a
+                  href="home.html"
+                  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                  >Products</a
+                >
+              </div>
+              <div class="py-6">
+                <a
+                  href="register.html"
+                  class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50"
+                  >Get Started</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!--Hero-->
+    <div style="padding: 100px 0; background-color: #f7f7f7">
+      <div
+        style="
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <!-- Left Column -->
+        <div style="flex: 1; text-align: left; padding-right: 50px">
+          <p
+            style="
+              text-transform: uppercase;
+              letter-spacing: 2px;
+              font-size: 14px;
+              color: #888;
+            "
+          >
+            Welcome!
+          </p>
+          <h1
+            style="
+              font-size: 48px;
+              font-weight: bold;
+              margin: 20px 0;
+              line-height: 1.2;
+            "
+          >
+            Fresh From Farm to Table
+          </h1>
+          <p
+            style="
+              font-size: 20px;
+              color: #666;
+              line-height: 1.6;
+              margin-bottom: 30px;
+            "
+          >
+            We bring the farm-fresh goodness directly to your doorstep. With a
+            wide selection of the highest quality produce, handpicked daily, we
+            ensure you get the freshest fruits, vegetables, and more.
+          </p>
+          <a href="home.html">
+            <button
+              style="
+                background-color: #fff;
+                color: #333;
+                padding: 15px 30px;
+                border: none;
+                border-radius: 30px;
+                font-weight: bold;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+                transition: transform 0.3s;
+              "
+            >
+              Explore More
+            </button>
+          </a>
+        </div>
+        <!-- Right Column -->
+        <div style="flex: 1; text-align: center">
+          <img
+            src="assets/images/landing.webp"
+            alt="Placeholder"
+            style="width: 100%; max-width: 500px"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div style="background-color: #fff; padding: 50px 0">
+      <div style="max-width: 1000px; margin: 0 auto; text-align: center">
+        <h2 style="font-size: 36px; font-weight: bold; margin-bottom: 20px">
+          Our Mission
+        </h2>
+        <div
+          style="
+            height: 3px;
+            width: 80px;
+            background: #f8b400;
+            margin: 0 auto 30px;
+          "
+        ></div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 30px;
+          "
+        >
+          <!-- Left Content -->
+          <div style="flex: 1; padding-right: 20px">
+            <h3 style="font-size: 28px; font-weight: bold; margin-bottom: 20px">
+              Sustainability
+            </h3>
+            <p style="color: #666; font-size: 18px; line-height: 1.6">
+              Our mission is to connect people with the freshest, most
+              nutritious produce, straight from local farms to your doorstep. We
+              are dedicated to supporting sustainable farming practices while
+              ensuring that every meal is filled with vibrant, healthy
+              ingredients.
+            </p>
+          </div>
+          <!-- Right Image -->
+          <div
+            style="
+              flex: 1;
+              text-align: center;
+              justify-content: center;
+              align-self: center;
+            "
+          >
+            <img
+              src="https://media.licdn.com/dms/image/D4E12AQGGDGTg3qn8YQ/article-cover_image-shrink_720_1280/0/1715697341292?e=2147483647&v=beta&t=3iLC4oDVf-Pzgu86yDKaSALUvV_6rREGnesmMU_tbgI"
+              alt="Placeholder"
+              style="width: 100%; max-width: 500px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background-color: #f8f8f8; padding: 50px 0">
+      <div
+        style="
+          max-width: 1000px;
+          margin: 0 auto;
+          display: flex;
+          gap: 30px;
+          justify-content: space-between;
+        "
+      >
+        <!-- Left Image -->
+        <div
+          style="
+            flex: 1;
+            text-align: center;
+            justify-content: center;
+            align-self: center;
+          "
+        >
+          <img
+            src="https://www.bria.com.ph/wp-content/uploads/2023/06/Healthy-living.png"
+            alt="Placeholder"
+            style="width: 100%; max-width: 500px"
+          />
+        </div>
+        <!-- Right Content -->
+        <div style="flex: 1; padding-right: 20px">
+          <h3
+            style="
+              font-size: 28px;
+              font-weight: bold;
+              margin-bottom: 20px;
+              text-align: center;
+              justify-items: center;
+              align-content: center;
+            "
+          >
+            Healthy Living
+          </h3>
+          <p style="color: #666; font-size: 18px; line-height: 1.6">
+            By providing convenience, quality, and care in every order, we aim
+            to inspire a healthier lifestyle and create a positive impact on our
+            community and the environment.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style="background-color: #fff; padding: 50px 0; text-align: center">
+      <div style="max-width: 800px; margin: 0 auto">
+        <h2 style="font-size: 36px; font-weight: bold; margin-bottom: 20px">
+          Experience the Freshness Today!
+        </h2>
+        <div
+          style="
+            height: 3px;
+            width: 80px;
+            background: #f8b400;
+            margin: 0 auto 30px;
+          "
+        ></div>
+        <p
+          style="
+            color: #666;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+          "
+        >
+          Order Now and Taste the Difference! Discover the vibrant, natural
+          flavors of our farm-fresh produce, delivered straight to your door.
+          Enjoy the convenience of getting the best of nature, all while
+          supporting sustainable farming practices. Don’t wait—start enjoying
+          healthier meals today with just a few clicks!
+        </p>
+        <a href="register.html">
+          <button
+            style="
+              background-color: #436850;
+              color: #fff;
+              padding: 15px 30px;
+              border: none;
+              border-radius: 30px;
+              font-weight: bold;
+              cursor: pointer;
+              transition: transform 0.3s;
+            "
+          >
+            Get Started
+          </button>
+        </a>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <footer class="bg-white">
+      <div class="container mx-auto px-8">
+        <div class="w-full flex flex-col md:flex-row py-6">
+          <div class="flex-1 mb-6 text-black">
+            <a
+              class="text-green-700 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+              href="#"
+            >
+              <img
+                src="assets/images/ani.png"
+                alt="Logo"
+                class="h-12 inline"
+                style="vertical-align: middle"
+              />
+            </a>
+          </div>
+          <div class="flex-1">
+            <p class="uppercase text-gray-500 md:mb-6">Links</p>
+            <ul class="list-reset mb-6">
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >FAQ</a
+                >
+              </li>
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Help</a
+                >
+              </li>
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Support</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="flex-1">
+            <p class="uppercase text-gray-500 md:mb-6">Legal</p>
+            <ul class="list-reset mb-6">
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Terms</a
+                >
+              </li>
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Privacy</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="flex-1">
+            <p class="uppercase text-gray-500 md:mb-6">Social</p>
+            <ul class="list-reset mb-6">
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Facebook</a
+                >
+              </li>
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Linkedin</a
+                >
+              </li>
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Twitter</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="flex-1">
+            <p class="uppercase text-gray-500 md:mb-6">Company</p>
+            <ul class="list-reset mb-6">
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Official Blog</a
+                >
+              </li>
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >About Us</a
+                >
+              </li>
+              <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                <a
+                  href="#"
+                  class="no-underline hover:underline text-gray-800 hover:text-pink-500"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <a
+        href="https://www.freepik.com/free-photos-vectors/background"
+        class="text-gray-500"
+        >Background vector created by freepik - www.freepik.com</a
+      >
+    </footer>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

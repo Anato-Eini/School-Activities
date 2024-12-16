@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="assets/images/favicon.png"
+    />
+    <title>ANI</title>
+    <!--Replace with your tailwind.css once created-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+    <style>
+      body {
+        /* background: linear-gradient(90deg, #d53369 0%, #daae51 100%); */
+        background-color: white;
+        font-family: Poppins;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header
+      class="bg-white"
+      style="
+        background-color: #fbfada;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      "
+    >
+      <nav
+        class="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        aria-label="Global"
+      >
+        <!-- Logo -->
+        <div class="flex lg:flex-1">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">ANI</span>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+          </a>
+        </div>
+
+        <!-- Hamburger Button (Small Screens) -->
+        <div class="flex lg:hidden">
+          <button
+            id="menu-toggle"
+            type="button"
+            class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Open main menu</span>
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Navigation Links (Large Screens) -->
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a
+            href="index.html"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >Explore</a
+          >
+          <a
+            href="#"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >About</a
+          >
+          <a
+            href="home.html"
+            class="text-sm font-semibold text-[#436850] hover:text-gray-900"
+            >Products</a
+          >
+        </div>
+      </nav>
+
+      <!-- Mobile Sidebar -->
+      <div
+        id="mobile-menu"
+        class="fixed inset-y-0 right-0 z-20 w-3/4 max-w-sm bg-white px-6 py-6 transform translate-x-full transition-transform lg:hidden"
+      >
+        <div class="flex items-center justify-between">
+          <a href="#" class="-m-1.5 p-1.5">
+            <span class="sr-only">ANI</span>
+            <img class="h-8 w-auto" src="assets/images/ani.png" alt="ANI" />
+          </a>
+          <button
+            id="menu-close"
+            type="button"
+            class="-m-2.5 rounded-md p-2.5 text-gray-700"
+          >
+            <span class="sr-only">Close menu</span>
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6 flow-root">
+          <div class="-my-6 divide-y divide-gray-500/10">
+            <div class="space-y-2 py-6">
+              <a
+                href="index.html"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-[#436850] hover:bg-gray-50"
+                >Explore</a
+              >
+              <a
+                href="#"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-[#436850] hover:bg-gray-50"
+                >About</a
+              >
+              <a
+                href="home.html"
+                class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-[#436850] hover:bg-gray-50"
+                >Products</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8"> -->
+    <div
+      class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <!-- <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+        <img
+          class="mx-auto h-10 w-auto"
+          src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+          alt="Your Company"
+        />
+        <h2
+          class="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900"
+        >
+          Sign in to your account
+        </h2>
+      </div> -->
+
+      <!-- <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm"> -->
+      <div
+        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+      >
+        <a
+          href="index.html"
+          class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
+        >
+          <img class="h-10 mt-5" src="assets/images/ani.png" alt="logo" />
+        </a>
+        <div class="p-3 space-y-4 md:space-y-6 sm:p-8">
+          <h1
+            class="text-4xl font-extrabold text-[#436850] text-center dark:text-white"
+          >
+            Login
+          </h1>
+          <form id="login-form" class="space-y-6" action="#" method="POST">
+            <div>
+              <label
+                for="username"
+                class="block text-sm font-medium text-gray-700 dark:text-white"
+                >Username</label
+              >
+              <div class="mt-2">
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  autocomplete="username"
+                  required
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between">
+                <label
+                  for="password"
+                  class="block text-sm font-medium text-gray-700 dark:text-white"
+                  >Password</label
+                >
+                <div class="text-sm">
+                  <a
+                    href="#"
+                    class="font-semibold text-[#436850] hover:text-[#436850] dark:text-white"
+                    >Forgot password?</a
+                  >
+                </div>
+              </div>
+              <div class="mt-2">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  autocomplete="current-password"
+                  required
+                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              class="w-full bg-[#436850] text-white hover:bg-[#365c45] focus:ring-4 focus:outline-none focus:ring-[#365c45] font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-white dark:text-[#436850] dark:hover:bg-[#436850] dark:hover:text-white dark:focus:ring-[#365c45]"
+            >
+              Sign in
+            </button>
+            <div id="login-error" class="text-red-500 text-sm mt-2"></div>
+          </form>
+          <p class="text-center text-sm/6 text-gray-500">
+            Don't have an account?
+            <a
+              href="register.html"
+              class="font-semibold text-[#436850] hover:text-[#436850] dark:text-white"
+              >Create an account</a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>
